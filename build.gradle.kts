@@ -6,7 +6,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.KtlintPlugin
 
 plugins {
-  val kotlinVersion = "1.3.61"
   kotlin("jvm") version kotlinVersion apply false
   id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
   id("com.vanniktech.dependency.graph.generator") version "0.5.0"
@@ -75,16 +74,7 @@ subprojects {
       }
     }
 
-    tasks.register("downloadDependencies") {
-      doLast {
-        val allDeps = configurations.names
-          .map { configurations[it] }
-          .filter { it.isCanBeResolved && !it.isDeprecated() }
-          .map { it.files.size }
-          .sum()
-        println("Downloaded all dependencies: $allDeps")
-      }
-    }
+    tasks.register<DownloadDependenciesTask>("downloadDependencies")
   }
 }
 

@@ -11,9 +11,24 @@ USER build
 RUN mkdir $build_home
 WORKDIR $build_home
 
+# Cache the gradle binaries
+COPY --chown=build gradlew gradlew
+COPY --chown=build gradle gradle
+RUN ./gradlew --no-daemon --version
+
+# Cache basic dependencies
+COPY --chown=build .editorconfig .editorconfig
+COPY --chown=build buildSrc buildSrc
+
+COPY --chown=build deps1.build.gradle.kts deps1.build.gradle.kts
+RUN ./gradlew --no-daemon -b deps1.build.gradle.kts downloadDependencies
+
+COPY --chown=build deps2.build.gradle.kts deps2.build.gradle.kts
+RUN ./gradlew --no-daemon -b deps2.build.gradle.kts downloadDependencies
+
 COPY --chown=build . .
 
-RUN ./gradlew -g caches/dependency-cache --build-cache --no-daemon build
+RUN ./gradlew --no-daemon --info build
 
 FROM openjdk:13.0.1-jdk-slim as app
 ARG app_dir=/usr/local/app

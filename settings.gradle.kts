@@ -7,12 +7,6 @@ include(
 
 includeChildrenOf("libraries") { ":${it.name}" }
 
-buildCache {
-  local {
-    directory = "${settingsDir}/caches/build-cache"
-  }
-}
-
 fun includeChildrenOf(
     container: String,
     nameFunc: (File) -> String = { ":${it.parentFile.name}-${it.name}" }
