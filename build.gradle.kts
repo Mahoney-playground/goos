@@ -1,5 +1,6 @@
 import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorExtension.Generator
 import org.gradle.api.JavaVersion.VERSION_13
+import org.gradle.internal.deprecation.DeprecatableConfiguration
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.KtlintPlugin
@@ -12,6 +13,7 @@ plugins {
   id("com.github.ben-manes.versions") version "0.27.0"
 }
 
+@Suppress("UnstableApiUsage")
 val javaVersion by extra(VERSION_13)
 
 allprojects {
@@ -72,6 +74,17 @@ subprojects {
         useJUnitPlatform()
       }
     }
+
+    tasks.register("downloadDependencies") {
+      doLast {
+        val allDeps = configurations.names
+          .map { configurations[it] }
+          .filter { it.isCanBeResolved && !it.isDeprecated() }
+          .map { it.files.size }
+          .sum()
+        println("Downloaded all dependencies: $allDeps")
+      }
+    }
   }
 }
 
@@ -90,3 +103,9 @@ dependencyGraphGenerator {
   )
 }
 
+fun Configuration.isDeprecated(): Boolean =
+  if (this is DeprecatableConfiguration) {
+    resolutionAlternatives != null
+  } else {
+    false
+  }

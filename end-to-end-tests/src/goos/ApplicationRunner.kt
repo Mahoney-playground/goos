@@ -23,6 +23,7 @@ class ApplicationRunner {
     driver = AuctionSniperDriver(timeout = 1.seconds)
 
     driver!!.showSniperStatus(Main.STATUS_JOINING)
+    auction.itemId
   }
 
   fun showSniperHasLostAuction() {

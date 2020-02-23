@@ -1,0 +1,16 @@
+@startdot
+digraph Test {
+libraries -> ports
+libraries -> adapters
+libraries -> core
+ports -> adapters
+ports -> core
+adapters -> app
+core -> app
+fakes -> "end to end tests"
+testdrivers -> "end to end tests"
+
+app -> "end to end test run"
+"end to end tests" -> "end to end test run"
+}
+@enddot

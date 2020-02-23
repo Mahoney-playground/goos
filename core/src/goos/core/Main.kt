@@ -7,6 +7,8 @@ object Main {
   const val STATUS_LOST: String = "Lost"
   const val STATUS_JOINING: String = "Joining"
 
+  @JvmStatic
   fun main(vararg args: String) {
+    println("APP RAN!")
   }
 }
