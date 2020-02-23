@@ -4,8 +4,7 @@ FROM openjdk:13.0.1-jdk-slim as builder
 ARG build_home
 
 RUN addgroup --system build && \
-    adduser --system build && \
-    usermod -a -G build build
+    adduser --system build --ingroup build
 
 USER build
 RUN mkdir $build_home
@@ -35,8 +34,7 @@ ARG app_dir=/usr/local/app
 ARG build_home
 
 RUN addgroup --system apprunner && \
-    adduser --system apprunner && \
-    usermod -a -G apprunner apprunner
+    adduser --system apprunner --ingroup apprunner
 
 RUN mkdir -p $app_dir && chown apprunner:apprunner $app_dir
 USER apprunner
@@ -50,8 +48,7 @@ ARG app_dir=/usr/local/app
 ARG build_home
 
 RUN addgroup --system apprunner && \
-    adduser --system apprunner && \
-    usermod -a -G apprunner apprunner
+    adduser --system apprunner --ingroup apprunner
 
 RUN mkdir -p $app_dir && chown apprunner:apprunner $app_dir
 USER apprunner
