@@ -27,7 +27,7 @@ RUN ./gradlew --no-daemon -b deps2.build.gradle.kts downloadDependencies
 
 COPY --chown=build . .
 
-RUN ./gradlew --no-daemon --info build
+RUN ./gradlew --no-daemon build
 
 FROM openjdk:13.0.1-jdk-slim as app
 ARG app_dir=/usr/local/app
