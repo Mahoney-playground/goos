@@ -25,6 +25,12 @@ RUN ./gradlew --no-daemon -b deps1.build.gradle.kts downloadDependencies
 COPY --chown=build deps2.build.gradle.kts deps2.build.gradle.kts
 RUN ./gradlew --no-daemon -b deps2.build.gradle.kts downloadDependencies
 
+COPY --chown=build settings.gradle.kts settings.gradle.kts
+COPY --chown=build build.gradle.kts build.gradle.kts
+COPY --chown=build core/build.gradle.kts core/build.gradle.kts
+
+RUN ./gradlew --no-daemon  downloadDependencies
+
 COPY --chown=build . .
 
 RUN ./gradlew --no-daemon build
