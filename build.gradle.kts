@@ -92,10 +92,3 @@ dependencyGraphGenerator {
     )
   )
 }
-
-fun Configuration.isDeprecated(): Boolean =
-  if (this is DeprecatableConfiguration) {
-    resolutionAlternatives != null
-  } else {
-    false
-  }
