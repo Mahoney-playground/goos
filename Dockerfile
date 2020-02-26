@@ -12,8 +12,8 @@ RUN mkdir -p $build_dev
 WORKDIR $build_dev
 
 COPY --chown=build . .
-
 RUN --mount=type=cache,target=/home/build/.gradle,gid=1000,uid=1001 ./gradlew --no-daemon --build-cache build
+
 
 FROM openjdk:13.0.1-jdk-slim as app
 ARG app_dir=/usr/local/app
@@ -28,6 +28,7 @@ WORKDIR $app_dir
 
 COPY --from=builder --chown=apprunner $build_dev/core/build/libs/core-0.1.0.jar .
 CMD java -jar core-0.1.0.jar
+
 
 FROM openjdk:13.0.1-jdk-slim as tests
 ARG app_dir=/usr/local/app
