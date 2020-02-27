@@ -6,6 +6,6 @@ jobs:
 
     steps:
       - setup_remote_docker:
-          version: 18.09.3
+          version: 19.03.5
       - checkout
       - run: BUILDKIT_PROGRESS=plain COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up --build --progress=plain
