@@ -1,11 +1,33 @@
-version: 2
+version: 2.1
+orbs:
+  docker-cache: cci-x/docker-registry-image-cache@0.2.0
 jobs:
   build:
     docker:
       - image: cimg/base:2020.02
 
+    environment:
+      DOCKER_REGISTRY: registry.heroku.com
+      DOCKER_REGISTRY_USERNAME: mahoney-playground
+      DOCKER_REPO: $DOCKER_REGISTRY_USERNAME/goos
+      COMPOSE_DOCKER_CLI_BUILD: 1
+      DOCKER_BUILDKIT: 1
+      BUILDKIT_PROGRESS: plain
+
     steps:
       - setup_remote_docker:
           version: 18.09.3
       - checkout
-      - run: BUILDKIT_PROGRESS=plain COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose build
+      - run:
+          name: docker login
+          command: |
+            echo "$DOCKER_REGISTRY_PASSWORD" | \
+            docker login --username "$DOCKER_REGISTRY_USERNAME" --password-stdin $DOCKER_REGISTRY
+      - docker-cache/with-save-restore-images:
+          repository: $DOCKER_REGISTRY/$DOCKER_REPO
+          images: 'goos-builder:${CIRCLE_BRANCH/\//-} goos-builder:master'
+          steps:
+            - docker-cache/build:
+                command: 'docker build --target builder -t goos-builder:${CIRCLE_BRANCH/\//-} .'
+      - run: docker build --target app -t goos-app:${CIRCLE_SHA1} .
+      - run: docker build --target tests -t goos-tests:${CIRCLE_SHA1} .
