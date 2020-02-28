@@ -1,45 +1,38 @@
 # syntax=docker/dockerfile:experimental
-ARG build_dev=/home/build/dev
+ARG username=worker
+ARG work_dir=/home/$username/work
 
-FROM openjdk:13.0.1-jdk-slim as builder
-ARG build_dev
+FROM openjdk:13.0.1-jdk-slim as worker
+ARG username
+ARG work_dir
 
-RUN addgroup --system build --gid 1000 && \
-    adduser --system build --ingroup build --uid 1001
+RUN addgroup --system $username --gid 1000 && \
+    adduser --system $username --ingroup $username --uid 1001
 
-USER build
-RUN mkdir -p $build_dev
-WORKDIR $build_dev
-
-COPY --chown=build . .
-RUN --mount=type=cache,target=/home/build/.gradle,gid=1000,uid=1001 ./gradlew --no-daemon --build-cache build
+USER $username
+RUN mkdir -p $work_dir
+WORKDIR $work_dir
 
 
-FROM openjdk:13.0.1-jdk-slim as app
-ARG app_dir=/usr/local/app
-ARG build_dev
+FROM worker as builder
+ARG username
 
-RUN addgroup --system apprunner && \
-    adduser --system apprunner --ingroup apprunner
+COPY --chown=$username . .
+# Can't use docker ARG values in the --mount argument: https://github.com/moby/buildkit/issues/815
+RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 ./gradlew --no-daemon --build-cache build
 
-RUN mkdir -p $app_dir && chown apprunner:apprunner $app_dir
-USER apprunner
-WORKDIR $app_dir
 
-COPY --from=builder --chown=apprunner $build_dev/core/build/libs/core-0.1.0.jar .
+FROM worker as app
+ARG username
+ARG work_dir
+
+COPY --from=builder --chown=$username $work_dir/core/build/libs/core-0.1.0.jar .
 CMD java -jar core-0.1.0.jar
 
 
-FROM openjdk:13.0.1-jdk-slim as tests
-ARG app_dir=/usr/local/app
-ARG build_dev
+FROM worker as tests
+ARG username
+ARG work_dir
 
-RUN addgroup --system apprunner && \
-    adduser --system apprunner --ingroup apprunner
-
-RUN mkdir -p $app_dir && chown apprunner:apprunner $app_dir
-USER apprunner
-WORKDIR $app_dir
-
-COPY --from=builder --chown=apprunner $build_dev/end-to-end-tests/build/libs/end-to-end-tests-0.1.0.jar .
+COPY --from=builder --chown=$username $work_dir/end-to-end-tests/build/libs/end-to-end-tests-0.1.0.jar .
 CMD java -jar end-to-end-tests-0.1.0.jar
