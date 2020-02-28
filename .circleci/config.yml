@@ -28,6 +28,6 @@ jobs:
           images: 'goos-builder:${CIRCLE_BRANCH/\//-} goos-builder:master'
           steps:
             - docker-cache/build:
-                command: 'docker build --target builder -t goos-builder:${CIRCLE_BRANCH/\//-} .'
+                command: 'docker build --target builder -t goos-builder:${CIRCLE_BRANCH/\//-} --build-arg BUILDKIT_INLINE_CACHE=1 .'
       - run: docker build --target app -t goos-app:${CIRCLE_SHA1} .
       - run: docker build --target tests -t goos-tests:${CIRCLE_SHA1} .
