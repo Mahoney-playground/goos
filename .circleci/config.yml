@@ -23,4 +23,4 @@ jobs:
             docker login --username "$DOCKER_REGISTRY_USERNAME" --password-stdin $DOCKER_REGISTRY
       - run: docker build --target app -t goos-app:${CIRCLE_SHA1} .
       - run: docker build --target tests -t goos-tests:${CIRCLE_SHA1} .
-      - run: docker build --target builder -t goos-builder:${CIRCLE_BRANCH/\//-} .'
+      - run: docker build --target builder -t goos-builder:${CIRCLE_BRANCH} .'
