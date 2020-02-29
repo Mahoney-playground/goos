@@ -16,10 +16,12 @@ WORKDIR $work_dir
 
 FROM worker as builder
 ARG username
+ENV GRADLE_OPTS='-Dorg.gradle.daemon=false -Xms256m -Xmx512m'
 
 COPY --chown=$username . .
 # Can't use docker ARG values in the --mount argument: https://github.com/moby/buildkit/issues/815
-RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 ./gradlew --no-daemon --build-cache build
+RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
+    ./gradlew build
 
 
 FROM worker as app
