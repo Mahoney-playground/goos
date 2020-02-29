@@ -1,6 +1,4 @@
 version: 2.1
-orbs:
-  docker-cache: cci-x/docker-registry-image-cache@0.2.0
 jobs:
   build:
     docker:
@@ -23,11 +21,6 @@ jobs:
           command: |
             echo "$DOCKER_REGISTRY_PASSWORD" | \
             docker login --username "$DOCKER_REGISTRY_USERNAME" --password-stdin $DOCKER_REGISTRY
-      - docker-cache/with-save-restore-images:
-          repository: $DOCKER_REGISTRY/$DOCKER_REPO
-          images: 'goos-builder:${CIRCLE_BRANCH/\//-} goos-builder:master'
-          steps:
-            - docker-cache/build:
-                command: 'docker build --target builder -t goos-builder:${CIRCLE_BRANCH/\//-} --build-arg BUILDKIT_INLINE_CACHE=1 .'
       - run: docker build --target app -t goos-app:${CIRCLE_SHA1} .
       - run: docker build --target tests -t goos-tests:${CIRCLE_SHA1} .
+      - run: docker build --target builder -t goos-builder:${CIRCLE_BRANCH/\//-} .'
