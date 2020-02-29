@@ -5,8 +5,6 @@ jobs:
       - image: cimg/base:2020.02
 
     environment:
-      DOCKER_REGISTRY: docker.pkg.github.com
-      DOCKER_REGISTRY_USERNAME: mahoney-playground
       DOCKER_REPO: mahoney-playground/goos
       COMPOSE_DOCKER_CLI_BUILD: 1
       DOCKER_BUILDKIT: 1
@@ -18,9 +16,13 @@ jobs:
       - checkout
       - run:
           name: docker login
-          command: |
-            echo "$DOCKER_REGISTRY_PASSWORD" | \
-            docker login --username "$DOCKER_REGISTRY_USERNAME" --password-stdin $DOCKER_REGISTRY
-      - run: docker build --target app -t goos-app:${CIRCLE_SHA1} .
+          command: echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin $DOCKER_REGISTRY
+      - run: docker build -t goos-app:${CIRCLE_SHA1} .
       - run: docker build --target tests -t goos-tests:${CIRCLE_SHA1} .
-      - run: docker build --target builder -t goos-builder:${CIRCLE_BRANCH} .'
+
+workflows:
+  version: 2
+  my-workflow:
+    jobs:
+      - build:
+          context: 'Docker GitHub'
