@@ -19,7 +19,7 @@ jobs:
     - name: Cache docker
       uses: actions/cache@v1
       env:
-        cache-name: mahoney-playground-goos-cache-docker
+        cache-name: mahoney-playground-goos-cache-docker-2
       with:
         path: /var/lib/docker
         key: ${{ runner.os }}-build-${{ env.cache-name }}
@@ -30,3 +30,5 @@ jobs:
 
     - name: Build Tests with Docker
       run: docker build . --target tests -t goos-tests:${GITHUB_SHA}
+    - name: Make docker dir readable
+      run: sudo chmod -R oug+rw /var/lib/docker
