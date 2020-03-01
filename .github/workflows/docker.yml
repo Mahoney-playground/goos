@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Make docker dir readable
-      run: chmod -R oug+rw /var/lib/docker
+      run: sudo chmod -R oug+rw /var/lib/docker
     - name: Cache docker
       uses: actions/cache@v1
       env:
