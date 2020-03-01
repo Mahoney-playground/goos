@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build App with Docker
-      run: docker build . -t goos-app:${GITHUB_SHA} .
+      run: docker build . -t goos-app:${GITHUB_SHA}
     - name: Build Tests with Docker
       run: docker build . --target tests -t goos-tests:${GITHUB_SHA}
       shell: bash
