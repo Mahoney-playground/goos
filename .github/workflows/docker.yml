@@ -14,17 +14,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Make docker dir readable
+      run: sudo syctemctl stop docker && sudo chmod -R oug+rw /var/lib/docker
     - name: Cache docker
       uses: actions/cache@v1
       env:
         cache-name: mahoney-playground-goos-cache-docker-2
       with:
-        path: ~/docker-cache
+        path: /var/lib/docker
         key: ${{ runner.os }}-build-${{ env.cache-name }}
 
-    - name: Replace docker cache
-      run: sudo cp -r ~/docker-cache/* /var/lib/docker/
-      shell: bash
+    - name: Start docker
+      run: sudo syctemctl start docker
 
     - name: Build App with Docker
       run: docker build . -t goos-app:${GITHUB_SHA}
@@ -32,10 +33,5 @@ jobs:
 
     - name: Build Tests with Docker
       run: docker build . --target tests -t goos-tests:${GITHUB_SHA}
-
-    - name: Size of docker
-      run: docker system df
-
-    - name: Replace docker cache
-      run: sudo cp -r /var/lib/docker/ ~/docker-cache/*
-      shell: bash
+    - name: Make docker dir readable
+      run: sudo syctemctl stop docker && sudo chmod -R oug+rw /var/lib/docker
