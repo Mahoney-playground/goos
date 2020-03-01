@@ -7,10 +7,18 @@ env:
   COMPOSE_DOCKER_CLI_BUILD: 1
   DOCKER_BUILDKIT: 1
   BUILDKIT_PROGRESS: plain
+  cache-name: cache-docker
 
 jobs:
   build:
     runs-on: ubuntu-18.04
+    with:
+      path: /var/lib/docker
+      key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.GITHUB_REF }}
+      restore-keys: |
+        ${{ runner.os }}-build-${{ env.cache-name }}-
+        ${{ runner.os }}-build-
+        ${{ runner.os }}-
 
     steps:
     - uses: actions/checkout@v1
