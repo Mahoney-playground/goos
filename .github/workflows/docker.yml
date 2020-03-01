@@ -1,0 +1,21 @@
+name: Docker Image CI
+
+on: [push]
+
+env:
+  DOCKER_REPO: mahoney-playground/goos
+  COMPOSE_DOCKER_CLI_BUILD: 1
+  DOCKER_BUILDKIT: 1
+  BUILDKIT_PROGRESS: plain
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build App with Docker
+      run: docker build . -t goos-app:${GITHUB_SHA} .
+    - name: Build Tests with Docker
+      run: docker build . --target tests -t goos-tests:${GITHUB_SHA}
+      shell: bash
