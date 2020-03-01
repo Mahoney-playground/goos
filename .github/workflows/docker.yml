@@ -19,10 +19,10 @@ jobs:
     - name: Cache docker
       uses: actions/cache@v1
       env:
-        cache-name: cache-docker
+        cache-name: mahoney-playground-goos-cache-docker
       with:
         path: /var/lib/docker
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.GITHUB_REF }}
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ GITHUB_REF }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
