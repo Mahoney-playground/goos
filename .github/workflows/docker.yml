@@ -7,30 +7,28 @@ env:
   COMPOSE_DOCKER_CLI_BUILD: 1
   DOCKER_BUILDKIT: 1
   BUILDKIT_PROGRESS: plain
-  cache-name: cache-docker
 
 jobs:
   build:
     runs-on: ubuntu-18.04
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
+    - name: Cache docker
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-docker
+      with:
+        path: /var/lib/docker
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.GITHUB_REF }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+
     - name: Build App with Docker
       run: docker build . -t goos-app:${GITHUB_SHA}
-      with:
-        path: /var/lib/docker
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.GITHUB_REF }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
+      shell: bash
+
     - name: Build Tests with Docker
       run: docker build . --target tests -t goos-tests:${GITHUB_SHA}
-      shell: bash
-      with:
-        path: /var/lib/docker
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ env.GITHUB_REF }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
