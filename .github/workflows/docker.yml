@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Make docker dir readable
-      run: sudo syctemctl stop docker && sudo chmod -R oug+rw /var/lib/docker
+      run: sudo service docker stop && sudo chmod -R oug+rw /var/lib/docker
     - name: Cache docker
       uses: actions/cache@v1
       env:
@@ -25,7 +25,7 @@ jobs:
         key: ${{ runner.os }}-build-${{ env.cache-name }}
 
     - name: Start docker
-      run: sudo syctemctl start docker
+      run: sudo service docker start
 
     - name: Build App with Docker
       run: docker build . -t goos-app:${GITHUB_SHA}
@@ -34,4 +34,4 @@ jobs:
     - name: Build Tests with Docker
       run: docker build . --target tests -t goos-tests:${GITHUB_SHA}
     - name: Make docker dir readable
-      run: sudo syctemctl stop docker && sudo chmod -R oug+rw /var/lib/docker
+      run: sudo service docker stop && sudo chmod -R oug+rw /var/lib/docker
