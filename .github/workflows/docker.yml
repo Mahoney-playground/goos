@@ -22,11 +22,7 @@ jobs:
         cache-name: mahoney-playground-goos-cache-docker
       with:
         path: /var/lib/docker
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ GITHUB_REF }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
+        key: ${{ runner.os }}-build-${{ env.cache-name }}
 
     - name: Build App with Docker
       run: docker build . -t goos-app:${GITHUB_SHA}
