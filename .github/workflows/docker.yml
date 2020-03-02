@@ -31,11 +31,11 @@ jobs:
           ${{ env.cache-name }}-
 
     - name: Restore docker
-      if: github.event_name != 'schedule' && steps.cache-primes.outputs.cache-hit == 'true'
+      if: github.event_name != 'schedule' && steps.cache-docker.outputs.cache-hit == 'true'
       run: ./.github/restore.sh ${{ runner.temp }} ${{ runner.temp }}/docker_cache/cache.tar
 
     - name: Slim docker down
-      if: github.event_name == 'schedule' || steps.cache-primes.outputs.cache-hit != 'true'
+      if: github.event_name == 'schedule' || steps.cache-docker.outputs.cache-hit != 'true'
       run: docker system prune -a -f --volumes
 
     - name: Build App with Docker
