@@ -7,6 +7,9 @@ function main {
 
   local me
   me=$(whoami)
+  local my_group
+  my_group=$(id -g -n "$me")
+
   local cache_dir="$tmpdir/docker_cache"
   local cache_tar="$cache_dir/cache.tar"
   mkdir -p "$cache_dir"
@@ -14,7 +17,7 @@ function main {
 
   time sudo service docker stop
   time sudo /bin/tar -c -f "$cache_tar" -C /var/lib/docker .
-  sudo chown "$me:$me" "$cache_tar"
+  sudo chown "$me:$my_group" "$cache_tar"
   ls -lh "$cache_tar"
 }
 
