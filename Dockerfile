@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:experimental
+# syntax=docker/dockerfile-upstream@sha256:694457a230ae531f1506cf56c222db773f9c3e6c34bf791e6fad06cadf1dd46a
 ARG username=worker
 ARG work_dir=/home/$username/work
 
@@ -19,9 +19,14 @@ ARG username
 ENV GRADLE_OPTS='-Dorg.gradle.daemon=false -Xms256m -Xmx512m --illegal-access=deny'
 
 COPY --chown=$username . .
+
 # Can't use docker ARG values in the --mount argument: https://github.com/moby/buildkit/issues/815
 RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
-    ./gradlew build
+    ./gradlew downloadDependencies
+
+RUN --network=none \
+    --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
+    ./gradlew --offline build
 
 
 FROM worker as app
