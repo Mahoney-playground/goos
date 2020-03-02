@@ -24,13 +24,13 @@ jobs:
       env:
         cache-name: docker-cache-1
       with:
-        path: /tmp/docker_cache
+        path: ${{ runner.temp }}/docker_cache
         key: ${{ env.cache-name }}-${{ github.run_number }}
         restore-keys: |
           ${{ env.cache-name }}-
 
     - name: Restore docker
-      run: ./.github/restore.sh ${{ github.event_name }}
+      run: ./.github/restore.sh ${{ github.event_name }} ${{ runner.temp }}
       shell: bash
 
     - name: Build App with Docker
@@ -41,5 +41,5 @@ jobs:
       run: docker build . --target tests -t goos-tests:${GITHUB_SHA}
 
     - name: Backup docker
-      run: ./.github/backup.sh
+      run: ./.github/backup.sh ${{ runner.temp }}
       shell: bash

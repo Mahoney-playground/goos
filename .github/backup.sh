@@ -3,9 +3,11 @@
 set -exuo pipefail
 
 function main {
+  local tmpdir=$1
+
   local me
   me=$(whoami)
-  local cache_dir=/tmp/docker_cache
+  local cache_dir="$tmpdir/docker_cache"
   local cache_tar="$cache_dir/cache.tar"
   mkdir -p "$cache_dir"
   rm -f "$cache_tar"
