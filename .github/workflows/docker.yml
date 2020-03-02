@@ -30,6 +30,9 @@ jobs:
         restore-keys: |
           ${{ env.cache-name }}-
 
+    - name: Show context values
+      run: echo 'event-name [${{ github.event_name }}] cache-hit [${{ steps.cache-docker.outputs.cache-hit }}]'
+
     - name: Restore docker
       if: github.event_name != 'schedule' && steps.cache-docker.outputs.cache-hit == 'true'
       run: ./.github/restore.sh ${{ runner.temp }} ${{ runner.temp }}/docker_cache/cache.tar
@@ -45,4 +48,4 @@ jobs:
       run: docker build . --target tests -t goos-tests:${GITHUB_SHA}
 
     - name: Backup docker
-      run: ./.github/backup.sh ${{ runner.temp }}/docker_cache/cache.tar
+      run: ./.github/backup.sh ${{ env.docker-cache-dir }}
