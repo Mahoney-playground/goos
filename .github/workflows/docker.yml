@@ -30,16 +30,8 @@ jobs:
         restore-keys: |
           ${{ env.cache-name }}-
 
-    - name: Show context values
-      run: echo 'event-name [${{ github.event_name }}] cache-hit [${{ steps.cache-docker.outputs.cache-hit }}]'
-
     - name: Restore docker
-      if: github.event_name != 'schedule' && steps.cache-docker.outputs.cache-hit == 'true'
-      run: ./.github/restore.sh ${{ runner.temp }} ${{ runner.temp }}/docker_cache/cache.tar
-
-    - name: Slim docker down
-      if: github.event_name == 'schedule' || steps.cache-docker.outputs.cache-hit != 'true'
-      run: docker system prune -a -f --volumes
+      run: ./.github/restore.sh ${{ runner.temp }}/docker_cache/cache.tar ${{ github.event_name != 'schedule' }}
 
     - name: Build App with Docker
       run: docker build . -t goos-app:${GITHUB_SHA}
