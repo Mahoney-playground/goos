@@ -3,7 +3,7 @@
 set -exuo pipefail
 
 function main() {
-  local cache_tar=~/docker_cache/cache.tar
+  local cache_tar=/tmp/docker_cache/cache.tar
 
   if [[ -f "$cache_tar" ]]; then
     ls -lh "$cache_tar"

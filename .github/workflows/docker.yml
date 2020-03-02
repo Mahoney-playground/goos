@@ -20,7 +20,7 @@ jobs:
       env:
         cache-name: docker-cache-1
       with:
-        path: ~/docker_cache
+        path: /tmp/docker_cache
         key: ${{ env.cache-name }}-${{ github.run_number }}
         restore-keys: |
           ${{ env.cache-name }}-
