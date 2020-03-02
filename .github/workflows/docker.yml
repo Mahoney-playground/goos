@@ -48,4 +48,4 @@ jobs:
       run: docker build . --target tests -t goos-tests:${GITHUB_SHA}
 
     - name: Backup docker
-      run: ./.github/backup.sh ${{ env.docker-cache-dir }}
+      run: ./.github/backup.sh ${{ runner.temp }}/docker_cache/cache.tar
