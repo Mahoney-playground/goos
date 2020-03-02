@@ -3,9 +3,10 @@
 set -exuo pipefail
 
 function main() {
+  local event_name=$1
   local cache_tar=/tmp/docker_cache/cache.tar
 
-  if [[ -f "$cache_tar" ]]; then
+  if [[ -f "$cache_tar" && $event_name != schedule ]]; then
     ls -lh "$cache_tar"
     time sudo service docker stop
     time sudo mv /var/lib/docker /tmp/olddocker
