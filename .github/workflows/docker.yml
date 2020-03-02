@@ -14,20 +14,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Make docker dir readable
-      run: sudo service docker stop && sudo chmod -R oug+rw /var/lib/docker
-      shell: bash
 
     - name: Cache docker
       uses: actions/cache@v1
       env:
-        cache-name: mahoney-playground-goos-cache-docker-3
+        cache-name: mahoney-playground-docker-cache-action-cache-docker-7
       with:
-        path: /var/lib/docker
-        key: ${{ runner.os }}-build-${{ env.cache-name }}
+        path: ~/docker_cache
+        key: ${{ env.cache-name }}-${{ github.run_number }}
+        restore-keys: |
+          ${{ env.cache-name }}-
 
-    - name: Start docker
-      run: sudo service docker start
+    - name: Restore docker
+      run: ./.github/restore.sh
       shell: bash
 
     - name: Build App with Docker
@@ -36,5 +35,7 @@ jobs:
 
     - name: Build Tests with Docker
       run: docker build . --target tests -t goos-tests:${GITHUB_SHA}
-    - name: Make docker dir readable
-      run: sudo service docker stop && sudo chmod -R oug+rw /var/lib/docker
+
+    - name: Backup docker
+      run: ./.github/backup.sh
+      shell: bash
