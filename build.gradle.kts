@@ -76,6 +76,7 @@ subprojects {
 
     tasks.register<DownloadDependenciesTask>("downloadDependencies")
   }
+
 }
 
 dependencyGraphGenerator {
