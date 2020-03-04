@@ -154,25 +154,17 @@ class ApplicationPlugin : Plugin<Project> {
       }
       .unzip()
 
-    val libJarSpec = project.copySpec().apply {
+    val libChildSpec = project.copySpec().apply {
       into("lib")
       from(jar)
-    }
-
-    val libInternalSpec = project.copySpec().apply {
-      into("lib/internal")
-      from(internalDependencies)
-    }
-
-    val libExternalSpec = project.copySpec().apply {
-      into("lib/external")
-      from(externalDependencies)
-    }
-
-    val libChildSpec = project.copySpec().apply {
-      with(libJarSpec)
-      with(libInternalSpec)
-      with(libExternalSpec)
+      with(project.copySpec().apply {
+        into("internal")
+        from(internalDependencies)
+      })
+      with(project.copySpec().apply {
+        into("external")
+        from(externalDependencies)
+      })
     }
 
     val binChildSpec = project.copySpec().apply {
