@@ -2,6 +2,7 @@ plugins {
   kotlin("jvm") version "1.3.70"
   `kotlin-dsl`
   id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
+  `java-gradle-plugin`
 }
 
 repositories {
@@ -21,6 +22,15 @@ kotlin {
     }
     test {
       kotlin.setSrcDirs(setOf("tests"))
+    }
+  }
+}
+
+gradlePlugin {
+  plugins {
+    create("localPlugins") {
+      id = "assemble-app-plugin"
+      implementationClass = "uk.org.lidalia.gradle.plugins.application.AssembleAppPlugin"
     }
   }
 }
