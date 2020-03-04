@@ -1,6 +1,6 @@
 plugins {
   kotlin("jvm")
-  id("assemble-app-plugin")
+  id("alt-application-plugin")
 }
 
 dependencies {

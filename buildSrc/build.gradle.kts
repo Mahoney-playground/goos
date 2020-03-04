@@ -28,9 +28,9 @@ kotlin {
 
 gradlePlugin {
   plugins {
-    create("localPlugins") {
-      id = "assemble-app-plugin"
-      implementationClass = "uk.org.lidalia.gradle.plugins.application.AssembleAppPlugin"
+    create("alt-application-plugin") {
+      id = "alt-application-plugin"
+      implementationClass = "uk.org.lidalia.gradle.plugins.application.ApplicationPlugin"
     }
   }
 }

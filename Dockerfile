@@ -26,14 +26,16 @@ RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
 
 RUN --network=none \
     --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
-    ./gradlew --offline build
+    ./gradlew --offline install test
 
 
 FROM worker as app
 ARG username
 ARG work_dir
 
-COPY --from=builder --chown=$username $work_dir/core/build/libs/core-0.1.0.jar .
+COPY --from=builder --chown=$username $work_dir/core/build/install/core/lib/external ./external
+COPY --from=builder --chown=$username $work_dir/core/build/install/core/lib/core-0.1.0.jar .
+
 CMD java -jar core-0.1.0.jar
 
 
@@ -41,5 +43,8 @@ FROM worker as tests
 ARG username
 ARG work_dir
 
-COPY --from=builder --chown=$username $work_dir/end-to-end-tests/build/libs/end-to-end-tests-0.1.0.jar .
+COPY --from=builder --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/external ./external
+COPY --from=builder --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/internal ./internal
+COPY --from=builder --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/end-to-end-tests-0.1.0.jar .
+
 CMD java -jar end-to-end-tests-0.1.0.jar
