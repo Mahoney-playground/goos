@@ -33,7 +33,7 @@ open class AssembleAppPlugin : Plugin<Project> {
 
           val (projectDepFiles, externalDepFiles) = project.configurations
             .getByName(RUNTIME_CLASSPATH_CONFIGURATION_NAME).files
-            .partition {it.isIn(project.rootDir) }
+            .partition { it.isIn(project.rootDir) }
 
           val projectDeps = projectDepFiles
             .map { "deps/project/${it.name}" }
