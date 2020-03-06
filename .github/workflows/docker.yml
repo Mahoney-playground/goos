@@ -34,10 +34,18 @@ jobs:
       run: ./.github/actions/docker-cache/restore.sh ${{ runner.temp }}/docker_cache/cache.tar
 
     - name: Build App with Docker
-      run: docker build . --target app -t goos-app:${GITHUB_SHA}
+      run: docker build . --target app -t goos-app:$GITHUB_SHA
 
     - name: Build Tests with Docker
-      run: docker build . --target tests -t goos-tests:${GITHUB_SHA}
+      run: docker build . --target tests -t goos-tests:$GITHUB_SHA
 
     - name: Backup docker
       run: ./.github/actions/docker-cache/backup.sh ${{ runner.temp }}/docker_cache/cache.tar
+
+  end-to-end-tests:
+    needs: build
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Run end to end tests
+        run: GOOS_TAG=$GITHUB_SHA docker-compose up --no-build --exit-code-from tests

@@ -2,11 +2,13 @@ version: '3.7'
 
 services:
   app:
+    image: goos-app:$GOOS_TAG
     build:
-      context: .
+      context: ..
       target: app
 
   tests:
+    image: goos-tests:$GOOS_TAG
     build:
-      context: .
+      context: ..
       target: tests
