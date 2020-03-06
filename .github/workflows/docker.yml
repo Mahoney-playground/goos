@@ -11,6 +11,7 @@ env:
   COMPOSE_DOCKER_CLI_BUILD: 1
   DOCKER_BUILDKIT: 1
   BUILDKIT_PROGRESS: plain
+  cache-name: docker-cache-1
 
 jobs:
   build:
@@ -22,8 +23,6 @@ jobs:
     - name: Cache docker
       uses: actions/cache@v1
       if: github.event_name != 'schedule'
-      env:
-        cache-name: docker-cache-1
       with:
         path: ${{ runner.temp }}/docker_cache
         key: ${{ env.cache-name }}-${{ github.run_number }}
@@ -47,5 +46,19 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache docker
+        uses: actions/cache@v1
+        if: github.event_name != 'schedule'
+        with:
+          path: ${{ runner.temp }}/docker_cache
+          key: ${{ env.cache-name }}-${{ github.run_number }}
+          restore-keys: |
+            ${{ env.cache-name }}-
+
+      - name: Restore docker
+        run: ./.github/actions/docker-cache/restore.sh ${{ runner.temp }}/docker_cache/cache.tar
+
       - name: Run end to end tests
-        run: GOOS_TAG=$GITHUB_SHA docker-compose up --no-build --exit-code-from tests
+        run: cd end-to-end-tests && GOOS_TAG=$GITHUB_SHA docker-compose up --no-build --exit-code-from tests
