@@ -62,7 +62,7 @@ jobs:
 
       - name: Run end to end tests
         env:
-          GOOS_TAG: $GITHUB_SHA
+          GOOS_TAG: ${{ env.GITHUB_SHA }}
         run: |
           cd end-to-end-tests && \
           docker-compose pull && \
