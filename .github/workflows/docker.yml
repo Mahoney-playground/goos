@@ -39,8 +39,8 @@ jobs:
       run: docker build . --target builder -t goos-builder:$GITHUB_SHA
 
     - name: Capture the reports as artifacts
-      run: container_id=$(docker create goos-builder:$GITHUB_SHA) && \
-           docker cp "$container_id":/home/worker/work/core/build/reports ${{ runner.temp }}/reports/core/reports && \
+      run: container_id=$(docker create goos-builder:$GITHUB_SHA) &&
+           docker cp "$container_id":/home/worker/work/core/build/reports ${{ runner.temp }}/reports/core/reports &&
            docker cp "$container_id":/home/worker/work/end-to-end-tests/build/reports ${{ runner.temp }}/reports/end-to-end-tests/reports
 
     - name: Archive reports
@@ -53,11 +53,11 @@ jobs:
       run: docker build . --target checker
 
     - name: Build App with Docker
-      run: docker build . --target app -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-app:$GITHUB_SHA && \
+      run: docker build . --target app -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-app:$GITHUB_SHA &&
            docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-app:$GITHUB_SHA
 
     - name: Build Tests with Docker
-      run: docker build . --target tests -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-tests:$GITHUB_SHA && \
+      run: docker build . --target tests -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-tests:$GITHUB_SHA &&
            docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-tests:$GITHUB_SHA
 
     - name: Backup docker
@@ -76,7 +76,6 @@ jobs:
     - name: Run end to end tests
       env:
         GOOS_TAG: ${{ github.sha }}
-      run: |
-        cd end-to-end-tests && \
-        docker-compose pull && \
-        docker-compose up --no-build --exit-code-from tests
+      run: cd end-to-end-tests &&
+           docker-compose pull &&
+           docker-compose up --no-build --exit-code-from tests
