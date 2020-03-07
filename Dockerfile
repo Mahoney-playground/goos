@@ -24,10 +24,17 @@ COPY --chown=$username . .
 RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
     ./gradlew downloadDependencies
 
-RUN --network=none \
-    --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
-    ./gradlew --offline install test
+RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
+    --network=none \
+    set +e; \
+    ./gradlew --offline install test; \
+    echo $? > build_result; \
+    set -e
 
+FROM builder as checker
+RUN build_result=$(cat build_result); \
+    if [ "$build_result" -gt 0 ]; then >&2 echo "The build failed, check output of builder stage"; fi; \
+    exit "$build_result"
 
 FROM worker as app
 ARG username
