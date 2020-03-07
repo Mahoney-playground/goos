@@ -11,8 +11,8 @@ dependencies {
   implementation(smack("extensions"))
   implementation(smack("java7"))
   implementation(smack("im"))
-  implementation(kotlintest("core"))
-  implementation(kotlintest("runner-junit5"))
+  implementation(kotest("core"))
+  implementation(kotest("runner-junit5"))
 
   implementation("com.googlecode.windowlicker:windowlicker-swing:r268")
 }

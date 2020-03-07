@@ -1,34 +1,29 @@
 package goos
 
-import io.kotlintest.TestCase
-import io.kotlintest.TestResult
-import io.kotlintest.specs.StringSpec
+import io.kotest.core.spec.style.StringSpec
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
-class AuctionSniperEndToEndTest : StringSpec() {
+class AuctionSniperEndToEndTest : StringSpec({
 
-  private val auction = FakeAuctionServer("item-54321")
-  private val application = ApplicationRunner()
+  val auction = FakeAuctionServer("item-54321")
+  val application = ApplicationRunner()
 
-  init {
+  "sniper joins auction until auction closes" {
 
-    "sniper joins auction until auction closes" {
+    auction.startSellingItem()
 
-      auction.startSellingItem()
+    application.startBiddingIn(auction)
 
-      application.startBiddingIn(auction)
+    auction.hasReceivedJoinRequestFromSniper()
 
-      auction.hasReceivedJoinRequestFromSniper()
+    auction.announceClosed()
 
-      auction.announceClosed()
-
-      application.showSniperHasLostAuction()
-    }
+    application.showSniperHasLostAuction()
   }
 
-  override fun afterTest(testCase: TestCase, result: TestResult) {
+  afterTest {
     auction.stop()
     application.stop()
   }
-}
+})

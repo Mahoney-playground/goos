@@ -1,7 +1,7 @@
 package goos.core
 
-// import io.kotlintest.fail
-import io.kotlintest.specs.StringSpec
+// import io.kotest.fail
+import io.kotest.core.spec.style.StringSpec
 
 class FakeTest : StringSpec({
 

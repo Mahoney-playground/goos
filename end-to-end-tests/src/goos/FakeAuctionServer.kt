@@ -1,6 +1,6 @@
 package goos
 
-import io.kotlintest.shouldNotBe
+import io.kotest.matchers.shouldNotBe
 import org.jivesoftware.smack.MessageListener
 import org.jivesoftware.smack.chat2.Chat
 import org.jivesoftware.smack.chat2.ChatManager

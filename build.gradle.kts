@@ -60,8 +60,8 @@ subprojects {
     dependencies {
       api(kotlin("stdlib"))
 
-      testImplementation(kotlintest("core"))
-      testImplementation(kotlintest("runner-junit5"))
+      testImplementation(kotest("core"))
+      testImplementation(kotest("runner-junit5"))
       testImplementation("io.mockk:mockk:1.9.3")
     }
 
