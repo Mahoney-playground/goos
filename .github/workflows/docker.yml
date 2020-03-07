@@ -57,5 +57,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Login to docker repo
+        run: docker login --username Mahoney-playground --password-stdin docker.pkg.github.com < <(echo "${{ secrets.GITHUB_TOKEN }}")
+
       - name: Run end to end tests
-        run: cd end-to-end-tests && GOOS_TAG=$GITHUB_SHA docker-compose up --no-build --exit-code-from tests
+        run: |
+          GOOS_TAG=$GITHUB_SHA \
+          cd end-to-end-tests && \
+          docker-compose pull && \
+          docker-compose up --no-build --exit-code-from tests
