@@ -55,15 +55,15 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
-      - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-      - name: Login to docker repo
-        run: docker login --username Mahoney-playground --password-stdin docker.pkg.github.com < <(echo "${{ secrets.GITHUB_TOKEN }}")
+    - name: Login to docker repo
+      run: docker login --username Mahoney-playground --password-stdin docker.pkg.github.com < <(echo "${{ secrets.GITHUB_TOKEN }}")
 
-      - name: Run end to end tests
-        env:
-          GOOS_TAG: ${{ env.GITHUB_SHA }}
-        run: |
-          cd end-to-end-tests && \
-          docker-compose pull && \
-          docker-compose up --no-build --exit-code-from tests
+    - name: Run end to end tests
+      env:
+        GOOS_TAG: ${{ github.sha }}
+      run: |
+        cd end-to-end-tests && \
+        docker-compose pull && \
+        docker-compose up --no-build --exit-code-from tests
