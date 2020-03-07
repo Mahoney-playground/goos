@@ -6,6 +6,7 @@ import org.gradle.api.plugins.ReportingBasePlugin
 import org.gradle.api.reporting.Reporting
 import org.gradle.api.reporting.ReportingExtension
 
+@Suppress("unused")
 class BuildDashboardPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {

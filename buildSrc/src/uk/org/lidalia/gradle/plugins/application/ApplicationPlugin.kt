@@ -36,6 +36,7 @@ import java.util.concurrent.Callable
  *
  * The plugin can be configured via its companion [ApplicationPluginConvention] object.
  */
+@Suppress("unused")
 class ApplicationPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
@@ -139,6 +140,7 @@ class ApplicationPlugin : Plugin<Project> {
     pluginConvention: ApplicationPluginConvention
   ): CopySpec {
 
+    @Suppress("UnstableApiUsage")
     mainDistribution
       .distributionBaseName
       .convention(project.provider { pluginConvention.applicationName })
@@ -190,6 +192,7 @@ class ApplicationPlugin : Plugin<Project> {
     applicationConvention: ApplicationPluginConvention
   ) {
     jarTask.configure {
+      @Suppress("UnstableApiUsage")
       manifest {
         val classpath = project.configurations
           .named(RUNTIME_CLASSPATH_CONFIGURATION_NAME).map { configuration ->
@@ -210,6 +213,7 @@ class ApplicationPlugin : Plugin<Project> {
   }
 
   companion object {
+    @Suppress("MemberVisibilityCanBePrivate")
     const val APPLICATION_PLUGIN_NAME = "application"
     const val APPLICATION_GROUP = APPLICATION_PLUGIN_NAME
     const val TASK_RUN_NAME = "run"
