@@ -2,13 +2,13 @@ version: '3.7'
 
 services:
   app:
-    image: goos-app:$GOOS_TAG
+    image: docker.pkg.github.com/mahoney-playground/goos/goos-app:$GOOS_TAG
     build:
       context: ..
       target: app
 
   tests:
-    image: goos-tests:$GOOS_TAG
+    image: docker.pkg.github.com/mahoney-playground/goos/goos-tests:$GOOS_TAG
     build:
       context: ..
       target: tests
