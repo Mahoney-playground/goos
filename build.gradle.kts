@@ -1,11 +1,11 @@
 import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorExtension.Generator
 import org.gradle.api.JavaVersion.VERSION_13
-import org.gradle.internal.deprecation.DeprecatableConfiguration
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.KtlintPlugin
 
 plugins {
+  base
   kotlin("jvm") version kotlinVersion apply false
   id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
   id("com.vanniktech.dependency.graph.generator") version "0.5.0"
