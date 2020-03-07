@@ -32,5 +32,13 @@ gradlePlugin {
       id = "alt-application-plugin"
       implementationClass = "uk.org.lidalia.gradle.plugins.application.ApplicationPlugin"
     }
+    create("alt-build-dashboard-plugin") {
+      id = "alt-build-dashboard"
+      implementationClass = "uk.org.lidalia.gradle.plugins.reporting.BuildDashboardPlugin"
+    }
   }
+}
+
+dependencies {
+  testRuntimeOnly("org.javamodularity:moduleplugin:1.5.0")
 }
