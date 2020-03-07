@@ -38,7 +38,3 @@ gradlePlugin {
     }
   }
 }
-
-dependencies {
-  testRuntimeOnly("org.javamodularity:moduleplugin:1.5.0")
-}
