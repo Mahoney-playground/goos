@@ -38,3 +38,18 @@ gradlePlugin {
     }
   }
 }
+
+dependencies {
+  testImplementation("org.jsoup:jsoup:1.13.1")
+  testImplementation(kotest("core"))
+  testImplementation(kotest("runner-junit5"))
+  testImplementation("io.mockk:mockk:1.9.3")
+}
+
+tasks {
+  test {
+    useJUnitPlatform()
+  }
+}
+
+fun kotest(module: String) = "io.kotest:kotest-$module:4.0.0-BETA1"

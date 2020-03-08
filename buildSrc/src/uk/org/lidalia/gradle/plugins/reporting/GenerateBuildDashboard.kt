@@ -50,7 +50,7 @@ open class GenerateBuildDashboard : DefaultTask(), Reporting<BuildDashboardRepor
 
   @get:Input
   val inputReports: Set<ReportState>
-    get() = (enabledInputReports - reports)
+    get() = (enabledInputReports - reports.toSet())
         .map { report ->
           ReportState(
             name = report.displayName,
@@ -145,6 +145,7 @@ open class GenerateBuildDashboard : DefaultTask(), Reporting<BuildDashboardRepor
 
   @TaskAction
   fun run() {
+    println("****** HERE WE GO! ********")
     if (reports.html.isEnabled) {
       val generator = BuildDashboardGenerator()
       generator.render(enabledInputReports, reports.html.entryPoint)
@@ -155,7 +156,7 @@ open class GenerateBuildDashboard : DefaultTask(), Reporting<BuildDashboardRepor
 
   data class ReportState internal constructor(
     private val name: String,
-    private val destination: File,
+    val destination: File,
     private val available: Boolean
   ) : Serializable
 }
