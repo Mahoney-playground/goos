@@ -23,6 +23,8 @@ allprojects {
     jcenter()
     mavenCentral()
   }
+
+  apply<ProjectReportsPlugin>()
 }
 
 subprojects {
@@ -76,6 +78,24 @@ subprojects {
 
     tasks.register<DownloadDependenciesTask>("downloadDependencies")
   }
+
+  tasks
+    .configureEach {
+      val task = this
+      if (task is Reporting<*>) {
+        doLast {
+          val projectRelativePath = rootDir.toPath().relativize(projectDir.toPath())
+          val rootDestination = rootProject.buildDir.toPath().resolve("reports").resolve(projectRelativePath)
+          task.reports.forEach { report ->
+            val reportPathUnderBuildDir = buildDir.toPath().relativize(report.destination.toPath())
+            copy {
+              from(report.destination)
+              into(rootDestination.resolve(reportPathUnderBuildDir))
+            }
+          }
+        }
+      }
+    }
 }
 
 dependencyGraphGenerator {

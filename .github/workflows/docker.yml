@@ -40,10 +40,8 @@ jobs:
 
     - name: Capture the reports as artifacts
       run: container_id=$(docker create goos-builder:$GITHUB_SHA) &&
-           mkdir -p ${{ runner.temp }}/reports/core/reports &&
-           docker cp "$container_id":/home/worker/work/core/build/reports ${{ runner.temp }}/reports/core/reports &&
-           mkdir -p ${{ runner.temp }}/reports/end-to-end-tests/reports &&
-           docker cp "$container_id":/home/worker/work/end-to-end-tests/build/reports ${{ runner.temp }}/reports/end-to-end-tests/reports
+           mkdir -p ${{ runner.temp }}/reports &&
+           docker cp "$container_id":/home/worker/work/build/reports ${{ runner.temp }}/reports
 
     - name: Archive reports
       uses: actions/upload-artifact@v1
