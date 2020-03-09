@@ -15,6 +15,8 @@ plugins {
 @Suppress("UnstableApiUsage")
 val javaVersion by extra(VERSION_13)
 
+apply<ReportingBasePlugin>()
+
 allprojects {
   group = "uk.org.lidalia.goos"
   version = "0.1.0"
@@ -84,8 +86,9 @@ subprojects {
       val task = this
       if (task is Reporting<*>) {
         doLast {
+          val reportingExtension: ReportingExtension = rootProject.extensions.getByType()
           val projectRelativePath = rootDir.toPath().relativize(projectDir.toPath())
-          val rootDestination = rootProject.buildDir.toPath().resolve("reports").resolve(projectRelativePath)
+          val rootDestination = reportingExtension.baseDir.toPath().resolve(projectRelativePath)
           task.reports.forEach { report ->
             val reportPathUnderBuildDir = buildDir.toPath().relativize(report.destination.toPath())
             copy {
