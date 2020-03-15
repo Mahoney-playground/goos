@@ -3,6 +3,7 @@ import org.gradle.api.JavaVersion.VERSION_13
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.KtlintPlugin
+import java.nio.file.Path
 
 plugins {
   base
@@ -86,16 +87,7 @@ subprojects {
       val task = this
       if (task is Reporting<*>) {
         doLast {
-          val reportingExtension: ReportingExtension = rootProject.extensions.getByType()
-          val projectRelativePath = rootDir.toPath().relativize(projectDir.toPath())
-          val rootDestination = reportingExtension.baseDir.toPath().resolve(projectRelativePath)
-          task.reports.forEach { report ->
-            val reportPathUnderBuildDir = buildDir.toPath().relativize(report.destination.toPath())
-            copy {
-              from(report.destination)
-              into(rootDestination.resolve(reportPathUnderBuildDir))
-            }
-          }
+          copyReportsToRootProject(task)
         }
       }
     }
@@ -114,4 +106,31 @@ dependencyGraphGenerator {
       includeProject = { it.pluginManager.hasPlugin("java") }
     )
   )
+}
+
+fun Project.copyReportsToRootProject(task: Reporting<*>) {
+
+  val reportingExtension: ReportingExtension by rootProject.extensions
+  val projectRelativePath = rootDir.toPath().relativize(projectDir.toPath())
+
+  val rootDestination = reportingExtension.baseDir.toPath()
+    .resolve(projectRelativePath)
+
+  task.reports.forEach { report ->
+    copyToRootProject(report, rootDestination)
+  }
+}
+
+fun Project.copyToRootProject(
+  report: Report,
+  rootDestination: Path
+) {
+
+  val reportPathUnderBuildDir = buildDir.toPath()
+    .relativize(report.destination.toPath())
+
+  copy {
+    from(report.destination)
+    into(rootDestination.resolve(reportPathUnderBuildDir))
+  }
 }

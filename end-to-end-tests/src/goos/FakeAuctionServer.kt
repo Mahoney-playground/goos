@@ -14,7 +14,11 @@ class FakeAuctionServer(
   val itemId: String
 ) {
 
-  private val connection = XMPPTCPConnection(XMPP_HOSTNAME, "auction-$itemId", AUCTION_PASSWORD)
+  private val connection = XMPPTCPConnection(
+    XMPP_HOSTNAME,
+    "auction-$itemId",
+    AUCTION_PASSWORD
+  )
   private lateinit var currentChat: Chat
 
   private val messageListener = SingleMessageListener()
@@ -24,7 +28,8 @@ class FakeAuctionServer(
     connection.connect()
     connection.login("auction-$itemId", AUCTION_PASSWORD)
 
-    ChatManager.getInstanceFor(connection).addIncomingListener { _, _, chat -> currentChat = chat }
+    ChatManager.getInstanceFor(connection)
+      .addIncomingListener { _, _, chat -> currentChat = chat }
   }
 
   fun hasReceivedJoinRequestFromSniper() {
@@ -36,7 +41,11 @@ class FakeAuctionServer(
   }
 
   fun stop() {
-    connection.disconnect()
+    try {
+      connection.disconnect()
+    } catch (t: Throwable) {
+      t.printStackTrace()
+    }
   }
 
   companion object {

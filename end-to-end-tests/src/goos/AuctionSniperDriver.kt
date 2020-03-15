@@ -21,6 +21,7 @@ class AuctionSniperDriver(timeout: Duration) : JFrameDriver(
 ) {
 
   fun showSniperStatus(statusText: String) {
-    JLabelDriver(this, named(Main.SNIPER_STATUS_NAME)).hasText(equalTo(statusText))
+    JLabelDriver(this, named(Main.SNIPER_STATUS_NAME))
+      .hasText(equalTo(statusText))
   }
 }
