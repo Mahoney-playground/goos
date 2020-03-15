@@ -82,12 +82,16 @@ subprojects {
     tasks.register<DownloadDependenciesTask>("downloadDependencies")
   }
 
+  val rootReportDestination = getRootReportDestination()
+
   tasks
     .configureEach {
       val task = this
       if (task is Reporting<*>) {
         doLast {
-          copyReportsToRootProject(task)
+          task.reports.forEach { report ->
+            copyToRootProject(report, rootReportDestination)
+          }
         }
       }
     }
@@ -108,16 +112,11 @@ dependencyGraphGenerator {
   )
 }
 
-fun Project.copyReportsToRootProject(task: Reporting<*>) {
-
+fun Project.getRootReportDestination(): Path {
   val reporting: ReportingExtension by rootProject.extensions
   val projectRelativePath = rootDir.toPath().relativize(projectDir.toPath())
 
-  val rootDestination = reporting.baseDir.toPath().resolve(projectRelativePath)
-
-  task.reports.forEach { report ->
-    copyToRootProject(report, rootDestination)
-  }
+  return reporting.baseDir.toPath().resolve(projectRelativePath)
 }
 
 fun Project.copyToRootProject(
