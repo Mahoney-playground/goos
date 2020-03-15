@@ -110,11 +110,10 @@ dependencyGraphGenerator {
 
 fun Project.copyReportsToRootProject(task: Reporting<*>) {
 
-  val reportingExtension: ReportingExtension by rootProject.extensions
+  val reporting: ReportingExtension by rootProject.extensions
   val projectRelativePath = rootDir.toPath().relativize(projectDir.toPath())
 
-  val rootDestination = reportingExtension.baseDir.toPath()
-    .resolve(projectRelativePath)
+  val rootDestination = reporting.baseDir.toPath().resolve(projectRelativePath)
 
   task.reports.forEach { report ->
     copyToRootProject(report, rootDestination)
