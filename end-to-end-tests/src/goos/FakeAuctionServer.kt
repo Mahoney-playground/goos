@@ -28,8 +28,7 @@ class FakeAuctionServer(
     connection.connect()
     connection.login("auction-$itemId", AUCTION_PASSWORD)
 
-    ChatManager.getInstanceFor(connection)
-      .addIncomingListener { _, _, chat -> currentChat = chat }
+    ChatManager.getInstanceFor(connection).addIncomingListener { _, _, chat -> currentChat = chat }
   }
 
   fun hasReceivedJoinRequestFromSniper() {

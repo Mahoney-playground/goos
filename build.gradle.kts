@@ -124,8 +124,7 @@ fun Project.copyToRootProject(
   rootDestination: Path
 ) {
 
-  val reportPathUnderBuildDir = buildDir.toPath()
-    .relativize(report.destination.toPath())
+  val reportPathUnderBuildDir = buildDir.toPath().relativize(report.destination.toPath())
 
   copy {
     from(report.destination)

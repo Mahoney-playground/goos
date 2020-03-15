@@ -21,7 +21,7 @@ import org.gradle.api.plugins.internal.DefaultApplicationPluginConvention
 import org.gradle.api.plugins.internal.DefaultJavaApplication
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.JavaExec
-import org.gradle.api.tasks.SourceSet
+import org.gradle.api.tasks.SourceSet.MAIN_SOURCE_SET_NAME
 import org.gradle.api.tasks.Sync
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.api.tasks.application.CreateStartScripts
@@ -34,7 +34,8 @@ import java.util.concurrent.Callable
  * A [Plugin] which runs a project as a Java Application.
  *
  *
- * The plugin can be configured via its companion [ApplicationPluginConvention] object.
+ * The plugin can be configured via its companion [ApplicationPluginConvention]
+ * object.
  */
 @Suppress("unused")
 class ApplicationPlugin : Plugin<Project> {
@@ -103,7 +104,7 @@ class ApplicationPlugin : Plugin<Project> {
     ) {
       description = "Runs this project as a JVM application"
       group = APPLICATION_GROUP
-      classpath = javaPluginConvention.sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME).runtimeClasspath
+      classpath = javaPluginConvention.sourceSets.getByName(MAIN_SOURCE_SET_NAME).runtimeClasspath
       conventionMapping.apply {
         map("main") { pluginConvention.mainClassName }
         map("jvmArgs") { pluginConvention.applicationDefaultJvmArgs }
@@ -231,24 +232,32 @@ private class PreventDestinationOverwrite internal constructor(
     val sync = task as Sync
     val destinationDir = sync.destinationDir
     if (destinationDir.isDirectory) {
-      val children = destinationDir.list() ?: throw UncheckedIOException("Could not list directory $destinationDir")
+      val children = destinationDir.list()
+        ?: throw UncheckedIOException("Could not list directory $destinationDir")
       if (children.isNotEmpty()) {
         if (!File(destinationDir, "lib").isDirectory || !File(
             destinationDir,
             pluginConvention.executableDir
           ).isDirectory
         ) {
-          throw GradleException(
-            """
-            The specified installation directory '$destinationDir' is neither empty nor does it contain an installation for '${pluginConvention.applicationName}'.
-            If you really want to install to this directory, delete it and run the install task again.
-            Alternatively, choose a different installation directory.
-            """.trimIndent()
-          )
+          throw GradleException(nonEmptyDestinationError(
+            destinationDir,
+            pluginConvention.applicationName
+          ))
         }
       }
     }
   }
 }
+
+private fun nonEmptyDestinationError(
+  destinationDir: File,
+  applicationName: String
+): String = """
+  The specified installation directory '$destinationDir' is neither empty nor does it contain an
+  installation for '$applicationName'.
+  If you really want to install to this directory, delete it and run the install task again.
+  Alternatively, choose a different installation directory.
+  """.trimIndent()
 
 private fun File.isIn(maybeParent: File) = absolutePath.contains(maybeParent.absolutePath + "/")
