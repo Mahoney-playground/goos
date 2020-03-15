@@ -13,10 +13,11 @@ dependencies {
   implementation(smack("im"))
   implementation(kotest("core"))
   implementation(kotest("runner-junit5"))
+  implementation("org.junit.platform:junit-platform-console:1.6.0")
 
   implementation("com.googlecode.windowlicker:windowlicker-swing:r268")
 }
 
 application {
-  mainClassName = "goos.Main"
+  mainClassName = "goos.MainKt"
 }

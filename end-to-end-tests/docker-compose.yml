@@ -2,13 +2,14 @@ version: '3.7'
 
 services:
   app:
-    image: docker.pkg.github.com/mahoney-playground/goos/goos-app:${GOOS_TAG:-latest}
+    image: docker.pkg.github.com/mahoney-playground/goos/goos-app:${GOOS_TAG:?"You must set GOOS_TAG"}
     build:
       context: ..
       target: app
 
-  tests:
-    image: docker.pkg.github.com/mahoney-playground/goos/goos-tests:${GOOS_TAG:-latest}
+  end-to-end-tests:
+    image: docker.pkg.github.com/mahoney-playground/goos/goos-end-to-end-tests:${GOOS_TAG:?"You must set GOOS_TAG"}
+    command: --reports-dir=build/reports
     build:
       context: ..
-      target: tests
+      target: end-to-end-tests

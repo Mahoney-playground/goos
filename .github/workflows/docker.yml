@@ -56,9 +56,9 @@ jobs:
       run: docker build . --target app -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-app:$GITHUB_SHA &&
            docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-app:$GITHUB_SHA
 
-    - name: Build Tests with Docker
-      run: docker build . --target tests -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-tests:$GITHUB_SHA &&
-           docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-tests:$GITHUB_SHA
+    - name: Build End to End Tests with Docker
+      run: docker build . --target end-to-end-tests -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-end-to-end-tests:$GITHUB_SHA &&
+           docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-end-to-end-tests:$GITHUB_SHA
 
     - name: Backup docker
       run: ./.github/actions/docker-cache/backup.sh ${{ runner.temp }}/docker_cache/cache.tar
@@ -78,4 +78,4 @@ jobs:
         GOOS_TAG: ${{ github.sha }}
       run: cd end-to-end-tests &&
            docker-compose pull &&
-           docker-compose up --no-build --exit-code-from tests
+           docker-compose up --no-build --exit-code-from end-to-end-tests

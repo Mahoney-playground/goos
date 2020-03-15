@@ -43,10 +43,10 @@ ARG work_dir
 COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/external ./external
 COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/core-0.1.0.jar .
 
-CMD java -jar core-0.1.0.jar
+ENTRYPOINT java -jar core-0.1.0.jar
 
 
-FROM worker as tests
+FROM worker as end-to-end-tests
 ARG username
 ARG work_dir
 
@@ -54,4 +54,4 @@ COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/e
 COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/internal ./internal
 COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/end-to-end-tests-0.1.0.jar .
 
-CMD java -jar end-to-end-tests-0.1.0.jar
+ENTRYPOINT java -jar end-to-end-tests-0.1.0.jar
