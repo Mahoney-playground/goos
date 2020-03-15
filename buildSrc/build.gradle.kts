@@ -30,7 +30,8 @@ gradlePlugin {
   plugins {
     create("alt-application-plugin") {
       id = "alt-application-plugin"
-      implementationClass = "uk.org.lidalia.gradle.plugins.application.ApplicationPlugin"
+      implementationClass =
+        "uk.org.lidalia.gradle.plugins.application.ApplicationPlugin"
     }
   }
 }
