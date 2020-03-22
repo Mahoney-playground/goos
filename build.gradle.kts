@@ -30,6 +30,29 @@ allprojects {
   apply<ProjectReportsPlugin>()
 }
 
+val allSubReports by configurations.creating {
+  isCanBeConsumed = false
+  isCanBeResolved = true
+}
+
+dependencies {
+  subprojects.forEach { subproject ->
+    allSubReports(project(mapOf(
+      "path" to subproject.path,
+      "configuration" to "reports"
+    )))
+  }
+}
+
+val aggregateReports by tasks.registering {
+  doLast {
+    println("***** REPORTS")
+    allSubReports.resolve().forEach {
+      println(it)
+    }
+  }
+}
+
 subprojects {
 
   pluginManager.withPlugin("kotlin") {
@@ -82,17 +105,26 @@ subprojects {
     tasks.register<DownloadDependenciesTask>("downloadDependencies")
   }
 
-  val rootReportDestination = getRootReportDestination()
+  val reports by configurations.creating {
+    isCanBeConsumed = true
+    isCanBeResolved = false
+  }
 
   tasks
     .configureEach {
       val task = this
       if (task is Reporting<*>) {
-        doLast {
-          task.reports.forEach { report ->
-            copyToRootProject(report, rootReportDestination)
+        task.doLast {
+          artifacts {
+            task.reports.forEach { report ->
+              println("ADDING ${report.destination}")
+              add("reports", report.destination) {
+                builtBy(task)
+              }
+            }
           }
         }
+        task.finalizedBy(aggregateReports)
       }
     }
 }
