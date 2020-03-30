@@ -49,9 +49,6 @@ jobs:
         name: build-reports
         path: ${{ runner.temp }}/build-reports
 
-    - name: Check the build passed
-      run: docker build . --target checker
-
     - name: Build App with Docker
       run: docker build . --target app -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-app:$GITHUB_SHA &&
            docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-app:$GITHUB_SHA
