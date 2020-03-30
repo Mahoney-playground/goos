@@ -40,14 +40,14 @@ jobs:
 
     - name: Capture the reports as artifacts
       run: container_id=$(docker create goos-builder:$GITHUB_SHA) &&
-           mkdir -p ${{ runner.temp }}/reports &&
-           docker cp "$container_id":/home/worker/work/build/reports ${{ runner.temp }}/reports
+           mkdir -p ${{ runner.temp }}/build-reports &&
+           docker cp "$container_id":/home/worker/work/build/reports ${{ runner.temp }}/build-reports
 
     - name: Archive reports
       uses: actions/upload-artifact@v1
       with:
-        name: reports
-        path: ${{ runner.temp }}/reports
+        name: build-reports
+        path: ${{ runner.temp }}/build-reports
 
     - name: Check the build passed
       run: docker build . --target checker
@@ -79,3 +79,15 @@ jobs:
       run: cd end-to-end-tests &&
            docker-compose pull &&
            docker-compose up --no-build --exit-code-from end-to-end-tests --abort-on-container-exit
+
+    - name: Capture the reports as artifacts
+      if: always()
+      run: mkdir -p ${{ runner.temp }}/end-to-end-tests-reports &&
+           docker cp end-to-end-tests_app_1:/home/worker/work/build/reports ${{ runner.temp }}/end-to-end-tests-reports
+
+    - name: Archive reports
+      if: always()
+      uses: actions/upload-artifact@v1
+      with:
+        name: end-to-end-tests-reports
+        path: ${{ runner.temp }}/end-to-end-tests-reports
