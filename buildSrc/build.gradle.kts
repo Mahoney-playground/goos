@@ -33,5 +33,10 @@ gradlePlugin {
       implementationClass =
         "uk.org.lidalia.gradle.plugins.application.ApplicationPlugin"
     }
+    create("report-aggregator-plugin") {
+      id = "report-aggregator"
+      implementationClass =
+        "uk.org.lidalia.gradle.plugins.reportaggregator.ReportAggregatorPlugin"
+    }
   }
 }
