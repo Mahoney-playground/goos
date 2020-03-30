@@ -12,7 +12,7 @@ object Main {
   @JvmStatic
   fun main(vararg args: String) {
     println("Starting app")
-      blockUntilShutdown()
+    blockUntilShutdown()
     println("App stopping")
   }
 
