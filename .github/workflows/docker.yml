@@ -80,7 +80,7 @@ jobs:
     - name: Capture the reports as artifacts
       if: always()
       run: mkdir -p ${{ runner.temp }}/end-to-end-tests-reports &&
-           docker cp end-to-end-tests_app_1:/home/worker/work/build/reports ${{ runner.temp }}/end-to-end-tests-reports
+           docker cp end-to-end-tests_end-to-end-tests_1:/home/worker/work/build/reports ${{ runner.temp }}/end-to-end-tests-reports
 
     - name: Archive reports
       if: always()
