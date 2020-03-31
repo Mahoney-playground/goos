@@ -49,6 +49,14 @@ jobs:
         name: build-reports
         path: ${{ runner.temp }}/build-reports
 
+    - name: Publish Reports
+      uses: JamesIves/github-pages-deploy-action@3.4.2
+      with:
+        ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: ${{ runner.temp }}/build-reports
+        TARGET_FOLDER: builds/${{ github.ref }}/${{ github.sha }}/build-reports
+
     - name: Build App with Docker
       run: docker build . --target app -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-app:$GITHUB_SHA &&
            docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-app:$GITHUB_SHA
@@ -88,3 +96,12 @@ jobs:
       with:
         name: end-to-end-tests-reports
         path: ${{ runner.temp }}/end-to-end-tests-reports
+
+    - name: Publish Reports
+      if: always()
+      uses: JamesIves/github-pages-deploy-action@3.4.2
+      with:
+        ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: ${{ runner.temp }}/end-to-end-tests-reports
+        TARGET_FOLDER: builds/${{ github.ref }}/${{ github.sha }}/end-to-end-tests-reports
