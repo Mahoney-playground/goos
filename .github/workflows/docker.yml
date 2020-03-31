@@ -40,8 +40,8 @@ jobs:
 
     - name: Capture the reports as artifacts
       run: container_id=$(docker create goos-builder:$GITHUB_SHA) &&
-           mkdir -p build/reports &&
-           docker cp "$container_id":/home/worker/work/build/reports build/reports
+           mkdir -p builds/${{ github.sha }}/build-reports &&
+           docker cp "$container_id":/home/worker/work/build/reports builds/${{ github.sha }}/build-reports
 
     - name: Archive reports
       uses: actions/upload-artifact@v1
@@ -54,8 +54,8 @@ jobs:
       with:
         ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
-        FOLDER: build/reports
-        TARGET_FOLDER: builds/${{ github.ref }}/${{ github.sha }}/build-reports
+        FOLDER: builds
+        TARGET_FOLDER: builds
 
     - name: Build App with Docker
       run: docker build . --target app -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-app:$GITHUB_SHA &&
@@ -87,8 +87,8 @@ jobs:
 
     - name: Capture the reports as artifacts
       if: always()
-      run: mkdir -p build/reports &&
-           docker cp end-to-end-tests_end-to-end-tests_1:/home/worker/work/build/reports build/reports
+      run: mkdir -p builds/${{ github.sha }}/end-to-end-tests-reports &&
+           docker cp end-to-end-tests_end-to-end-tests_1:/home/worker/work/build/reports builds/${{ github.sha }}/end-to-end-tests-reports
 
     - name: Archive reports
       if: always()
@@ -103,5 +103,5 @@ jobs:
       with:
         ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
-        FOLDER: build/reports
-        TARGET_FOLDER: builds/${{ github.ref }}/${{ github.sha }}/end-to-end-tests-reports
+        FOLDER: builds
+        TARGET_FOLDER: builds
