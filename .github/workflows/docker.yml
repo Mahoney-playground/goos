@@ -57,6 +57,9 @@ jobs:
         FOLDER: builds
         TARGET_FOLDER: builds
 
+    - name: Publish Reports
+      run: echo "Reports are published at https://mahoney-playground.github.io/goos/builds/${{ github.sha }}/build-reports"
+
     - name: Build App with Docker
       run: docker build . --target app -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-app:$GITHUB_SHA &&
            docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-app:$GITHUB_SHA
@@ -105,3 +108,8 @@ jobs:
         BRANCH: gh-pages
         FOLDER: builds
         TARGET_FOLDER: builds
+
+    - name: Publish Reports
+      if: always()
+      run: echo "Reports are published at https://mahoney-playground.github.io/goos/builds/${{ github.sha }}/end-to-end-tests-reports"
+
