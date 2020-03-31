@@ -79,18 +79,21 @@ private fun buildIndexFile(
             a(href = "..") { +"⬆ Parent Directory" }
           }
         }
-        val (directories, files) = children.partition { it.isDirectory }
-        ((directories.sorted()) + files.sorted())
-          .forEach { child ->
-            val icon = if (child.isDirectory) "\uD83D\uDCC1" else "\uD83D\uDCC4"
-            div {
-              a(href = child.name) { +"$icon ${child.name}" }
-            }
+        children.directoriesFirst().forEach { child ->
+          val icon = if (child.isDirectory) "\uD83D\uDCC1" else "\uD83D\uDCC4"
+          div {
+            a(href = child.name) { +"$icon ${child.name}" }
           }
+        }
       }
     }
   }
   .toString()
+
+private fun List<File>.directoriesFirst(): List<File> {
+  val (directories, files) = partition { it.isDirectory }
+  return directories.sorted() + files.sorted()
+}
 
 private fun File.addIndexFilesToSubDirs() =
   listFiles().orEmpty()
