@@ -13,17 +13,14 @@ fun main(args: Array<String>) {
   ConsoleLauncher.main(*defaultedArgs)
 }
 
-private fun Array<String>.withDefaultSelectPackage(
-  pkg: String
-): Array<String> = withDefaultOption('p', "select-package", pkg)
+private fun Array<String>.withDefaultSelectPackage(pkg: String) =
+  withDefaultOption('p', "select-package", pkg)
 
-private fun Array<String>.withDefaultIncludeClassName(
-  @Language("RegExp") pattern: String
-): Array<String> = withDefaultOption('n', "include-classname", pattern)
+private fun Array<String>.withDefaultIncludeClassName(@Language("RegExp") pattern: String) =
+  withDefaultOption('n', "include-classname", pattern)
 
-private fun Array<String>.withDefaultReportsDir(
-  reportsDir: String
-): Array<String> = withDefaultOption(null, "reports-dir", reportsDir)
+private fun Array<String>.withDefaultReportsDir(reportsDir: String) =
+  withDefaultOption(null, "reports-dir", reportsDir)
 
 private fun Array<String>.withDefaultOption(
   shortOption: Char?,
