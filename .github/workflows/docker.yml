@@ -40,21 +40,21 @@ jobs:
 
     - name: Capture the reports as artifacts
       run: container_id=$(docker create goos-builder:$GITHUB_SHA) &&
-           mkdir -p ${{ runner.temp }}/build-reports &&
-           docker cp "$container_id":/home/worker/work/build/reports ${{ runner.temp }}/build-reports
+           mkdir -p build/reports &&
+           docker cp "$container_id":/home/worker/work/build/reports build/reports
 
     - name: Archive reports
       uses: actions/upload-artifact@v1
       with:
         name: build-reports
-        path: ${{ runner.temp }}/build-reports
+        path: build/reports
 
     - name: Publish Reports
       uses: JamesIves/github-pages-deploy-action@3.4.2
       with:
         ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
-        FOLDER: ${{ runner.temp }}/build-reports
+        FOLDER: build/reports
         TARGET_FOLDER: builds/${{ github.ref }}/${{ github.sha }}/build-reports
 
     - name: Build App with Docker
@@ -87,15 +87,15 @@ jobs:
 
     - name: Capture the reports as artifacts
       if: always()
-      run: mkdir -p ${{ runner.temp }}/end-to-end-tests-reports &&
-           docker cp end-to-end-tests_end-to-end-tests_1:/home/worker/work/build/reports ${{ runner.temp }}/end-to-end-tests-reports
+      run: mkdir -p build/reports &&
+           docker cp end-to-end-tests_end-to-end-tests_1:/home/worker/work/build/reports build/reports
 
     - name: Archive reports
       if: always()
       uses: actions/upload-artifact@v1
       with:
         name: end-to-end-tests-reports
-        path: ${{ runner.temp }}/end-to-end-tests-reports
+        path: build/reports
 
     - name: Publish Reports
       if: always()
@@ -103,5 +103,5 @@ jobs:
       with:
         ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
-        FOLDER: ${{ runner.temp }}/end-to-end-tests-reports
+        FOLDER: build/reports
         TARGET_FOLDER: builds/${{ github.ref }}/${{ github.sha }}/end-to-end-tests-reports
