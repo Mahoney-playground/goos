@@ -96,6 +96,7 @@ class ReportAggregatorPlugin : Plugin<Project> {
             }
           }
         }
+        reporting.baseDir.addIndexFiles()
       }
     }
   }

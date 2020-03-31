@@ -26,6 +26,10 @@ kotlin {
   }
 }
 
+dependencies {
+  implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.1")
+}
+
 gradlePlugin {
   plugins {
     create("alt-application-plugin") {
