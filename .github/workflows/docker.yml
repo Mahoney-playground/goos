@@ -40,8 +40,9 @@ jobs:
 
     - name: Capture the reports as artifacts
       run: container_id=$(docker create goos-builder:$GITHUB_SHA) &&
-           mkdir -p builds/${{ github.sha }}/build-reports &&
-           docker cp "$container_id":/home/worker/work/build/reports builds/${{ github.sha }}/build-reports
+           mkdir -p builds/${{ github.sha }} &&
+           docker cp "$container_id":/home/worker/work/build/reports builds/${{ github.sha }} &&
+           mv builds/${{ github.sha }}/reports builds/${{ github.sha }}/build-reports
 
     - name: Archive reports
       uses: actions/upload-artifact@v1
@@ -90,8 +91,10 @@ jobs:
 
     - name: Capture the reports as artifacts
       if: always()
-      run: mkdir -p builds/${{ github.sha }}/end-to-end-tests-reports &&
-           docker cp end-to-end-tests_end-to-end-tests_1:/home/worker/work/build/reports builds/${{ github.sha }}/end-to-end-tests-reports
+      run:
+           mkdir -p builds/${{ github.sha }} &&
+           docker cp end-to-end-tests_end-to-end-tests_1:/home/worker/work/build/reports builds/${{ github.sha }} &&
+           mv builds/${{ github.sha }}/reports builds/${{ github.sha }}/end-to-end-tests-reports
 
     - name: Archive reports
       if: always()
