@@ -47,7 +47,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: build-reports
-        path: build/reports
+        path: builds/${{ github.sha }}/build-reports
 
     - name: Publish Reports
       uses: JamesIves/github-pages-deploy-action@3.4.2
@@ -95,7 +95,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: end-to-end-tests-reports
-        path: build/reports
+        path: builds/${{ github.sha }}/end-to-end-tests-reports
 
     - name: Publish Reports
       if: always()
