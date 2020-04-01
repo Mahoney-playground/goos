@@ -28,6 +28,12 @@ allprojects {
   }
 
   apply<ProjectReportsPlugin>()
+
+  afterEvaluate {
+    tasks.check {
+      dependsOn(tasks.getByName("projectReport"))
+    }
+  }
 }
 
 subprojects {
@@ -35,6 +41,7 @@ subprojects {
   pluginManager.withPlugin("kotlin") {
 
     apply<KtlintPlugin>()
+    apply<BuildDashboardPlugin>()
 
     val test by tasks.existing(Test::class)
 
