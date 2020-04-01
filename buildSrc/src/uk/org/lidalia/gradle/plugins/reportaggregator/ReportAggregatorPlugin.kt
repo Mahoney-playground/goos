@@ -113,7 +113,7 @@ class ReportAggregatorPlugin : Plugin<Project> {
       }
 
       subProject.tasks
-        .filter { it is Reporting<*> }
+        .filter { it is Reporting<*> || it.javaClass.name.contains("KtlintCheckTask") }
         .forEach { task ->
           task.outputs.files.forEach { file ->
             subProject.artifacts {
