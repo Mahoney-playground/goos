@@ -1,6 +1,18 @@
 To build:
 ```bash
-COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose up --build
+DOCKER_BUILDKIT=1 \
+docker build .
+```
+
+To run the end to end tests:
+```bash
+COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 \
+GOOS_TAG=latest \
+docker-compose \
+ -f end-to-end-tests/docker-compose.yml \
+ up \
+ --build \
+ --exit-code-from end-to-end-tests --abort-on-container-exit
 ```
 
 ```plantuml
