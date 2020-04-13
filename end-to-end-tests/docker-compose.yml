@@ -1,6 +1,12 @@
 version: '3.7'
 
 services:
+
+  auctionhost:
+    hostname: auctionhost
+    build:
+      context: ../docker-openfire
+
   app:
     image: docker.pkg.github.com/mahoney-playground/goos/goos-app:${GOOS_TAG:?"You must set GOOS_TAG"}
     build:
@@ -10,6 +16,9 @@ services:
   end-to-end-tests:
     image: docker.pkg.github.com/mahoney-playground/goos/goos-end-to-end-tests:${GOOS_TAG:?"You must set GOOS_TAG"}
     command: --disable-banner --reports-dir=build/reports
+    depends_on:
+      - app
+      - auctionhost
     build:
       context: ..
       target: end-to-end-tests
