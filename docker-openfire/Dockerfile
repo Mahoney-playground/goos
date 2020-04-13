@@ -4,9 +4,7 @@ ENV OPENFIRE_VERSION=4.5.1 \
     OPENFIRE_USER=openfire
 
 RUN apt-get update \
- && DEBIAN_FRONTEND=noninteractive apt-get install -y dnsutils
-
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y sudo wget \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y sudo wget \
  && echo "Downloading openfire_${OPENFIRE_VERSION}_all.deb ..." \
  && wget --no-verbose "http://download.igniterealtime.org/openfire/openfire_${OPENFIRE_VERSION}_all.deb" -O /tmp/openfire_${OPENFIRE_VERSION}_all.deb \
  && dpkg -i --force-depends /tmp/openfire_${OPENFIRE_VERSION}_all.deb \
