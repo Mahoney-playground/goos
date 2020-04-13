@@ -16,6 +16,7 @@ dependencies {
   implementation("org.junit.platform:junit-platform-console:1.6.0")
 
   implementation("com.googlecode.windowlicker:windowlicker-swing:r268")
+  implementation(project(":retry"))
 }
 
 application {
