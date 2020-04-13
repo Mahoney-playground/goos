@@ -3,6 +3,8 @@ package uk.org.lidalia.retry
 import java.time.Clock
 import java.time.Duration
 import java.time.Instant
+import arrow.core.Either
+import kotlinx.coroutines.runBlocking
 
 fun <A> retry(
   clock: Clock = Clock.systemUTC(),
@@ -11,24 +13,30 @@ fun <A> retry(
   work: () -> A
 ) = retry(clock, timeBetweenRetries, clock.instant().plus(timeoutAfter), work)
 
-fun <A> retry(
+tailrec fun <A> retry(
   clock: Clock,
   timeBetweenRetries: Duration,
   timeout: Instant,
   work: () -> A
 ): A {
-  return try {
-    work.invoke()
-  } catch (e: Exception) {
-    if (clock.instant().isAfter(timeout)) throw e
-    else {
-      Thread.sleep(timeBetweenRetries.toMillis())
-      retry(
-        timeBetweenRetries = timeBetweenRetries.multipliedBy(2),
-        clock = clock,
-        timeout = timeout,
-        work = work
-      )
+  val result = runBlocking {
+    Either.catch {
+      work.invoke()
     }
+  }
+
+  return when (result) {
+    is Either.Left ->
+      if (clock.instant().isAfter(timeout)) throw result.a
+      else {
+        Thread.sleep(timeBetweenRetries.toMillis())
+        retry(
+          timeBetweenRetries = timeBetweenRetries.multipliedBy(2),
+          clock = clock,
+          timeout = timeout,
+          work = work
+        )
+      }
+    is Either.Right -> result.b
   }
 }
