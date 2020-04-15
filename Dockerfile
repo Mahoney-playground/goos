@@ -35,15 +35,6 @@ RUN build_result=$(cat build_result); \
     if [ "$build_result" -gt 0 ]; then >&2 echo "The build failed, check output of builder stage"; fi; \
     exit "$build_result"
 
-FROM worker as app
-ARG username
-ARG work_dir
-
-COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/external ./external
-COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/core-0.1.0.jar .
-
-ENTRYPOINT ["java", "-jar", "core-0.1.0.jar"]
-
 
 FROM worker as end-to-end-tests
 ARG username
@@ -54,3 +45,13 @@ COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/e
 COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/end-to-end-tests-0.1.0.jar .
 
 ENTRYPOINT ["java", "-jar", "end-to-end-tests-0.1.0.jar"]
+
+
+FROM worker as app
+ARG username
+ARG work_dir
+
+COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/external ./external
+COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/core-0.1.0.jar .
+
+ENTRYPOINT ["java", "-jar", "core-0.1.0.jar"]
