@@ -4,39 +4,36 @@ import java.time.Clock
 import java.time.Duration
 import java.time.Instant
 import arrow.core.Either
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.delay
 
-fun <A> retry(
+suspend fun <A> retry(
   clock: Clock = Clock.systemUTC(),
   timeBetweenRetries: Duration = Duration.ofMillis(10),
   timeoutAfter: Duration = Duration.ofSeconds(10),
-  work: () -> A
+  work: suspend () -> A
 ) = retry(clock, timeBetweenRetries, clock.instant().plus(timeoutAfter), work)
 
-tailrec fun <A> retry(
+tailrec suspend fun <A> retry(
   clock: Clock,
   timeBetweenRetries: Duration,
   timeout: Instant,
-  work: () -> A
+  work: suspend () -> A
 ): A {
-  val result = runBlocking {
-    Either.catch {
-      work.invoke()
-    }
-  }
 
-  return when (result) {
+  return when (val result = Either.catch(work)) {
+    is Either.Right -> result.b
     is Either.Left ->
-      if (clock.instant().isAfter(timeout)) throw result.a
+      if (timeout.inPast(clock)) throw result.a
       else {
-        Thread.sleep(timeBetweenRetries.toMillis())
+        delay(timeBetweenRetries.toMillis())
         retry(
-          timeBetweenRetries = timeBetweenRetries.multipliedBy(2),
           clock = clock,
+          timeBetweenRetries = timeBetweenRetries.multipliedBy(2),
           timeout = timeout,
           work = work
         )
       }
-    is Either.Right -> result.b
   }
 }
+
+private fun Instant.inPast(clock: Clock) = clock.instant().isAfter(this)

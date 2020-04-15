@@ -1,6 +1,7 @@
 package goos
 
 import io.kotest.matchers.shouldNotBe
+import kotlinx.coroutines.runBlocking
 import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode.disabled
 import org.jivesoftware.smack.MessageListener
 import org.jivesoftware.smack.chat2.Chat
@@ -35,7 +36,7 @@ class FakeAuctionServer(
 
   fun startSellingItem() {
 
-    retry { connection.connect() }
+    runBlocking { retry { connection.connect() } }
 
     createAuctionItem(itemId)
     connection.connect()
