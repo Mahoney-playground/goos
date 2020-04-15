@@ -9,6 +9,7 @@ services:
 
   app:
     image: docker.pkg.github.com/mahoney-playground/goos/goos-app:${GOOS_TAG:?"You must set GOOS_TAG"}
+    init: true
     build:
       context: ..
       target: app
@@ -16,6 +17,7 @@ services:
   end-to-end-tests:
     image: docker.pkg.github.com/mahoney-playground/goos/goos-end-to-end-tests:${GOOS_TAG:?"You must set GOOS_TAG"}
     command: --disable-banner --reports-dir=build/reports
+    init: true
     depends_on:
       - app
       - auctionhost

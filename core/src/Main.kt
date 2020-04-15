@@ -1,6 +1,9 @@
 package goos.core
 
 import java.util.concurrent.CountDownLatch
+import javax.swing.JButton
+
+import javax.swing.JFrame
 
 object Main {
 
@@ -12,6 +15,13 @@ object Main {
   @JvmStatic
   fun main(vararg args: String) {
     println("Starting app")
+    val frame = JFrame("My First GUI")
+    frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+    frame.setSize(300, 300)
+    val button = JButton("Press")
+    frame.contentPane.add(button) // Adds Button to content pane of frame
+
+    frame.isVisible = true
     blockUntilShutdown()
     println("App stopping")
   }

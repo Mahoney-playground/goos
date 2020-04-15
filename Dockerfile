@@ -36,7 +36,21 @@ RUN build_result=$(cat build_result); \
     exit "$build_result"
 
 
-FROM worker as end-to-end-tests
+FROM worker as runner
+ARG username
+ARG work_dir
+
+USER root
+RUN apt-get update && \
+    apt-get install -y \
+      libxrender1 libxtst6 libxi6 \
+      fontconfig \
+      xvfb && \
+    rm -rf /var/lib/apt/lists/*
+USER $username
+
+
+FROM runner as end-to-end-tests
 ARG username
 ARG work_dir
 
@@ -44,14 +58,14 @@ COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/e
 COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/internal ./internal
 COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/end-to-end-tests-0.1.0.jar .
 
-ENTRYPOINT ["java", "-jar", "end-to-end-tests-0.1.0.jar"]
+ENTRYPOINT ["xvfb-run", "java", "-jar", "end-to-end-tests-0.1.0.jar"]
 
 
-FROM worker as app
+FROM runner as app
 ARG username
 ARG work_dir
 
 COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/external ./external
 COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/core-0.1.0.jar .
 
-ENTRYPOINT ["java", "-jar", "core-0.1.0.jar"]
+ENTRYPOINT ["xvfb-run", "java", "-jar", "core-0.1.0.jar"]
