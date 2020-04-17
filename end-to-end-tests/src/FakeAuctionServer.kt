@@ -1,7 +1,6 @@
 package goos
 
 import io.kotest.matchers.shouldNotBe
-import kotlinx.coroutines.runBlocking
 import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode.disabled
 import org.jivesoftware.smack.MessageListener
 import org.jivesoftware.smack.chat2.Chat
@@ -11,7 +10,6 @@ import org.jivesoftware.smack.tcp.XMPPTCPConnection
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration
 import org.jivesoftware.smackx.admin.ServiceAdministrationManager
 import org.jxmpp.jid.impl.JidCreate
-import uk.org.lidalia.retry.retry
 import java.util.concurrent.ArrayBlockingQueue
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.TimeUnit.SECONDS
@@ -36,7 +34,7 @@ class FakeAuctionServer(
 
   fun startSellingItem() {
 
-    runBlocking { retry { connection.connect() } }
+    connection.connect()
 
     createAuctionItem(itemId)
     connection.connect()

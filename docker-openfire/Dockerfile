@@ -4,13 +4,15 @@ ENV OPENFIRE_VERSION=4.5.1 \
     OPENFIRE_USER=openfire
 
 RUN apt-get update \
- && DEBIAN_FRONTEND=noninteractive apt-get install -y sudo wget \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y curl \
  && echo "Downloading openfire_${OPENFIRE_VERSION}_all.deb ..." \
- && wget --no-verbose "http://download.igniterealtime.org/openfire/openfire_${OPENFIRE_VERSION}_all.deb" -O /tmp/openfire_${OPENFIRE_VERSION}_all.deb \
+ && curl -fsSL "http://download.igniterealtime.org/openfire/openfire_${OPENFIRE_VERSION}_all.deb" -o /tmp/openfire_${OPENFIRE_VERSION}_all.deb \
  && dpkg -i --force-depends /tmp/openfire_${OPENFIRE_VERSION}_all.deb \
  && rm -rf openfire_${OPENFIRE_VERSION}_all.deb
 
 RUN rm -rf /var/lib/apt/lists/*
+
+HEALTHCHECK --interval=1s --retries=10 --timeout=5s CMD curl -fsSL http://localhost:9090
 
 COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod 755 /sbin/entrypoint.sh
