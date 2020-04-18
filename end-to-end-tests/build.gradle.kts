@@ -17,6 +17,8 @@ dependencies {
 
   implementation("com.googlecode.windowlicker:windowlicker-swing:r268")
   implementation(project(":retry"))
+  implementation(project(":clioptions"))
+  implementation(fileTree("${project.rootDir}/buildSrc/build/"))
 }
 
 application {

@@ -2,6 +2,11 @@ package goos
 
 import org.intellij.lang.annotations.Language
 import org.junit.platform.console.ConsoleLauncher
+import kotlin.system.exitProcess
+import uk.org.lidalia.indexhtml.addIndexFiles
+import uk.org.lidalia.clioptions.withDefaultOption
+import uk.org.lidalia.clioptions.getOption
+import java.io.File
 
 fun main(args: Array<String>) {
 
@@ -10,7 +15,14 @@ fun main(args: Array<String>) {
     .withDefaultIncludeClassName("^(Test.*|.+[.$]Test.*|.*Tests?|.*Spec)$")
     .withDefaultReportsDir("build/reports")
 
-  ConsoleLauncher.main(*defaultedArgs)
+  val exitCode = ConsoleLauncher
+    .execute(System.out, System.err, *defaultedArgs)
+    .exitCode
+
+  val reportsDir = defaultedArgs.reportsDir()!!
+  reportsDir.addIndexFiles()
+
+  exitProcess(exitCode)
 }
 
 private fun Array<String>.withDefaultSelectPackage(pkg: String) =
@@ -19,18 +31,9 @@ private fun Array<String>.withDefaultSelectPackage(pkg: String) =
 private fun Array<String>.withDefaultIncludeClassName(@Language("RegExp") pattern: String) =
   withDefaultOption('n', "include-classname", pattern)
 
+private const val reportsDir = "reports-dir"
+
 private fun Array<String>.withDefaultReportsDir(reportsDir: String) =
-  withDefaultOption(null, "reports-dir", reportsDir)
+  withDefaultOption(null, reportsDir, reportsDir)
 
-private fun Array<String>.withDefaultOption(
-  shortOption: Char?,
-  longOption: String,
-  value: String
-): Array<String> {
-
-  val alreadyHasOption =
-    (shortOption != null && this.contains("-$shortOption")) ||
-      this.any { it.startsWith("--$longOption=") }
-
-  return if (alreadyHasOption) this else this + "--$longOption=$value"
-}
+private fun Array<String>.reportsDir() = getOption(null, reportsDir)?.let { File(it) }
