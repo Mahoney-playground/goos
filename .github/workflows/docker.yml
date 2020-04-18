@@ -86,7 +86,7 @@ jobs:
       env:
         GOOS_TAG: ${{ github.sha }}
       run: cd end-to-end-tests &&
-           docker-compose pull &&
+           docker-compose pull -q &&
            docker-compose up --exit-code-from end-to-end-tests --abort-on-container-exit
 
     - name: Capture the reports as artifacts

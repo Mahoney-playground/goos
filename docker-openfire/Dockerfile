@@ -3,8 +3,8 @@ FROM openjdk:8u242-jre-slim
 ENV OPENFIRE_VERSION=4.5.1 \
     OPENFIRE_USER=openfire
 
-RUN apt-get update \
- && DEBIAN_FRONTEND=noninteractive apt-get install -y curl \
+RUN apt-get -qq update \
+ && DEBIAN_FRONTEND=noninteractive apt-get -qq install curl \
  && echo "Downloading openfire_${OPENFIRE_VERSION}_all.deb ..." \
  && curl -fsSL "http://download.igniterealtime.org/openfire/openfire_${OPENFIRE_VERSION}_all.deb" -o /tmp/openfire_${OPENFIRE_VERSION}_all.deb \
  && dpkg -i --force-depends /tmp/openfire_${OPENFIRE_VERSION}_all.deb \

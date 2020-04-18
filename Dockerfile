@@ -41,8 +41,8 @@ ARG username
 ARG work_dir
 
 USER root
-RUN apt-get update && \
-    apt-get install -y \
+RUN apt-get -qq update && \
+    apt-get -qq install \
       libxrender1 libxtst6 libxi6 \
       fontconfig \
       xvfb && \
