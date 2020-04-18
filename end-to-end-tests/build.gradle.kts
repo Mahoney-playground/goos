@@ -19,6 +19,7 @@ dependencies {
   implementation(project(":retry"))
   implementation(project(":clioptions"))
   implementation(fileTree("${project.rootDir}/buildSrc/build/"))
+  implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.1")
 }
 
 application {
