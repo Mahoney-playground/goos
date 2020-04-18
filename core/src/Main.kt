@@ -16,6 +16,7 @@ object Main {
   fun main(vararg args: String) {
     println("Starting app")
     val frame = JFrame("My First GUI")
+    frame.name = "MAIN_WINDOW"
     frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
     frame.setSize(300, 300)
     val button = JButton("Press")
