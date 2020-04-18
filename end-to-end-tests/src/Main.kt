@@ -31,9 +31,9 @@ private fun Array<String>.withDefaultSelectPackage(pkg: String) =
 private fun Array<String>.withDefaultIncludeClassName(@Language("RegExp") pattern: String) =
   withDefaultOption('n', "include-classname", pattern)
 
-private const val reportsDir = "reports-dir"
+private const val reportsDirOption = "reports-dir"
 
 private fun Array<String>.withDefaultReportsDir(reportsDir: String) =
-  withDefaultOption(null, reportsDir, reportsDir)
+  withDefaultOption(null, reportsDirOption, reportsDir)
 
-private fun Array<String>.reportsDir() = getOption(null, reportsDir)?.let { File(it) }
+private fun Array<String>.reportsDir() = getOption(null, reportsDirOption)?.let { File(it) }
