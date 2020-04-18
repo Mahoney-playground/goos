@@ -42,7 +42,7 @@ ARG work_dir
 
 USER root
 RUN apt-get -qq update && \
-    apt-get -qq install \
+    DEBIAN_FRONTEND=noninteractive apt-get -qq -o=Dpkg::Use-Pty=0 install \
       libxrender1 libxtst6 libxi6 \
       fontconfig \
       xvfb && \

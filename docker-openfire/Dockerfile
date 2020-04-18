@@ -4,11 +4,11 @@ ENV OPENFIRE_VERSION=4.5.1 \
     OPENFIRE_USER=openfire
 
 RUN apt-get -qq update \
- && DEBIAN_FRONTEND=noninteractive apt-get -qq install curl \
+ && DEBIAN_FRONTEND=noninteractive apt-get -qq -o=Dpkg::Use-Pty=0 install curl \
  && echo "Downloading openfire_${OPENFIRE_VERSION}_all.deb ..." \
  && curl -fsSL "http://download.igniterealtime.org/openfire/openfire_${OPENFIRE_VERSION}_all.deb" -o /tmp/openfire_${OPENFIRE_VERSION}_all.deb \
  && dpkg -i --force-depends /tmp/openfire_${OPENFIRE_VERSION}_all.deb \
- && rm -rf openfire_${OPENFIRE_VERSION}_all.deb
+ && rm -rf /tmp/openfire_${OPENFIRE_VERSION}_all.deb
 
 RUN rm -rf /var/lib/apt/lists/*
 
