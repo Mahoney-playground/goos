@@ -47,10 +47,11 @@ RUN apt-get -qq update && \
       fontconfig \
       xvfb && \
     rm -rf /var/lib/apt/lists/*
+RUN mkdir /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
 USER $username
 
 
-FROM runner as end-to-end-tests
+FROM worker as end-to-end-tests
 ARG username
 ARG work_dir
 
@@ -58,7 +59,7 @@ COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/e
 COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/internal ./internal
 COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/end-to-end-tests-0.1.0.jar .
 
-ENTRYPOINT ["xvfb-run", "java", "-jar", "end-to-end-tests-0.1.0.jar"]
+ENTRYPOINT ["java", "-jar", "end-to-end-tests-0.1.0.jar"]
 
 
 FROM runner as app
@@ -68,4 +69,13 @@ ARG work_dir
 COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/external ./external
 COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/core-0.1.0.jar .
 
-ENTRYPOINT ["xvfb-run", "java", "-jar", "core-0.1.0.jar"]
+ENTRYPOINT ["xvfb-run", "--error-file=/dev/stderr", "java", "-jar", "core-0.1.0.jar"]
+
+
+FROM app as instrumentedapp
+ARG username
+ARG work_dir
+
+COPY --from=end-to-end-tests --chown=$username $work_dir/external/marathon-java-agent-*.jar ./external/marathon-java-agent.jar
+
+ENTRYPOINT ["xvfb-run", "--error-file=/dev/stderr", "java", "-javaagent:external/marathon-java-agent.jar=1234", "-jar", "core-0.1.0.jar"]

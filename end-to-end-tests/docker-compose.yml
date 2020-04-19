@@ -8,11 +8,11 @@ services:
       context: ../docker-openfire
 
   app:
-    image: docker.pkg.github.com/mahoney-playground/goos/goos-app:${GOOS_TAG:?"You must set GOOS_TAG"}
+    image: docker.pkg.github.com/mahoney-playground/goos/goos-instrumentedapp:${GOOS_TAG:?"You must set GOOS_TAG"}
     init: true
     build:
       context: ..
-      target: app
+      target: instrumentedapp
 
   end-to-end-tests:
     image: docker.pkg.github.com/mahoney-playground/goos/goos-end-to-end-tests:${GOOS_TAG:?"You must set GOOS_TAG"}

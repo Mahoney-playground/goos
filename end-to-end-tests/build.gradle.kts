@@ -5,7 +5,6 @@ plugins {
 
 dependencies {
 
-  implementation(project(":core"))
   implementation(smack("core"))
   implementation(smack("tcp"))
   implementation(smack("extensions"))
@@ -15,11 +14,12 @@ dependencies {
   implementation(kotest("runner-junit5"))
   implementation("org.junit.platform:junit-platform-console:1.6.0")
 
-  implementation("com.googlecode.windowlicker:windowlicker-swing:r268")
-  implementation(project(":retry"))
   implementation(project(":clioptions"))
   implementation(fileTree("${project.rootDir}/buildSrc/build/"))
   implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.1")
+
+  implementation("com.jaliansystems:marathon-java-agent:5.2.6.0")
+  implementation("com.jaliansystems:marathon-java-driver:5.2.6.0")
 }
 
 application {
