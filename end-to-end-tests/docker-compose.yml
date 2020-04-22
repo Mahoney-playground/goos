@@ -2,12 +2,12 @@ version: '2.4'
 
 services:
 
-  auctionhost:
-    hostname: auctionhost
+  auctionhost.internal:
+    hostname: auctionhost.internal
     build:
       context: ../docker-openfire
 
-  app:
+  app.internal:
     image: docker.pkg.github.com/mahoney-playground/goos/goos-instrumentedapp:${GOOS_TAG:?"You must set GOOS_TAG"}
     init: true
     build:
@@ -19,9 +19,9 @@ services:
     command: --disable-banner --reports-dir=build/reports
     init: true
     depends_on:
-      auctionhost:
+      auctionhost.internal:
         condition: service_healthy
-      app:
+      app.internal:
         condition: service_started
     build:
       context: ..

@@ -70,7 +70,7 @@ class FakeAuctionServer(
 
   companion object {
     const val AUCTION_RESOURCE = "Auction"
-    const val XMPP_DOMAIN = "auctionhost"
+    const val XMPP_DOMAIN = "auctionhost.internal"
 //    const val XMPP_HOSTNAME = "localhost"
     const val XMPP_HOSTNAME = XMPP_DOMAIN
     const val AUCTION_PASSWORD = "auction"
