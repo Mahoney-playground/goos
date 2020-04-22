@@ -15,6 +15,22 @@ docker-compose \
  --exit-code-from end-to-end-tests --abort-on-container-exit
 ```
 
+To run the end to end tests locally:
+* Install dnsmasq: `brew install dnsmasq`
+* Ensure it resolves *.internal to localhost:
+  ```bash
+  echo address=/internal/127.0.0.1 >> /usr/local/etc/dnsmasq.conf
+  echo 'nameserver 127.0.0.1' | sudo tee /etc/resolver/internal > /dev/null
+  sudo dscacheutil -flushcache
+  sudo killall -HUP mDNSResponder
+  ping -c1 foo.internal
+* Run up the required docker containers:
+  ```bash
+  DOCKER_BUILDKIT=1 docker build -t goos-instrumentedapp . && docker run -p 1234:1234 goos-instrumentedapp
+  cd docker-openfire && docker build -t openfire . && docker run -p 5222:5222 -p 9090:9090 -h auctionhost.internal openfire 
+  ```
+  ```
+You should now be able to run the tests locally.
 ```plantuml
 digraph Test {
   libraries -> ports
