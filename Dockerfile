@@ -78,4 +78,6 @@ ARG work_dir
 
 COPY --from=end-to-end-tests --chown=$username $work_dir/external/marathon-java-agent-*.jar ./external/marathon-java-agent.jar
 
+EXPOSE 1234
+
 ENTRYPOINT ["xvfb-run", "--error-file=/dev/stderr", "java", "-javaagent:external/marathon-java-agent.jar=1234", "-jar", "core-0.1.0.jar"]
