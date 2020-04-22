@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile-upstream@sha256:694457a230ae531f1506cf56c222db773f9c3e6c34bf791e6fad06cadf1dd46a
+# syntax=docker/dockerfile-upstream:1.1.7-experimental
 ARG username=worker
 ARG work_dir=/home/$username/work
 
