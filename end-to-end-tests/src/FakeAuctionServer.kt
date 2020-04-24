@@ -2,17 +2,18 @@ package goos
 
 import io.kotest.matchers.shouldNotBe
 import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode.disabled
-import org.jivesoftware.smack.MessageListener
-import org.jivesoftware.smack.chat2.Chat
-import org.jivesoftware.smack.chat2.ChatManager
+import org.jivesoftware.smack.chat.Chat
+import org.jivesoftware.smack.chat.ChatManager
+import org.jivesoftware.smack.chat.ChatMessageListener
 import org.jivesoftware.smack.packet.Message
 import org.jivesoftware.smack.tcp.XMPPTCPConnection
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration
 import org.jivesoftware.smackx.admin.ServiceAdministrationManager
 import org.jxmpp.jid.impl.JidCreate
+import org.jxmpp.jid.parts.Resourcepart
 import java.util.concurrent.ArrayBlockingQueue
 import java.util.concurrent.BlockingQueue
-import java.util.concurrent.TimeUnit.SECONDS
+import java.util.concurrent.TimeUnit.MINUTES
 
 class FakeAuctionServer(
   val itemId: String
@@ -21,35 +22,48 @@ class FakeAuctionServer(
   private val connection = XMPPTCPConnection(
     XMPPTCPConnectionConfiguration.builder()
       .setSecurityMode(disabled)
-      .setXmppDomain(
-        JidCreate.domainBareFrom(XMPP_DOMAIN)
-      )
-      .setHost(XMPP_HOSTNAME)
+      .setXmppDomain(XMPP_DOMAIN)
       .build()
   )
 
-  private lateinit var currentChat: Chat
+  init {
+    createUser("sniper", "sniper")
+  }
 
   private val messageListener = SingleMessageListener()
+  private var currentChat: Chat? = null
 
   fun startSellingItem() {
 
-    connection.connect()
-
     createAuctionItem(itemId)
     connection.connect()
-    connection.login("auction-$itemId", AUCTION_PASSWORD)
+    connection.login("auction-$itemId", AUCTION_PASSWORD, Resourcepart.from(AUCTION_RESOURCE))
 
-    ChatManager.getInstanceFor(connection).addIncomingListener { _, _, chat -> currentChat = chat }
+    val chatManager = ChatManager.getInstanceFor(connection)
+    chatManager.addChatListener { chat, _ ->
+      currentChat = chat
+      chat.addMessageListener(messageListener)
+    }
   }
 
   private fun createAuctionItem(itemId: String) {
-    connection.login("admin", "admin")
-    ServiceAdministrationManager.getInstanceFor(connection).addUser(
-      JidCreate.entityBareFrom("auction-$itemId@$XMPP_DOMAIN"),
-      AUCTION_PASSWORD
+    createUser("auction-$itemId", AUCTION_PASSWORD)
+  }
+
+  private fun createUser(username: String, password: String) {
+    val c = XMPPTCPConnection(
+      XMPPTCPConnectionConfiguration.builder()
+        .setSecurityMode(disabled)
+        .setXmppDomain(XMPP_DOMAIN)
+        .build()
+      )
+    c.connect()
+    c.login("admin", "admin")
+    ServiceAdministrationManager.getInstanceFor(c).addUser(
+      JidCreate.entityBareFrom("$username@$XMPP_DOMAIN"),
+      password
     )
-    connection.disconnect()
+    c.disconnect()
   }
 
   fun hasReceivedJoinRequestFromSniper() {
@@ -57,7 +71,7 @@ class FakeAuctionServer(
   }
 
   fun announceClosed() {
-    currentChat.send(Message())
+    currentChat?.sendMessage(Message())
   }
 
   fun stop() {
@@ -71,21 +85,19 @@ class FakeAuctionServer(
   companion object {
     const val AUCTION_RESOURCE = "Auction"
     const val XMPP_DOMAIN = "auctionhost.internal"
-//    const val XMPP_HOSTNAME = "localhost"
-    const val XMPP_HOSTNAME = XMPP_DOMAIN
     const val AUCTION_PASSWORD = "auction"
   }
 }
 
-class SingleMessageListener : MessageListener {
+class SingleMessageListener : ChatMessageListener {
 
   private val messages: BlockingQueue<Message> = ArrayBlockingQueue(1)
 
-  override fun processMessage(message: Message) {
+  override fun processMessage(chat: Chat, message: Message) {
     messages.add(message)
   }
 
   fun receivesAMessage() {
-    messages.poll(5, SECONDS) shouldNotBe null
+    messages.poll(10, MINUTES) shouldNotBe null
   }
 }

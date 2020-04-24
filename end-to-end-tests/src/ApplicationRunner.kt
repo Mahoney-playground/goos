@@ -1,26 +1,30 @@
 package goos
 
-class ApplicationRunner {
+import io.kotest.assertions.timing.eventually
+import kotlin.time.ExperimentalTime
+import kotlin.time.seconds
 
-  private var driver: AuctionSniperDriver? = null
+@ExperimentalTime
+class ApplicationRunner(
+  private val driver: AuctionSniperDriver = AuctionSniperDriver()
+) {
 
-  fun startBiddingIn(
+  suspend fun startBiddingIn(
     auction: FakeAuctionServer
   ) {
+    driver.joinAuction()
 
-    driver = AuctionSniperDriver()
-
-    driver!!.showSniperStatus(STATUS_JOINING)
+    eventually(5.seconds) {
+      driver.showSniperStatus(STATUS_JOINING)
+    }
     auction.itemId
   }
 
   fun showSniperHasLostAuction() {
-    driver!!.showSniperStatus(STATUS_LOST)
+    driver.showSniperStatus(STATUS_LOST)
   }
 
   companion object {
-    const val SNIPER_ID = "sniper"
-    const val SNIPER_PASSWORD = "sniper"
     const val STATUS_LOST: String = "Lost"
     const val STATUS_JOINING: String = "Joining"
   }

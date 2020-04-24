@@ -18,8 +18,8 @@ dependencies {
   implementation(fileTree("${project.rootDir}/buildSrc/build/"))
   implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.1")
 
-  implementation("com.jaliansystems:marathon-java-agent:5.2.6.0")
-  implementation("com.jaliansystems:marathon-java-driver:5.2.6.0")
+  runtimeOnly("com.jaliansystems:marathon-java-agent:5.2.6.0")
+  implementation("org.seleniumhq.selenium:selenium-remote-driver:3.14.0")
 }
 
 application {

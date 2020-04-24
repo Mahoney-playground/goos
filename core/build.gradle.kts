@@ -4,6 +4,11 @@ plugins {
 }
 
 dependencies {
+  implementation(smack("core"))
+  implementation(smack("tcp"))
+  implementation(smack("extensions"))
+  implementation(smack("java7"))
+  implementation(smack("im"))
 }
 
 application {

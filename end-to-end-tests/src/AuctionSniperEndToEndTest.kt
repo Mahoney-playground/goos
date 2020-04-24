@@ -1,7 +1,9 @@
 package goos
 
 import io.kotest.core.spec.style.StringSpec
+import kotlin.time.ExperimentalTime
 
+@ExperimentalTime
 class AuctionSniperEndToEndTest : StringSpec({
 
   val auction = FakeAuctionServer("item-54321")
