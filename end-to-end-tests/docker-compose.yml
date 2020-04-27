@@ -9,7 +9,6 @@ services:
 
   app.internal:
     image: docker.pkg.github.com/mahoney-playground/goos/goos-instrumentedapp:${GOOS_TAG:?"You must set GOOS_TAG"}
-    init: true
     command: auctionhost.internal sniper sniper item-54321
     build:
       context: ..
@@ -18,7 +17,6 @@ services:
   end-to-end-tests:
     image: docker.pkg.github.com/mahoney-playground/goos/goos-end-to-end-tests:${GOOS_TAG:?"You must set GOOS_TAG"}
     command: --disable-banner --reports-dir=build/reports
-    init: true
     depends_on:
       auctionhost.internal:
         condition: service_healthy

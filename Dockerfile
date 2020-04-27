@@ -45,9 +45,11 @@ RUN apt-get -qq update && \
     DEBIAN_FRONTEND=noninteractive apt-get -qq -o=Dpkg::Use-Pty=0 install \
       libxrender1 libxtst6 libxi6 \
       fontconfig \
-      xvfb && \
-    rm -rf /var/lib/apt/lists/*
+      xvfb
+#RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -o=Dpkg::Use-Pty=0 install sudo procps
+RUN rm -rf /var/lib/apt/lists/*
 RUN mkdir /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
+COPY --chown=root scripts/simplest-xvfb-run.sh /usr/bin/simplest-xvfb-run
 USER $username
 
 
@@ -69,7 +71,7 @@ ARG work_dir
 COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/external ./external
 COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/core-0.1.0.jar .
 
-ENTRYPOINT ["xvfb-run", "--error-file=/dev/stderr", "java", "-jar", "core-0.1.0.jar"]
+ENTRYPOINT ["simplest-xvfb-run", "java", "-jar", "core-0.1.0.jar"]
 
 
 FROM app as instrumentedapp
@@ -80,4 +82,4 @@ COPY --from=end-to-end-tests --chown=$username $work_dir/external/marathon-java-
 
 EXPOSE 1234
 
-ENTRYPOINT ["xvfb-run", "--error-file=/dev/stderr", "java", "-javaagent:external/marathon-java-agent.jar=1234", "-jar", "core-0.1.0.jar"]
+ENTRYPOINT ["simplest-xvfb-run", "java", "-javaagent:external/marathon-java-agent.jar=1234", "-jar", "core-0.1.0.jar"]
