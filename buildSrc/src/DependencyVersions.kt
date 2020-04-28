@@ -5,3 +5,4 @@ fun kotlinCoroutines(module: String) = "org.jetbrains.kotlinx:kotlinx-coroutines
 fun kotest(module: String) = "io.kotest:kotest-$module:4.0.4"
 fun arrow(module: String) = "io.arrow-kt:arrow-$module:0.10.5"
 fun smack(module: String) = "org.igniterealtime.smack:smack-$module:4.3.4"
+val mockk = "io.mockk:mockk:1.10.0"

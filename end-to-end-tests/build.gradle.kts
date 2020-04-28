@@ -20,6 +20,8 @@ dependencies {
 
   runtimeOnly("com.jaliansystems:marathon-java-agent:5.2.6.0")
   implementation("org.seleniumhq.selenium:selenium-remote-driver:3.14.0")
+
+  runtimeOnly(mockk)
 }
 
 application {

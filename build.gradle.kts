@@ -73,7 +73,7 @@ subprojects {
 
       testImplementation(kotest("core"))
       testImplementation(kotest("runner-junit5"))
-      testImplementation("io.mockk:mockk:1.9.3")
+      testImplementation(mockk)
     }
 
     tasks.withType<KotlinCompile> {
@@ -88,6 +88,8 @@ subprojects {
 
     tasks.register<DownloadDependenciesTask>("downloadDependencies")
   }
+
+  tasks.register<DependencyReportTask>("allDeps")
 }
 
 dependencyGraphGenerator {
