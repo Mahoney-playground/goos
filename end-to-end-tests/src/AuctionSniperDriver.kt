@@ -1,10 +1,13 @@
 package goos
 
+import io.kotest.assertions.timing.eventually
 import io.kotest.matchers.shouldBe
 import org.openqa.selenium.Platform
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
 import java.net.URL
+import kotlin.time.ExperimentalTime
+import kotlin.time.seconds
 
 class AuctionSniperDriver(
   private val driver: RemoteWebDriver
@@ -19,8 +22,11 @@ class AuctionSniperDriver(
     driver.rootElement().isDisplayed shouldBe true
   }
 
-  fun showSniperStatus(statusText: String) {
-    driver.findElementByName(SNIPER_STATUS_NAME).text shouldBe statusText
+  @ExperimentalTime
+  suspend fun showSniperStatus(statusText: String) {
+    eventually(5.seconds) {
+      driver.findElementByName(SNIPER_STATUS_NAME).text shouldBe statusText
+    }
   }
 
   fun joinAuction() {

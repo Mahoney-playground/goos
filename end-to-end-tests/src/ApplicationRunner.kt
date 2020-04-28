@@ -1,8 +1,6 @@
 package goos
 
-import io.kotest.assertions.timing.eventually
 import kotlin.time.ExperimentalTime
-import kotlin.time.seconds
 
 @ExperimentalTime
 class ApplicationRunner(
@@ -13,14 +11,11 @@ class ApplicationRunner(
     auction: FakeAuctionServer
   ) {
     driver.joinAuction()
-
-    eventually(5.seconds) {
-      driver.showSniperStatus(STATUS_JOINING)
-    }
+    driver.showSniperStatus(STATUS_JOINING)
     auction.itemId
   }
 
-  fun showSniperHasLostAuction() {
+  suspend fun showSniperHasLostAuction() {
     driver.showSniperStatus(STATUS_LOST)
   }
 

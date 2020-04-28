@@ -47,11 +47,16 @@ class Main(
     disconnectWhenUICloses(connection!!)
 
     val chat = ChatManager.getInstanceFor(connection)
-      .createChat(auctionId(itemId, hostname)) { _, _ ->
-        SwingUtilities.invokeLater {
-          ui.showStatus(MainWindow.STATUS_LOST)
-        }
-      }
+      .createChat(
+        auctionId(itemId, hostname),
+        AuctionMessageTranslator(object : AuctionEventListener {
+          override fun auctionClosed() {
+            SwingUtilities.invokeLater {
+              ui.showStatus(MainWindow.STATUS_LOST)
+            }
+          }
+        })
+      )
     notToBeGCd = chat
 
     chat.sendMessage(Message())
