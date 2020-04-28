@@ -1,5 +1,6 @@
 package goos
 
+import goos.ApplicationRunner.Companion.SNIPER_XMPP_ID
 import io.kotest.core.spec.style.StringSpec
 import kotlin.time.ExperimentalTime
 
@@ -14,8 +15,7 @@ class AuctionSniperEndToEndTest : StringSpec({
     auction.startSellingItem()
 
     application.startBiddingIn(auction)
-
-    auction.hasReceivedJoinRequestFromSniper()
+    auction.hasReceivedJoinRequestFrom(SNIPER_XMPP_ID)
 
     auction.announceClosed()
 

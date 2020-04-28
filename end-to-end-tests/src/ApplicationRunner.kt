@@ -25,6 +25,7 @@ class ApplicationRunner(
   }
 
   companion object {
+    const val SNIPER_XMPP_ID: String = "sniper@auctionhost.internal/Auction"
     const val STATUS_LOST: String = "Lost"
     const val STATUS_JOINING: String = "Joining"
   }

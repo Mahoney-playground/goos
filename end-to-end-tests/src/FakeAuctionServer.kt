@@ -1,5 +1,6 @@
 package goos
 
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode.disabled
 import org.jivesoftware.smack.chat.Chat
@@ -66,8 +67,18 @@ class FakeAuctionServer(
     c.disconnect()
   }
 
-  fun hasReceivedJoinRequestFromSniper() {
-    messageListener.receivesAMessage()
+  fun hasReceivedJoinRequestFrom(sniperId: String) {
+    receivesAMessageMatching(sniperId) {
+      it shouldBe ""
+    }
+  }
+
+  private fun receivesAMessageMatching(
+    sniperId: String,
+    matcher: (String) -> Unit
+  ) {
+    messageListener.receivesAMessage(matcher)
+    currentChat!!.participant shouldBe sniperId
   }
 
   fun announceClosed() {
@@ -97,7 +108,7 @@ class SingleMessageListener : ChatMessageListener {
     messages.add(message)
   }
 
-  fun receivesAMessage() {
+  fun receivesAMessage(matcher: (String) -> Unit) {
     messages.poll(10, MINUTES) shouldNotBe null
   }
 }
