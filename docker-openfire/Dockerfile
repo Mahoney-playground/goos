@@ -12,7 +12,7 @@ RUN apt-get -qq update \
 
 RUN rm -rf /var/lib/apt/lists/*
 
-HEALTHCHECK --interval=1s --retries=10 --timeout=5s CMD curl -fsSL http://localhost:9090
+HEALTHCHECK --interval=1s --retries=20 --timeout=5s CMD curl -fsSL http://localhost:9090
 
 COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod 755 /sbin/entrypoint.sh
