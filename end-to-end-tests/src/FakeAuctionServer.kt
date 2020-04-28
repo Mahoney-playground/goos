@@ -1,7 +1,6 @@
 package goos
 
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNotBe
 import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode.disabled
 import org.jivesoftware.smack.chat.Chat
 import org.jivesoftware.smack.chat.ChatManager
@@ -14,7 +13,7 @@ import org.jxmpp.jid.impl.JidCreate
 import org.jxmpp.jid.parts.Resourcepart
 import java.util.concurrent.ArrayBlockingQueue
 import java.util.concurrent.BlockingQueue
-import java.util.concurrent.TimeUnit.MINUTES
+import java.util.concurrent.TimeUnit.SECONDS
 
 class FakeAuctionServer(
   val itemId: String
@@ -69,13 +68,13 @@ class FakeAuctionServer(
 
   fun hasReceivedJoinRequestFrom(sniperId: String) {
     receivesAMessageMatching(sniperId) {
-      it shouldBe ""
+      it shouldBe null
     }
   }
 
   private fun receivesAMessageMatching(
     sniperId: String,
-    matcher: (String) -> Unit
+    matcher: (String?) -> Unit
   ) {
     messageListener.receivesAMessage(matcher)
     currentChat!!.participant shouldBe sniperId
@@ -108,7 +107,8 @@ class SingleMessageListener : ChatMessageListener {
     messages.add(message)
   }
 
-  fun receivesAMessage(matcher: (String) -> Unit) {
-    messages.poll(10, MINUTES) shouldNotBe null
+  fun receivesAMessage(matcher: (String?) -> Unit) {
+    val message = messages.poll(10, SECONDS)
+    matcher(message!!.body)
   }
 }
