@@ -8,4 +8,8 @@ class XMPPAuction(
   override fun bid(bid: Int) {
     chat.sendMessage("SOLVersion: 1.1; Command: BID; Price: $bid;")
   }
+
+  fun join() {
+    chat.sendMessage("SOLVersion: 1.1; Command: JOIN")
+  }
 }

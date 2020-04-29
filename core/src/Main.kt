@@ -48,8 +48,7 @@ class Main(
 
     val auction = XMPPAuction(chat)
     chat.addMessageListener(AuctionMessageTranslator(AuctionSniper(auction, this)))
-
-    chat.sendMessage("SOLVersion: 1.1; Command: JOIN")
+    auction.join()
   }
 
   private fun connect() {
