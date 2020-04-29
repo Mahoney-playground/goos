@@ -49,19 +49,6 @@ class Main(
     chat.sendMessage("SOLVersion: 1.1; Command: JOIN")
   }
 
-  override fun auctionClosed() {
-    SwingUtilities.invokeLater {
-      ui.showStatus(MainWindow.STATUS_LOST)
-    }
-  }
-
-  override fun currentPrice(price: Int, increment: Int) {
-    SwingUtilities.invokeLater {
-      ui.showStatus(MainWindow.STATUS_BIDDING)
-    }
-    notToBeGCd!!.sendMessage("SOLVersion: 1.1; Command: BID; Price: ${price + increment};")
-  }
-
   private fun connect() {
     if (connection == null) {
       connection = connectTo(
@@ -78,6 +65,19 @@ class Main(
         connection.disconnect()
       }
     })
+  }
+
+  override fun auctionClosed() {
+    SwingUtilities.invokeLater {
+      ui.showStatus(MainWindow.STATUS_LOST)
+    }
+  }
+
+  override fun currentPrice(price: Int, increment: Int) {
+    SwingUtilities.invokeLater {
+      ui.showStatus(MainWindow.STATUS_BIDDING)
+    }
+    notToBeGCd!!.sendMessage("SOLVersion: 1.1; Command: BID; Price: ${price + increment};")
   }
 
   companion object {
