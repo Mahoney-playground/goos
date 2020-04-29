@@ -9,6 +9,7 @@ dependencies {
   implementation(smack("extensions"))
   implementation(smack("java7"))
   implementation(smack("im"))
+  implementation(project(":kotlinlangext"))
 }
 
 application {

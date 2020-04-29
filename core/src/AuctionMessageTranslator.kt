@@ -3,6 +3,7 @@ package goos.core
 import org.jivesoftware.smack.chat.Chat
 import org.jivesoftware.smack.chat.ChatMessageListener
 import org.jivesoftware.smack.packet.Message
+import uk.org.lidalia.kotlinlangext.strings.toMap
 
 class AuctionMessageTranslator(
   private val listener: AuctionEventListener
@@ -36,24 +37,6 @@ private class AuctionEvent(
     ))
   }
 }
-
-private fun String.toMap(
-  pairDelimiter: Char,
-  keyValueSeparator: Char
-): Map<String, String> {
-  return split(pairDelimiter)
-    .map { it.split(keyValueSeparator, limit = 2) }
-    .toMap()
-}
-
-private fun List<List<String>>.toMap(): Map<String, String> {
-  return mapNotNull { it.toPair() }.toMap()
-}
-
-private fun List<String>.toPair(): Pair<String, String>? =
-  if (this.size >= 2)
-    this[0].trim() to this[1].trim()
-  else null
 
 interface AuctionEventListener {
   fun auctionClosed()
