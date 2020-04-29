@@ -18,7 +18,7 @@ class Main(
   private val username: String,
   private val password: String,
   private val itemId: String
-) : SniperListener {
+) {
 
   private lateinit var ui: MainWindow
   private var connection: XMPPTCPConnection? = null
@@ -47,7 +47,12 @@ class Main(
     notToBeGCd = chat
 
     val auction = XMPPAuction(chat)
-    chat.addMessageListener(AuctionMessageTranslator(AuctionSniper(auction, this)))
+    chat.addMessageListener(AuctionMessageTranslator(
+      AuctionSniper(
+        auction,
+        SniperStateDisplayer(ui)
+      )
+    ))
     auction.join()
   }
 
@@ -67,18 +72,6 @@ class Main(
         connection.disconnect()
       }
     })
-  }
-
-  override fun sniperLost() {
-    SwingUtilities.invokeLater {
-      ui.showStatus(MainWindow.STATUS_LOST)
-    }
-  }
-
-  override fun sniperBidding() {
-    SwingUtilities.invokeLater {
-      ui.showStatus(MainWindow.STATUS_BIDDING)
-    }
   }
 
   companion object {
