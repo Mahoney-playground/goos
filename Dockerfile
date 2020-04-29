@@ -69,6 +69,7 @@ ARG username
 ARG work_dir
 
 COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/external ./external
+COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/internal ./internal
 COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/core-0.1.0.jar .
 
 ENTRYPOINT ["simple-xvfb-run", "java", "-jar", "core-0.1.0.jar"]
