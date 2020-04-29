@@ -8,9 +8,9 @@ import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration
 import org.jxmpp.jid.EntityBareJid
 import org.jxmpp.jid.impl.JidCreate
 import org.jxmpp.jid.parts.Resourcepart
+import uk.org.lidalia.kotlinlangext.threads.blockUntilShutdown
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
-import java.util.concurrent.CountDownLatch
 import javax.swing.SwingUtilities
 
 class Main(
@@ -94,22 +94,6 @@ class Main(
       )
       blockUntilShutdown()
       println("App stopping")
-    }
-
-    private fun blockUntilShutdown() {
-      val latch = CountDownLatch(1)
-      val runningThread = Thread.currentThread()
-
-      Runtime.getRuntime().addShutdownHook(
-        object : Thread() {
-          override fun run() {
-            latch.countDown()
-            runningThread.join()
-          }
-        }
-      )
-
-      latch.await()
     }
 
     private fun connectTo(
