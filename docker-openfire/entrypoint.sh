@@ -18,7 +18,7 @@ function setup_openfire {
 }
 
 function run_openfire {
-    java \
+    exec java \
       -server \
       -Dlog4j.configurationFile=/usr/share/openfire/lib/log4j2.xml \
       -DopenfireHome=/usr/share/openfire \
