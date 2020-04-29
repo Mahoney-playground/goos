@@ -29,12 +29,6 @@ allprojects {
   }
 
   apply<ProjectReportsPlugin>()
-
-  afterEvaluate {
-    tasks.check {
-      dependsOn(tasks.getByName("projectReport"))
-    }
-  }
 }
 
 subprojects {

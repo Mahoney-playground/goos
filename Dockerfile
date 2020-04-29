@@ -27,7 +27,7 @@ RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
 RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
     --network=none \
     set +e; \
-    ./gradlew --offline check install; \
+    ./gradlew --offline check projectReport install; \
     echo $? > build_result;
 
 FROM builder as checker
