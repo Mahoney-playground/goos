@@ -45,9 +45,9 @@ RUN apt-get -qq update && \
     DEBIAN_FRONTEND=noninteractive apt-get -qq -o=Dpkg::Use-Pty=0 install \
       libxrender1 libxtst6 libxi6 \
       fontconfig \
-      xvfb
-#RUN DEBIAN_FRONTEND=noninteractive apt-get -qq -o=Dpkg::Use-Pty=0 install sudo procps
-RUN rm -rf /var/lib/apt/lists/*
+      xvfb \
+#      sudo procps \
+      && rm -rf /var/lib/apt/lists/*
 RUN mkdir /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
 COPY --chown=root scripts/simple-xvfb-run.sh /usr/bin/simple-xvfb-run
 USER $username
