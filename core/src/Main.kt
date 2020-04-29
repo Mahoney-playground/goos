@@ -35,13 +35,7 @@ class Main(
   }
 
   internal fun joinAuction() {
-    if (connection == null) {
-      connection = connectTo(
-        hostname,
-        username,
-        password
-      )
-    }
+    connect()
 
     disconnectWhenUICloses(connection!!)
 
@@ -66,6 +60,16 @@ class Main(
       ui.showStatus(MainWindow.STATUS_BIDDING)
     }
     notToBeGCd!!.sendMessage("SOLVersion: 1.1; Command: BID; Price: ${price + increment};")
+  }
+
+  private fun connect() {
+    if (connection == null) {
+      connection = connectTo(
+        hostname,
+        username,
+        password
+      )
+    }
   }
 
   private fun disconnectWhenUICloses(connection: XMPPTCPConnection) {
