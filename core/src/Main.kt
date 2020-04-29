@@ -18,7 +18,7 @@ class Main(
   private val username: String,
   private val password: String,
   private val itemId: String
-) : AuctionEventListener {
+) : SniperListener {
 
   private lateinit var ui: MainWindow
   private var connection: XMPPTCPConnection? = null
@@ -42,9 +42,16 @@ class Main(
     val chat = ChatManager.getInstanceFor(connection)
       .createChat(
         auctionId(itemId, hostname),
-        AuctionMessageTranslator(this)
+        null
       )
     notToBeGCd = chat
+
+    val auction = object : Auction {
+      override fun bid(bid: Int) {
+        chat.sendMessage("SOLVersion: 1.1; Command: BID; Price: $bid;")
+      }
+    }
+    chat.addMessageListener(AuctionMessageTranslator(AuctionSniper(auction, this)))
 
     chat.sendMessage("SOLVersion: 1.1; Command: JOIN")
   }
@@ -67,17 +74,16 @@ class Main(
     })
   }
 
-  override fun auctionClosed() {
+  override fun sniperLost() {
     SwingUtilities.invokeLater {
       ui.showStatus(MainWindow.STATUS_LOST)
     }
   }
 
-  override fun currentPrice(price: Int, increment: Int) {
+  override fun sniperBidding() {
     SwingUtilities.invokeLater {
       ui.showStatus(MainWindow.STATUS_BIDDING)
     }
-    notToBeGCd!!.sendMessage("SOLVersion: 1.1; Command: BID; Price: ${price + increment};")
   }
 
   companion object {
