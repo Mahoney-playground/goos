@@ -19,7 +19,7 @@ class Main(
   private val username: String,
   private val password: String,
   private val itemId: String
-) {
+) : AuctionEventListener {
 
   private lateinit var ui: MainWindow
   private var connection: XMPPTCPConnection? = null
@@ -49,17 +49,17 @@ class Main(
     val chat = ChatManager.getInstanceFor(connection)
       .createChat(
         auctionId(itemId, hostname),
-        AuctionMessageTranslator(object : AuctionEventListener {
-          override fun auctionClosed() {
-            SwingUtilities.invokeLater {
-              ui.showStatus(MainWindow.STATUS_LOST)
-            }
-          }
-        })
+        AuctionMessageTranslator(this)
       )
     notToBeGCd = chat
 
     chat.sendMessage(Message())
+  }
+
+  override fun auctionClosed() {
+    SwingUtilities.invokeLater {
+      ui.showStatus(MainWindow.STATUS_LOST)
+    }
   }
 
   private fun disconnectWhenUICloses(connection: XMPPTCPConnection) {
