@@ -10,6 +10,6 @@ class XMPPAuction(
   }
 
   fun join() {
-    chat.sendMessage("SOLVersion: 1.1; Command: JOIN")
+    chat.sendMessage("SOLVersion: 1.1; Command: JOIN;")
   }
 }

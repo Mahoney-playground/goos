@@ -68,7 +68,7 @@ class FakeAuctionServer(
 
   fun hasReceivedJoinRequestFrom(sniperId: String) {
     receivesAMessageMatching(sniperId) {
-      it shouldBe "SOLVersion: 1.1; Command: JOIN"
+      it shouldBe "SOLVersion: 1.1; Command: JOIN;"
     }
   }
 
