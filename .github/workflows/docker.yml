@@ -66,8 +66,8 @@ jobs:
            docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-end-to-end-tests:$GITHUB_SHA
 
     - name: Build App with Docker
-      run: docker build . --target app -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-app:$GITHUB_SHA &&
-           docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-app:$GITHUB_SHA
+      run: docker build . --target instrumentedapp -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-instrumentedapp:$GITHUB_SHA &&
+           docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-instrumentedapp:$GITHUB_SHA
 
     - name: Backup docker
       run: ./.github/actions/docker-cache/backup.sh ${{ runner.temp }}/docker_cache/cache.tar
@@ -115,4 +115,3 @@ jobs:
     - name: Link to Reports
       if: always()
       run: echo "Reports are published at https://mahoney-playground.github.io/goos/builds/${{ github.sha }}/end-to-end-tests-reports"
-
