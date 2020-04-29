@@ -1,4 +1,4 @@
-FROM openjdk:8u242-jre-slim
+FROM openjdk:14.0.1-jdk-slim
 
 ENV OPENFIRE_VERSION=4.5.1 \
     OPENFIRE_USER=openfire
@@ -8,9 +8,8 @@ RUN apt-get -qq update \
  && echo "Downloading openfire_${OPENFIRE_VERSION}_all.deb ..." \
  && curl -fsSL "http://download.igniterealtime.org/openfire/openfire_${OPENFIRE_VERSION}_all.deb" -o /tmp/openfire_${OPENFIRE_VERSION}_all.deb \
  && dpkg -i --force-depends /tmp/openfire_${OPENFIRE_VERSION}_all.deb \
- && rm -rf /tmp/openfire_${OPENFIRE_VERSION}_all.deb
-
-RUN rm -rf /var/lib/apt/lists/*
+ && rm -rf /tmp/openfire_${OPENFIRE_VERSION}_all.deb \
+ && rm -rf /var/lib/apt/lists/*
 
 HEALTHCHECK --interval=1s --retries=20 --timeout=5s CMD curl -fsSL http://localhost:9090
 
