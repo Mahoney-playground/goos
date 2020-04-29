@@ -36,7 +36,7 @@ open class FakeReport @Inject constructor(
   }
 
   @Internal
-  val theReport: SingleFileReport = getByName("report")
+  val theReport: SingleFileReport = getByName("report")!!
 }
 
 open class FakeReportTask @Inject constructor(
