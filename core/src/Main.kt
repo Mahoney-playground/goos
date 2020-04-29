@@ -46,11 +46,7 @@ class Main(
       )
     notToBeGCd = chat
 
-    val auction = object : Auction {
-      override fun bid(bid: Int) {
-        chat.sendMessage("SOLVersion: 1.1; Command: BID; Price: $bid;")
-      }
-    }
+    val auction = XMPPAuction(chat)
     chat.addMessageListener(AuctionMessageTranslator(AuctionSniper(auction, this)))
 
     chat.sendMessage("SOLVersion: 1.1; Command: JOIN")
