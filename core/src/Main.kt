@@ -3,7 +3,6 @@ package goos.core
 import org.jivesoftware.smack.ConnectionConfiguration
 import org.jivesoftware.smack.chat.Chat
 import org.jivesoftware.smack.chat.ChatManager
-import org.jivesoftware.smack.packet.Message
 import org.jivesoftware.smack.tcp.XMPPTCPConnection
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration
 import org.jxmpp.jid.EntityBareJid
@@ -53,7 +52,7 @@ class Main(
       )
     notToBeGCd = chat
 
-    chat.sendMessage(Message())
+    chat.sendMessage("SOLVersion: 1.1; Command: JOIN")
   }
 
   override fun auctionClosed() {
