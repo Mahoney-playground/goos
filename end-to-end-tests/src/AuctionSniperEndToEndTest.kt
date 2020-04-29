@@ -10,7 +10,7 @@ class AuctionSniperEndToEndTest : StringSpec({
   val auction = FakeAuctionServer("item-54321")
   val application = ApplicationRunner()
 
-  "sniper joins auction until auction closes" {
+  "sniper joins auction and loses" {
 
     auction.startSellingItem()
 
@@ -23,8 +23,26 @@ class AuctionSniperEndToEndTest : StringSpec({
     auction.hasReceivedBid(1098, SNIPER_XMPP_ID)
 
     auction.announceClosed()
-
     application.showSniperHasLostAuction()
+  }
+
+  "sniper wins an auction by bidding higher" {
+
+    auction.startSellingItem()
+
+    application.startBiddingIn(auction)
+    auction.hasReceivedJoinRequestFrom(SNIPER_XMPP_ID)
+
+    auction.reportPrice(1000, 98, "other bidder")
+    application.hasShownSniperIsBidding()
+
+    auction.hasReceivedBid(1098, SNIPER_XMPP_ID)
+
+    auction.reportPrice(1098, 97, SNIPER_XMPP_ID)
+    application.hasShownSniperIsWinning()
+
+    auction.announceClosed()
+    application.showSniperHasWonAuction()
   }
 
   afterTest {

@@ -53,5 +53,7 @@ class MainWindow(
     const val STATUS_BIDDING: String = "Bidding"
     const val STATUS_INITIAL: String = "Ready to join"
     const val STATUS_JOINING: String = "Joining"
+    const val STATUS_WINNING: String = "Winning"
+    const val STATUS_WON: String = "Won"
   }
 }
