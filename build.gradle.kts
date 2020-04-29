@@ -11,6 +11,7 @@ plugins {
   id("com.vanniktech.dependency.graph.generator") version "0.5.0"
   id("com.github.ben-manes.versions") version "0.27.0"
   id("report-aggregator")
+  id("com.dorongold.task-tree") version "1.5"
 }
 
 @Suppress("UnstableApiUsage")
