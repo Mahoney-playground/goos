@@ -72,6 +72,12 @@ class FakeAuctionServer(
     }
   }
 
+  fun hasReceivedBid(bid: Int, sniperId: String) {
+    receivesAMessageMatching(sniperId) {
+      it shouldBe "SOLVersion: 1.1; Command: BID; Price: $bid;"
+    }
+  }
+
   private fun receivesAMessageMatching(
     sniperId: String,
     matcher: (String?) -> Unit
@@ -81,7 +87,9 @@ class FakeAuctionServer(
   }
 
   fun announceClosed() {
-    currentChat?.sendMessage(Message())
+    currentChat!!.sendMessage(
+      "SOLVersion: 1.1; Event: CLOSE;"
+    )
   }
 
   fun stop() {
@@ -90,6 +98,12 @@ class FakeAuctionServer(
     } catch (t: Throwable) {
       t.printStackTrace()
     }
+  }
+
+  fun reportPrice(price: Int, increment: Int, bidder: String) {
+    currentChat!!.sendMessage(
+      "SOLVersion: 1.1; Event: PRICE; CurrentPrice: $price; Increment: $increment; Bidder: $bidder;"
+    )
   }
 
   companion object {

@@ -17,6 +17,11 @@ class AuctionSniperEndToEndTest : StringSpec({
     application.startBiddingIn(auction)
     auction.hasReceivedJoinRequestFrom(SNIPER_XMPP_ID)
 
+    auction.reportPrice(1000, 98, "other bidder")
+    application.hasShownSniperIsBidding()
+
+    auction.hasReceivedBid(1098, SNIPER_XMPP_ID)
+
     auction.announceClosed()
 
     application.showSniperHasLostAuction()

@@ -62,6 +62,13 @@ class Main(
     }
   }
 
+  override fun currentPrice(price: Int, increment: Int) {
+    SwingUtilities.invokeLater {
+      ui.showStatus(MainWindow.STATUS_BIDDING)
+    }
+    notToBeGCd!!.sendMessage("SOLVersion: 1.1; Command: BID; Price: ${price + increment};")
+  }
+
   private fun disconnectWhenUICloses(connection: XMPPTCPConnection) {
     ui.addWindowListener(object : WindowAdapter() {
       override fun windowClosed(e: WindowEvent?) {

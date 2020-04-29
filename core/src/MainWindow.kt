@@ -50,6 +50,7 @@ class MainWindow(
     const val SNIPER_STATUS_NAME: String = "sniper status"
     const val SNIPER_JOIN_BUTTON_NAME: String = "sniper join button"
     const val STATUS_LOST: String = "Lost"
+    const val STATUS_BIDDING: String = "Bidding"
     const val STATUS_INITIAL: String = "Ready to join"
     const val STATUS_JOINING: String = "Joining"
   }
