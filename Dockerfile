@@ -79,8 +79,21 @@ FROM app as instrumentedapp
 ARG username
 ARG work_dir
 
+USER root
+
+RUN apt-get -qq update && \
+    DEBIAN_FRONTEND=noninteractive apt-get -qq -o=Dpkg::Use-Pty=0 install \
+      curl \
+      && rm -rf /var/lib/apt/lists/*
+
+USER $username
+
 COPY --from=end-to-end-tests --chown=$username $work_dir/external/marathon-java-agent-*.jar ./external/marathon-java-agent.jar
 
 EXPOSE 1234
 
 ENTRYPOINT ["simple-xvfb-run", "java", "-javaagent:external/marathon-java-agent.jar=1234", "--illegal-access=deny", "--add-exports", "java.desktop/sun.awt=ALL-UNNAMED", "-jar", "core-0.1.0.jar"]
+
+COPY --chown=$username scripts/app-running.sh $work_dir/app-running.sh
+
+HEALTHCHECK --interval=1s --retries=20 --timeout=5s CMD ./app-running.sh

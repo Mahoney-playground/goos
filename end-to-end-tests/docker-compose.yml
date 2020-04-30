@@ -22,7 +22,7 @@ services:
       auctionhost.internal:
         condition: service_healthy
       app.internal:
-        condition: service_started
+        condition: service_healthy
     build:
       context: ..
       target: end-to-end-tests
