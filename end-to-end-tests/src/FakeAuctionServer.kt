@@ -118,11 +118,11 @@ class SingleMessageListener : ChatMessageListener {
   private val messages: BlockingQueue<Message> = ArrayBlockingQueue(1)
 
   override fun processMessage(chat: Chat, message: Message) {
-    messages.add(message)
+    messages.put(message)
   }
 
   fun receivesAMessage(matcher: (String?) -> Unit) {
-    val message = messages.poll(10, SECONDS)
-    matcher(message!!.body)
+    val message = messages.poll(10, SECONDS) ?: throw IllegalStateException("No message received")
+    matcher(message.body)
   }
 }
