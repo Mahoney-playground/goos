@@ -15,17 +15,27 @@ clean_up_process() {
   wait "$pid" || :
 }
 
+clean_up_processes() {
+  for pid in "$@"; do
+    clean_up_process $pid
+  done
+}
+
 main() {
+
+  trap 'clean_up_processes $main_pid $xvfb_pid' EXIT
+
   local display=99
 
   Xvfb ":$display" -ac &
-
-  # shellcheck disable=SC2064
-  trap "clean_up_process $!" EXIT
+  local xvfb_pid=$!
 
   wait_for_xvfb_to_be_ready $display
 
-  DISPLAY=":$display" "$@"
+  DISPLAY=":$display" "$@" &
+  local main_pid=$!
+
+  wait $main_pid
 }
 
 main "$@"
