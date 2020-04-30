@@ -11,7 +11,8 @@ import org.jxmpp.jid.parts.Resourcepart
 import uk.org.lidalia.kotlinlangext.threads.blockUntilShutdown
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
-import java.util.logging.LogManager
+import java.util.logging.Level.WARNING
+import java.util.logging.Logger
 import javax.swing.SwingUtilities
 
 class Main(
@@ -87,7 +88,9 @@ class Main(
 
     @JvmStatic
     fun main(vararg args: String) {
-      LogManager.getLogManager().reset()
+
+      Logger.getLogger("").level = WARNING
+
       println("Starting app")
       Main(
         hostname = args[ARG_HOSTNAME],

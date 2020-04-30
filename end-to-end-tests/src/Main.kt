@@ -2,13 +2,17 @@ package goos
 
 import org.intellij.lang.annotations.Language
 import org.junit.platform.console.ConsoleLauncher
-import kotlin.system.exitProcess
-import uk.org.lidalia.indexhtml.addIndexFiles
-import uk.org.lidalia.clioptions.withDefaultOption
 import uk.org.lidalia.clioptions.getOption
+import uk.org.lidalia.clioptions.withDefaultOption
+import uk.org.lidalia.indexhtml.addIndexFiles
 import java.io.File
+import java.util.logging.Level.WARNING
+import java.util.logging.Logger
+import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
+
+  Logger.getLogger("").level = WARNING
 
   val defaultedArgs = args
     .withDefaultSelectPackage("goos")
