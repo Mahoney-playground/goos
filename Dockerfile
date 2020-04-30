@@ -61,7 +61,7 @@ COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/e
 COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/internal ./internal
 COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/end-to-end-tests-0.1.0.jar .
 
-ENTRYPOINT ["java", "-jar", "end-to-end-tests-0.1.0.jar"]
+ENTRYPOINT ["java", "-jar", "--illegal-access=deny", "end-to-end-tests-0.1.0.jar"]
 
 
 FROM runner as app
@@ -72,7 +72,7 @@ COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/exte
 COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/internal ./internal
 COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/core-0.1.0.jar .
 
-ENTRYPOINT ["simple-xvfb-run", "java", "-jar", "core-0.1.0.jar"]
+ENTRYPOINT ["simple-xvfb-run", "java", "--illegal-access=deny", "-jar", "core-0.1.0.jar"]
 
 
 FROM app as instrumentedapp
@@ -83,4 +83,4 @@ COPY --from=end-to-end-tests --chown=$username $work_dir/external/marathon-java-
 
 EXPOSE 1234
 
-ENTRYPOINT ["simple-xvfb-run", "java", "-javaagent:external/marathon-java-agent.jar=1234", "-jar", "core-0.1.0.jar"]
+ENTRYPOINT ["simple-xvfb-run", "java", "-javaagent:external/marathon-java-agent.jar=1234", "--illegal-access=deny", "--add-exports", "java.desktop/sun.awt=ALL-UNNAMED", "-jar", "core-0.1.0.jar"]
