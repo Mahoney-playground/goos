@@ -25,7 +25,12 @@ class AuctionSniperDriver(
   }
 
   @ExperimentalTime
-  fun showSniperStatus(statusText: String) {
+  fun showSniperStatus(
+    itemId: String,
+    lastPrice: Int,
+    lastBid: Int,
+    statusText: String
+  ) {
     runBlocking {
       eventually(5.seconds) {
         val statusElement = driver
