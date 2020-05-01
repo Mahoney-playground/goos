@@ -3,6 +3,7 @@ package goos
 import io.kotest.assertions.timing.eventually
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.runBlocking
+import org.openqa.selenium.By
 import org.openqa.selenium.Platform
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
@@ -27,7 +28,10 @@ class AuctionSniperDriver(
   fun showSniperStatus(statusText: String) {
     runBlocking {
       eventually(5.seconds) {
-        val statusElement = driver.findElementByName(SNIPER_STATUS_NAME)
+        val statusElement = driver
+          .findElementByName(SNIPERS_TABLE_NAME)
+          .findElement(By.cssSelector(".::mnth-cell(1, 1)"))
+
         statusElement.text shouldBe statusText
       }
     }
@@ -41,7 +45,7 @@ class AuctionSniperDriver(
 
     const val MAIN_WINDOW_NAME: String = "Auction Sniper Name"
 
-    const val SNIPER_STATUS_NAME: String = "sniper status"
+    const val SNIPERS_TABLE_NAME: String = "snipers table"
     const val SNIPER_JOIN_BUTTON_NAME: String = "sniper join button"
   }
 }
