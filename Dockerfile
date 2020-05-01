@@ -68,14 +68,10 @@ FROM runner as app
 ARG username
 ARG work_dir
 
-COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/external ./external
-COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/internal ./internal
-COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/core-0.1.0.jar .
-
 ENTRYPOINT ["simple-xvfb-run", "java", "--illegal-access=deny", "-jar", "core-0.1.0.jar"]
 
 
-FROM app as instrumentedapp
+FROM runner as instrumentedapp
 ARG username
 ARG work_dir
 
@@ -88,6 +84,9 @@ RUN apt-get -qq update && \
 
 USER $username
 
+COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/external ./external
+COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/internal ./internal
+COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/core-0.1.0.jar .
 COPY --from=end-to-end-tests --chown=$username $work_dir/external/marathon-java-agent-*.jar ./external/marathon-java-agent.jar
 
 EXPOSE 1234
