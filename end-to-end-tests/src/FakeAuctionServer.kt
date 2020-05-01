@@ -48,9 +48,7 @@ class FakeAuctionServer(
     messageListener.drain()
   }
 
-  private fun createAuctionItem(itemId: String) {
-    createUser("auction-$itemId", AUCTION_PASSWORD)
-  }
+  private fun createAuctionItem(itemId: String) = createUser("auction-$itemId", AUCTION_PASSWORD)
 
   private fun createUser(username: String, password: String) {
     val c = XMPPTCPConnection(
@@ -68,16 +66,12 @@ class FakeAuctionServer(
     c.disconnect()
   }
 
-  fun hasReceivedJoinRequestFrom(sniperId: String) {
-    receivesAMessageMatching(sniperId) {
-      it shouldBe "SOLVersion: 1.1; Command: JOIN;"
-    }
+  fun hasReceivedJoinRequestFrom(sniperId: String) = receivesAMessageMatching(sniperId) {
+    it shouldBe "SOLVersion: 1.1; Command: JOIN;"
   }
 
-  fun hasReceivedBid(bid: Int, sniperId: String) {
-    receivesAMessageMatching(sniperId) {
-      it shouldBe "SOLVersion: 1.1; Command: BID; Price: $bid;"
-    }
+  fun hasReceivedBid(bid: Int, sniperId: String) = receivesAMessageMatching(sniperId) {
+    it shouldBe "SOLVersion: 1.1; Command: BID; Price: $bid;"
   }
 
   private fun receivesAMessageMatching(
@@ -88,11 +82,7 @@ class FakeAuctionServer(
     currentChat!!.participant shouldBe sniperId
   }
 
-  fun announceClosed() {
-    currentChat!!.sendMessage(
-      "SOLVersion: 1.1; Event: CLOSE;"
-    )
-  }
+  fun announceClosed() = currentChat!!.sendMessage("SOLVersion: 1.1; Event: CLOSE;")
 
   fun stop() {
     try {
@@ -103,11 +93,10 @@ class FakeAuctionServer(
     }
   }
 
-  fun reportPrice(price: Int, increment: Int, bidder: String) {
+  fun reportPrice(price: Int, increment: Int, bidder: String) =
     currentChat!!.sendMessage(
       "SOLVersion: 1.1; Event: PRICE; CurrentPrice: $price; Increment: $increment; Bidder: $bidder;"
     )
-  }
 
   companion object {
     const val AUCTION_RESOURCE = "Auction"
@@ -120,9 +109,7 @@ class SingleMessageListener : ChatMessageListener {
 
   private val messages: BlockingQueue<Message> = ArrayBlockingQueue(1)
 
-  override fun processMessage(chat: Chat, message: Message) {
-    messages.put(message)
-  }
+  override fun processMessage(chat: Chat, message: Message) = messages.put(message)
 
   fun receivesAMessage(matcher: (String?) -> Unit) {
     val message = messages.poll(10, SECONDS) ?: throw IllegalStateException("No message received")
