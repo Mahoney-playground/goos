@@ -7,7 +7,7 @@ class ApplicationRunner(
   private val driver: AuctionSniperDriver = AuctionSniperDriver()
 ) {
 
-  suspend fun startBiddingIn(
+  fun startBiddingIn(
     auction: FakeAuctionServer
   ) {
     driver.joinAuction()
@@ -15,19 +15,19 @@ class ApplicationRunner(
     auction.itemId
   }
 
-  suspend fun showSniperHasLostAuction() {
+  fun showSniperHasLostAuction() {
     driver.showSniperStatus(STATUS_LOST)
   }
 
-  suspend fun hasShownSniperIsBidding() {
+  fun hasShownSniperIsBidding() {
     driver.showSniperStatus(STATUS_BIDDING)
   }
 
-  suspend fun hasShownSniperIsWinning() {
+  fun hasShownSniperIsWinning() {
     driver.showSniperStatus(STATUS_WINNING)
   }
 
-  suspend fun showSniperHasWonAuction() {
+  fun showSniperHasWonAuction() {
     driver.showSniperStatus(STATUS_WON)
   }
 

@@ -2,6 +2,7 @@ package goos
 
 import io.kotest.assertions.timing.eventually
 import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.runBlocking
 import org.openqa.selenium.Platform
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
@@ -23,9 +24,11 @@ class AuctionSniperDriver(
   }
 
   @ExperimentalTime
-  suspend fun showSniperStatus(statusText: String) {
-    eventually(5.seconds) {
-      driver.findElementByName(SNIPER_STATUS_NAME).text shouldBe statusText
+  fun showSniperStatus(statusText: String) {
+    runBlocking {
+      eventually(5.seconds) {
+        driver.findElementByName(SNIPER_STATUS_NAME).text shouldBe statusText
+      }
     }
   }
 
