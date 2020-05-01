@@ -30,10 +30,8 @@ class Main(
     startUserInterface()
   }
 
-  private fun startUserInterface() {
-    SwingUtilities.invokeAndWait {
-      ui = MainWindow(this)
-    }
+  private fun startUserInterface() = SwingUtilities.invokeAndWait {
+    ui = MainWindow(this)
   }
 
   internal fun joinAuction() {
@@ -69,13 +67,12 @@ class Main(
     }
   }
 
-  private fun disconnectWhenUICloses(connection: XMPPTCPConnection) {
+  private fun disconnectWhenUICloses(connection: XMPPTCPConnection) =
     ui.addWindowListener(object : WindowAdapter() {
       override fun windowClosed(e: WindowEvent?) {
         connection.disconnect()
       }
     })
-  }
 
   companion object {
 
