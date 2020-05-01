@@ -30,21 +30,17 @@ class AuctionSniperDriver(
     lastPrice: Int,
     lastBid: Int,
     statusText: String
-  ) {
-    runBlocking {
-      eventually(5.seconds) {
-        val statusElement = driver
-          .findElementByName(SNIPERS_TABLE_NAME)
-          .findElement(By.cssSelector(".::mnth-cell(1, 1)"))
+  ) = runBlocking {
+    eventually(5.seconds) {
+      val statusElement = driver
+        .findElementByName(SNIPERS_TABLE_NAME)
+        .findElement(By.cssSelector(".::mnth-cell(1, 1)"))
 
-        statusElement.text shouldBe statusText
-      }
+      statusElement.text shouldBe statusText
     }
   }
 
-  fun joinAuction() {
-    driver.findElementByName(SNIPER_JOIN_BUTTON_NAME).click()
-  }
+  fun joinAuction() = driver.findElementByName(SNIPER_JOIN_BUTTON_NAME).click()
 
   companion object {
 
