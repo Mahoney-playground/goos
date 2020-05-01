@@ -1,6 +1,7 @@
 package goos
 
 import goos.ApplicationRunner.Companion.SNIPER_XMPP_ID
+import io.kotest.core.spec.IsolationMode.InstancePerTest
 import io.kotest.core.spec.style.StringSpec
 import kotlin.time.ExperimentalTime
 
@@ -48,4 +49,6 @@ class AuctionSniperEndToEndTest : StringSpec({
   afterTest {
     auction.stop()
   }
-})
+}) {
+  override fun isolationMode() = InstancePerTest
+}
