@@ -18,9 +18,8 @@ tailrec suspend fun <A> retry(
   timeBetweenRetries: Duration,
   timeout: Instant,
   work: suspend () -> A
-): A {
-
-  return when (val result = Either.catch(work)) {
+): A =
+  when (val result = Either.catch(work)) {
     is Either.Right -> result.b
     is Either.Left ->
       if (timeout.inPast(clock)) throw result.a
@@ -34,6 +33,5 @@ tailrec suspend fun <A> retry(
         )
       }
   }
-}
 
 private fun Instant.inPast(clock: Clock) = clock.instant().isAfter(this)
