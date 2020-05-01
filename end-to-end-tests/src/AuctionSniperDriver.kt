@@ -27,7 +27,8 @@ class AuctionSniperDriver(
   fun showSniperStatus(statusText: String) {
     runBlocking {
       eventually(5.seconds) {
-        driver.findElementByName(SNIPER_STATUS_NAME).text shouldBe statusText
+        val statusElement = driver.findElementByName(SNIPER_STATUS_NAME)
+        statusElement.text shouldBe statusText
       }
     }
   }
