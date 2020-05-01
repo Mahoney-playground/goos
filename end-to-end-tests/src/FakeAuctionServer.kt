@@ -13,6 +13,7 @@ import org.jxmpp.jid.impl.JidCreate
 import org.jxmpp.jid.parts.Resourcepart
 import java.util.concurrent.ArrayBlockingQueue
 import java.util.concurrent.BlockingQueue
+import java.util.concurrent.TimeUnit.MILLISECONDS
 import java.util.concurrent.TimeUnit.SECONDS
 
 class FakeAuctionServer(
@@ -44,6 +45,7 @@ class FakeAuctionServer(
       currentChat = chat
       chat.addMessageListener(messageListener)
     }
+    messageListener.drain()
   }
 
   private fun createAuctionItem(itemId: String) {
@@ -94,6 +96,7 @@ class FakeAuctionServer(
 
   fun stop() {
     try {
+      messageListener.drain()
       connection.disconnect()
     } catch (t: Throwable) {
       t.printStackTrace()
@@ -124,5 +127,11 @@ class SingleMessageListener : ChatMessageListener {
   fun receivesAMessage(matcher: (String?) -> Unit) {
     val message = messages.poll(10, SECONDS) ?: throw IllegalStateException("No message received")
     matcher(message.body)
+  }
+
+  tailrec fun drain() {
+    if (messages.poll(100, MILLISECONDS) != null) {
+      drain()
+    }
   }
 }
