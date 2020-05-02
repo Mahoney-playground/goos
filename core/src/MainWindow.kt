@@ -1,6 +1,5 @@
 package goos.core
 
-import goos.core.goos.core.SnipersTableModel
 import java.awt.BorderLayout
 import java.awt.BorderLayout.NORTH
 import java.awt.BorderLayout.SOUTH

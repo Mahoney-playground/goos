@@ -1,4 +1,4 @@
-package goos.core.goos.core
+package goos.core
 
 import goos.core.MainWindow.Companion.STATUS_INITIAL
 import javax.swing.table.AbstractTableModel
