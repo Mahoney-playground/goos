@@ -1,7 +1,6 @@
 package goos.core
 
 import goos.core.Column.ITEM_IDENTIFIER
-import goos.core.MainWindow.Companion.STATE_BIDDING
 import goos.core.SniperState.BIDDING
 import io.kotest.core.spec.IsolationMode.InstancePerTest
 import io.kotest.core.spec.style.StringSpec
@@ -36,7 +35,7 @@ class SnipersTableModelTest : StringSpec({
   }
 
   "set sniper values in columns" {
-    model.sniperStatusChanged(SniperSnapshot("item id", 555, 666, BIDDING), STATE_BIDDING)
+    model.sniperStatusChanged(SniperSnapshot("item id", 555, 666, BIDDING))
 
     ITEM_IDENTIFIER shouldHaveValue "item id"
     listener.calls.forOne {

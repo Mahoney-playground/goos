@@ -1,6 +1,5 @@
 package goos.core
 
-import goos.core.MainWindow.Companion.STATE_BIDDING
 import goos.core.MainWindow.Companion.STATE_LOST
 import goos.core.MainWindow.Companion.STATE_WINNING
 import goos.core.MainWindow.Companion.STATE_WON
@@ -11,7 +10,7 @@ internal class SniperStateDisplayer(
 ) : SniperListener {
 
   override fun sniperBidding(sniperSnapshot: SniperSnapshot) =
-    statusChanged(sniperSnapshot, STATE_BIDDING)
+    statusChanged(sniperSnapshot)
   override fun sniperWinning() = showStatus(STATE_WINNING)
   override fun sniperLost() = showStatus(STATE_LOST)
   override fun sniperWon() = showStatus(STATE_WON)
@@ -22,8 +21,8 @@ internal class SniperStateDisplayer(
     }
   }
 
-  private fun statusChanged(sniperSnapshot: SniperSnapshot, status: String) =
+  private fun statusChanged(sniperSnapshot: SniperSnapshot) =
     SwingUtilities.invokeLater {
-      ui.sniperStatusChanged(sniperSnapshot, status)
+      ui.sniperStatusChanged(sniperSnapshot)
     }
 }

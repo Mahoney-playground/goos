@@ -51,8 +51,8 @@ class MainWindow(
     snipers.stateText = status
   }
 
-  fun sniperStatusChanged(snapshot: SniperSnapshot, status: String) {
-    snipers.sniperStatusChanged(snapshot, status)
+  fun sniperStatusChanged(snapshot: SniperSnapshot) {
+    snipers.sniperStatusChanged(snapshot)
   }
 
   companion object {

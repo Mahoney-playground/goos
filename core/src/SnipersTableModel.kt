@@ -4,8 +4,17 @@ import goos.core.Column.ITEM_IDENTIFIER
 import goos.core.Column.LAST_BID
 import goos.core.Column.LAST_PRICE
 import goos.core.Column.SNIPER_STATE
+import goos.core.MainWindow.Companion.STATE_BIDDING
 import goos.core.MainWindow.Companion.STATE_INITIAL
+import goos.core.MainWindow.Companion.STATE_JOINING
+import goos.core.MainWindow.Companion.STATE_LOST
+import goos.core.MainWindow.Companion.STATE_WINNING
+import goos.core.MainWindow.Companion.STATE_WON
+import goos.core.SniperState.BIDDING
 import goos.core.SniperState.JOINING
+import goos.core.SniperState.LOST
+import goos.core.SniperState.WINNING
+import goos.core.SniperState.WON
 import javax.swing.table.AbstractTableModel
 
 class SnipersTableModel : AbstractTableModel() {
@@ -32,9 +41,15 @@ class SnipersTableModel : AbstractTableModel() {
   }
 
   fun sniperStatusChanged(
-    newSniperSnapshot: SniperSnapshot,
-    newStatusText: String
+    newSniperSnapshot: SniperSnapshot
   ) {
+    val newStatusText = when (newSniperSnapshot.state) {
+      JOINING -> STATE_JOINING
+      BIDDING -> STATE_BIDDING
+      WINNING -> STATE_WINNING
+      LOST -> STATE_LOST
+      WON -> STATE_WON
+    }
     sniperSnapshot = newSniperSnapshot
     _stateText = newStatusText
     fireTableRowsUpdated(0, 0)
