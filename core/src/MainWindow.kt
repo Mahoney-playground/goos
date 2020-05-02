@@ -39,7 +39,7 @@ class MainWindow(
           addActionListener {
             val itemId = main.joinAuction()
             invokeLater {
-              sniperStatusChanged(SniperSnapshot(itemId, 0, 0, JOINING))
+              sniperStateChanged(SniperSnapshot(itemId, 0, 0, JOINING))
             }
           }
         }, SOUTH)
@@ -48,12 +48,12 @@ class MainWindow(
     }
   }
 
-  fun showStatus(status: String) {
-    snipers.stateText = status
+  fun showState(state: String) {
+    snipers.stateText = state
   }
 
-  fun sniperStatusChanged(snapshot: SniperSnapshot) {
-    snipers.sniperStatusChanged(snapshot)
+  fun sniperStateChanged(snapshot: SniperSnapshot) {
+    snipers.sniperStateChanged(snapshot)
   }
 
   companion object {

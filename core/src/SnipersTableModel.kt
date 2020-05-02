@@ -40,10 +40,10 @@ class SnipersTableModel : AbstractTableModel() {
     SNIPER_STATE -> stateText
   }
 
-  fun sniperStatusChanged(
+  fun sniperStateChanged(
     newSniperSnapshot: SniperSnapshot
   ) {
-    val newStatusText = when (newSniperSnapshot.state) {
+    val newStateText = when (newSniperSnapshot.state) {
       JOINING -> STATE_JOINING
       BIDDING -> STATE_BIDDING
       WINNING -> STATE_WINNING
@@ -51,7 +51,7 @@ class SnipersTableModel : AbstractTableModel() {
       WON -> STATE_WON
     }
     sniperSnapshot = newSniperSnapshot
-    _stateText = newStatusText
+    _stateText = newStateText
     fireTableRowsUpdated(0, 0)
   }
 

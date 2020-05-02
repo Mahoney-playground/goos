@@ -14,31 +14,31 @@ class ApplicationRunner(
   ) {
     driver.joinAuction()
     itemId = auction.itemId
-    driver.showSniperStatus(itemId, 0, 0, STATUS_JOINING)
+    driver.showSniperState(itemId, 0, 0, STATE_JOINING)
   }
 
   fun showSniperHasLostAuction(lastPrice: Int) {
-    driver.showSniperStatus(itemId, lastPrice, lastPrice, STATUS_LOST)
+    driver.showSniperState(itemId, lastPrice, lastPrice, STATE_LOST)
   }
 
   fun hasShownSniperIsBidding(lastPrice: Int, lastBid: Int) {
-    driver.showSniperStatus(itemId, lastPrice, lastBid, STATUS_BIDDING)
+    driver.showSniperState(itemId, lastPrice, lastBid, STATE_BIDDING)
   }
 
   fun hasShownSniperIsWinning(winningBid: Int) {
-    driver.showSniperStatus(itemId, winningBid, winningBid, STATUS_WINNING)
+    driver.showSniperState(itemId, winningBid, winningBid, STATE_WINNING)
   }
 
   fun showSniperHasWonAuction(lastPrice: Int) {
-    driver.showSniperStatus(itemId, lastPrice, lastPrice, STATUS_WON)
+    driver.showSniperState(itemId, lastPrice, lastPrice, STATE_WON)
   }
 
   companion object {
     const val SNIPER_XMPP_ID: String = "sniper@auctionhost.internal/Auction"
-    const val STATUS_LOST: String = "Lost"
-    const val STATUS_BIDDING: String = "Bidding"
-    const val STATUS_JOINING: String = "Joining"
-    const val STATUS_WINNING: String = "Winning"
-    const val STATUS_WON: String = "Won"
+    const val STATE_LOST: String = "Lost"
+    const val STATE_BIDDING: String = "Bidding"
+    const val STATE_JOINING: String = "Joining"
+    const val STATE_WINNING: String = "Winning"
+    const val STATE_WON: String = "Won"
   }
 }

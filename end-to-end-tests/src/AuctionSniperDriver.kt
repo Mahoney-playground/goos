@@ -27,11 +27,11 @@ class AuctionSniperDriver(
   }
 
   @ExperimentalTime
-  fun showSniperStatus(
+  fun showSniperState(
     itemId: String,
     lastPrice: Int,
     lastBid: Int,
-    statusText: String
+    stateText: String
   ) = runBlocking {
     eventually(5.seconds) {
       val table = JTableDriver(
@@ -42,7 +42,7 @@ class AuctionSniperDriver(
         { it shouldBe itemId },
         { it shouldBe lastPrice.toString() },
         { it shouldBe lastBid.toString() },
-        { it shouldBe statusText }
+        { it shouldBe stateText }
       )
     }
   }

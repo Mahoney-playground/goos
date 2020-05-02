@@ -10,19 +10,19 @@ internal class SniperStateDisplayer(
 ) : SniperListener {
 
   override fun sniperStateChanged(sniperSnapshot: SniperSnapshot) =
-    statusChanged(sniperSnapshot)
-  override fun sniperWinning() = showStatus(STATE_WINNING)
-  override fun sniperLost() = showStatus(STATE_LOST)
-  override fun sniperWon() = showStatus(STATE_WON)
+    stateChanged(sniperSnapshot)
+  override fun sniperWinning() = showState(STATE_WINNING)
+  override fun sniperLost() = showState(STATE_LOST)
+  override fun sniperWon() = showState(STATE_WON)
 
-  private fun showStatus(status: String) {
+  private fun showState(state: String) {
     SwingUtilities.invokeLater {
-      ui.showStatus(status)
+      ui.showState(state)
     }
   }
 
-  private fun statusChanged(sniperSnapshot: SniperSnapshot) =
+  private fun stateChanged(sniperSnapshot: SniperSnapshot) =
     SwingUtilities.invokeLater {
-      ui.sniperStatusChanged(sniperSnapshot)
+      ui.sniperStateChanged(sniperSnapshot)
     }
 }
