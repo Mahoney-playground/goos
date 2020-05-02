@@ -2,6 +2,7 @@ package goos.core
 
 import goos.core.AuctionEventListener.PriceSource
 import goos.core.AuctionEventListener.PriceSource.FromSniper
+import goos.core.SniperState.BIDDING
 import java.util.EventListener
 
 class AuctionSniper(
@@ -31,7 +32,7 @@ class AuctionSniper(
     } else {
       val bid = price + increment
       auction.bid(bid)
-      sniperListener.sniperBidding(SniperSnapshot(itemId, price, bid))
+      sniperListener.sniperBidding(SniperSnapshot(itemId, price, bid, BIDDING))
     }
   }
 }
@@ -46,5 +47,14 @@ interface SniperListener : EventListener {
 data class SniperSnapshot(
   val itemId: String,
   val lastPrice: Int,
-  val lastBid: Int
+  val lastBid: Int,
+  val state: SniperState
 )
+
+enum class SniperState {
+  JOINING,
+  BIDDING,
+  WINNING,
+  LOST,
+  WON
+}

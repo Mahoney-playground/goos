@@ -2,6 +2,7 @@ package goos.core
 
 import goos.core.AuctionEventListener.PriceSource.FromOtherBidder
 import goos.core.AuctionEventListener.PriceSource.FromSniper
+import goos.core.SniperState.BIDDING
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.StringSpec
 import io.mockk.Called
@@ -43,7 +44,7 @@ class AuctionSniperTest : StringSpec({
     sniper.currentPrice(price, increment, FromOtherBidder)
 
     verify(exactly = 1) { auction.bid(bid) }
-    verify { sniperListener.sniperBidding(SniperSnapshot(ITEM_ID, price, bid)) }
+    verify { sniperListener.sniperBidding(SniperSnapshot(ITEM_ID, price, bid, BIDDING)) }
   }
 
   "reports is winning when current price comes from sniper" {

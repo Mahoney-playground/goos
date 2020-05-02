@@ -5,6 +5,7 @@ import goos.core.Column.LAST_BID
 import goos.core.Column.LAST_PRICE
 import goos.core.Column.SNIPER_STATE
 import goos.core.MainWindow.Companion.STATE_INITIAL
+import goos.core.SniperState.JOINING
 import javax.swing.table.AbstractTableModel
 
 class SnipersTableModel : AbstractTableModel() {
@@ -40,7 +41,7 @@ class SnipersTableModel : AbstractTableModel() {
   }
 
   companion object {
-    val STARTING_UP = SniperSnapshot("", 0, 0)
+    val STARTING_UP = SniperSnapshot("", 0, 0, JOINING)
   }
 }
 
