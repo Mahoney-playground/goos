@@ -18,29 +18,29 @@ class SnipersTableModel : AbstractTableModel() {
       fireTableRowsUpdated(0, 0)
     }
 
-  private var sniperState = STARTING_UP
+  private var sniperSnapshot = STARTING_UP
 
   override fun getColumnCount(): Int = Column.values().size
   override fun getRowCount(): Int = 1
 
   override fun getValueAt(rowIndex: Int, columnIndex: Int): Any = when (Column.at(columnIndex)) {
-    ITEM_IDENTIFIER -> sniperState.itemId
-    LAST_PRICE -> sniperState.lastPrice
-    LAST_BID -> sniperState.lastBid
+    ITEM_IDENTIFIER -> sniperSnapshot.itemId
+    LAST_PRICE -> sniperSnapshot.lastPrice
+    LAST_BID -> sniperSnapshot.lastBid
     SNIPER_STATUS -> statusText
   }
 
   fun sniperStatusChanged(
-    newSniperState: SniperState,
+    newSniperSnapshot: SniperSnapshot,
     newStatusText: String
   ) {
-    sniperState = newSniperState
+    sniperSnapshot = newSniperSnapshot
     _statusText = newStatusText
     fireTableRowsUpdated(0, 0)
   }
 
   companion object {
-    val STARTING_UP = SniperState("", 0, 0)
+    val STARTING_UP = SniperSnapshot("", 0, 0)
   }
 }
 

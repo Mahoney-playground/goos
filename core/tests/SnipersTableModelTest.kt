@@ -35,7 +35,7 @@ class SnipersTableModelTest : StringSpec({
   }
 
   "set sniper values in columns" {
-    model.sniperStatusChanged(SniperState("item id", 555, 666), STATUS_BIDDING)
+    model.sniperStatusChanged(SniperSnapshot("item id", 555, 666), STATUS_BIDDING)
 
     ITEM_IDENTIFIER shouldHaveValue "item id"
     listener.calls.forOne {
