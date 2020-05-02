@@ -1,5 +1,6 @@
 package goos.core
 
+import goos.core.SniperState.JOINING
 import java.awt.BorderLayout
 import java.awt.BorderLayout.NORTH
 import java.awt.BorderLayout.SOUTH
@@ -36,9 +37,9 @@ class MainWindow(
         add(JButton("Join").apply {
           name = SNIPER_JOIN_BUTTON_NAME
           addActionListener {
-            main.joinAuction()
+            val itemId = main.joinAuction()
             invokeLater {
-              showStatus(STATE_JOINING)
+              sniperStatusChanged(SniperSnapshot(itemId, 0, 0, JOINING))
             }
           }
         }, SOUTH)

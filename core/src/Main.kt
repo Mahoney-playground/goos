@@ -34,7 +34,7 @@ class Main(
     ui = MainWindow(this)
   }
 
-  internal fun joinAuction() {
+  internal fun joinAuction(): String {
     connect()
 
     disconnectWhenUICloses(connection!!)
@@ -56,6 +56,7 @@ class Main(
       )
     ))
     auction.join()
+    return itemId
   }
 
   private fun connect() {
