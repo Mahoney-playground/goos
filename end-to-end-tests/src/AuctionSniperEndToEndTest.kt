@@ -19,7 +19,7 @@ class AuctionSniperEndToEndTest : StringSpec({
     auction.hasReceivedJoinRequestFrom(SNIPER_XMPP_ID)
 
     auction.announceClosed()
-    application.showSniperHasLostAuction(lastPrice = 0)
+    application.showSniperHasLostAuction(lastPrice = 0, lastBid = 0)
   }
 
   "sniper joins auction, bids and loses" {
@@ -34,7 +34,7 @@ class AuctionSniperEndToEndTest : StringSpec({
     auction.hasReceivedBid(bid = 1_098, sniperId = SNIPER_XMPP_ID)
 
     auction.announceClosed()
-    application.showSniperHasLostAuction(lastPrice = 1_000)
+    application.showSniperHasLostAuction(lastPrice = 1_000, lastBid = 1_098)
   }
 
   "sniper wins an auction by bidding higher" {
@@ -75,7 +75,7 @@ class AuctionSniperEndToEndTest : StringSpec({
     auction.hasReceivedBid(bid = 1_308, sniperId = SNIPER_XMPP_ID)
 
     auction.announceClosed()
-    application.showSniperHasLostAuction(lastPrice = 1_198)
+    application.showSniperHasLostAuction(lastPrice = 1_198, lastBid = 1_308)
   }
 
   afterTest {

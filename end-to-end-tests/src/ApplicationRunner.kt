@@ -17,8 +17,8 @@ class ApplicationRunner(
     driver.showSniperState(itemId, 0, 0, STATE_JOINING)
   }
 
-  fun showSniperHasLostAuction(lastPrice: Int) {
-    driver.showSniperState(itemId, lastPrice, lastPrice, STATE_LOST)
+  fun showSniperHasLostAuction(lastPrice: Int, lastBid: Int) {
+    driver.showSniperState(itemId, lastPrice, lastBid, STATE_LOST)
   }
 
   fun hasShownSniperIsBidding(lastPrice: Int, lastBid: Int) {
