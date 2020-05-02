@@ -1,10 +1,12 @@
 package goos
 
 import io.kotest.assertions.timing.eventually
+import io.kotest.inspectors.forOne
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.runBlocking
 import org.openqa.selenium.By
 import org.openqa.selenium.Platform
+import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
 import java.net.URL
@@ -32,11 +34,16 @@ class AuctionSniperDriver(
     statusText: String
   ) = runBlocking {
     eventually(5.seconds) {
-      val statusElement = driver
-        .findElementByName(SNIPERS_TABLE_NAME)
-        .findElement(By.cssSelector(".::mnth-cell(1, 1)"))
+      val table = JTableDriver(
+        driver.findElementByName(SNIPERS_TABLE_NAME)
+      )
 
-      statusElement.text shouldBe statusText
+      table.hasRow(
+        { it shouldBe itemId },
+        { it shouldBe lastPrice.toString() },
+        { it shouldBe lastBid.toString() },
+        { it shouldBe statusText }
+      )
     }
   }
 
@@ -52,3 +59,15 @@ class AuctionSniperDriver(
 }
 
 private fun RemoteWebDriver.rootElement() = findElementByCssSelector(".")
+
+private class JTableDriver(
+  private val element: WebElement
+) {
+  fun hasRow(vararg cellMatchers: (String) -> Unit) {
+    (1 until 100).toList().forOne { rowNum ->
+      cellMatchers.toList().forEachIndexed { index, cellMatcher ->
+        cellMatcher(element.findElement(By.cssSelector(".::mnth-cell($rowNum, ${index + 1})")).text)
+      }
+    }
+  }
+}

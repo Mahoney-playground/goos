@@ -12,7 +12,7 @@ class AuctionSniperTest : StringSpec({
 
   val auction = mockk<Auction>(relaxed = true)
   val sniperListener = mockk<SniperListener>(relaxed = true)
-  val sniper = AuctionSniper(auction, sniperListener)
+  val sniper = AuctionSniper(ITEM_ID, auction, sniperListener)
 
   "reports lost if auction closes immediately" {
     sniper.auctionClosed()
@@ -38,11 +38,12 @@ class AuctionSniperTest : StringSpec({
 
     val price = 1001
     val increment = 25
+    val bid = price + increment
 
     sniper.currentPrice(price, increment, FromOtherBidder)
 
-    verify(exactly = 1) { auction.bid(price + increment) }
-    verify { sniperListener.sniperBidding() }
+    verify(exactly = 1) { auction.bid(bid) }
+    verify { sniperListener.sniperBidding(SniperState(ITEM_ID, price, bid)) }
   }
 
   "reports is winning when current price comes from sniper" {
@@ -57,4 +58,8 @@ class AuctionSniperTest : StringSpec({
   }
 }) {
   override fun isolationMode() = IsolationMode.InstancePerTest
+
+  companion object {
+    const val ITEM_ID = "1234"
+  }
 }

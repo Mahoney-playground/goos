@@ -51,6 +51,10 @@ class MainWindow(
     snipers.statusText = status
   }
 
+  fun sniperStatusChanged(state: SniperState, status: String) {
+    snipers.sniperStatusChanged(state, status)
+  }
+
   companion object {
     const val MAIN_WINDOW_NAME: String = "Auction Sniper Name"
     const val SNIPERS_TABLE_NAME: String = "snipers table"

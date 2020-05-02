@@ -5,6 +5,7 @@ import goos.core.AuctionEventListener.PriceSource.FromSniper
 import java.util.EventListener
 
 class AuctionSniper(
+  private val itemId: String,
   private val auction: Auction,
   private val sniperListener: SniperListener
 ) : AuctionEventListener {
@@ -28,15 +29,22 @@ class AuctionSniper(
     if (isWinning) {
       sniperListener.sniperWinning()
     } else {
-      auction.bid(price + increment)
-      sniperListener.sniperBidding()
+      val bid = price + increment
+      auction.bid(bid)
+      sniperListener.sniperBidding(SniperState(itemId, price, bid))
     }
   }
 }
 
 interface SniperListener : EventListener {
-  fun sniperBidding()
+  fun sniperBidding(sniperState: SniperState)
   fun sniperWinning()
   fun sniperLost()
   fun sniperWon()
 }
+
+data class SniperState(
+  val itemId: String,
+  val lastPrice: Int,
+  val lastBid: Int
+)
