@@ -58,7 +58,7 @@ data class SniperSnapshot(
     SniperSnapshot(itemId, newLastPrice, lastBid, WINNING)
 
   fun closed() =
-    SniperSnapshot(itemId, lastPrice, lastBid, state.whenAuctionClosed)
+    SniperSnapshot(itemId, lastPrice, lastBid, state.whenAuctionClosed())
 
   companion object {
     fun joining(itemId: String) = SniperSnapshot(itemId, 0, 0, JOINING)
@@ -66,11 +66,14 @@ data class SniperSnapshot(
 }
 
 enum class SniperState(
-  val whenAuctionClosed: SniperState
+  private val whenAuctionClosed: SniperState?
 ) {
-  LOST(LOST),
-  WON(WON),
+  LOST(null),
+  WON(null),
   JOINING(LOST),
   BIDDING(LOST),
   WINNING(WON);
+
+  fun whenAuctionClosed(): SniperState =
+    whenAuctionClosed ?: throw Defect("Auction is already closed")
 }
