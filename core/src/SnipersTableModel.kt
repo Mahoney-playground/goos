@@ -13,6 +13,7 @@ class SnipersTableModel : AbstractTableModel(), SniperListener {
 
   override fun getColumnCount(): Int = Column.values().size
   override fun getRowCount(): Int = 1
+  override fun getColumnName(column: Int): String = Column.at(column).title
 
   override fun getValueAt(rowIndex: Int, columnIndex: Int): Any =
     Column.at(columnIndex).valueIn(sniperSnapshot)
@@ -30,11 +31,11 @@ class SnipersTableModel : AbstractTableModel(), SniperListener {
   }
 }
 
-enum class Column {
-  ITEM_IDENTIFIER { override fun valueIn(snapshot: SniperSnapshot) = snapshot.itemId },
-  LAST_PRICE { override fun valueIn(snapshot: SniperSnapshot) = snapshot.lastPrice },
-  LAST_BID { override fun valueIn(snapshot: SniperSnapshot) = snapshot.lastBid },
-  SNIPER_STATE { override fun valueIn(snapshot: SniperSnapshot) = snapshot.stateText() };
+enum class Column(val title: String) {
+  ITEM_IDENTIFIER("Item") { override fun valueIn(snapshot: SniperSnapshot) = snapshot.itemId },
+  LAST_PRICE("Last Price") { override fun valueIn(snapshot: SniperSnapshot) = snapshot.lastPrice },
+  LAST_BID("Last Bid") { override fun valueIn(snapshot: SniperSnapshot) = snapshot.lastBid },
+  SNIPER_STATE("State") { override fun valueIn(snapshot: SniperSnapshot) = snapshot.stateText() };
 
   abstract fun valueIn(snapshot: SniperSnapshot): Any
 

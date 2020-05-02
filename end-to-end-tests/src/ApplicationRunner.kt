@@ -7,6 +7,11 @@ class ApplicationRunner(
   private val driver: AuctionSniperDriver = AuctionSniperDriver()
 ) {
 
+  init {
+    driver.hasTitle("Auction Sniper")
+    driver.hasColumnTitles()
+  }
+
   private lateinit var itemId: String
 
   fun startBiddingIn(

@@ -34,6 +34,12 @@ class SnipersTableModelTest : StringSpec({
     model.columnCount shouldBe Column.values().size
   }
 
+  Column.values().forEach { column ->
+    "has column title for $column" {
+      column.title shouldBe model.getColumnName(column.ordinal)
+    }
+  }
+
   "set sniper values in columns" {
     model.sniperStateChanged(SniperSnapshot("item id", 555, 666, BIDDING))
 

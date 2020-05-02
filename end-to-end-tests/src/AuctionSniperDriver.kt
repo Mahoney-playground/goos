@@ -49,6 +49,18 @@ class AuctionSniperDriver(
 
   fun joinAuction() = driver.findElementByName(SNIPER_JOIN_BUTTON_NAME).click()
 
+  fun hasTitle(title: String) {
+    driver.title shouldBe title
+  }
+
+  fun hasColumnTitles() {
+    val titles = driver.findElementByName(SNIPERS_TABLE_NAME)
+      .findElements(By.cssSelector(".::header.::all-items"))
+      .map { it.text }
+
+    titles shouldBe listOf("Item", "Last Price", "Last Bid", "State")
+  }
+
   companion object {
 
     const val MAIN_WINDOW_NAME: String = "Auction Sniper Name"
