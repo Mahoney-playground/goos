@@ -44,7 +44,7 @@ class AuctionSniperTest : StringSpec({
     sniper.currentPrice(price, increment, FromOtherBidder)
 
     verify(exactly = 1) { auction.bid(bid) }
-    verify { sniperListener.sniperBidding(SniperSnapshot(ITEM_ID, price, bid, BIDDING)) }
+    verify { sniperListener.sniperStateChanged(SniperSnapshot(ITEM_ID, price, bid, BIDDING)) }
   }
 
   "reports is winning when current price comes from sniper" {

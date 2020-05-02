@@ -32,13 +32,13 @@ class AuctionSniper(
     } else {
       val bid = price + increment
       auction.bid(bid)
-      sniperListener.sniperBidding(SniperSnapshot(itemId, price, bid, BIDDING))
+      sniperListener.sniperStateChanged(SniperSnapshot(itemId, price, bid, BIDDING))
     }
   }
 }
 
 interface SniperListener : EventListener {
-  fun sniperBidding(sniperSnapshot: SniperSnapshot)
+  fun sniperStateChanged(sniperSnapshot: SniperSnapshot)
   fun sniperWinning()
   fun sniperLost()
   fun sniperWon()
