@@ -48,10 +48,6 @@ class MainWindow(
     }
   }
 
-  fun showState(state: String) {
-    snipers.stateText = state
-  }
-
   fun sniperStateChanged(snapshot: SniperSnapshot) {
     snipers.sniperStateChanged(snapshot)
   }
@@ -62,7 +58,6 @@ class MainWindow(
     const val SNIPER_JOIN_BUTTON_NAME: String = "sniper join button"
     const val STATE_LOST: String = "Lost"
     const val STATE_BIDDING: String = "Bidding"
-    const val STATE_INITIAL: String = "Ready to join"
     const val STATE_JOINING: String = "Joining"
     const val STATE_WINNING: String = "Winning"
     const val STATE_WON: String = "Won"

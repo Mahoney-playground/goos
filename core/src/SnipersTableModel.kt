@@ -5,7 +5,6 @@ import goos.core.Column.LAST_BID
 import goos.core.Column.LAST_PRICE
 import goos.core.Column.SNIPER_STATE
 import goos.core.MainWindow.Companion.STATE_BIDDING
-import goos.core.MainWindow.Companion.STATE_INITIAL
 import goos.core.MainWindow.Companion.STATE_JOINING
 import goos.core.MainWindow.Companion.STATE_LOST
 import goos.core.MainWindow.Companion.STATE_WINNING
@@ -19,15 +18,6 @@ import javax.swing.table.AbstractTableModel
 
 class SnipersTableModel : AbstractTableModel() {
 
-  private var _stateText: String = STATE_INITIAL
-
-  internal var stateText: String
-    get() = _stateText
-    set(value) {
-      _stateText = value
-      fireTableRowsUpdated(0, 0)
-    }
-
   private var sniperSnapshot = STARTING_UP
 
   override fun getColumnCount(): Int = Column.values().size
@@ -37,22 +27,22 @@ class SnipersTableModel : AbstractTableModel() {
     ITEM_IDENTIFIER -> sniperSnapshot.itemId
     LAST_PRICE -> sniperSnapshot.lastPrice
     LAST_BID -> sniperSnapshot.lastBid
-    SNIPER_STATE -> stateText
+    SNIPER_STATE -> sniperSnapshot.stateText()
   }
 
   fun sniperStateChanged(
     newSniperSnapshot: SniperSnapshot
   ) {
-    val newStateText = when (newSniperSnapshot.state) {
-      JOINING -> STATE_JOINING
-      BIDDING -> STATE_BIDDING
-      WINNING -> STATE_WINNING
-      LOST -> STATE_LOST
-      WON -> STATE_WON
-    }
     sniperSnapshot = newSniperSnapshot
-    _stateText = newStateText
     fireTableRowsUpdated(0, 0)
+  }
+
+  private fun SniperSnapshot.stateText(): String = when (state) {
+    JOINING -> STATE_JOINING
+    BIDDING -> STATE_BIDDING
+    WINNING -> STATE_WINNING
+    LOST -> STATE_LOST
+    WON -> STATE_WON
   }
 
   companion object {

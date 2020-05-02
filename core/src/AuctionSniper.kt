@@ -42,8 +42,6 @@ class AuctionSniper(
 
 interface SniperListener : EventListener {
   fun sniperStateChanged(sniperSnapshot: SniperSnapshot)
-  fun sniperLost()
-  fun sniperWon()
 }
 
 data class SniperSnapshot(
