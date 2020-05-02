@@ -7,30 +7,30 @@ class ApplicationRunner(
   private val driver: AuctionSniperDriver = AuctionSniperDriver()
 ) {
 
-  private var itemId: String? = null
+  private lateinit var itemId: String
 
   fun startBiddingIn(
     auction: FakeAuctionServer
   ) {
     driver.joinAuction()
     itemId = auction.itemId
-    driver.showSniperStatus(itemId!!, 0, 0, STATUS_JOINING)
+    driver.showSniperStatus(itemId, 0, 0, STATUS_JOINING)
   }
 
   fun showSniperHasLostAuction(lastPrice: Int) {
-    driver.showSniperStatus(itemId!!, lastPrice, lastPrice, STATUS_LOST)
+    driver.showSniperStatus(itemId, lastPrice, lastPrice, STATUS_LOST)
   }
 
   fun hasShownSniperIsBidding(lastPrice: Int, lastBid: Int) {
-    driver.showSniperStatus(itemId!!, lastPrice, lastBid, STATUS_BIDDING)
+    driver.showSniperStatus(itemId, lastPrice, lastBid, STATUS_BIDDING)
   }
 
   fun hasShownSniperIsWinning(winningBid: Int) {
-    driver.showSniperStatus(itemId!!, winningBid, winningBid, STATUS_WINNING)
+    driver.showSniperStatus(itemId, winningBid, winningBid, STATUS_WINNING)
   }
 
   fun showSniperHasWonAuction(lastPrice: Int) {
-    driver.showSniperStatus(itemId!!, lastPrice, lastPrice, STATUS_WON)
+    driver.showSniperStatus(itemId, lastPrice, lastPrice, STATUS_WON)
   }
 
   companion object {
