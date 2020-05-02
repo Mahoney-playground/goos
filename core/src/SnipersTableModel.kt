@@ -3,18 +3,18 @@ package goos.core
 import goos.core.Column.ITEM_IDENTIFIER
 import goos.core.Column.LAST_BID
 import goos.core.Column.LAST_PRICE
-import goos.core.Column.SNIPER_STATUS
-import goos.core.MainWindow.Companion.STATUS_INITIAL
+import goos.core.Column.SNIPER_STATE
+import goos.core.MainWindow.Companion.STATE_INITIAL
 import javax.swing.table.AbstractTableModel
 
 class SnipersTableModel : AbstractTableModel() {
 
-  private var _statusText: String = STATUS_INITIAL
+  private var _stateText: String = STATE_INITIAL
 
-  internal var statusText: String
-    get() = _statusText
+  internal var stateText: String
+    get() = _stateText
     set(value) {
-      _statusText = value
+      _stateText = value
       fireTableRowsUpdated(0, 0)
     }
 
@@ -27,7 +27,7 @@ class SnipersTableModel : AbstractTableModel() {
     ITEM_IDENTIFIER -> sniperSnapshot.itemId
     LAST_PRICE -> sniperSnapshot.lastPrice
     LAST_BID -> sniperSnapshot.lastBid
-    SNIPER_STATUS -> statusText
+    SNIPER_STATE -> stateText
   }
 
   fun sniperStatusChanged(
@@ -35,7 +35,7 @@ class SnipersTableModel : AbstractTableModel() {
     newStatusText: String
   ) {
     sniperSnapshot = newSniperSnapshot
-    _statusText = newStatusText
+    _stateText = newStatusText
     fireTableRowsUpdated(0, 0)
   }
 
@@ -48,7 +48,7 @@ enum class Column {
   ITEM_IDENTIFIER,
   LAST_PRICE,
   LAST_BID,
-  SNIPER_STATUS;
+  SNIPER_STATE;
 
   companion object {
     fun at(offset: Int) = values()[offset]

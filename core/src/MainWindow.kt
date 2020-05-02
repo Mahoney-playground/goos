@@ -38,7 +38,7 @@ class MainWindow(
           addActionListener {
             main.joinAuction()
             invokeLater {
-              showStatus(STATUS_JOINING)
+              showStatus(STATE_JOINING)
             }
           }
         }, SOUTH)
@@ -48,7 +48,7 @@ class MainWindow(
   }
 
   fun showStatus(status: String) {
-    snipers.statusText = status
+    snipers.stateText = status
   }
 
   fun sniperStatusChanged(snapshot: SniperSnapshot, status: String) {
@@ -59,11 +59,11 @@ class MainWindow(
     const val MAIN_WINDOW_NAME: String = "Auction Sniper Name"
     const val SNIPERS_TABLE_NAME: String = "snipers table"
     const val SNIPER_JOIN_BUTTON_NAME: String = "sniper join button"
-    const val STATUS_LOST: String = "Lost"
-    const val STATUS_BIDDING: String = "Bidding"
-    const val STATUS_INITIAL: String = "Ready to join"
-    const val STATUS_JOINING: String = "Joining"
-    const val STATUS_WINNING: String = "Winning"
-    const val STATUS_WON: String = "Won"
+    const val STATE_LOST: String = "Lost"
+    const val STATE_BIDDING: String = "Bidding"
+    const val STATE_INITIAL: String = "Ready to join"
+    const val STATE_JOINING: String = "Joining"
+    const val STATE_WINNING: String = "Winning"
+    const val STATE_WON: String = "Won"
   }
 }
