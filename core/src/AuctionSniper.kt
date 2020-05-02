@@ -35,8 +35,8 @@ class AuctionSniper(
 }
 
 interface SniperListener : EventListener {
-  fun sniperLost()
   fun sniperBidding()
   fun sniperWinning()
+  fun sniperLost()
   fun sniperWon()
 }

@@ -10,9 +10,9 @@ internal class SniperStateDisplayer(
   private val ui: MainWindow
 ) : SniperListener {
 
-  override fun sniperLost() = showStatus(STATUS_LOST)
   override fun sniperBidding() = showStatus(STATUS_BIDDING)
   override fun sniperWinning() = showStatus(STATUS_WINNING)
+  override fun sniperLost() = showStatus(STATUS_LOST)
   override fun sniperWon() = showStatus(STATUS_WON)
 
   private fun showStatus(status: String) {
