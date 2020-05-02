@@ -1,7 +1,6 @@
 package goos.core
 
 import goos.core.MainWindow.Companion.STATE_LOST
-import goos.core.MainWindow.Companion.STATE_WINNING
 import goos.core.MainWindow.Companion.STATE_WON
 import javax.swing.SwingUtilities
 
@@ -11,7 +10,7 @@ internal class SniperStateDisplayer(
 
   override fun sniperStateChanged(sniperSnapshot: SniperSnapshot) =
     stateChanged(sniperSnapshot)
-  override fun sniperWinning() = showState(STATE_WINNING)
+
   override fun sniperLost() = showState(STATE_LOST)
   override fun sniperWon() = showState(STATE_WON)
 

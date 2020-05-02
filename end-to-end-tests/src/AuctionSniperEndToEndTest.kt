@@ -34,7 +34,7 @@ class AuctionSniperEndToEndTest : StringSpec({
     auction.hasReceivedBid(bid = 1_098, sniperId = SNIPER_XMPP_ID)
 
     auction.announceClosed()
-    application.showSniperHasLostAuction(lastPrice = 1_098)
+    application.showSniperHasLostAuction(lastPrice = 1_000)
   }
 
   "sniper wins an auction by bidding higher" {
