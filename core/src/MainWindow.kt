@@ -12,10 +12,9 @@ import javax.swing.JTable
 import javax.swing.SwingUtilities.invokeLater
 
 class MainWindow(
-  private val main: Main
+  private val main: Main,
+  private val snipers: SnipersTableModel
 ) : JFrame("Auction Sniper") {
-
-  private val snipers = SnipersTableModel()
 
   init {
     name = MAIN_WINDOW_NAME
@@ -39,17 +38,13 @@ class MainWindow(
           addActionListener {
             val itemId = main.joinAuction()
             invokeLater {
-              sniperStateChanged(SniperSnapshot(itemId, 0, 0, JOINING))
+              snipers.sniperStateChanged(SniperSnapshot(itemId, 0, 0, JOINING))
             }
           }
         }, SOUTH)
         pack()
       })
     }
-  }
-
-  fun sniperStateChanged(snapshot: SniperSnapshot) {
-    snipers.sniperStateChanged(snapshot)
   }
 
   companion object {

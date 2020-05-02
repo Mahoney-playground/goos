@@ -22,6 +22,7 @@ class Main(
   private val itemId: String
 ) {
 
+  private val snipers = SnipersTableModel()
   private lateinit var ui: MainWindow
   private var connection: XMPPTCPConnection? = null
   private var notToBeGCd: Chat? = null
@@ -31,7 +32,7 @@ class Main(
   }
 
   private fun startUserInterface() = SwingUtilities.invokeAndWait {
-    ui = MainWindow(this)
+    ui = MainWindow(this, snipers)
   }
 
   internal fun joinAuction(): String {
@@ -52,7 +53,7 @@ class Main(
       AuctionSniper(
         itemId,
         auction,
-        SniperStateDisplayer(ui)
+        SwingThreadSniperListener(snipers)
       )
     ))
     auction.join()

@@ -7,7 +7,7 @@ import goos.core.SniperState.WINNING
 import goos.core.SniperState.WON
 import javax.swing.table.AbstractTableModel
 
-class SnipersTableModel : AbstractTableModel() {
+class SnipersTableModel : AbstractTableModel(), SniperListener {
 
   private var sniperSnapshot = STARTING_UP
 
@@ -17,10 +17,10 @@ class SnipersTableModel : AbstractTableModel() {
   override fun getValueAt(rowIndex: Int, columnIndex: Int): Any =
     Column.at(columnIndex).valueIn(sniperSnapshot)
 
-  fun sniperStateChanged(
-    newSniperSnapshot: SniperSnapshot
+  override fun sniperStateChanged(
+    sniperSnapshot: SniperSnapshot
   ) {
-    sniperSnapshot = newSniperSnapshot
+    this.sniperSnapshot = sniperSnapshot
     fireTableRowsUpdated(0, 0)
   }
 
