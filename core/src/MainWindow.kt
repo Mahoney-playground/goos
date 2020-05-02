@@ -56,10 +56,5 @@ class MainWindow(
     const val MAIN_WINDOW_NAME: String = "Auction Sniper Name"
     const val SNIPERS_TABLE_NAME: String = "snipers table"
     const val SNIPER_JOIN_BUTTON_NAME: String = "sniper join button"
-    const val STATE_LOST: String = "Lost"
-    const val STATE_BIDDING: String = "Bidding"
-    const val STATE_JOINING: String = "Joining"
-    const val STATE_WINNING: String = "Winning"
-    const val STATE_WON: String = "Won"
   }
 }
