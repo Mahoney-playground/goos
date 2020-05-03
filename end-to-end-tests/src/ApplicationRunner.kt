@@ -12,30 +12,27 @@ class ApplicationRunner(
     driver.hasColumnTitles()
   }
 
-  private lateinit var itemId: String
-
   fun startBiddingIn(
     auction: FakeAuctionServer
   ) {
     driver.joinAuction()
-    itemId = auction.itemId
-    driver.showSniperState(itemId, 0, 0, STATE_JOINING)
+    driver.showSniperState(auction.itemId, 0, 0, STATE_JOINING)
   }
 
-  fun showSniperHasLostAuction(lastPrice: Int, lastBid: Int) {
-    driver.showSniperState(itemId, lastPrice, lastBid, STATE_LOST)
+  fun showSniperHasLostAuction(auction: FakeAuctionServer, lastPrice: Int, lastBid: Int) {
+    driver.showSniperState(auction.itemId, lastPrice, lastBid, STATE_LOST)
   }
 
-  fun hasShownSniperIsBidding(lastPrice: Int, lastBid: Int) {
-    driver.showSniperState(itemId, lastPrice, lastBid, STATE_BIDDING)
+  fun hasShownSniperIsBidding(auction: FakeAuctionServer, lastPrice: Int, lastBid: Int) {
+    driver.showSniperState(auction.itemId, lastPrice, lastBid, STATE_BIDDING)
   }
 
-  fun hasShownSniperIsWinning(winningBid: Int) {
-    driver.showSniperState(itemId, winningBid, winningBid, STATE_WINNING)
+  fun hasShownSniperIsWinning(auction: FakeAuctionServer, winningBid: Int) {
+    driver.showSniperState(auction.itemId, winningBid, winningBid, STATE_WINNING)
   }
 
-  fun showSniperHasWonAuction(lastPrice: Int) {
-    driver.showSniperState(itemId, lastPrice, lastPrice, STATE_WON)
+  fun showSniperHasWonAuction(auction: FakeAuctionServer, lastPrice: Int) {
+    driver.showSniperState(auction.itemId, lastPrice, lastPrice, STATE_WON)
   }
 
   companion object {

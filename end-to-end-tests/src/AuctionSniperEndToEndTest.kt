@@ -19,7 +19,7 @@ class AuctionSniperEndToEndTest : StringSpec({
     auction.hasReceivedJoinRequestFrom(SNIPER_XMPP_ID)
 
     auction.announceClosed()
-    application.showSniperHasLostAuction(lastPrice = 0, lastBid = 0)
+    application.showSniperHasLostAuction(auction, lastPrice = 0, lastBid = 0)
   }
 
   "sniper joins auction, bids and loses" {
@@ -30,11 +30,11 @@ class AuctionSniperEndToEndTest : StringSpec({
     auction.hasReceivedJoinRequestFrom(SNIPER_XMPP_ID)
 
     auction.reportPrice(price = 1_000, increment = 98, bidder = "other bidder")
-    application.hasShownSniperIsBidding(lastPrice = 1_000, lastBid = 1_098)
+    application.hasShownSniperIsBidding(auction, lastPrice = 1_000, lastBid = 1_098)
     auction.hasReceivedBid(bid = 1_098, sniperId = SNIPER_XMPP_ID)
 
     auction.announceClosed()
-    application.showSniperHasLostAuction(lastPrice = 1_000, lastBid = 1_098)
+    application.showSniperHasLostAuction(auction, lastPrice = 1_000, lastBid = 1_098)
   }
 
   "sniper wins an auction by bidding higher" {
@@ -45,14 +45,14 @@ class AuctionSniperEndToEndTest : StringSpec({
     auction.hasReceivedJoinRequestFrom(SNIPER_XMPP_ID)
 
     auction.reportPrice(price = 1_000, increment = 98, bidder = "other bidder")
-    application.hasShownSniperIsBidding(lastPrice = 1_000, lastBid = 1_098)
+    application.hasShownSniperIsBidding(auction, lastPrice = 1_000, lastBid = 1_098)
     auction.hasReceivedBid(bid = 1_098, sniperId = SNIPER_XMPP_ID)
 
     auction.reportPrice(price = 1_098, increment = 97, bidder = SNIPER_XMPP_ID)
-    application.hasShownSniperIsWinning(winningBid = 1_098)
+    application.hasShownSniperIsWinning(auction, winningBid = 1_098)
 
     auction.announceClosed()
-    application.showSniperHasWonAuction(lastPrice = 1_098)
+    application.showSniperHasWonAuction(auction, lastPrice = 1_098)
   }
 
   "sniper loses an auction after bidding" {
@@ -63,19 +63,19 @@ class AuctionSniperEndToEndTest : StringSpec({
     auction.hasReceivedJoinRequestFrom(SNIPER_XMPP_ID)
 
     auction.reportPrice(price = 1_000, increment = 98, bidder = "other bidder")
-    application.hasShownSniperIsBidding(lastPrice = 1_000, lastBid = 1_098)
+    application.hasShownSniperIsBidding(auction, lastPrice = 1_000, lastBid = 1_098)
 
     auction.hasReceivedBid(bid = 1_098, sniperId = SNIPER_XMPP_ID)
 
     auction.reportPrice(price = 1_098, increment = 100, bidder = SNIPER_XMPP_ID)
-    application.hasShownSniperIsWinning(winningBid = 1_098)
+    application.hasShownSniperIsWinning(auction, winningBid = 1_098)
 
     auction.reportPrice(price = 1_198, increment = 110, bidder = "other bidder")
-    application.hasShownSniperIsBidding(lastPrice = 1_198, lastBid = 1_308)
+    application.hasShownSniperIsBidding(auction, lastPrice = 1_198, lastBid = 1_308)
     auction.hasReceivedBid(bid = 1_308, sniperId = SNIPER_XMPP_ID)
 
     auction.announceClosed()
-    application.showSniperHasLostAuction(lastPrice = 1_198, lastBid = 1_308)
+    application.showSniperHasLostAuction(auction, lastPrice = 1_198, lastBid = 1_308)
   }
 
   afterTest {
