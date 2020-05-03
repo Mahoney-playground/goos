@@ -9,6 +9,7 @@ import kotlin.time.ExperimentalTime
 class AuctionSniperEndToEndTest : StringSpec({
 
   val auction = FakeAuctionServer("item-54321")
+  val auction2 = FakeAuctionServer("item-65432")
   val application = ApplicationRunner()
 
   "sniper joins auction, loses without bidding" {
@@ -76,6 +77,34 @@ class AuctionSniperEndToEndTest : StringSpec({
 
     auction.announceClosed()
     application.showSniperHasLostAuction(auction, lastPrice = 1_198, lastBid = 1_308)
+  }
+
+  "!sniper bids for multiple items" {
+
+    auction.startSellingItem()
+    auction2.startSellingItem()
+
+    application.startBiddingIn(auction, auction2)
+    auction.hasReceivedJoinRequestFrom(SNIPER_XMPP_ID)
+    auction2.hasReceivedJoinRequestFrom(SNIPER_XMPP_ID)
+
+    auction.reportPrice(price = 1_000, increment = 98, bidder = "other bidder")
+    auction.hasReceivedBid(bid = 1_098, sniperId = SNIPER_XMPP_ID)
+
+    auction2.reportPrice(price = 500, increment = 21, bidder = "other bidder")
+    auction2.hasReceivedBid(bid = 421, sniperId = SNIPER_XMPP_ID)
+
+    auction.reportPrice(price = 1_098, increment = 97, bidder = SNIPER_XMPP_ID)
+    auction2.reportPrice(price = 521, increment = 22, bidder = SNIPER_XMPP_ID)
+
+    application.hasShownSniperIsWinning(auction, winningBid = 1_098)
+    application.hasShownSniperIsWinning(auction2, winningBid = 521)
+
+    auction.announceClosed()
+    auction2.announceClosed()
+
+    application.showSniperHasWonAuction(auction, lastPrice = 1_098)
+    application.showSniperHasWonAuction(auction2, lastPrice = 521)
   }
 
   afterTest {

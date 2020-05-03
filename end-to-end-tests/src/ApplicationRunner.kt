@@ -13,10 +13,12 @@ class ApplicationRunner(
   }
 
   fun startBiddingIn(
-    auction: FakeAuctionServer
+    vararg auctions: FakeAuctionServer
   ) {
-    driver.joinAuction()
-    driver.showSniperState(auction.itemId, 0, 0, STATE_JOINING)
+    driver.joinAuctions()
+    auctions.forEach { auction ->
+      driver.showSniperState(auction.itemId, 0, 0, STATE_JOINING)
+    }
   }
 
   fun showSniperHasLostAuction(auction: FakeAuctionServer, lastPrice: Int, lastBid: Int) {

@@ -25,13 +25,13 @@ class Main(
   private val hostname: String,
   private val username: String,
   private val password: String,
-  private val itemId: String
+  private val itemIds: List<String>
 ) {
 
   private val snipers = SnipersTableModel()
   private lateinit var ui: MainWindow
   private var connection: XMPPTCPConnection? = null
-  private var notToBeGCd: Chat? = null
+  private val notToBeGCd = mutableListOf<Chat>()
 
   init {
     startUserInterface()
@@ -46,7 +46,9 @@ class Main(
 
     disconnectWhenUICloses()
 
-    joinAuction(itemId)
+    itemIds.forEach { itemId ->
+      joinAuction(itemId)
+    }
   }
 
   private fun joinAuction(itemId: String) {
@@ -56,7 +58,7 @@ class Main(
         auctionId(itemId, connection!!.host),
         null
       )
-    notToBeGCd = chat
+    notToBeGCd.add(chat)
 
     val auction = XMPPAuction(chat)
     chat.addMessageListener(AuctionMessageTranslator(
@@ -92,7 +94,6 @@ class Main(
     private const val ARG_HOSTNAME = 0
     private const val ARG_USERNAME = 1
     private const val ARG_PASSWORD = 2
-    private const val ARG_ITEM_ID = 3
 
     private val AUCTION_RESOURCE = Resourcepart.from("Auction")
 
@@ -106,7 +107,7 @@ class Main(
         hostname = args[ARG_HOSTNAME],
         username = args[ARG_USERNAME],
         password = args[ARG_PASSWORD],
-        itemId = args[ARG_ITEM_ID]
+        itemIds = args.drop(3)
       )
       blockUntilShutdown()
       println("App stopping")

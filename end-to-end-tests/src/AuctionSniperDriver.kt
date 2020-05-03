@@ -47,7 +47,7 @@ class AuctionSniperDriver(
     }
   }
 
-  fun joinAuction() = driver.findElementByName(SNIPER_JOIN_BUTTON_NAME).click()
+  fun joinAuctions() = driver.findElementByName(SNIPER_JOIN_BUTTON_NAME).click()
 
   fun hasTitle(title: String) {
     driver.title shouldBe title
