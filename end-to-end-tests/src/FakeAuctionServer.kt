@@ -112,7 +112,7 @@ class SingleMessageListener : ChatMessageListener {
   override fun processMessage(chat: Chat, message: Message) = messages.put(message)
 
   fun receivesAMessage(matcher: (String?) -> Unit) {
-    val message = messages.poll(10, SECONDS) ?: throw IllegalStateException("No message received")
+    val message = messages.poll(10, SECONDS) ?: throw AssertionError("No message received")
     matcher(message.body)
   }
 
