@@ -1,8 +1,6 @@
 package goos.core.ui
 
 import goos.core.app.Main
-import goos.core.core.SniperSnapshot
-import goos.core.core.SniperState.JOINING
 import java.awt.BorderLayout
 import java.awt.BorderLayout.NORTH
 import java.awt.BorderLayout.SOUTH
@@ -11,7 +9,6 @@ import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.JScrollPane
 import javax.swing.JTable
-import javax.swing.SwingUtilities.invokeLater
 
 class MainWindow(
   private val main: Main,
@@ -38,10 +35,7 @@ class MainWindow(
         add(JButton("Join").apply {
           name = SNIPER_JOIN_BUTTON_NAME
           addActionListener {
-            val itemId = main.joinAuction()
-            invokeLater {
-              snipers.sniperStateChanged(SniperSnapshot(itemId, 0, 0, JOINING))
-            }
+            main.joinAuctions()
           }
         }, SOUTH)
         pack()

@@ -12,6 +12,9 @@ class AuctionSniper(
 ) : AuctionEventListener {
 
   private var snapshot = SniperSnapshot.joining(itemId)
+  init {
+    notifyChange()
+  }
 
   override fun auctionClosed() {
     snapshot = snapshot.closed()

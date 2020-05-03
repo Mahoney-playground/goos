@@ -41,14 +41,19 @@ class Main(
     ui = MainWindow(this, snipers)
   }
 
-  internal fun joinAuction(): String {
+  internal fun joinAuctions() {
     connect()
 
-    disconnectWhenUICloses(connection!!)
+    disconnectWhenUICloses()
+
+    joinAuction(itemId)
+  }
+
+  private fun joinAuction(itemId: String) {
 
     val chat = ChatManager.getInstanceFor(connection)
       .createChat(
-        auctionId(itemId, hostname),
+        auctionId(itemId, connection!!.host),
         null
       )
     notToBeGCd = chat
@@ -63,12 +68,11 @@ class Main(
       )
     ))
     auction.join()
-    return itemId
   }
 
   private fun connect() {
     if (connection == null) {
-      connection = connectTo(
+      connection = connection(
         hostname,
         username,
         password
@@ -76,10 +80,10 @@ class Main(
     }
   }
 
-  private fun disconnectWhenUICloses(connection: XMPPTCPConnection) =
+  private fun disconnectWhenUICloses() =
     ui.addWindowListener(object : WindowAdapter() {
       override fun windowClosed(e: WindowEvent?) {
-        connection.disconnect()
+        connection?.disconnect()
       }
     })
 
@@ -108,7 +112,7 @@ class Main(
       println("App stopping")
     }
 
-    private fun connectTo(
+    private fun connection(
       hostname: String,
       username: String,
       password: String
