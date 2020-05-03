@@ -1,5 +1,6 @@
-package goos.core
+package goos.core.auction.xmpp
 
+import goos.core.auction.api.Auction
 import org.jivesoftware.smack.chat.Chat
 
 class XMPPAuction(

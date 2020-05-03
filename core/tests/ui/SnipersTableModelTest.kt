@@ -1,7 +1,8 @@
-package goos.core
+package goos.core.ui
 
-import goos.core.Column.ITEM_IDENTIFIER
-import goos.core.SniperState.BIDDING
+import goos.core.core.SniperSnapshot
+import goos.core.core.SniperState.BIDDING
+import goos.core.ui.Column.ITEM_IDENTIFIER
 import io.kotest.core.spec.IsolationMode.InstancePerTest
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forOne

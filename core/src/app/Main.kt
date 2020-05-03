@@ -1,5 +1,11 @@
-package goos.core
+package goos.core.app
 
+import goos.core.auction.xmpp.AuctionMessageTranslator
+import goos.core.auction.xmpp.XMPPAuction
+import goos.core.core.AuctionSniper
+import goos.core.ui.MainWindow
+import goos.core.ui.SnipersTableModel
+import goos.core.ui.SwingThreadSniperListener
 import org.jivesoftware.smack.ConnectionConfiguration
 import org.jivesoftware.smack.chat.Chat
 import org.jivesoftware.smack.chat.ChatManager

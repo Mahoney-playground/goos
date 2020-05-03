@@ -13,5 +13,5 @@ dependencies {
 }
 
 application {
-  mainClassName = "goos.core.Main"
+  mainClassName = "goos.core.app.Main"
 }

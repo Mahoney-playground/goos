@@ -1,9 +1,10 @@
-import goos.core.Defect
-import goos.core.SniperState.BIDDING
-import goos.core.SniperState.JOINING
-import goos.core.SniperState.LOST
-import goos.core.SniperState.WINNING
-import goos.core.SniperState.WON
+package goos.core.core
+
+import goos.core.core.SniperState.BIDDING
+import goos.core.core.SniperState.JOINING
+import goos.core.core.SniperState.LOST
+import goos.core.core.SniperState.WINNING
+import goos.core.core.SniperState.WON
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe

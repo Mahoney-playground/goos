@@ -1,5 +1,3 @@
-package goos.core
-
-import java.lang.RuntimeException
+package goos.core.core
 
 class Defect(message: String) : RuntimeException(message)

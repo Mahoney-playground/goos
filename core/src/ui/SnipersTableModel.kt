@@ -1,10 +1,12 @@
-package goos.core
+package goos.core.ui
 
-import goos.core.SniperState.BIDDING
-import goos.core.SniperState.JOINING
-import goos.core.SniperState.LOST
-import goos.core.SniperState.WINNING
-import goos.core.SniperState.WON
+import goos.core.core.SniperListener
+import goos.core.core.SniperSnapshot
+import goos.core.core.SniperState.BIDDING
+import goos.core.core.SniperState.JOINING
+import goos.core.core.SniperState.LOST
+import goos.core.core.SniperState.WINNING
+import goos.core.core.SniperState.WON
 import javax.swing.table.AbstractTableModel
 
 class SnipersTableModel : AbstractTableModel(), SniperListener {

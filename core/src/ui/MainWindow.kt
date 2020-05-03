@@ -1,6 +1,8 @@
-package goos.core
+package goos.core.ui
 
-import goos.core.SniperState.JOINING
+import goos.core.app.Main
+import goos.core.core.SniperSnapshot
+import goos.core.core.SniperState.JOINING
 import java.awt.BorderLayout
 import java.awt.BorderLayout.NORTH
 import java.awt.BorderLayout.SOUTH
