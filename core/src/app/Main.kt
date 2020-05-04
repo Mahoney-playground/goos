@@ -23,36 +23,20 @@ import java.util.logging.Logger
 import javax.swing.SwingUtilities
 
 class Main(
-  private val hostname: String,
-  private val username: String,
-  private val password: String,
-  private val itemIds: List<String>
+  private val connection: XMPPTCPConnection
 ) {
 
   private val snipers = SnipersTableModel()
   private lateinit var ui: MainWindow
-  private var connection: XMPPTCPConnection? = null
   private val notToBeGCd = mutableListOf<Chat>()
 
   init {
     startUserInterface()
+    disconnectWhenUICloses()
   }
 
   private fun startUserInterface() = SwingUtilities.invokeAndWait {
     ui = MainWindow(this, snipers)
-  }
-
-  internal fun joinAuctions() {
-
-    if (!initialised()) {
-      connect()
-
-      disconnectWhenUICloses()
-    }
-
-    itemIds.forEach { itemId ->
-      joinAuction(itemId)
-    }
   }
 
   internal fun reset() {
@@ -61,21 +45,19 @@ class Main(
     }
   }
 
-  private fun initialised(): Boolean = connection != null
-
   private fun joinAuction(itemId: String) {
     safelyAddItemToModel(itemId)
 
     val chat = ChatManager.getInstanceFor(connection)
       .createChat(
-        auctionId(itemId, connection!!.host),
+        auctionId(itemId, connection.host),
         null
       )
     notToBeGCd.add(chat)
 
     val auction = XMPPAuction(chat)
     chat.addMessageListener(AuctionMessageTranslator(
-      connection!!.user.toString(),
+      connection.user.toString(),
       AuctionSniper(
         itemId,
         auction,
@@ -91,18 +73,10 @@ class Main(
     }
   }
 
-  private fun connect() {
-    connection = connection(
-      hostname,
-      username,
-      password
-    )
-  }
-
   private fun disconnectWhenUICloses() =
     ui.addWindowListener(object : WindowAdapter() {
       override fun windowClosed(e: WindowEvent?) {
-        connection?.disconnect()
+        connection.disconnect()
       }
     })
 
@@ -120,12 +94,12 @@ class Main(
       Logger.getLogger("").level = WARNING
 
       println("Starting app")
-      Main(
+      val connection = connection(
         hostname = args[ARG_HOSTNAME],
         username = args[ARG_USERNAME],
-        password = args[ARG_PASSWORD],
-        itemIds = args.drop(3)
+        password = args[ARG_PASSWORD]
       )
+      Main(connection)
       blockUntilShutdown()
       println("App stopping")
     }

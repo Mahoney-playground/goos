@@ -15,8 +15,8 @@ class ApplicationRunner(
   fun startBiddingIn(
     vararg auctions: FakeAuctionServer
   ) {
-    driver.clickJoin()
     auctions.forEach { auction ->
+      driver.startBiddingFor(auction.itemId)
       driver.showSniperState(auction.itemId, 0, 0, STATE_JOINING)
     }
   }

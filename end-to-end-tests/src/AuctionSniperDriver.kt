@@ -60,17 +60,24 @@ class AuctionSniperDriver(
     titles shouldBe listOf("Item", "Last Price", "Last Bid", "State")
   }
 
-  fun clickJoin() = driver.findElementByName(SNIPER_JOIN_BUTTON_NAME).click()
-
   fun clickReset() = driver.findElementByName(SNIPER_RESET_BUTTON_NAME).click()
+
+  fun startBiddingFor(itemId: String) {
+    itemIdField().sendKeys(itemId)
+    bidButton().click()
+  }
+
+  private fun itemIdField() = driver.findElementByName(NEW_ITEM_ID_NAME)
+  private fun bidButton() = driver.findElementByName(JOIN_BUTTON_NAME)
 
   companion object {
 
     const val MAIN_WINDOW_NAME: String = "Auction Sniper Name"
 
     const val SNIPERS_TABLE_NAME: String = "snipers table"
-    const val SNIPER_JOIN_BUTTON_NAME: String = "sniper join button"
     const val SNIPER_RESET_BUTTON_NAME: String = "sniper reset button"
+    const val NEW_ITEM_ID_NAME: String = "new item id field"
+    const val JOIN_BUTTON_NAME: String = "join button"
   }
 }
 
