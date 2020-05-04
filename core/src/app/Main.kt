@@ -3,6 +3,7 @@ package goos.core.app
 import goos.core.auction.xmpp.AuctionMessageTranslator
 import goos.core.auction.xmpp.XMPPAuction
 import goos.core.core.AuctionSniper
+import goos.core.core.SniperSnapshot
 import goos.core.ui.MainWindow
 import goos.core.ui.SnipersTableModel
 import goos.core.ui.SwingThreadSniperListener
@@ -42,16 +43,28 @@ class Main(
   }
 
   internal fun joinAuctions() {
-    connect()
 
-    disconnectWhenUICloses()
+    if (!initialised()) {
+      connect()
+
+      disconnectWhenUICloses()
+    }
 
     itemIds.forEach { itemId ->
       joinAuction(itemId)
     }
   }
 
+  internal fun reset() {
+    SwingUtilities.invokeLater {
+      snipers.reset()
+    }
+  }
+
+  private fun initialised(): Boolean = connection != null
+
   private fun joinAuction(itemId: String) {
+    safelyAddItemToModel(itemId)
 
     val chat = ChatManager.getInstanceFor(connection)
       .createChat(
@@ -72,14 +85,18 @@ class Main(
     auction.join()
   }
 
-  private fun connect() {
-    if (connection == null) {
-      connection = connection(
-        hostname,
-        username,
-        password
-      )
+  private fun safelyAddItemToModel(itemId: String) {
+    SwingUtilities.invokeLater {
+      snipers.addSniper(SniperSnapshot.joining(itemId))
     }
+  }
+
+  private fun connect() {
+    connection = connection(
+      hostname,
+      username,
+      password
+    )
   }
 
   private fun disconnectWhenUICloses() =

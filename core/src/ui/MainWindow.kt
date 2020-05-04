@@ -2,6 +2,7 @@ package goos.core.ui
 
 import goos.core.app.Main
 import java.awt.BorderLayout
+import java.awt.BorderLayout.CENTER
 import java.awt.BorderLayout.NORTH
 import java.awt.BorderLayout.SOUTH
 import javax.swing.JButton
@@ -9,6 +10,7 @@ import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.JScrollPane
 import javax.swing.JTable
+import javax.swing.SwingUtilities
 
 class MainWindow(
   private val main: Main,
@@ -35,7 +37,17 @@ class MainWindow(
         add(JButton("Join").apply {
           name = SNIPER_JOIN_BUTTON_NAME
           addActionListener {
-            main.joinAuctions()
+            SwingUtilities.invokeLater {
+              main.joinAuctions()
+            }
+          }
+        }, CENTER)
+        add(JButton("Reset").apply {
+          name = SNIPER_RESET_BUTTON_NAME
+          addActionListener {
+            SwingUtilities.invokeLater {
+              main.reset()
+            }
           }
         }, SOUTH)
         pack()
@@ -47,5 +59,6 @@ class MainWindow(
     const val MAIN_WINDOW_NAME: String = "Auction Sniper Name"
     const val SNIPERS_TABLE_NAME: String = "snipers table"
     const val SNIPER_JOIN_BUTTON_NAME: String = "sniper join button"
+    const val SNIPER_RESET_BUTTON_NAME: String = "sniper reset button"
   }
 }

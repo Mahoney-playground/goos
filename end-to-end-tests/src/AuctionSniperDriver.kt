@@ -5,6 +5,7 @@ import io.kotest.inspectors.forOne
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.runBlocking
 import org.openqa.selenium.By
+import org.openqa.selenium.NoSuchElementException
 import org.openqa.selenium.Platform
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.DesiredCapabilities
@@ -47,8 +48,6 @@ class AuctionSniperDriver(
     }
   }
 
-  fun joinAuctions() = driver.findElementByName(SNIPER_JOIN_BUTTON_NAME).click()
-
   fun hasTitle(title: String) {
     driver.title shouldBe title
   }
@@ -61,12 +60,17 @@ class AuctionSniperDriver(
     titles shouldBe listOf("Item", "Last Price", "Last Bid", "State")
   }
 
+  fun clickJoin() = driver.findElementByName(SNIPER_JOIN_BUTTON_NAME).click()
+
+  fun clickReset() = driver.findElementByName(SNIPER_RESET_BUTTON_NAME).click()
+
   companion object {
 
     const val MAIN_WINDOW_NAME: String = "Auction Sniper Name"
 
     const val SNIPERS_TABLE_NAME: String = "snipers table"
     const val SNIPER_JOIN_BUTTON_NAME: String = "sniper join button"
+    const val SNIPER_RESET_BUTTON_NAME: String = "sniper reset button"
   }
 }
 
@@ -76,10 +80,26 @@ private class JTableDriver(
   private val element: WebElement
 ) {
   fun hasRow(vararg cellMatchers: (String) -> Unit) {
-    (1 until 100).toList().forOne { rowNum ->
+    (1 until element.rowCount() + 1).toList().forOne { rowNum ->
       cellMatchers.toList().forEachIndexed { index, cellMatcher ->
         cellMatcher(element.findElement(By.cssSelector(".::mnth-cell($rowNum, ${index + 1})")).text)
       }
     }
   }
 }
+
+private fun WebElement.rowCount(): Int {
+  var numberOfRows = 0
+  while (hasRow(numberOfRows + 1)) {
+    numberOfRows += 1
+  }
+  return numberOfRows
+}
+
+private fun WebElement.hasRow(row: Int): Boolean =
+  try {
+    findElement(By.cssSelector(".::mnth-cell($row, 1)")).text
+    true
+  } catch (e: NoSuchElementException) {
+    false
+  }

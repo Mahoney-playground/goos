@@ -1,5 +1,6 @@
 package goos.core.ui
 
+import goos.core.core.Defect
 import goos.core.core.SniperListener
 import goos.core.core.SniperSnapshot
 import goos.core.core.SniperState.BIDDING
@@ -11,25 +12,38 @@ import javax.swing.table.AbstractTableModel
 
 class SnipersTableModel : AbstractTableModel(), SniperListener {
 
-  private var sniperSnapshot = STARTING_UP
+  private val sniperSnapshots = mutableListOf<SniperSnapshot>()
 
   override fun getColumnCount(): Int = Column.values().size
-  override fun getRowCount(): Int = 1
+  override fun getRowCount(): Int = sniperSnapshots.size
   override fun getColumnName(column: Int): String = Column.at(column).title
 
-  override fun getValueAt(rowIndex: Int, columnIndex: Int): Any =
-    Column.at(columnIndex).valueIn(sniperSnapshot)
+  override fun getValueAt(rowIndex: Int, columnIndex: Int): Any {
+    val sniperSnapshot = sniperSnapshots[rowIndex]
+    return Column.at(columnIndex).valueIn(sniperSnapshot)
+  }
 
   override fun sniperStateChanged(
     sniperSnapshot: SniperSnapshot
   ) {
-    this.sniperSnapshot = sniperSnapshot
-    fireTableRowsUpdated(0, 0)
+    val index = sniperSnapshots.indexOfFirst { it.itemId == sniperSnapshot.itemId }
+    if (index >= 0) {
+      sniperSnapshots[index] = sniperSnapshot
+      fireTableRowsUpdated(index, index)
+    } else {
+      throw Defect("No sniper with id [${sniperSnapshot.itemId}]")
+    }
   }
 
-  companion object {
+  fun addSniper(sniper: SniperSnapshot) {
+    sniperSnapshots.add(sniper)
+    fireTableRowsInserted(rowCount - 1, rowCount - 1)
+  }
 
-    private val STARTING_UP = SniperSnapshot("", 0, 0, JOINING)
+  fun reset() {
+    val rows = rowCount
+    sniperSnapshots.clear()
+    fireTableRowsDeleted(0, rows)
   }
 }
 
@@ -43,13 +57,13 @@ enum class Column(val title: String) {
 
   companion object {
     fun at(offset: Int) = values()[offset]
-
-    private fun SniperSnapshot.stateText(): String = when (state) {
-      JOINING -> "Joining"
-      BIDDING -> "Bidding"
-      WINNING -> "Winning"
-      LOST -> "Lost"
-      WON -> "Won"
-    }
   }
+}
+
+internal fun SniperSnapshot.stateText(): String = when (state) {
+  JOINING -> "Joining"
+  BIDDING -> "Bidding"
+  WINNING -> "Winning"
+  LOST -> "Lost"
+  WON -> "Won"
 }

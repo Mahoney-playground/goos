@@ -15,7 +15,7 @@ class ApplicationRunner(
   fun startBiddingIn(
     vararg auctions: FakeAuctionServer
   ) {
-    driver.joinAuctions()
+    driver.clickJoin()
     auctions.forEach { auction ->
       driver.showSniperState(auction.itemId, 0, 0, STATE_JOINING)
     }
@@ -35,6 +35,10 @@ class ApplicationRunner(
 
   fun showSniperHasWonAuction(auction: FakeAuctionServer, lastPrice: Int) {
     driver.showSniperState(auction.itemId, lastPrice, lastPrice, STATE_WON)
+  }
+
+  fun reset() {
+    driver.clickReset()
   }
 
   companion object {

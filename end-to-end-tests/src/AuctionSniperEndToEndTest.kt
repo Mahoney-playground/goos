@@ -79,7 +79,7 @@ class AuctionSniperEndToEndTest : StringSpec({
     application.showSniperHasLostAuction(auction, lastPrice = 1_198, lastBid = 1_308)
   }
 
-  "!sniper bids for multiple items" {
+  "sniper bids for multiple items" {
 
     auction.startSellingItem()
     auction2.startSellingItem()
@@ -92,7 +92,7 @@ class AuctionSniperEndToEndTest : StringSpec({
     auction.hasReceivedBid(bid = 1_098, sniperId = SNIPER_XMPP_ID)
 
     auction2.reportPrice(price = 500, increment = 21, bidder = "other bidder")
-    auction2.hasReceivedBid(bid = 421, sniperId = SNIPER_XMPP_ID)
+    auction2.hasReceivedBid(bid = 521, sniperId = SNIPER_XMPP_ID)
 
     auction.reportPrice(price = 1_098, increment = 97, bidder = SNIPER_XMPP_ID)
     auction2.reportPrice(price = 521, increment = 22, bidder = SNIPER_XMPP_ID)
@@ -107,9 +107,8 @@ class AuctionSniperEndToEndTest : StringSpec({
     application.showSniperHasWonAuction(auction2, lastPrice = 521)
   }
 
-  afterTest {
-    auction.stop()
-  }
+  afterTest { auction.stop() }
+  afterTest { application.reset() }
 }) {
   override fun isolationMode() = InstancePerTest
 }
