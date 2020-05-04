@@ -6,6 +6,15 @@ FROM openjdk:14.0.1-jdk-slim as worker
 ARG username
 ARG work_dir
 
+RUN apt-get -qq update && \
+    DEBIAN_FRONTEND=noninteractive apt-get -qq -o=Dpkg::Use-Pty=0 install \
+      libxrender1 libxtst6 libxi6 \
+      fontconfig \
+      xvfb \
+      && rm -rf /var/lib/apt/lists/*
+RUN mkdir /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
+COPY --chown=root scripts/simple-xvfb-run.sh /usr/bin/simple-xvfb-run
+
 RUN addgroup --system $username --gid 1000 && \
     adduser --system $username --ingroup $username --uid 1001
 
@@ -27,30 +36,13 @@ RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
 RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
     --network=none \
     set +e; \
-    ./gradlew --offline check projectReport install; \
+    simple-xvfb-run ./gradlew --offline check projectReport install; \
     echo $? > build_result;
 
 FROM builder as checker
 RUN build_result=$(cat build_result); \
     if [ "$build_result" -gt 0 ]; then >&2 echo "The build failed, check output of builder stage"; fi; \
     exit "$build_result"
-
-
-FROM worker as runner
-ARG username
-ARG work_dir
-
-USER root
-RUN apt-get -qq update && \
-    DEBIAN_FRONTEND=noninteractive apt-get -qq -o=Dpkg::Use-Pty=0 install \
-      libxrender1 libxtst6 libxi6 \
-      fontconfig \
-      xvfb \
-#      sudo procps \
-      && rm -rf /var/lib/apt/lists/*
-RUN mkdir /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
-COPY --chown=root scripts/simple-xvfb-run.sh /usr/bin/simple-xvfb-run
-USER $username
 
 
 FROM worker as end-to-end-tests
@@ -64,14 +56,14 @@ COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/e
 ENTRYPOINT ["java", "-jar", "--illegal-access=deny", "end-to-end-tests-0.1.0.jar"]
 
 
-FROM runner as app
+FROM worker as app
 ARG username
 ARG work_dir
 
 ENTRYPOINT ["simple-xvfb-run", "java", "--illegal-access=deny", "-jar", "core-0.1.0.jar"]
 
 
-FROM runner as instrumentedapp
+FROM worker as instrumentedapp
 ARG username
 ARG work_dir
 
