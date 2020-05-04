@@ -1,5 +1,6 @@
 package goos
 
+import goos.uitestsupport.AuctionSniperDriver
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime

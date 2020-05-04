@@ -2,7 +2,8 @@ rootProject.name = "goos"
 
 include(
   ":core",
-  ":end-to-end-tests"
+  ":end-to-end-tests",
+  ":ui-test-support"
 )
 
 includeChildrenOf("libraries") { ":${it.name}" }

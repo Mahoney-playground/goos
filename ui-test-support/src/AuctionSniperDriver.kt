@@ -1,4 +1,4 @@
-package goos
+package goos.uitestsupport
 
 import io.kotest.assertions.timing.eventually
 import io.kotest.inspectors.forOne
@@ -63,6 +63,7 @@ class AuctionSniperDriver(
   fun clickReset() = driver.findElementByName(SNIPER_RESET_BUTTON_NAME).click()
 
   fun startBiddingFor(itemId: String) {
+    itemIdField().clear()
     itemIdField().sendKeys(itemId)
     bidButton().click()
   }
