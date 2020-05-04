@@ -3,8 +3,14 @@ plugins {
 }
 
 dependencies {
-  api("com.jaliansystems:marathon-java-driver:5.2.6.0")
+  api("org.seleniumhq.selenium:selenium-remote-driver:3.14.0")
+  constraints {
+    api(byteBuddy)
+  }
+
   implementation(kotest("core"))
   implementation(kotlinCoroutines("core"))
-  runtimeOnly("net.bytebuddy:byte-buddy:1.10.9")
+  constraints {
+    implementation(mockk)
+  }
 }

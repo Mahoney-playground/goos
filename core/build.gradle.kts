@@ -10,7 +10,8 @@ dependencies {
   implementation(smack("java7"))
   implementation(smack("im"))
   implementation(project(":kotlinlangext"))
-  implementation(project(":ui-test-support"))
+  testImplementation(marathon("java-driver"))
+  testImplementation(project(":ui-test-support"))
 }
 
 application {
