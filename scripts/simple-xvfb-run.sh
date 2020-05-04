@@ -23,8 +23,6 @@ clean_up_processes() {
 
 main() {
 
-  trap 'clean_up_processes $main_pid $xvfb_pid' EXIT
-
   local display=99
 
   Xvfb ":$display" -ac &
@@ -34,6 +32,9 @@ main() {
 
   DISPLAY=":$display" "$@" &
   local main_pid=$!
+
+  # shellcheck disable=SC2064
+  trap "clean_up_processes $main_pid $xvfb_pid" EXIT
 
   wait $main_pid
 }
