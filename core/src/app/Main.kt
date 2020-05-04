@@ -7,6 +7,7 @@ import goos.core.core.SniperSnapshot
 import goos.core.ui.MainWindow
 import goos.core.ui.SnipersTableModel
 import goos.core.ui.SwingThreadSniperListener
+import goos.core.ui.api.UserRequestListener
 import org.jivesoftware.smack.ConnectionConfiguration
 import org.jivesoftware.smack.chat.Chat
 import org.jivesoftware.smack.chat.ChatManager
@@ -33,44 +34,41 @@ class Main(
   init {
     startUserInterface()
     disconnectWhenUICloses()
+    addUserRequestListener()
   }
 
   private fun startUserInterface() = SwingUtilities.invokeAndWait {
-    ui = MainWindow(this, snipers)
+    ui = MainWindow(snipers)
   }
 
-  internal fun reset() {
-    SwingUtilities.invokeLater {
-      snipers.reset()
-    }
-  }
+  private fun addUserRequestListener() {
+    ui.addUserRequestListener(object : UserRequestListener {
+      override fun joinAuction(itemId: String) {
+        snipers.addSniper(SniperSnapshot.joining(itemId))
 
-  private fun joinAuction(itemId: String) {
-    safelyAddItemToModel(itemId)
+        val chat = ChatManager.getInstanceFor(connection)
+          .createChat(
+            auctionId(itemId, connection.host),
+            null
+          )
+        notToBeGCd.add(chat)
 
-    val chat = ChatManager.getInstanceFor(connection)
-      .createChat(
-        auctionId(itemId, connection.host),
-        null
-      )
-    notToBeGCd.add(chat)
+        val auction = XMPPAuction(chat)
+        chat.addMessageListener(AuctionMessageTranslator(
+          connection.user.toString(),
+          AuctionSniper(
+            itemId,
+            auction,
+            SwingThreadSniperListener(snipers)
+          )
+        ))
+        auction.join()
+      }
 
-    val auction = XMPPAuction(chat)
-    chat.addMessageListener(AuctionMessageTranslator(
-      connection.user.toString(),
-      AuctionSniper(
-        itemId,
-        auction,
-        SwingThreadSniperListener(snipers)
-      )
-    ))
-    auction.join()
-  }
-
-  private fun safelyAddItemToModel(itemId: String) {
-    SwingUtilities.invokeLater {
-      snipers.addSniper(SniperSnapshot.joining(itemId))
-    }
+      override fun reset() {
+        snipers.reset()
+      }
+    })
   }
 
   private fun disconnectWhenUICloses() =
