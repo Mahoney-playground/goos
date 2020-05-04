@@ -20,6 +20,8 @@ data class SniperSnapshot(
   fun closed() =
     SniperSnapshot(itemId, lastPrice, lastBid, state.whenAuctionClosed())
 
+  fun isForSameItemAs(sniperSnapshot: SniperSnapshot) = itemId == sniperSnapshot.itemId
+
   companion object {
     fun joining(itemId: String) = SniperSnapshot(itemId, 0, 0, JOINING)
   }

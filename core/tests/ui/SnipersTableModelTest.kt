@@ -32,10 +32,6 @@ class SnipersTableModelTest : StringSpec({
     addTableModelListener(listener)
   }
 
-  infix fun Column.shouldHaveValue(expected: String) {
-    model.getValueAt(rowIndex = 0, columnIndex = ordinal) shouldBe expected
-  }
-
   infix fun List<Any>.shouldMatch(sniperSnapshot: SniperSnapshot) {
     get(ITEM_IDENTIFIER.ordinal) shouldBe sniperSnapshot.itemId
     get(LAST_BID.ordinal) shouldBe sniperSnapshot.lastBid
@@ -121,10 +117,11 @@ class SnipersTableModelTest : StringSpec({
 
   "throws defect if no existing sniper for an update" {
 
+    val sniperSnapshot = SniperSnapshot.joining("no such item")
     val e = shouldThrow<Defect> {
-      model.sniperStateChanged(SniperSnapshot.joining("no such item"))
+      model.sniperStateChanged(sniperSnapshot)
     }
-    e.message shouldBe "No sniper with id [no such item]"
+    e.message shouldBe "No sniper for same item as $sniperSnapshot"
   }
 }) {
   override fun isolationMode() = InstancePerTest

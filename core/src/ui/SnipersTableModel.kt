@@ -26,13 +26,10 @@ class SnipersTableModel : AbstractTableModel(), SniperListener {
   override fun sniperStateChanged(
     sniperSnapshot: SniperSnapshot
   ) {
-    val index = sniperSnapshots.indexOfFirst { it.itemId == sniperSnapshot.itemId }
-    if (index >= 0) {
-      sniperSnapshots[index] = sniperSnapshot
-      fireTableRowsUpdated(index, index)
-    } else {
-      throw Defect("No sniper with id [${sniperSnapshot.itemId}]")
-    }
+    val index = sniperSnapshots.indexOfFirstOrNull { it.isForSameItemAs(sniperSnapshot) }
+      ?: throw Defect("No sniper for same item as $sniperSnapshot")
+    sniperSnapshots[index] = sniperSnapshot
+    fireTableRowsUpdated(index, index)
   }
 
   fun addSniper(sniper: SniperSnapshot) {
@@ -66,4 +63,9 @@ internal fun SniperSnapshot.stateText(): String = when (state) {
   WINNING -> "Winning"
   LOST -> "Lost"
   WON -> "Won"
+}
+
+private fun <T> List<T>.indexOfFirstOrNull(predicate: (T) -> Boolean): Int? {
+  val index = indexOfFirst(predicate)
+  return if (index >= 0) index else null
 }
