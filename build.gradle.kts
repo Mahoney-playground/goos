@@ -1,5 +1,6 @@
 import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorExtension.Generator
 import org.gradle.api.JavaVersion.VERSION_14
+import org.jetbrains.gradle.ext.IdeaExtPlugin
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jlleitschuh.gradle.ktlint.KtlintPlugin
@@ -37,6 +38,7 @@ subprojects {
 
     apply<KtlintPlugin>()
     apply<BuildDashboardPlugin>()
+    apply<IdeaExtPlugin>()
 
     val test by tasks.existing(Test::class)
 

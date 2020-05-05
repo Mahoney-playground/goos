@@ -28,6 +28,7 @@ kotlin {
 
 dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.1")
+  implementation("gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:0.7")
 }
 
 gradlePlugin {
