@@ -4,6 +4,8 @@ import goos.core.auction.api.Auction
 import goos.core.auction.api.AuctionEventListener
 import goos.core.auction.api.AuctionEventListener.PriceSource
 import goos.core.auction.api.AuctionEventListener.PriceSource.FromSniper
+import goos.core.ui.api.SniperListener
+import goos.core.ui.api.SniperSnapshot
 
 class AuctionSniper(
   itemId: String,

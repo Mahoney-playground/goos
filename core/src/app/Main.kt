@@ -3,11 +3,11 @@ package goos.core.app
 import goos.core.auction.xmpp.AuctionMessageTranslator
 import goos.core.auction.xmpp.XMPPAuction
 import goos.core.core.AuctionSniper
-import goos.core.core.SniperSnapshot
-import goos.core.ui.MainWindow
-import goos.core.ui.SnipersTableModel
-import goos.core.ui.SwingThreadSniperListener
+import goos.core.ui.api.SniperSnapshot
 import goos.core.ui.api.UserRequestListener
+import goos.core.ui.swing.MainWindow
+import goos.core.ui.swing.SnipersTableModel
+import goos.core.ui.swing.SwingThreadSniperListener
 import org.jivesoftware.smack.ConnectionConfiguration
 import org.jivesoftware.smack.chat.Chat
 import org.jivesoftware.smack.chat.ChatManager

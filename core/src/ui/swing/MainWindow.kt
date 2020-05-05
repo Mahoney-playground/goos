@@ -1,4 +1,4 @@
-package goos.core.ui
+package goos.core.ui.swing
 
 import goos.core.ui.api.UserRequestListener
 import java.awt.BorderLayout

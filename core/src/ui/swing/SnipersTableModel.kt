@@ -1,13 +1,13 @@
-package goos.core.ui
+package goos.core.ui.swing
 
-import goos.core.core.Defect
-import goos.core.core.SniperListener
-import goos.core.core.SniperSnapshot
-import goos.core.core.SniperState.BIDDING
-import goos.core.core.SniperState.JOINING
-import goos.core.core.SniperState.LOST
-import goos.core.core.SniperState.WINNING
-import goos.core.core.SniperState.WON
+import goos.core.common.Defect
+import goos.core.ui.api.SniperListener
+import goos.core.ui.api.SniperSnapshot
+import goos.core.ui.api.SniperState.BIDDING
+import goos.core.ui.api.SniperState.JOINING
+import goos.core.ui.api.SniperState.LOST
+import goos.core.ui.api.SniperState.WINNING
+import goos.core.ui.api.SniperState.WON
 import javax.swing.table.AbstractTableModel
 
 class SnipersTableModel : AbstractTableModel(), SniperListener {
@@ -16,7 +16,9 @@ class SnipersTableModel : AbstractTableModel(), SniperListener {
 
   override fun getColumnCount(): Int = Column.values().size
   override fun getRowCount(): Int = sniperSnapshots.size
-  override fun getColumnName(column: Int): String = Column.at(column).title
+  override fun getColumnName(column: Int): String = Column.at(
+    column
+  ).title
 
   override fun getValueAt(rowIndex: Int, columnIndex: Int): Any {
     val sniperSnapshot = sniperSnapshots[rowIndex]
