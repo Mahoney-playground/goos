@@ -22,7 +22,7 @@ class MainWindow(
 
   init {
     name = MAIN_WINDOW_NAME
-    fillContentPane(makeSnipersTable(), makeControls())
+    fillContentPane(makeSnipersTable(), makeControls(), makeConnectionControls())
     pack()
     defaultCloseOperation = EXIT_ON_CLOSE
     isVisible = true
@@ -46,21 +46,31 @@ class MainWindow(
     })
   }
 
-  private fun fillContentPane(snipersTable: JTable, controls: Component) {
+  private fun fillContentPane(
+    snipersTable: JTable,
+    controls: Component,
+    connectionControls: Component
+  ) {
     contentPane.apply {
       add(JPanel().apply {
         layout = BorderLayout()
         add(controls, NORTH)
         add(JScrollPane(snipersTable), CENTER)
-        add(JButton("Reset").apply {
-          name = SNIPER_RESET_BUTTON_NAME
-          addActionListener {
-            userRequests.reset()
-          }
-        }, SOUTH)
+        add(connectionControls, SOUTH)
         pack()
       })
     }
+  }
+
+  private fun makeConnectionControls() = JPanel(FlowLayout()).apply {
+    add(JButton("Connect").apply {
+      name = SNIPER_CONNECT_BUTTON_NAME
+      addActionListener { userRequests.connect() }
+    })
+    add(JButton("Reset").apply {
+      name = SNIPER_RESET_BUTTON_NAME
+      addActionListener { userRequests.reset() }
+    })
   }
 
   fun addUserRequestListener(userRequestListener: UserRequestListener) {
@@ -71,6 +81,7 @@ class MainWindow(
     const val MAIN_WINDOW_NAME: String = "Auction Sniper Name"
     const val SNIPERS_TABLE_NAME: String = "snipers table"
     const val SNIPER_RESET_BUTTON_NAME: String = "sniper reset button"
+    const val SNIPER_CONNECT_BUTTON_NAME: String = "sniper connect button"
     const val NEW_ITEM_ID_NAME: String = "new item id field"
     const val JOIN_BUTTON_NAME: String = "join button"
   }
@@ -89,5 +100,9 @@ private class MultiUserRequestListener : UserRequestListener {
 
   override fun reset() {
     listeners.forEach { it.reset() }
+  }
+
+  override fun connect() {
+    listeners.forEach { it.connect() }
   }
 }

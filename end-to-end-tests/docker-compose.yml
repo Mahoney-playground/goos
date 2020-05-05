@@ -11,9 +11,6 @@ services:
   app.internal:
     image: docker.pkg.github.com/mahoney-playground/goos/goos-instrumentedapp:${GOOS_TAG:?"You must set GOOS_TAG"}
     command: auctionhost.internal sniper sniper
-    depends_on:
-      auctionhost.internal:
-        condition: service_healthy
     build:
       context: ..
       target: instrumentedapp

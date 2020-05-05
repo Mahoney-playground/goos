@@ -11,6 +11,7 @@ class ApplicationRunner(
   init {
     driver.hasTitle("Auction Sniper")
     driver.hasColumnTitles()
+    driver.connect()
   }
 
   fun startBiddingIn(
@@ -39,7 +40,7 @@ class ApplicationRunner(
   }
 
   fun reset() {
-    driver.clickReset()
+    driver.reset()
   }
 
   companion object {

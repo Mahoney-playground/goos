@@ -23,10 +23,18 @@ import java.util.logging.Level.WARNING
 import java.util.logging.Logger
 import javax.swing.SwingUtilities
 
+/*
+ * The sniper user will not exist until the end to end tests create him!
+ * It's very difficult to do it outside the end to end tests.
+ *
+ * Besides, it's better to have the app startup decoupled from the XMPP server.
+ */
 class Main(
-  private val connection: XMPPTCPConnection
+  private val hostname: String,
+  private val username: String,
+  private val password: String
 ) {
-
+  private var connection: XMPPTCPConnection? = null
   private val snipers = SnipersTableModel()
   private lateinit var ui: MainWindow
   private val notToBeGCd = mutableListOf<Chat>()
@@ -46,16 +54,16 @@ class Main(
       override fun joinAuction(itemId: String) {
         snipers.addSniper(SniperSnapshot.joining(itemId))
 
-        val chat = ChatManager.getInstanceFor(connection)
+        val chat = ChatManager.getInstanceFor(connection!!)
           .createChat(
-            auctionId(itemId, connection.host),
+            auctionId(itemId, connection!!.host),
             null
           )
         notToBeGCd.add(chat)
 
         val auction = XMPPAuction(chat)
         chat.addMessageListener(AuctionMessageTranslator(
-          connection.user.toString(),
+          connection!!.user.toString(),
           AuctionSniper(
             itemId,
             auction,
@@ -68,13 +76,19 @@ class Main(
       override fun reset() {
         snipers.reset()
       }
+
+      override fun connect() {
+        if (connection?.isConnected != true) {
+          connection = connection(hostname, username, password)
+        }
+      }
     })
   }
 
   private fun disconnectWhenUICloses() =
     ui.addWindowListener(object : WindowAdapter() {
       override fun windowClosed(e: WindowEvent?) {
-        connection.disconnect()
+        connection?.disconnect()
       }
     })
 
@@ -92,12 +106,11 @@ class Main(
       Logger.getLogger("").level = WARNING
 
       println("Starting app")
-      val connection = connection(
+      Main(
         hostname = args[ARG_HOSTNAME],
         username = args[ARG_USERNAME],
         password = args[ARG_PASSWORD]
       )
-      Main(connection)
       blockUntilShutdown()
       println("App stopping")
     }

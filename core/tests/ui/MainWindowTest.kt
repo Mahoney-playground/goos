@@ -24,7 +24,7 @@ class MainWindowTest : StringSpec({
 
     driver.startBiddingFor("an item-id")
 
-    eventually(1.seconds) {
+    eventually(5.seconds) {
       verify(exactly = 1) {
         userRequestListener.joinAuction("an item-id")
       }
@@ -33,11 +33,22 @@ class MainWindowTest : StringSpec({
 
   "make user request when reset button clicked" {
 
-    driver.clickReset()
+    driver.reset()
 
     eventually(1.seconds) {
       verify(exactly = 1) {
         userRequestListener.reset()
+      }
+    }
+  }
+
+  "make user request when connect button clicked" {
+
+    driver.connect()
+
+    eventually(1.seconds) {
+      verify(exactly = 1) {
+        userRequestListener.connect()
       }
     }
   }
