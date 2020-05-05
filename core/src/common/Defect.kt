@@ -1,3 +1,3 @@
-package goos.core.common
+package goos.common
 
 class Defect(message: String) : RuntimeException(message)

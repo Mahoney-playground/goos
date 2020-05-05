@@ -1,14 +1,14 @@
-package goos.core.core
+package goos.core
 
-import goos.core.auction.api.Auction
-import goos.core.auction.api.AuctionEventListener.PriceSource.FromOtherBidder
-import goos.core.auction.api.AuctionEventListener.PriceSource.FromSniper
-import goos.core.ui.api.SniperListener
-import goos.core.ui.api.UiSniperSnapshot
-import goos.core.ui.api.UiSniperState.BIDDING
-import goos.core.ui.api.UiSniperState.LOST
-import goos.core.ui.api.UiSniperState.WINNING
-import goos.core.ui.api.UiSniperState.WON
+import goos.auction.api.Auction
+import goos.auction.api.AuctionEventListener.PriceSource.FromOtherBidder
+import goos.auction.api.AuctionEventListener.PriceSource.FromSniper
+import goos.ui.api.SniperListener
+import goos.ui.api.UiSniperSnapshot
+import goos.ui.api.UiSniperState.BIDDING
+import goos.ui.api.UiSniperState.LOST
+import goos.ui.api.UiSniperState.WINNING
+import goos.ui.api.UiSniperState.WON
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.StringSpec
 import io.mockk.Called

@@ -1,8 +1,8 @@
-package goos.core.auction.xmpp
+package goos.auction.xmpp
 
-import goos.core.auction.api.AuctionEventListener
-import goos.core.auction.api.AuctionEventListener.PriceSource.FromOtherBidder
-import goos.core.auction.api.AuctionEventListener.PriceSource.FromSniper
+import goos.auction.api.AuctionEventListener
+import goos.auction.api.AuctionEventListener.PriceSource.FromOtherBidder
+import goos.auction.api.AuctionEventListener.PriceSource.FromSniper
 import io.kotest.core.spec.IsolationMode.InstancePerTest
 import io.kotest.core.spec.style.StringSpec
 import io.mockk.mockk

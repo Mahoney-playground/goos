@@ -1,7 +1,7 @@
-package goos.core.ui.swing
+package goos.ui.swing
 
-import goos.core.ui.api.SniperListener
-import goos.core.ui.api.UiSniperSnapshot
+import goos.ui.api.SniperListener
+import goos.ui.api.UiSniperSnapshot
 import javax.swing.SwingUtilities
 
 internal class SwingThreadSniperListener(

@@ -1,9 +1,9 @@
-package goos.core.auction.xmpp
+package goos.auction.xmpp
 
-import goos.core.auction.api.AuctionEventListener
-import goos.core.auction.api.AuctionEventListener.PriceSource
-import goos.core.auction.api.AuctionEventListener.PriceSource.FromOtherBidder
-import goos.core.auction.api.AuctionEventListener.PriceSource.FromSniper
+import goos.auction.api.AuctionEventListener
+import goos.auction.api.AuctionEventListener.PriceSource
+import goos.auction.api.AuctionEventListener.PriceSource.FromOtherBidder
+import goos.auction.api.AuctionEventListener.PriceSource.FromSniper
 import org.jivesoftware.smack.chat.Chat
 import org.jivesoftware.smack.chat.ChatMessageListener
 import org.jivesoftware.smack.packet.Message

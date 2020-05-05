@@ -1,7 +1,7 @@
-package goos.core.core
+package goos.core
 
-import goos.core.common.Defect
-import goos.core.ui.api.UiSniperState
+import goos.common.Defect
+import goos.ui.api.UiSniperState
 
 enum class SniperState(
   private val whenAuctionClosed: SniperState?,

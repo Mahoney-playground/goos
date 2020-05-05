@@ -1,9 +1,9 @@
-package goos.core.core
+package goos.core
 
-import goos.core.core.SniperState.BIDDING
-import goos.core.core.SniperState.JOINING
-import goos.core.core.SniperState.WINNING
-import goos.core.ui.api.UiSniperSnapshot
+import goos.core.SniperState.BIDDING
+import goos.core.SniperState.JOINING
+import goos.core.SniperState.WINNING
+import goos.ui.api.UiSniperSnapshot
 
 data class SniperSnapshot(
   val itemId: String,

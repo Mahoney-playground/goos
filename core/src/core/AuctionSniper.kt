@@ -1,10 +1,10 @@
-package goos.core.core
+package goos.core
 
-import goos.core.auction.api.Auction
-import goos.core.auction.api.AuctionEventListener
-import goos.core.auction.api.AuctionEventListener.PriceSource
-import goos.core.auction.api.AuctionEventListener.PriceSource.FromSniper
-import goos.core.ui.api.SniperListener
+import goos.auction.api.Auction
+import goos.auction.api.AuctionEventListener
+import goos.auction.api.AuctionEventListener.PriceSource
+import goos.auction.api.AuctionEventListener.PriceSource.FromSniper
+import goos.ui.api.SniperListener
 
 class AuctionSniper(
   itemId: String,

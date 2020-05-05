@@ -1,4 +1,4 @@
-package goos.core.ui.api
+package goos.ui.api
 
 import java.util.EventListener
 

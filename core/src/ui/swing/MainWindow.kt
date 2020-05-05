@@ -1,6 +1,6 @@
-package goos.core.ui.swing
+package goos.ui.swing
 
-import goos.core.ui.api.UserRequestListener
+import goos.ui.api.UserRequestListener
 import java.awt.BorderLayout
 import java.awt.BorderLayout.CENTER
 import java.awt.BorderLayout.NORTH

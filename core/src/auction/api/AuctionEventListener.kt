@@ -1,4 +1,4 @@
-package goos.core.auction.api
+package goos.auction.api
 
 interface AuctionEventListener {
 

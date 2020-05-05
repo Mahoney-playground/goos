@@ -15,9 +15,9 @@ dependencies {
 }
 
 application {
-  mainClassName = "goos.core.app.Main"
+  mainClassName = "goos.app.Main"
 }
 
 idea {
-  setPackagePrefix("goos.core")
+  setPackagePrefix("goos")
 }

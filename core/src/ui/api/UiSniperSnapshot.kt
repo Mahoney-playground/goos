@@ -1,6 +1,6 @@
-package goos.core.ui.api
+package goos.ui.api
 
-import goos.core.ui.api.UiSniperState.JOINING
+import goos.ui.api.UiSniperState.JOINING
 
 data class UiSniperSnapshot(
   val itemId: String,
