@@ -5,7 +5,6 @@ import goos.core.auction.api.AuctionEventListener
 import goos.core.auction.api.AuctionEventListener.PriceSource
 import goos.core.auction.api.AuctionEventListener.PriceSource.FromSniper
 import goos.core.ui.api.SniperListener
-import goos.core.ui.api.SniperSnapshot
 
 class AuctionSniper(
   itemId: String,
@@ -39,6 +38,6 @@ class AuctionSniper(
   }
 
   private fun notifyChange() {
-    sniperListener.sniperStateChanged(snapshot)
+    sniperListener.sniperStateChanged(snapshot.toUi())
   }
 }

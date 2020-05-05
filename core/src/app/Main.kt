@@ -3,7 +3,7 @@ package goos.core.app
 import goos.core.auction.xmpp.AuctionMessageTranslator
 import goos.core.auction.xmpp.XMPPAuction
 import goos.core.core.AuctionSniper
-import goos.core.ui.api.SniperSnapshot
+import goos.core.ui.api.UiSniperSnapshot
 import goos.core.ui.api.UserRequestListener
 import goos.core.ui.swing.MainWindow
 import goos.core.ui.swing.SnipersTableModel
@@ -52,7 +52,7 @@ class Main(
   private fun addUserRequestListener() {
     ui.addUserRequestListener(object : UserRequestListener {
       override fun joinAuction(itemId: String) {
-        snipers.addSniper(SniperSnapshot.joining(itemId))
+        snipers.addSniper(UiSniperSnapshot.joining(itemId))
 
         val chat = ChatManager.getInstanceFor(connection!!)
           .createChat(

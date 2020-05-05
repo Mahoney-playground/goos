@@ -1,7 +1,8 @@
 package ui.swing
 
 import goos.core.common.Defect
-import goos.core.ui.api.SniperSnapshot
+import goos.core.ui.api.UiSniperSnapshot
+import goos.core.ui.api.UiSniperState.BIDDING
 import goos.core.ui.swing.Column
 import goos.core.ui.swing.Column.ITEM_IDENTIFIER
 import goos.core.ui.swing.Column.LAST_BID
@@ -35,7 +36,7 @@ class SnipersTableModelTest : StringSpec({
     addTableModelListener(listener)
   }
 
-  infix fun List<Any>.shouldMatch(sniperSnapshot: SniperSnapshot) {
+  infix fun List<Any>.shouldMatch(sniperSnapshot: UiSniperSnapshot) {
     get(ITEM_IDENTIFIER.ordinal) shouldBe sniperSnapshot.itemId
     get(LAST_BID.ordinal) shouldBe sniperSnapshot.lastBid
     get(LAST_PRICE.ordinal) shouldBe sniperSnapshot.lastPrice
@@ -69,10 +70,10 @@ class SnipersTableModelTest : StringSpec({
 
   "sets sniper values in columns" {
 
-    val joining = SniperSnapshot.joining("item id")
+    val joining = UiSniperSnapshot.joining("item id")
     model.addSniper(joining)
 
-    val bidding = joining.bidding(555, 666)
+    val bidding = joining.copy(state = BIDDING, lastPrice = 555, lastBid = 666)
     model.sniperStateChanged(bidding)
 
     model.row(0) shouldMatch bidding
@@ -80,7 +81,7 @@ class SnipersTableModelTest : StringSpec({
   }
 
   "notifies listeners when adding a sniper" {
-    val joining = SniperSnapshot.joining("item123")
+    val joining = UiSniperSnapshot.joining("item123")
 
     model.rowCount shouldBe 0
 
@@ -92,8 +93,8 @@ class SnipersTableModelTest : StringSpec({
   }
 
   "holds snipers in addition order" {
-    model.addSniper(SniperSnapshot.joining("item 0"))
-    model.addSniper(SniperSnapshot.joining("item 1"))
+    model.addSniper(UiSniperSnapshot.joining("item 0"))
+    model.addSniper(UiSniperSnapshot.joining("item 1"))
 
     model.row(0).column(ITEM_IDENTIFIER) shouldBe "item 0"
     model.row(1).column(ITEM_IDENTIFIER) shouldBe "item 1"
@@ -101,16 +102,16 @@ class SnipersTableModelTest : StringSpec({
 
   "updates correct row for sniper" {
 
-    val item0 = SniperSnapshot.joining("item 0")
+    val item0 = UiSniperSnapshot.joining("item 0")
     model.addSniper(item0)
 
-    val item1 = SniperSnapshot.joining("item 1")
+    val item1 = UiSniperSnapshot.joining("item 1")
     model.addSniper(item1)
 
-    val item2 = SniperSnapshot.joining("item 2")
+    val item2 = UiSniperSnapshot.joining("item 2")
     model.addSniper(item2)
 
-    val updatedItem1 = item1.bidding(10, 11)
+    val updatedItem1 = item1.copy(state = BIDDING, lastPrice = 10, lastBid = 11)
     model.sniperStateChanged(updatedItem1)
 
     model.row(0) shouldMatch item0
@@ -120,7 +121,7 @@ class SnipersTableModelTest : StringSpec({
 
   "throws defect if no existing sniper for an update" {
 
-    val sniperSnapshot = SniperSnapshot.joining("no such item")
+    val sniperSnapshot = UiSniperSnapshot.joining("no such item")
     val e = shouldThrow<Defect> {
       model.sniperStateChanged(sniperSnapshot)
     }

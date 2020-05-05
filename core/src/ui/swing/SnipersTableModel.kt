@@ -2,17 +2,17 @@ package goos.core.ui.swing
 
 import goos.core.common.Defect
 import goos.core.ui.api.SniperListener
-import goos.core.ui.api.SniperSnapshot
-import goos.core.ui.api.SniperState.BIDDING
-import goos.core.ui.api.SniperState.JOINING
-import goos.core.ui.api.SniperState.LOST
-import goos.core.ui.api.SniperState.WINNING
-import goos.core.ui.api.SniperState.WON
+import goos.core.ui.api.UiSniperSnapshot
+import goos.core.ui.api.UiSniperState.BIDDING
+import goos.core.ui.api.UiSniperState.JOINING
+import goos.core.ui.api.UiSniperState.LOST
+import goos.core.ui.api.UiSniperState.WINNING
+import goos.core.ui.api.UiSniperState.WON
 import javax.swing.table.AbstractTableModel
 
 class SnipersTableModel : AbstractTableModel(), SniperListener {
 
-  private val sniperSnapshots = mutableListOf<SniperSnapshot>()
+  private val sniperSnapshots = mutableListOf<UiSniperSnapshot>()
 
   override fun getColumnCount(): Int = Column.values().size
   override fun getRowCount(): Int = sniperSnapshots.size
@@ -26,7 +26,7 @@ class SnipersTableModel : AbstractTableModel(), SniperListener {
   }
 
   override fun sniperStateChanged(
-    sniperSnapshot: SniperSnapshot
+    sniperSnapshot: UiSniperSnapshot
   ) {
     val index = sniperSnapshots.indexOfFirstOrNull { it.isForSameItemAs(sniperSnapshot) }
       ?: throw Defect("No sniper for same item as $sniperSnapshot")
@@ -34,7 +34,7 @@ class SnipersTableModel : AbstractTableModel(), SniperListener {
     fireTableRowsUpdated(index, index)
   }
 
-  fun addSniper(sniper: SniperSnapshot) {
+  fun addSniper(sniper: UiSniperSnapshot) {
     sniperSnapshots.add(sniper)
     fireTableRowsInserted(rowCount - 1, rowCount - 1)
   }
@@ -47,19 +47,27 @@ class SnipersTableModel : AbstractTableModel(), SniperListener {
 }
 
 enum class Column(val title: String) {
-  ITEM_IDENTIFIER("Item") { override fun valueIn(snapshot: SniperSnapshot) = snapshot.itemId },
-  LAST_PRICE("Last Price") { override fun valueIn(snapshot: SniperSnapshot) = snapshot.lastPrice },
-  LAST_BID("Last Bid") { override fun valueIn(snapshot: SniperSnapshot) = snapshot.lastBid },
-  SNIPER_STATE("State") { override fun valueIn(snapshot: SniperSnapshot) = snapshot.stateText() };
+  ITEM_IDENTIFIER("Item") {
+    override fun valueIn(snapshot: UiSniperSnapshot) = snapshot.itemId
+  },
+  LAST_PRICE("Last Price") {
+    override fun valueIn(snapshot: UiSniperSnapshot) = snapshot.lastPrice
+  },
+  LAST_BID("Last Bid") {
+    override fun valueIn(snapshot: UiSniperSnapshot) = snapshot.lastBid
+  },
+  SNIPER_STATE("State") {
+    override fun valueIn(snapshot: UiSniperSnapshot) = snapshot.stateText()
+  };
 
-  abstract fun valueIn(snapshot: SniperSnapshot): Any
+  abstract fun valueIn(snapshot: UiSniperSnapshot): Any
 
   companion object {
     fun at(offset: Int) = values()[offset]
   }
 }
 
-internal fun SniperSnapshot.stateText(): String = when (state) {
+internal fun UiSniperSnapshot.stateText(): String = when (state) {
   JOINING -> "Joining"
   BIDDING -> "Bidding"
   WINNING -> "Winning"

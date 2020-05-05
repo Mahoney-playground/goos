@@ -4,11 +4,11 @@ import goos.core.auction.api.Auction
 import goos.core.auction.api.AuctionEventListener.PriceSource.FromOtherBidder
 import goos.core.auction.api.AuctionEventListener.PriceSource.FromSniper
 import goos.core.ui.api.SniperListener
-import goos.core.ui.api.SniperSnapshot
-import goos.core.ui.api.SniperState.BIDDING
-import goos.core.ui.api.SniperState.LOST
-import goos.core.ui.api.SniperState.WINNING
-import goos.core.ui.api.SniperState.WON
+import goos.core.ui.api.UiSniperSnapshot
+import goos.core.ui.api.UiSniperState.BIDDING
+import goos.core.ui.api.UiSniperState.LOST
+import goos.core.ui.api.UiSniperState.WINNING
+import goos.core.ui.api.UiSniperState.WON
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.StringSpec
 import io.mockk.Called
@@ -25,7 +25,7 @@ class AuctionSniperTest : StringSpec({
     sniper.auctionClosed()
 
     verify(exactly = 1) {
-      sniperListener.sniperStateChanged(SniperSnapshot(ITEM_ID, 0, 0, LOST))
+      sniperListener.sniperStateChanged(UiSniperSnapshot(ITEM_ID, 0, 0, LOST))
     }
   }
 
@@ -34,10 +34,10 @@ class AuctionSniperTest : StringSpec({
     sniper.auctionClosed()
 
     verify(exactly = 1) {
-      sniperListener.sniperStateChanged(SniperSnapshot(ITEM_ID, 123, 168, BIDDING))
+      sniperListener.sniperStateChanged(UiSniperSnapshot(ITEM_ID, 123, 168, BIDDING))
     }
     verify(exactly = 1) {
-      sniperListener.sniperStateChanged(SniperSnapshot(ITEM_ID, 123, 168, LOST))
+      sniperListener.sniperStateChanged(UiSniperSnapshot(ITEM_ID, 123, 168, LOST))
     }
   }
 
@@ -46,10 +46,10 @@ class AuctionSniperTest : StringSpec({
     sniper.auctionClosed()
 
     verify(exactly = 1) {
-      sniperListener.sniperStateChanged(SniperSnapshot(ITEM_ID, 123, 0, WINNING))
+      sniperListener.sniperStateChanged(UiSniperSnapshot(ITEM_ID, 123, 0, WINNING))
     }
     verify(exactly = 1) {
-      sniperListener.sniperStateChanged(SniperSnapshot(ITEM_ID, 123, 0, WON))
+      sniperListener.sniperStateChanged(UiSniperSnapshot(ITEM_ID, 123, 0, WON))
     }
   }
 
@@ -63,7 +63,7 @@ class AuctionSniperTest : StringSpec({
 
     verify(exactly = 1) { auction.bid(bid) }
     verify(exactly = 1) {
-      sniperListener.sniperStateChanged(SniperSnapshot(ITEM_ID, price, bid, BIDDING))
+      sniperListener.sniperStateChanged(UiSniperSnapshot(ITEM_ID, price, bid, BIDDING))
     }
   }
 
@@ -76,7 +76,7 @@ class AuctionSniperTest : StringSpec({
 
     verify { auction wasNot Called }
     verify(exactly = 1) {
-      sniperListener.sniperStateChanged(SniperSnapshot(ITEM_ID, price, 0, WINNING))
+      sniperListener.sniperStateChanged(UiSniperSnapshot(ITEM_ID, price, 0, WINNING))
     }
   }
 }) {
