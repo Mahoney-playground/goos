@@ -25,7 +25,7 @@ WORKDIR $work_dir
 
 FROM worker as builder
 ARG username
-ENV GRADLE_OPTS='-Dorg.gradle.daemon=false -Xms256m -Xmx512m --illegal-access=deny'
+ENV GRADLE_OPTS='-Dorg.gradle.daemon=false -Xms256m -Xmx2g --illegal-access=deny'
 
 COPY --chown=$username . .
 
