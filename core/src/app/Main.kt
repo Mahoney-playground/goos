@@ -1,7 +1,6 @@
 package goos.app
 
 import goos.auction.api.MultiAuctionEventListener
-import goos.auction.xmpp.AuctionMessageTranslator
 import goos.auction.xmpp.XMPPAuction
 import goos.core.AuctionSniper
 import goos.ui.api.UiSniperSnapshot
@@ -10,11 +9,8 @@ import goos.ui.swing.MainWindow
 import goos.ui.swing.SnipersTableModel
 import goos.ui.swing.SwingThreadSniperListener
 import org.jivesoftware.smack.ConnectionConfiguration
-import org.jivesoftware.smack.chat.Chat
-import org.jivesoftware.smack.chat.ChatManager
 import org.jivesoftware.smack.tcp.XMPPTCPConnection
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration
-import org.jxmpp.jid.EntityBareJid
 import org.jxmpp.jid.impl.JidCreate
 import org.jxmpp.jid.parts.Resourcepart
 import uk.org.lidalia.kotlinlangext.threads.blockUntilShutdown
@@ -38,7 +34,6 @@ class Main(
   private var connection: XMPPTCPConnection? = null
   private val snipers = SnipersTableModel()
   private lateinit var ui: MainWindow
-  private val notToBeGCd = mutableListOf<Chat>()
 
   init {
     startUserInterface()
@@ -82,24 +77,7 @@ class Main(
   private fun buildAuction(
     itemId: String,
     auctionEventListeners: MultiAuctionEventListener
-  ): XMPPAuction {
-    val chat = ChatManager.getInstanceFor(connection!!)
-      .createChat(
-        auctionId(itemId, connection!!.host),
-        null
-      )
-    notToBeGCd.add(chat)
-
-
-    chat.addMessageListener(
-      AuctionMessageTranslator(
-        connection!!.user.toString(),
-        auctionEventListeners
-      )
-    )
-
-    return XMPPAuction(chat)
-  }
+  ) = XMPPAuction(connection!!, itemId, auctionEventListeners)
 
   private fun disconnectWhenUICloses() =
     ui.addWindowListener(object : WindowAdapter() {
@@ -150,8 +128,5 @@ class Main(
       connection.login(username, password, AUCTION_RESOURCE)
       return connection
     }
-
-    private fun auctionId(itemId: String, hostname: String): EntityBareJid =
-      JidCreate.entityBareFrom("auction-$itemId@$hostname/$AUCTION_RESOURCE")
   }
 }
