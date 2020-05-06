@@ -11,7 +11,7 @@ import goos.ui.api.UiSniperState.WINNING
 import goos.ui.api.UiSniperState.WON
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.StringSpec
-import io.mockk.Called
+import io.mockk.confirmVerified
 import io.mockk.mockk
 import io.mockk.verify
 
@@ -74,7 +74,7 @@ class AuctionSniperTest : StringSpec({
 
     sniper.currentPrice(price, increment, FromSniper)
 
-    verify { auction wasNot Called }
+    confirmVerified(auction)
     verify(exactly = 1) {
       sniperListener.sniperStateChanged(UiSniperSnapshot(ITEM_ID, price, 0, WINNING))
     }

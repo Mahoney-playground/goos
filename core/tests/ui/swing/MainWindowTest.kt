@@ -4,6 +4,8 @@ import goos.ui.api.UserRequestListener
 import goos.uitestsupport.AuctionSniperDriver
 import io.kotest.assertions.timing.eventually
 import io.kotest.core.spec.style.StringSpec
+import io.mockk.clearAllMocks
+import io.mockk.confirmVerified
 import io.mockk.mockk
 import io.mockk.verify
 import net.sourceforge.marathon.javadriver.JavaDriver
@@ -29,6 +31,7 @@ class MainWindowTest : StringSpec({
         userRequestListener.joinAuction("an item-id")
       }
     }
+    confirmVerified(userRequestListener)
   }
 
   "make user request when reset button clicked" {
@@ -40,6 +43,7 @@ class MainWindowTest : StringSpec({
         userRequestListener.reset()
       }
     }
+    confirmVerified(userRequestListener)
   }
 
   "make user request when connect button clicked" {
@@ -51,5 +55,10 @@ class MainWindowTest : StringSpec({
         userRequestListener.connect()
       }
     }
+    confirmVerified(userRequestListener)
+  }
+
+  afterTest {
+    clearAllMocks()
   }
 })
