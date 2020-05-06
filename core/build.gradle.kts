@@ -21,3 +21,12 @@ application {
 idea {
   setPackagePrefix("goos")
 }
+
+val test by tasks.existing(Test::class) {
+  // silence warnings due to using marathon java agent
+  jvmArgs(
+    "-Xshare:off",
+    "--illegal-access=deny",
+    "--add-exports", "java.desktop/sun.awt=ALL-UNNAMED"
+  )
+}

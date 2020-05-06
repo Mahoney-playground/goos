@@ -83,7 +83,7 @@ COPY --from=end-to-end-tests --chown=$username $work_dir/external/marathon-java-
 
 EXPOSE 1234
 
-ENTRYPOINT ["simple-xvfb-run", "java", "-javaagent:external/marathon-java-agent.jar=1234", "--illegal-access=deny", "--add-exports", "java.desktop/sun.awt=ALL-UNNAMED", "-jar", "core-0.1.0.jar"]
+ENTRYPOINT ["simple-xvfb-run", "java", "-javaagent:external/marathon-java-agent.jar=1234", "-Xshare:off", "--illegal-access=deny", "--add-exports", "java.desktop/sun.awt=ALL-UNNAMED", "-jar", "core-0.1.0.jar"]
 
 COPY --chown=$username scripts/app-running.sh $work_dir/app-running.sh
 
