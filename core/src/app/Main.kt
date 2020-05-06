@@ -12,6 +12,7 @@ import org.jivesoftware.smack.ConnectionConfiguration
 import org.jivesoftware.smack.tcp.XMPPTCPConnection
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration
 import org.jxmpp.jid.impl.JidCreate
+import org.jxmpp.jid.parts.Resourcepart
 import uk.org.lidalia.kotlinlangext.threads.blockUntilShutdown
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
@@ -121,7 +122,7 @@ class Main(
           .build()
       )
       connection.connect()
-      connection.login(username, password)
+      connection.login(username, password, Resourcepart.from("Auction"))
       return connection
     }
   }
