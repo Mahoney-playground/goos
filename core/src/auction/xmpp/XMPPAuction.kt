@@ -1,6 +1,7 @@
 package goos.auction.xmpp
 
 import goos.auction.api.Auction
+import goos.auction.api.AuctionEventListener
 import goos.auction.api.MultiAuctionEventListener
 import org.jivesoftware.smack.XMPPConnection
 import org.jivesoftware.smack.chat.ChatManager
@@ -11,7 +12,7 @@ import org.jxmpp.jid.parts.Resourcepart
 class XMPPAuction(
   connection: XMPPConnection,
   itemId: String,
-  auctionEventListeners: MultiAuctionEventListener
+  private val auctionEventListeners: MultiAuctionEventListener
 ) : Auction {
 
   private val chat = ChatManager.getInstanceFor(connection)
@@ -33,7 +34,8 @@ class XMPPAuction(
     chat.sendMessage("SOLVersion: 1.1; Command: BID; Price: $bid;")
   }
 
-  fun join() {
+  fun join(listener: AuctionEventListener) {
+    auctionEventListeners.addListener(listener)
     chat.sendMessage("SOLVersion: 1.1; Command: JOIN;")
   }
 

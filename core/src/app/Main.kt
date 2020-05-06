@@ -52,14 +52,11 @@ class Main(
 
         val auctionEventListeners = MultiAuctionEventListener()
         val auction = buildAuction(itemId, auctionEventListeners)
-        auctionEventListeners.addListener(
-          AuctionSniper(
-            itemId,
-            auction,
-            SwingThreadSniperListener(snipers)
-          )
-        )
-        auction.join()
+        auction.join(AuctionSniper(
+          itemId,
+          auction,
+          SwingThreadSniperListener(snipers)
+        ))
       }
 
       override fun reset() {
