@@ -12,7 +12,6 @@ import org.jivesoftware.smack.ConnectionConfiguration
 import org.jivesoftware.smack.tcp.XMPPTCPConnection
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration
 import org.jxmpp.jid.impl.JidCreate
-import org.jxmpp.jid.parts.Resourcepart
 import uk.org.lidalia.kotlinlangext.threads.blockUntilShutdown
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
@@ -55,11 +54,15 @@ class Main(
         val auction = XMPPAuction(connection!!, itemId)
         notToBeGCd.add(auction)
 
-        auction.join(AuctionSniper(
+        val sniper = AuctionSniper(
           itemId,
           auction,
           SwingThreadSniperListener(snipers)
-        ))
+        )
+
+        auction.addAuctionEventListener(sniper)
+
+        auction.join()
       }
 
       override fun reset() {
@@ -86,8 +89,6 @@ class Main(
     private const val ARG_HOSTNAME = 0
     private const val ARG_USERNAME = 1
     private const val ARG_PASSWORD = 2
-
-    private val AUCTION_RESOURCE = Resourcepart.from("Auction")
 
     @JvmStatic
     fun main(vararg args: String) {
@@ -120,7 +121,7 @@ class Main(
           .build()
       )
       connection.connect()
-      connection.login(username, password, AUCTION_RESOURCE)
+      connection.login(username, password)
       return connection
     }
   }

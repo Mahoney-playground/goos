@@ -31,13 +31,16 @@ class XMPPAuction(
     )
   }
 
-  override fun bid(bid: Int) {
-    chat.sendMessage("SOLVersion: 1.1; Command: BID; Price: $bid;")
+  override fun addAuctionEventListener(listener: AuctionEventListener) {
+    auctionEventListeners.addListener(listener)
   }
 
-  fun join(listener: AuctionEventListener) {
-    auctionEventListeners.addListener(listener)
+  override fun join() {
     chat.sendMessage("SOLVersion: 1.1; Command: JOIN;")
+  }
+
+  override fun bid(bid: Int) {
+    chat.sendMessage("SOLVersion: 1.1; Command: BID; Price: $bid;")
   }
 
   companion object {
