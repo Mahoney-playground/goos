@@ -3,24 +3,30 @@ package goos.ui.swing
 import goos.ui.api.UserRequestListener
 import goos.uitestsupport.AuctionSniperDriver
 import io.kotest.assertions.timing.eventually
+import io.kotest.core.test.isActive
 import io.kotest.core.spec.style.StringSpec
 import io.mockk.clearAllMocks
 import io.mockk.confirmVerified
 import io.mockk.mockk
 import io.mockk.verify
 import net.sourceforge.marathon.javadriver.JavaDriver
+import javax.swing.SwingUtilities
 import kotlin.time.ExperimentalTime
 import kotlin.time.seconds
 
 @ExperimentalTime
 class MainWindowTest : StringSpec({
 
-  val tableModel = SnipersTableModel()
-  val userRequestListener = mockk<UserRequestListener>(relaxed = true)
-  val mainWindow = MainWindow(tableModel)
-  mainWindow.addUserRequestListener(userRequestListener)
+  tags(UI)
 
-  val driver = AuctionSniperDriver(JavaDriver())
+  val userRequestListener: UserRequestListener = mockk(relaxed = true)
+  lateinit var driver: AuctionSniperDriver
+
+  beforeSpec { spec ->
+    if (spec.rootTests().any { it.testCase.isActive() }) {
+      driver = initiailiseUi(userRequestListener)
+    }
+  }
 
   "make user request when join button clicked" {
 
@@ -62,3 +68,13 @@ class MainWindowTest : StringSpec({
     clearAllMocks()
   }
 })
+
+private fun initiailiseUi(
+  userRequestListener: UserRequestListener
+): AuctionSniperDriver {
+  SwingUtilities.invokeAndWait {
+    val mainWindow = MainWindow(SnipersTableModel())
+    mainWindow.addUserRequestListener(userRequestListener)
+  }
+  return AuctionSniperDriver(JavaDriver())
+}
