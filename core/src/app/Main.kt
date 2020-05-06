@@ -47,9 +47,11 @@ class Main(
   private fun addUserRequestListener() {
     ui.addUserRequestListener(object : UserRequestListener {
       override fun joinAuction(itemId: String) {
+
         snipers.addSniper(UiSniperSnapshot.joining(itemId))
 
-        val auction = buildAuction(itemId)
+        val auction = XMPPAuction(connection!!, itemId)
+
         auction.join(AuctionSniper(
           itemId,
           auction,
@@ -68,10 +70,6 @@ class Main(
       }
     })
   }
-
-  private fun buildAuction(
-    itemId: String
-  ) = XMPPAuction(connection!!, itemId)
 
   private fun disconnectWhenUICloses() =
     ui.addWindowListener(object : WindowAdapter() {
