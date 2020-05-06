@@ -35,6 +35,7 @@ open class FakeReport @Inject constructor(
     )
   }
 
+  @Suppress("UNNECESSARY_NOT_NULL_ASSERTION") // without it IntelliJ reports a compile error
   @Internal
   val theReport: SingleFileReport = getByName("report")!!
 }
