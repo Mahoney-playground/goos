@@ -55,21 +55,8 @@ class Main(
       override fun joinAuction(itemId: String) {
         snipers.addSniper(UiSniperSnapshot.joining(itemId))
 
-        val chat = ChatManager.getInstanceFor(connection!!)
-          .createChat(
-            auctionId(itemId, connection!!.host),
-            null
-          )
-        notToBeGCd.add(chat)
-
         val auctionEventListeners = MultiAuctionEventListener()
-
-        chat.addMessageListener(AuctionMessageTranslator(
-          connection!!.user.toString(),
-          auctionEventListeners
-        ))
-
-        val auction = XMPPAuction(chat)
+        val auction = buildAuction(itemId, auctionEventListeners)
         auctionEventListeners.addListener(
           AuctionSniper(
             itemId,
@@ -90,6 +77,28 @@ class Main(
         }
       }
     })
+  }
+
+  private fun buildAuction(
+    itemId: String,
+    auctionEventListeners: MultiAuctionEventListener
+  ): XMPPAuction {
+    val chat = ChatManager.getInstanceFor(connection!!)
+      .createChat(
+        auctionId(itemId, connection!!.host),
+        null
+      )
+    notToBeGCd.add(chat)
+
+
+    chat.addMessageListener(
+      AuctionMessageTranslator(
+        connection!!.user.toString(),
+        auctionEventListeners
+      )
+    )
+
+    return XMPPAuction(chat)
   }
 
   private fun disconnectWhenUICloses() =
