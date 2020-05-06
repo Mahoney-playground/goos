@@ -1,5 +1,6 @@
 package goos.app
 
+import goos.auction.api.Auction
 import goos.auction.xmpp.XMPPAuction
 import goos.core.AuctionSniper
 import goos.ui.api.UiSniperSnapshot
@@ -33,6 +34,7 @@ class Main(
   private var connection: XMPPTCPConnection? = null
   private val snipers = SnipersTableModel()
   private lateinit var ui: MainWindow
+  private val notToBeGCd = mutableListOf<Auction>()
 
   init {
     startUserInterface()
@@ -51,6 +53,7 @@ class Main(
         snipers.addSniper(UiSniperSnapshot.joining(itemId))
 
         val auction = XMPPAuction(connection!!, itemId)
+        notToBeGCd.add(auction)
 
         auction.join(AuctionSniper(
           itemId,
