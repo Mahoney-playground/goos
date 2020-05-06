@@ -11,9 +11,10 @@ import org.jxmpp.jid.parts.Resourcepart
 
 class XMPPAuction(
   connection: XMPPConnection,
-  itemId: String,
-  private val auctionEventListeners: MultiAuctionEventListener
+  itemId: String
 ) : Auction {
+
+  private val auctionEventListeners = MultiAuctionEventListener()
 
   private val chat = ChatManager.getInstanceFor(connection)
     .createChat(

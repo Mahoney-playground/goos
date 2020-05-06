@@ -1,6 +1,5 @@
 package goos.app
 
-import goos.auction.api.MultiAuctionEventListener
 import goos.auction.xmpp.XMPPAuction
 import goos.core.AuctionSniper
 import goos.ui.api.UiSniperSnapshot
@@ -50,8 +49,7 @@ class Main(
       override fun joinAuction(itemId: String) {
         snipers.addSniper(UiSniperSnapshot.joining(itemId))
 
-        val auctionEventListeners = MultiAuctionEventListener()
-        val auction = buildAuction(itemId, auctionEventListeners)
+        val auction = buildAuction(itemId)
         auction.join(AuctionSniper(
           itemId,
           auction,
@@ -72,9 +70,8 @@ class Main(
   }
 
   private fun buildAuction(
-    itemId: String,
-    auctionEventListeners: MultiAuctionEventListener
-  ) = XMPPAuction(connection!!, itemId, auctionEventListeners)
+    itemId: String
+  ) = XMPPAuction(connection!!, itemId)
 
   private fun disconnectWhenUICloses() =
     ui.addWindowListener(object : WindowAdapter() {
