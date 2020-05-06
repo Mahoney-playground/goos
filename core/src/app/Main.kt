@@ -1,5 +1,6 @@
 package goos.app
 
+import goos.auction.api.MultiAuctionEventListener
 import goos.auction.xmpp.AuctionMessageTranslator
 import goos.auction.xmpp.XMPPAuction
 import goos.core.AuctionSniper
@@ -61,15 +62,21 @@ class Main(
           )
         notToBeGCd.add(chat)
 
-        val auction = XMPPAuction(chat)
+        val auctionEventListeners = MultiAuctionEventListener()
+
         chat.addMessageListener(AuctionMessageTranslator(
           connection!!.user.toString(),
+          auctionEventListeners
+        ))
+
+        val auction = XMPPAuction(chat)
+        auctionEventListeners.addListener(
           AuctionSniper(
             itemId,
             auction,
             SwingThreadSniperListener(snipers)
           )
-        ))
+        )
         auction.join()
       }
 
