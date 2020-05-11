@@ -40,11 +40,6 @@ subprojects {
     apply<BuildDashboardPlugin>()
     apply<IdeaExtPlugin>()
 
-    val test by tasks.existing(Test::class)
-
-    val api by configurations
-    val testImplementation by configurations
-
     val mainSrc = setOf("src")
     val testSrc = setOf("tests")
 
@@ -66,6 +61,10 @@ subprojects {
     }
 
     dependencies {
+
+      val api by configurations
+      val testImplementation by configurations
+
       api(kotlin("stdlib"))
 
       testImplementation(kotest("core"))
@@ -73,20 +72,21 @@ subprojects {
       testImplementation(mockk)
     }
 
-    tasks.withType<KotlinCompile> {
-      kotlinOptions.jvmTarget = "13" // hardcoded until kotlin can cope with 14
-    }
-
     tasks {
-      test {
+
+      withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = "13" // hardcoded until kotlin can cope with 14
+      }
+
+      named<Test>("test") {
+        environment("BUILD_SYSTEM", "GRADLE")
         useJUnitPlatform()
       }
+
+      register<DownloadDependenciesTask>("downloadDependencies")
+      register<DependencyReportTask>("allDeps")
     }
-
-    tasks.register<DownloadDependenciesTask>("downloadDependencies")
   }
-
-  tasks.register<DependencyReportTask>("allDeps")
 }
 
 dependencyGraphGenerator {
