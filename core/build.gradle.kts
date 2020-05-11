@@ -10,6 +10,11 @@ dependencies {
   implementation(smack("java7"))
   implementation(smack("im"))
   implementation(project(":kotlinlangext"))
+  implementation(kotlinCoroutines("core"))
+  implementation(kotlinCoroutines("core-common"))
+  implementation(kotlinCoroutines("jdk8"))
+  implementation(kotlinCoroutines("swing"))
+
   testImplementation(marathon("java-driver"))
   testImplementation(project(":ui-test-support"))
 }
