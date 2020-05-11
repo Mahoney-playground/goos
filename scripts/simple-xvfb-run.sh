@@ -23,6 +23,7 @@ clean_up_processes() {
 
 main() {
 
+  # If you change this number, change goos.ui.swing.UI
   local display=99
 
   Xvfb ":$display" -ac &

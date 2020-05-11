@@ -19,6 +19,10 @@ class MainWindowTest : StringSpec({
 
   tags(UI)
 
+  /*
+   * These are initialised in the beforeTest block so that
+   * the window is not created if the tests are ignored
+   */
   lateinit var userRequestListener: UserRequestListener
   lateinit var mainWindow: MainWindow
   lateinit var driver: AuctionSniperDriver
