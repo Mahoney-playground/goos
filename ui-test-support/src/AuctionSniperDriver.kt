@@ -22,7 +22,7 @@ class AuctionSniperDriver(
     RemoteWebDriver(url, DesiredCapabilities("java", "1.0", Platform.ANY))
   )
 
-  init {
+  fun hasBasicAttributes() {
     driver.rootElement().getAttribute("name") shouldBe MAIN_WINDOW_NAME
     driver.rootElement().isDisplayed shouldBe true
   }
@@ -74,6 +74,10 @@ class AuctionSniperDriver(
   private fun connectButton() = driver.findElementByName(SNIPER_CONNECT_BUTTON_NAME)
   private fun itemIdField() = driver.findElementByName(NEW_ITEM_ID_NAME)
   private fun bidButton() = driver.findElementByName(JOIN_BUTTON_NAME)
+
+  fun close() {
+    driver.close()
+  }
 
   companion object {
 

@@ -9,6 +9,7 @@ class ApplicationRunner(
 ) {
 
   init {
+    driver.hasBasicAttributes()
     driver.hasTitle("Auction Sniper")
     driver.hasColumnTitles()
     driver.connect()

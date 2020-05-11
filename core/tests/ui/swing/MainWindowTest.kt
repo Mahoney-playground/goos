@@ -3,14 +3,14 @@ package goos.ui.swing
 import goos.ui.api.UserRequestListener
 import goos.uitestsupport.AuctionSniperDriver
 import io.kotest.assertions.timing.eventually
-import io.kotest.core.test.isActive
 import io.kotest.core.spec.style.StringSpec
-import io.mockk.clearAllMocks
 import io.mockk.confirmVerified
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.swing.Swing
+import kotlinx.coroutines.withContext
 import net.sourceforge.marathon.javadriver.JavaDriver
-import javax.swing.SwingUtilities
 import kotlin.time.ExperimentalTime
 import kotlin.time.seconds
 
@@ -19,13 +19,27 @@ class MainWindowTest : StringSpec({
 
   tags(UI)
 
-  val userRequestListener: UserRequestListener = mockk(relaxed = true)
+  lateinit var userRequestListener: UserRequestListener
+  lateinit var mainWindow: MainWindow
   lateinit var driver: AuctionSniperDriver
 
-  beforeSpec { spec ->
-    if (spec.rootTests().any { it.testCase.isActive() }) {
-      driver = initiailiseUi(userRequestListener)
+  beforeTest {
+    userRequestListener = mockk(relaxed = true)
+    withContext(Dispatchers.Swing) {
+      mainWindow = MainWindow(SnipersTableModel())
+      mainWindow.addUserRequestListener(userRequestListener)
     }
+    driver = AuctionSniperDriver(JavaDriver())
+  }
+
+  afterTest {
+    driver.close()
+  }
+
+  "window has expected features" {
+    driver.hasBasicAttributes()
+    driver.hasTitle("Auction Sniper")
+    driver.hasColumnTitles()
   }
 
   "make user request when join button clicked" {
@@ -63,18 +77,4 @@ class MainWindowTest : StringSpec({
     }
     confirmVerified(userRequestListener)
   }
-
-  afterTest {
-    clearAllMocks()
-  }
 })
-
-private fun initiailiseUi(
-  userRequestListener: UserRequestListener
-): AuctionSniperDriver {
-  SwingUtilities.invokeAndWait {
-    val mainWindow = MainWindow(SnipersTableModel())
-    mainWindow.addUserRequestListener(userRequestListener)
-  }
-  return AuctionSniperDriver(JavaDriver())
-}
