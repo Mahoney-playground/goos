@@ -1,15 +1,12 @@
-package ui.swing
+package goos.ui.swing
 
 import goos.common.Defect
 import goos.ui.api.UiSniperSnapshot
 import goos.ui.api.UiSniperState.BIDDING
-import goos.ui.swing.Column
 import goos.ui.swing.Column.ITEM_IDENTIFIER
 import goos.ui.swing.Column.LAST_BID
 import goos.ui.swing.Column.LAST_PRICE
 import goos.ui.swing.Column.SNIPER_STATE
-import goos.ui.swing.SnipersTableModel
-import goos.ui.swing.stateText
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.IsolationMode.InstancePerTest
 import io.kotest.core.spec.style.StringSpec
