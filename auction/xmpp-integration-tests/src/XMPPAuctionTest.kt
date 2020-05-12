@@ -1,7 +1,9 @@
-package goos.auction.xmpp
+package goos
 
 import goos.auction.api.AuctionEventListener
 import goos.auction.api.AuctionEventListener.PriceSource
+import goos.auction.xmpp.XMPPAuction
+import goos.auction.xmpp.connection
 import goos.xmpptestsupport.FakeAuctionServer
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe

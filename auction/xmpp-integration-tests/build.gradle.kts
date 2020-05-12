@@ -4,15 +4,13 @@ plugins {
 }
 
 dependencies {
-
   implementation(kotest("core"))
   implementation(kotlinCoroutines("core"))
+  implementation(kotlinCoroutines("jdk8"))
   constraints {
     implementation(mockk)
   }
-
-  runtimeOnly(marathon("java-agent"))
-  implementation(project(":ui-test-support"))
+  implementation(project(":auction-xmpp"))
   implementation(project(":xmpp-test-support"))
   implementation(project(":testlauncher"))
 }

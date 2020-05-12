@@ -56,6 +56,17 @@ COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/e
 ENTRYPOINT ["java", "-jar", "--illegal-access=deny", "end-to-end-tests-0.1.0.jar"]
 
 
+FROM worker as auction-xmpp-integration-tests
+ARG username
+ARG work_dir
+
+COPY --from=checker --chown=$username $work_dir/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/external ./external
+COPY --from=checker --chown=$username $work_dir/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/internal ./internal
+COPY --from=checker --chown=$username $work_dir/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/auction-xmpp-integration-tests-0.1.0.jar .
+
+ENTRYPOINT ["java", "-jar", "--illegal-access=deny", "auction-xmpp-integration-tests-0.1.0.jar"]
+
+
 FROM worker as app
 ARG username
 ARG work_dir

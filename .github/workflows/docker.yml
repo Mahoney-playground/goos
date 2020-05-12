@@ -76,6 +76,50 @@ jobs:
     - name: Backup docker
       run: ./.github/actions/docker-cache/backup.sh ${{ runner.temp }}/docker_cache/cache.tar
 
+  auction-xmpp-integration-tests:
+    needs: build
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Login to docker repo
+      run: docker login --username Mahoney-playground --password-stdin docker.pkg.github.com < <(echo "${{ secrets.GITHUB_TOKEN }}")
+
+    - name: Run auction xmpp integration tests
+      env:
+        GOOS_TAG: ${{ github.sha }}
+      run: cd auction/xmpp-integration-tests &&
+           docker-compose pull -q &&
+           docker-compose up --no-build --exit-code-from auction-xmpp-integration-tests --abort-on-container-exit
+
+    - name: Capture the reports as artifacts
+      if: always()
+      run:
+           mkdir -p builds/${{ github.sha }} &&
+           docker cp auction-xmpp-integration-tests_auction-xmpp-integration-tests_1:/home/worker/work/build/reports builds/${{ github.sha }} &&
+           mv builds/${{ github.sha }}/reports builds/${{ github.sha }}/auction-xmpp-integration-tests-reports
+
+    - name: Archive reports
+      if: always()
+      uses: actions/upload-artifact@v1
+      with:
+        name: auction-xmpp-integration-tests-reports
+        path: builds/${{ github.sha }}/auction-xmpp-integration-tests-reports
+
+    - name: Publish Reports
+      if: always()
+      uses: JamesIves/github-pages-deploy-action@3.4.2
+      with:
+        ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: builds
+        TARGET_FOLDER: builds
+
+    - name: Link to Reports
+      if: always()
+      run: echo "Reports are published at https://mahoney-playground.github.io/goos/builds/${{ github.sha }}/auction-xmpp-integration-tests-reports"
+
   end-to-end-tests:
     needs: build
     runs-on: ubuntu-18.04
