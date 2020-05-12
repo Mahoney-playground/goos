@@ -1,17 +1,8 @@
 package goos.app
 
-import goos.auction.api.Auction
-import goos.auction.api.AuctionHouse
-import goos.auction.xmpp.XMPPAuctionHouse
-import goos.core.AuctionSniper
-import goos.ui.api.UiSniperSnapshot
-import goos.ui.api.UserRequestListener
 import goos.ui.swing.MainWindow
 import goos.ui.swing.SnipersTableModel
-import goos.ui.swing.SwingThreadSniperListener
 import uk.org.lidalia.kotlinlangext.threads.blockUntilShutdown
-import java.awt.event.WindowAdapter
-import java.awt.event.WindowEvent
 import java.util.logging.Level.WARNING
 import java.util.logging.Logger
 import javax.swing.SwingUtilities
@@ -27,10 +18,14 @@ class Main(
   private val username: String,
   private val password: String
 ) {
-  private var auctionHouse: AuctionHouse? = null
   private val snipers = SnipersTableModel()
+  private val sniperLauncher = SniperLauncher(
+    hostname = hostname,
+    username = username,
+    password = password,
+    snipers = snipers
+  )
   private lateinit var ui: MainWindow
-  private val notToBeGCd = mutableListOf<Auction>()
 
   init {
     startUserInterface()
@@ -43,43 +38,11 @@ class Main(
   }
 
   private fun addUserRequestListener() {
-    ui.addUserRequestListener(object : UserRequestListener {
-      override fun joinAuction(itemId: String) {
-
-        snipers.addSniper(UiSniperSnapshot.joining(itemId))
-
-        val auction = auctionHouse!!.auctionFor(itemId)
-        notToBeGCd.add(auction)
-
-        val sniper = AuctionSniper(
-          itemId,
-          auction,
-          SwingThreadSniperListener(snipers)
-        )
-
-        auction.addAuctionEventListener(sniper)
-
-        auction.join()
-      }
-
-      override fun reset() {
-        snipers.reset()
-      }
-
-      override fun connect() {
-        if (auctionHouse == null) {
-          auctionHouse = XMPPAuctionHouse.connect(hostname, username, password)
-        }
-      }
-    })
+    ui.addUserRequestListener(sniperLauncher)
   }
 
   private fun disconnectWhenUICloses() =
-    ui.addWindowListener(object : WindowAdapter() {
-      override fun windowClosed(e: WindowEvent?) {
-        auctionHouse?.disconnect()
-      }
-    })
+    ui.addWindowListener(sniperLauncher)
 
   companion object {
 
