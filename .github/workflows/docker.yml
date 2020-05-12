@@ -101,7 +101,7 @@ jobs:
       if: always()
       run:
            mkdir -p builds/${{ github.sha }} &&
-           docker cp auction-xmpp-integration-tests_auction-xmpp-integration-tests_1:/home/worker/work/build/reports builds/${{ github.sha }} &&
+           docker cp xmpp-integration-tests_auction-xmpp-integration-tests_1:/home/worker/work/build/reports builds/${{ github.sha }} &&
            mv builds/${{ github.sha }}/reports builds/${{ github.sha }}/auction-xmpp-integration-tests-reports
 
     - name: Archive reports
