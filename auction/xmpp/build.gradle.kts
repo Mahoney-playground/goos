@@ -12,6 +12,8 @@ dependencies {
   implementation(smack("java7"))
   implementation(smack("im"))
   implementation(project(":kotlinlangext"))
+
+  testImplementation(project(":xmpp-test-support"))
 }
 
 idea {
