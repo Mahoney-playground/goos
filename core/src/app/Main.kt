@@ -2,17 +2,14 @@ package goos.app
 
 import goos.auction.api.Auction
 import goos.auction.xmpp.XMPPAuction
+import goos.auction.xmpp.connection
 import goos.core.AuctionSniper
 import goos.ui.api.UiSniperSnapshot
 import goos.ui.api.UserRequestListener
 import goos.ui.swing.MainWindow
 import goos.ui.swing.SnipersTableModel
 import goos.ui.swing.SwingThreadSniperListener
-import org.jivesoftware.smack.ConnectionConfiguration
 import org.jivesoftware.smack.tcp.XMPPTCPConnection
-import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration
-import org.jxmpp.jid.impl.JidCreate
-import org.jxmpp.jid.parts.Resourcepart
 import uk.org.lidalia.kotlinlangext.threads.blockUntilShutdown
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
@@ -104,26 +101,6 @@ class Main(
       )
       blockUntilShutdown()
       println("App stopping")
-    }
-
-    private fun connection(
-      hostname: String,
-      username: String,
-      password: String
-    ): XMPPTCPConnection {
-      val connection = XMPPTCPConnection(
-        XMPPTCPConnectionConfiguration.builder()
-          .setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)
-          .setXmppDomain(
-            JidCreate.domainBareFrom(
-              hostname
-            )
-          )
-          .build()
-      )
-      connection.connect()
-      connection.login(username, password, Resourcepart.from("Auction"))
-      return connection
     }
   }
 }
