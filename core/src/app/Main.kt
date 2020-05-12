@@ -1,15 +1,14 @@
 package goos.app
 
 import goos.auction.api.Auction
-import goos.auction.xmpp.XMPPAuction
-import goos.auction.xmpp.connection
+import goos.auction.api.AuctionHouse
+import goos.auction.xmpp.XMPPAuctionHouse
 import goos.core.AuctionSniper
 import goos.ui.api.UiSniperSnapshot
 import goos.ui.api.UserRequestListener
 import goos.ui.swing.MainWindow
 import goos.ui.swing.SnipersTableModel
 import goos.ui.swing.SwingThreadSniperListener
-import org.jivesoftware.smack.tcp.XMPPTCPConnection
 import uk.org.lidalia.kotlinlangext.threads.blockUntilShutdown
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
@@ -28,7 +27,7 @@ class Main(
   private val username: String,
   private val password: String
 ) {
-  private var connection: XMPPTCPConnection? = null
+  private var auctionHouse: AuctionHouse? = null
   private val snipers = SnipersTableModel()
   private lateinit var ui: MainWindow
   private val notToBeGCd = mutableListOf<Auction>()
@@ -49,7 +48,7 @@ class Main(
 
         snipers.addSniper(UiSniperSnapshot.joining(itemId))
 
-        val auction = XMPPAuction(connection!!, itemId)
+        val auction = auctionHouse!!.auctionFor(itemId)
         notToBeGCd.add(auction)
 
         val sniper = AuctionSniper(
@@ -68,8 +67,8 @@ class Main(
       }
 
       override fun connect() {
-        if (connection?.isConnected != true) {
-          connection = connection(hostname, username, password)
+        if (auctionHouse == null) {
+          auctionHouse = XMPPAuctionHouse.connect(hostname, username, password)
         }
       }
     })
@@ -78,7 +77,7 @@ class Main(
   private fun disconnectWhenUICloses() =
     ui.addWindowListener(object : WindowAdapter() {
       override fun windowClosed(e: WindowEvent?) {
-        connection?.disconnect()
+        auctionHouse?.disconnect()
       }
     })
 

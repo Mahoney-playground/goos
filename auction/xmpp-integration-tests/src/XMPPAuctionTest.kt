@@ -2,8 +2,7 @@ package goos
 
 import goos.auction.api.AuctionEventListener
 import goos.auction.api.AuctionEventListener.PriceSource
-import goos.auction.xmpp.XMPPAuction
-import goos.auction.xmpp.connection
+import goos.auction.xmpp.XMPPAuctionHouse
 import goos.xmpptestsupport.FakeAuctionServer
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
@@ -20,16 +19,15 @@ class XMPPAuctionTest : StringSpec({
     val auctionServer = FakeAuctionServer("item-879")
     auctionServer.startSellingItem()
 
-    val auction = XMPPAuction(
-      connection(
+    val auction = XMPPAuctionHouse.connect(
         hostname = "auctionhost.internal",
         username = "sniper",
         password = "sniper"
-      ),
-      auctionServer.itemId
-    ).apply {
-      addAuctionEventListener(auctionClosedListener(auctionWasClosed))
-    }
+    )
+      .auctionFor(auctionServer.itemId)
+      .apply {
+        addAuctionEventListener(auctionClosedListener(auctionWasClosed))
+      }
 
     auction.join()
     auctionServer.hasReceivedJoinRequestFrom("sniper@auctionhost.internal/Auction")

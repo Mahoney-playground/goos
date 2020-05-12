@@ -9,7 +9,7 @@ import org.jxmpp.jid.EntityBareJid
 import org.jxmpp.jid.impl.JidCreate
 import org.jxmpp.jid.parts.Resourcepart
 
-class XMPPAuction(
+class XMPPAuction internal constructor(
   connection: XMPPConnection,
   itemId: String
 ) : Auction {
