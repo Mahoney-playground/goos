@@ -61,6 +61,10 @@ jobs:
     - name: Link to Reports
       run: echo "Reports are published at https://mahoney-playground.github.io/goos/builds/${{ github.sha }}/build-reports"
 
+    - name: Build Auction XMPP Integration Tests with Docker
+      run: docker build . --target auction-xmpp-integration-tests -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-auction-xmpp-integration-tests:$GITHUB_SHA &&
+           docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-auction-xmpp-integration-tests:$GITHUB_SHA
+
     - name: Build End to End Tests with Docker
       run: docker build . --target end-to-end-tests -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-end-to-end-tests:$GITHUB_SHA &&
            docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-end-to-end-tests:$GITHUB_SHA
