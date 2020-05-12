@@ -11,5 +11,5 @@ dependencies {
   implementation("org.junit.platform:junit-platform-console:1.6.0")
 
   implementation(project(":clioptions"))
-  implementation(kotlinxHtml("jvm"))
+  implementation(project(":indexhtml"))
 }
