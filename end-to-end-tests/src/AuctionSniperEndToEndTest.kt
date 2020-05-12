@@ -1,6 +1,7 @@
 package goos
 
 import goos.ApplicationRunner.Companion.SNIPER_XMPP_ID
+import goos.xmpptestsupport.FakeAuctionServer
 import io.kotest.core.spec.IsolationMode.InstancePerTest
 import io.kotest.core.spec.style.StringSpec
 import kotlin.time.ExperimentalTime

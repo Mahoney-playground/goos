@@ -3,9 +3,11 @@ rootProject.name = "goos"
 include(
   ":core",
   ":end-to-end-tests",
-  ":ui-test-support"
+  ":ui-test-support",
+  ":xmpp-test-support"
 )
 
+includeChildrenOf("auction")
 includeChildrenOf("libraries") { ":${it.name}" }
 
 fun includeChildrenOf(

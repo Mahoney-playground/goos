@@ -10,6 +10,8 @@ dependencies {
   implementation(smack("java7"))
   implementation(smack("im"))
   implementation(project(":kotlinlangext"))
+  implementation(project(":auction-xmpp"))
+  implementation(project(":auction-api"))
   implementation(kotlinCoroutines("core"))
   implementation(kotlinCoroutines("core-common"))
   implementation(kotlinCoroutines("jdk8"))

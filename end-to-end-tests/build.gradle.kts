@@ -5,11 +5,6 @@ plugins {
 
 dependencies {
 
-  implementation(smack("core"))
-  implementation(smack("tcp"))
-  implementation(smack("extensions"))
-  implementation(smack("java7"))
-  implementation(smack("im"))
   implementation(kotest("core"))
   implementation(kotest("runner-junit5"))
   constraints {
@@ -22,6 +17,7 @@ dependencies {
 
   runtimeOnly(marathon("java-agent"))
   implementation(project(":ui-test-support"))
+  implementation(project(":xmpp-test-support"))
 }
 
 application {

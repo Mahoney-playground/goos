@@ -1,4 +1,4 @@
-package goos
+package goos.xmpptestsupport
 
 import io.kotest.matchers.shouldBe
 import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode.disabled
