@@ -22,7 +22,7 @@ dependencies {
 }
 
 application {
-  mainClassName = "goos.app.Main"
+  mainClassName = "goos.app.MainKt"
 }
 
 idea {
