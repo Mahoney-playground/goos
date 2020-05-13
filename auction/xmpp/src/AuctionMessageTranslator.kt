@@ -9,7 +9,7 @@ import org.jivesoftware.smack.chat.ChatMessageListener
 import org.jivesoftware.smack.packet.Message
 import uk.org.lidalia.kotlinlangext.strings.toMap
 
-class AuctionMessageTranslator(
+internal class AuctionMessageTranslator(
   private val sniperId: String,
   private val listener: AuctionEventListener
 ) : ChatMessageListener {

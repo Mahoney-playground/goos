@@ -9,7 +9,7 @@ import org.jxmpp.jid.EntityBareJid
 import org.jxmpp.jid.impl.JidCreate
 import org.jxmpp.jid.parts.Resourcepart
 
-class XMPPAuction internal constructor(
+internal class XMPPAuction(
   connection: XMPPConnection,
   itemId: String
 ) : Auction {
@@ -19,17 +19,11 @@ class XMPPAuction internal constructor(
   private val chat = ChatManager.getInstanceFor(connection)
     .createChat(
       auctionId(itemId, connection.host),
-      null
-    )
-
-  init {
-    chat.addMessageListener(
       AuctionMessageTranslator(
         connection.user.toString(),
         auctionEventListeners
       )
     )
-  }
 
   override fun addAuctionEventListener(listener: AuctionEventListener) {
     auctionEventListeners.addListener(listener)
