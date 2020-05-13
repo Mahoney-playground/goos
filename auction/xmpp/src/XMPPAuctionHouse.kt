@@ -7,36 +7,57 @@ import org.jivesoftware.smack.tcp.XMPPTCPConnection
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration
 import org.jxmpp.jid.impl.JidCreate
 import org.jxmpp.jid.parts.Resourcepart
+import java.util.concurrent.locks.Lock
+import java.util.concurrent.locks.ReentrantLock
 
-class XMPPAuctionHouse private constructor(
-  private val connection: XMPPTCPConnection
+class XMPPAuctionHouse(
+  hostname: String,
+  private val username: String,
+  private val password: String
 ) : AuctionHouse {
 
-  override fun auctionFor(itemId: String): Auction = XMPPAuction(connection, itemId)
-
-  override fun disconnect() = connection.disconnect()
-
-  companion object {
-    fun connect(
-      hostname: String,
-      username: String,
-      password: String
-    ): XMPPAuctionHouse {
-      val connection = XMPPTCPConnection(
-        XMPPTCPConnectionConfiguration.builder()
-          .setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)
-          .setXmppDomain(
-            JidCreate.domainBareFrom(hostname)
-          )
-          .build()
+  private val connection: XMPPTCPConnection = XMPPTCPConnection(
+    XMPPTCPConnectionConfiguration.builder()
+      .setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)
+      .setXmppDomain(
+        JidCreate.domainBareFrom(hostname)
       )
-      connection.connect()
-      connection.login(
-        username,
-        password,
-        Resourcepart.from("Auction")
-      )
-      return XMPPAuctionHouse(connection)
+      .build()
+  )
+
+  override fun auctionFor(itemId: String): Auction {
+    ensureConnected()
+    return XMPPAuction(connection, itemId)
+  }
+
+  private val lock: Lock = ReentrantLock()
+  private fun ensureConnected() {
+    lock.use {
+      if (!connection.isConnected) {
+        connect()
+      }
     }
+  }
+
+  private fun connect() {
+    connection.connect()
+    connection.login(
+      username,
+      password,
+      Resourcepart.from("Auction")
+    )
+  }
+
+  override fun disconnect() {
+    connection.disconnect()
+  }
+}
+
+fun <T> Lock.use(block: () -> T) {
+  lock()
+  try {
+    block.invoke()
+  } finally {
+    unlock()
   }
 }

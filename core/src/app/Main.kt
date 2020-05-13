@@ -1,5 +1,6 @@
 package goos.app
 
+import goos.auction.xmpp.XMPPAuctionHouse
 import goos.ui.swing.MainWindow
 import goos.ui.swing.SnipersTableModel
 import uk.org.lidalia.kotlinlangext.threads.blockUntilShutdown
@@ -22,10 +23,12 @@ class Main(
 ) {
   private val snipers = SnipersTableModel()
   private val sniperLauncher = SniperLauncher(
-    hostname = hostname,
-    username = username,
-    password = password,
-    snipers = snipers
+    XMPPAuctionHouse(
+      hostname = hostname,
+      username = username,
+      password = password
+    ),
+    snipers
   )
   private lateinit var ui: MainWindow
 

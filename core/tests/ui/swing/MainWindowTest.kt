@@ -69,16 +69,4 @@ class MainWindowTest : StringSpec({
     }
     confirmVerified(userRequestListener)
   }
-
-  "make user request when connect button clicked" {
-
-    driver.connect()
-
-    eventually(1.seconds) {
-      verify(exactly = 1) {
-        userRequestListener.connect()
-      }
-    }
-    confirmVerified(userRequestListener)
-  }
 })

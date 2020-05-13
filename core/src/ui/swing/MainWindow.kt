@@ -63,10 +63,6 @@ class MainWindow(
   }
 
   private fun makeConnectionControls() = JPanel(FlowLayout()).apply {
-    add(JButton("Connect").apply {
-      name = SNIPER_CONNECT_BUTTON_NAME
-      addActionListener { userRequests.connect() }
-    })
     add(JButton("Reset").apply {
       name = SNIPER_RESET_BUTTON_NAME
       addActionListener { userRequests.reset() }
@@ -81,7 +77,6 @@ class MainWindow(
     const val MAIN_WINDOW_NAME: String = "Auction Sniper Name"
     const val SNIPERS_TABLE_NAME: String = "snipers table"
     const val SNIPER_RESET_BUTTON_NAME: String = "sniper reset button"
-    const val SNIPER_CONNECT_BUTTON_NAME: String = "sniper connect button"
     const val NEW_ITEM_ID_NAME: String = "new item id field"
     const val JOIN_BUTTON_NAME: String = "join button"
   }
@@ -102,11 +97,7 @@ private class MultiUserRequestListener : UserRequestListener {
     listeners.forEach { it.reset() }
   }
 
-  override fun connect() {
-    listeners.forEach { it.connect() }
-  }
-
   override fun disconnect() {
-    listeners.forEach { it.connect() }
+    listeners.forEach { it.disconnect() }
   }
 }

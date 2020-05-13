@@ -19,7 +19,7 @@ class XMPPAuctionTest : StringSpec({
     val auctionServer = FakeAuctionServer("item-879")
     auctionServer.startSellingItem()
 
-    val auction = XMPPAuctionHouse.connect(
+    val auction = XMPPAuctionHouse(
         hostname = "auctionhost.internal",
         username = "sniper",
         password = "sniper"

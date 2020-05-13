@@ -13,7 +13,6 @@ class ApplicationRunner(
     driver.hasBasicAttributes()
     driver.hasTitle("Auction Sniper")
     driver.hasColumnTitles()
-    driver.connect()
   }
 
   fun startBiddingIn(
