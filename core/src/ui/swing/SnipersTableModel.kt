@@ -2,7 +2,7 @@ package goos.ui.swing
 
 import goos.common.Defect
 import goos.core.AuctionSniper
-import goos.core.SniperCollector
+import goos.core.PortfolioListener
 import goos.ui.api.SniperListener
 import goos.ui.api.UiSniperSnapshot
 import goos.ui.api.UiSniperState.BIDDING
@@ -12,10 +12,9 @@ import goos.ui.api.UiSniperState.WINNING
 import goos.ui.api.UiSniperState.WON
 import javax.swing.table.AbstractTableModel
 
-class SnipersTableModel : AbstractTableModel(), SniperListener, SniperCollector {
+class SnipersTableModel : AbstractTableModel(), SniperListener, PortfolioListener {
 
   private val sniperSnapshots = mutableListOf<UiSniperSnapshot>()
-  private val notToBeGCd = mutableListOf<AuctionSniper>()
 
   override fun getColumnCount(): Int = Column.values().size
   override fun getRowCount(): Int = sniperSnapshots.size
@@ -48,8 +47,7 @@ class SnipersTableModel : AbstractTableModel(), SniperListener, SniperCollector 
     fireTableRowsDeleted(0, rows)
   }
 
-  override fun addSniper(sniper: AuctionSniper) {
-    notToBeGCd.add(sniper)
+  override fun sniperAdded(sniper: AuctionSniper) {
     addSniperSnapshot(sniper.snapshot.toUi())
     sniper.addSniperListener(SwingThreadSniperListener(this))
   }

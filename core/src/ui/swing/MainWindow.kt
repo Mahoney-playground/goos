@@ -1,5 +1,6 @@
 package goos.ui.swing
 
+import goos.core.SniperPortfolio
 import goos.ui.api.UserRequestListener
 import java.awt.BorderLayout
 import java.awt.BorderLayout.CENTER
@@ -15,21 +16,29 @@ import javax.swing.JTable
 import javax.swing.JTextField
 
 class MainWindow(
-  private val snipers: SnipersTableModel
+  portfolio: SniperPortfolio
 ) : JFrame("Auction Sniper") {
 
   private val userRequests = MultiUserRequestListener()
 
   init {
     name = MAIN_WINDOW_NAME
-    fillContentPane(makeSnipersTable(), makeControls(), makeConnectionControls())
+    fillContentPane(makeSnipersTable(portfolio), makeControls(), makeConnectionControls())
     pack()
     defaultCloseOperation = EXIT_ON_CLOSE
     isVisible = true
   }
 
-  private fun makeSnipersTable() = JTable(snipers).apply {
-    name = SNIPERS_TABLE_NAME
+  private fun makeSnipersTable(
+    portfolio: SniperPortfolio
+  ): JTable {
+
+    val model = SnipersTableModel()
+    portfolio.addPortfolioListener(model)
+
+    return JTable(model).apply {
+      name = SNIPERS_TABLE_NAME
+    }
   }
 
   private fun makeControls() = JPanel(FlowLayout()).apply {

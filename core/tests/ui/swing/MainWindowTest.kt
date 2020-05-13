@@ -1,5 +1,6 @@
 package goos.ui.swing
 
+import goos.core.SniperPortfolio
 import goos.ui.api.UserRequestListener
 import goos.uitestsupport.AuctionSniperDriver
 import io.kotest.assertions.timing.eventually
@@ -30,7 +31,7 @@ class MainWindowTest : StringSpec({
   beforeTest {
     userRequestListener = mockk(relaxed = true)
     withContext(Dispatchers.Swing) {
-      mainWindow = MainWindow(SnipersTableModel())
+      mainWindow = MainWindow(SniperPortfolio())
       mainWindow.addUserRequestListener(userRequestListener)
     }
     driver = AuctionSniperDriver(JavaDriver())

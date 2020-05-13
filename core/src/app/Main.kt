@@ -2,8 +2,8 @@ package goos.app
 
 import goos.auction.xmpp.XMPPAuctionHouse
 import goos.core.SniperLauncher
+import goos.core.SniperPortfolio
 import goos.ui.swing.MainWindow
-import goos.ui.swing.SnipersTableModel
 import uk.org.lidalia.kotlinlangext.threads.blockUntilShutdown
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
@@ -22,14 +22,14 @@ class Main(
   private val username: String,
   private val password: String
 ) {
-  private val snipers = SnipersTableModel()
+  private val portfolio = SniperPortfolio()
   private val sniperLauncher = SniperLauncher(
     XMPPAuctionHouse(
       hostname = hostname,
       username = username,
       password = password
     ),
-    snipers
+    portfolio
   )
   private lateinit var ui: MainWindow
 
@@ -40,7 +40,7 @@ class Main(
   }
 
   private fun startUserInterface() = SwingUtilities.invokeAndWait {
-    ui = MainWindow(snipers)
+    ui = MainWindow(portfolio)
   }
 
   private fun addUserRequestListener() {
