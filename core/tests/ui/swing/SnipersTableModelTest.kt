@@ -1,7 +1,7 @@
 package goos.ui.swing
 
-import goos.core.SniperSnapshot
-import goos.core.SniperState.BIDDING
+import goos.core.api.SniperSnapshot
+import goos.core.api.SniperState.BIDDING
 import goos.ui.swing.Column.ITEM_IDENTIFIER
 import goos.ui.swing.Column.LAST_BID
 import goos.ui.swing.Column.LAST_PRICE

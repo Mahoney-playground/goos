@@ -1,6 +1,6 @@
 package goos.ui.swing
 
-import goos.core.PortfolioNotifier
+import goos.core.api.PortfolioNotifier
 import goos.ui.api.UserRequestListener
 import java.awt.BorderLayout
 import java.awt.BorderLayout.CENTER

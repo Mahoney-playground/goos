@@ -5,7 +5,7 @@ import goos.ui.api.UserRequestListener
 
 class SniperLauncher(
   private val auctionHouse: AuctionHouse,
-  private val collector: SniperCollector
+  private val portfolio: SniperPortfolio
 ) : UserRequestListener {
 
   override fun joinAuction(itemId: String) {
@@ -16,13 +16,13 @@ class SniperLauncher(
 
     auction.addAuctionEventListener(sniper)
 
-    collector.addSniper(sniper)
+    portfolio.addSniper(sniper)
 
     auction.join()
   }
 
   override fun reset() {
-    collector.reset()
+    portfolio.reset()
   }
 
   override fun disconnect() {
