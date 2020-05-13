@@ -19,7 +19,9 @@ class AuctionSniperTest : StringSpec({
 
   val auction = mockk<Auction>(relaxed = true)
   val sniperListener = mockk<SniperListener>(relaxed = true)
-  val sniper = AuctionSniper(ITEM_ID, auction, sniperListener)
+  val sniper = AuctionSniper(ITEM_ID, auction).apply {
+    addSniperListener(sniperListener)
+  }
 
   "reports lost if auction closes immediately" {
     sniper.auctionClosed()

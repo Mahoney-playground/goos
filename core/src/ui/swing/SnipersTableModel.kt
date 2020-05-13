@@ -1,6 +1,8 @@
 package goos.ui.swing
 
 import goos.common.Defect
+import goos.core.AuctionSniper
+import goos.core.SniperCollector
 import goos.ui.api.SniperListener
 import goos.ui.api.UiSniperSnapshot
 import goos.ui.api.UiSniperState.BIDDING
@@ -10,9 +12,10 @@ import goos.ui.api.UiSniperState.WINNING
 import goos.ui.api.UiSniperState.WON
 import javax.swing.table.AbstractTableModel
 
-class SnipersTableModel : AbstractTableModel(), SniperListener {
+class SnipersTableModel : AbstractTableModel(), SniperListener, SniperCollector {
 
   private val sniperSnapshots = mutableListOf<UiSniperSnapshot>()
+  private val notToBeGCd = mutableListOf<AuctionSniper>()
 
   override fun getColumnCount(): Int = Column.values().size
   override fun getRowCount(): Int = sniperSnapshots.size
@@ -34,15 +37,21 @@ class SnipersTableModel : AbstractTableModel(), SniperListener {
     fireTableRowsUpdated(index, index)
   }
 
-  fun addSniper(sniper: UiSniperSnapshot) {
+  fun addSniperSnapshot(sniper: UiSniperSnapshot) {
     sniperSnapshots.add(sniper)
     fireTableRowsInserted(rowCount - 1, rowCount - 1)
   }
 
-  fun reset() {
+  override fun reset() {
     val rows = rowCount
     sniperSnapshots.clear()
     fireTableRowsDeleted(0, rows)
+  }
+
+  override fun addSniper(sniper: AuctionSniper) {
+    notToBeGCd.add(sniper)
+    addSniperSnapshot(sniper.snapshot.toUi())
+    sniper.addSniperListener(SwingThreadSniperListener(this))
   }
 }
 

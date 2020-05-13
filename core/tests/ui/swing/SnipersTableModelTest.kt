@@ -68,7 +68,7 @@ class SnipersTableModelTest : StringSpec({
   "sets sniper values in columns" {
 
     val joining = UiSniperSnapshot.joining("item id")
-    model.addSniper(joining)
+    model.addSniperSnapshot(joining)
 
     val bidding = joining.copy(state = BIDDING, lastPrice = 555, lastBid = 666)
     model.sniperStateChanged(bidding)
@@ -82,7 +82,7 @@ class SnipersTableModelTest : StringSpec({
 
     model.rowCount shouldBe 0
 
-    model.addSniper(joining)
+    model.addSniperSnapshot(joining)
 
     model.rowCount shouldBe 1
     model.row(0) shouldMatch joining
@@ -90,8 +90,8 @@ class SnipersTableModelTest : StringSpec({
   }
 
   "holds snipers in addition order" {
-    model.addSniper(UiSniperSnapshot.joining("item 0"))
-    model.addSniper(UiSniperSnapshot.joining("item 1"))
+    model.addSniperSnapshot(UiSniperSnapshot.joining("item 0"))
+    model.addSniperSnapshot(UiSniperSnapshot.joining("item 1"))
 
     model.row(0).column(ITEM_IDENTIFIER) shouldBe "item 0"
     model.row(1).column(ITEM_IDENTIFIER) shouldBe "item 1"
@@ -100,13 +100,13 @@ class SnipersTableModelTest : StringSpec({
   "updates correct row for sniper" {
 
     val item0 = UiSniperSnapshot.joining("item 0")
-    model.addSniper(item0)
+    model.addSniperSnapshot(item0)
 
     val item1 = UiSniperSnapshot.joining("item 1")
-    model.addSniper(item1)
+    model.addSniperSnapshot(item1)
 
     val item2 = UiSniperSnapshot.joining("item 2")
-    model.addSniper(item2)
+    model.addSniperSnapshot(item2)
 
     val updatedItem1 = item1.copy(state = BIDDING, lastPrice = 10, lastBid = 11)
     model.sniperStateChanged(updatedItem1)

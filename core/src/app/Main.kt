@@ -1,6 +1,7 @@
 package goos.app
 
 import goos.auction.xmpp.XMPPAuctionHouse
+import goos.core.SniperLauncher
 import goos.ui.swing.MainWindow
 import goos.ui.swing.SnipersTableModel
 import uk.org.lidalia.kotlinlangext.threads.blockUntilShutdown
