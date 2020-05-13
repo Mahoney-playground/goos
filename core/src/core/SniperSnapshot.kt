@@ -3,7 +3,6 @@ package goos.core
 import goos.core.SniperState.BIDDING
 import goos.core.SniperState.JOINING
 import goos.core.SniperState.WINNING
-import goos.ui.api.UiSniperSnapshot
 
 data class SniperSnapshot(
   val itemId: String,
@@ -21,8 +20,9 @@ data class SniperSnapshot(
   fun closed() =
     copy(state = state.whenAuctionClosed())
 
-  fun toUi(): UiSniperSnapshot =
-    UiSniperSnapshot(itemId, lastPrice, lastBid, state.ui)
+  fun toUi() = this
+
+  fun isForSameItemAs(sniperSnapshot: SniperSnapshot) = itemId == sniperSnapshot.itemId
 
   companion object {
     fun joining(itemId: String) = SniperSnapshot(itemId, 0, 0, JOINING)

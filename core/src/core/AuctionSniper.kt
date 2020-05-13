@@ -4,8 +4,6 @@ import goos.auction.api.Auction
 import goos.auction.api.AuctionEventListener
 import goos.auction.api.AuctionEventListener.PriceSource
 import goos.auction.api.AuctionEventListener.PriceSource.FromSniper
-import goos.ui.api.MultiSniperListener
-import goos.ui.api.SniperListener
 
 class AuctionSniper(
   val itemId: String,

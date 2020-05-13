@@ -1,16 +1,16 @@
-package goos.ui.api
+package goos.core
 
 import java.util.EventListener
 
 interface SniperListener : EventListener {
-  fun sniperStateChanged(sniperSnapshot: UiSniperSnapshot)
+  fun sniperStateChanged(sniperSnapshot: SniperSnapshot)
 }
 
 class MultiSniperListener : SniperListener {
 
   private val listeners = mutableListOf<SniperListener>()
 
-  override fun sniperStateChanged(sniperSnapshot: UiSniperSnapshot) {
+  override fun sniperStateChanged(sniperSnapshot: SniperSnapshot) {
     listeners.forEach { it.sniperStateChanged(sniperSnapshot) }
   }
 
