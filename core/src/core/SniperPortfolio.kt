@@ -1,17 +1,19 @@
 package goos.core
 
+import java.util.EventListener
+
 class SniperPortfolio : SniperCollector {
 
-  private val notToBeGCd = mutableListOf<AuctionSniper>()
+  private val snipers = mutableListOf<AuctionSniper>()
   private val portfolioListeners = MultiPortfolioListener()
 
   override fun addSniper(sniper: AuctionSniper) {
-    notToBeGCd.add(sniper)
+    snipers.add(sniper)
     portfolioListeners.sniperAdded(sniper)
   }
 
   override fun reset() {
-    notToBeGCd.clear()
+    snipers.clear()
     portfolioListeners.reset()
   }
 
@@ -20,7 +22,7 @@ class SniperPortfolio : SniperCollector {
   }
 }
 
-interface PortfolioListener {
+interface PortfolioListener : EventListener {
   fun sniperAdded(sniper: AuctionSniper)
   fun reset()
 }
