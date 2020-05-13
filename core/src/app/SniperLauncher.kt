@@ -27,9 +27,9 @@ class SniperLauncher(
     notToBeGCd.add(auction)
 
     val sniper = AuctionSniper(
-        itemId,
-        auction,
-        SwingThreadSniperListener(snipers)
+      itemId,
+      auction,
+      SwingThreadSniperListener(snipers)
     )
 
     auction.addAuctionEventListener(sniper)
