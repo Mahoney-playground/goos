@@ -8,6 +8,8 @@ import java.awt.BorderLayout.NORTH
 import java.awt.BorderLayout.SOUTH
 import java.awt.Component
 import java.awt.FlowLayout
+import java.awt.event.WindowAdapter
+import java.awt.event.WindowEvent
 import javax.swing.JButton
 import javax.swing.JFrame
 import javax.swing.JPanel
@@ -27,6 +29,11 @@ class MainWindow(
     pack()
     defaultCloseOperation = EXIT_ON_CLOSE
     isVisible = true
+    addWindowListener(object : WindowAdapter() {
+      override fun windowClosing(e: WindowEvent) {
+        userRequests.disconnect()
+      }
+    })
   }
 
   private fun makeSnipersTable(

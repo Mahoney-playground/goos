@@ -5,8 +5,6 @@ import goos.core.SniperLauncher
 import goos.core.SniperPortfolio
 import goos.ui.swing.MainWindow
 import uk.org.lidalia.kotlinlangext.threads.blockUntilShutdown
-import java.awt.event.WindowAdapter
-import java.awt.event.WindowEvent
 import java.util.logging.Level.WARNING
 import java.util.logging.Logger
 import javax.swing.SwingUtilities
@@ -23,19 +21,10 @@ class Main(
   private val password: String
 ) {
   private val portfolio = SniperPortfolio()
-  private val sniperLauncher = SniperLauncher(
-    XMPPAuctionHouse(
-      hostname = hostname,
-      username = username,
-      password = password
-    ),
-    portfolio
-  )
   private lateinit var ui: MainWindow
 
   init {
     startUserInterface()
-    disconnectWhenUICloses()
     addUserRequestListener()
   }
 
@@ -44,15 +33,15 @@ class Main(
   }
 
   private fun addUserRequestListener() {
-    ui.addUserRequestListener(sniperLauncher)
+    ui.addUserRequestListener(SniperLauncher(
+      XMPPAuctionHouse(
+        hostname = hostname,
+        username = username,
+        password = password
+      ),
+      portfolio
+    ))
   }
-
-  private fun disconnectWhenUICloses() =
-    ui.addWindowListener(object : WindowAdapter() {
-      override fun windowClosed(e: WindowEvent?) {
-        sniperLauncher.disconnect()
-      }
-    })
 
   companion object {
 
