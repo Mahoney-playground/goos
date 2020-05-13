@@ -105,4 +105,8 @@ private class MultiUserRequestListener : UserRequestListener {
   override fun connect() {
     listeners.forEach { it.connect() }
   }
+
+  override fun disconnect() {
+    listeners.forEach { it.connect() }
+  }
 }

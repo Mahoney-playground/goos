@@ -3,6 +3,8 @@ package goos.app
 import goos.ui.swing.MainWindow
 import goos.ui.swing.SnipersTableModel
 import uk.org.lidalia.kotlinlangext.threads.blockUntilShutdown
+import java.awt.event.WindowAdapter
+import java.awt.event.WindowEvent
 import java.util.logging.Level.WARNING
 import java.util.logging.Logger
 import javax.swing.SwingUtilities
@@ -42,7 +44,11 @@ class Main(
   }
 
   private fun disconnectWhenUICloses() =
-    ui.addWindowListener(sniperLauncher)
+    ui.addWindowListener(object : WindowAdapter() {
+      override fun windowClosed(e: WindowEvent?) {
+        sniperLauncher.disconnect()
+      }
+    })
 
   companion object {
 

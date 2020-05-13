@@ -8,15 +8,13 @@ import goos.ui.api.UiSniperSnapshot
 import goos.ui.api.UserRequestListener
 import goos.ui.swing.SnipersTableModel
 import goos.ui.swing.SwingThreadSniperListener
-import java.awt.event.WindowAdapter
-import java.awt.event.WindowEvent
 
 class SniperLauncher(
   private val hostname: String,
   private val username: String,
   private val password: String,
   private val snipers: SnipersTableModel
-) : WindowAdapter(), UserRequestListener {
+) : UserRequestListener {
 
   private var auctionHouse: AuctionHouse? = null
   private val notToBeGCd = mutableListOf<Auction>()
@@ -49,7 +47,7 @@ class SniperLauncher(
     }
   }
 
-  override fun windowClosed(e: WindowEvent?) {
+  override fun disconnect() {
     auctionHouse?.disconnect()
   }
 }
