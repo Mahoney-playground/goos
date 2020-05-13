@@ -9,6 +9,7 @@ import org.jxmpp.jid.impl.JidCreate
 import org.jxmpp.jid.parts.Resourcepart
 import java.util.concurrent.locks.Lock
 import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.withLock
 
 class XMPPAuctionHouse(
   hostname: String,
@@ -32,7 +33,7 @@ class XMPPAuctionHouse(
 
   private val lock: Lock = ReentrantLock()
   private fun ensureConnected() {
-    lock.use {
+    lock.withLock {
       if (!connection.isConnected) {
         connect()
       }
@@ -50,14 +51,5 @@ class XMPPAuctionHouse(
 
   override fun disconnect() {
     connection.disconnect()
-  }
-}
-
-fun <T> Lock.use(block: () -> T) {
-  lock()
-  try {
-    block.invoke()
-  } finally {
-    unlock()
   }
 }
