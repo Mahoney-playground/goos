@@ -1,8 +1,7 @@
 package goos.app
 
 import goos.auction.xmpp.XMPPAuctionHouse
-import goos.core.SniperLauncher
-import goos.core.SniperPortfolio
+import goos.core.Core
 import goos.ui.swing.buildUi
 import uk.org.lidalia.kotlinlangext.threads.blockUntilShutdown
 import java.util.logging.Level.WARNING
@@ -24,13 +23,9 @@ fun main(vararg args: String) {
     password = args[ARG_PASSWORD]
   )
 
-  val sniperPortfolio = SniperPortfolio()
-  val sniperLauncher = SniperLauncher(
-    auctionHouse,
-    sniperPortfolio
-  )
+  val core = Core(auctionHouse)
 
-  buildUi(sniperPortfolio, sniperLauncher)
+  buildUi(core)
 
   blockUntilShutdown()
   println("App stopping")

@@ -1,4 +1,4 @@
-package goos.core.api
+package goos.core
 
 interface SniperNotifier {
   fun addSniperListener(sniperListener: SniperListener)

@@ -1,16 +1,12 @@
 package goos.ui.swing
 
-import goos.core.api.PortfolioNotifier
-import goos.ui.api.UserRequestListener
+import goos.core.Core
 import javax.swing.SwingUtilities
 
-fun buildUi(
-  portfolio: PortfolioNotifier,
-  userRequestListener: UserRequestListener
-) {
+fun buildUi(core: Core) {
   SwingUtilities.invokeAndWait {
-    MainWindow(portfolio).apply {
-      addUserRequestListener(userRequestListener)
+    MainWindow(core.portfolioNotifier).apply {
+      addUserRequestListener(core.userRequestListener)
     }
   }
 }

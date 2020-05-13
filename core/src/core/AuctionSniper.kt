@@ -4,12 +4,8 @@ import goos.auction.api.Auction
 import goos.auction.api.AuctionEventListener
 import goos.auction.api.AuctionEventListener.PriceSource
 import goos.auction.api.AuctionEventListener.PriceSource.FromSniper
-import goos.core.api.MultiSniperListener
-import goos.core.api.SniperListener
-import goos.core.api.SniperNotifier
-import goos.core.api.SniperSnapshot
 
-class AuctionSniper(
+internal class AuctionSniper(
   val itemId: String,
   private val auction: Auction
 ) : AuctionEventListener, SniperNotifier {
@@ -44,7 +40,7 @@ class AuctionSniper(
   }
 
   private fun notifyChange() {
-    sniperListeners.sniperStateChanged(snapshot.toUi())
+    sniperListeners.sniperStateChanged(snapshot)
   }
 
   override fun addSniperListener(sniperListener: SniperListener) {

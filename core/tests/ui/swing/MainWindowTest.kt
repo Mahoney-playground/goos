@@ -1,7 +1,7 @@
 package goos.ui.swing
 
 import goos.core.SniperPortfolio
-import goos.ui.api.UserRequestListener
+import goos.core.UserRequestListener
 import goos.uitestsupport.AuctionSniperDriver
 import io.kotest.assertions.timing.eventually
 import io.kotest.core.spec.style.StringSpec

@@ -1,4 +1,4 @@
-package goos.core.api
+package goos.core
 
 import goos.common.Defect
 

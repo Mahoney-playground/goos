@@ -1,8 +1,8 @@
-package goos.core.api
+package goos.core
 
-import goos.core.api.SniperState.BIDDING
-import goos.core.api.SniperState.JOINING
-import goos.core.api.SniperState.WINNING
+import goos.core.SniperState.BIDDING
+import goos.core.SniperState.JOINING
+import goos.core.SniperState.WINNING
 
 data class SniperSnapshot(
   val itemId: String,
@@ -11,16 +11,14 @@ data class SniperSnapshot(
   val state: SniperState
 ) {
 
-  fun bidding(newLastPrice: Int, newLastBid: Int) =
+  internal fun bidding(newLastPrice: Int, newLastBid: Int) =
     copy(lastPrice = newLastPrice, lastBid = newLastBid, state = BIDDING)
 
-  fun winning(newLastPrice: Int) =
+  internal fun winning(newLastPrice: Int) =
     copy(lastPrice = newLastPrice, state = WINNING)
 
-  fun closed() =
+  internal fun closed() =
     copy(state = state.whenAuctionClosed())
-
-  fun toUi() = this
 
   fun isForSameItemAs(sniperSnapshot: SniperSnapshot) = itemId == sniperSnapshot.itemId
 
