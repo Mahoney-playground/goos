@@ -1,6 +1,6 @@
 package goos.ui.swing
 
-import goos.core.SniperPortfolio
+import goos.core.PortfolioNotifier
 import goos.ui.api.UserRequestListener
 import java.awt.BorderLayout
 import java.awt.BorderLayout.CENTER
@@ -18,7 +18,7 @@ import javax.swing.JTable
 import javax.swing.JTextField
 
 class MainWindow(
-  portfolio: SniperPortfolio
+  portfolio: PortfolioNotifier
 ) : JFrame("Auction Sniper") {
 
   private val userRequests = MultiUserRequestListener()
@@ -37,7 +37,7 @@ class MainWindow(
   }
 
   private fun makeSnipersTable(
-    portfolio: SniperPortfolio
+    portfolio: PortfolioNotifier
   ): JTable {
 
     val model = SnipersTableModel()

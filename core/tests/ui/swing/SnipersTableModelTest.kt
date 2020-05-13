@@ -1,13 +1,11 @@
 package goos.ui.swing
 
-import goos.common.Defect
 import goos.core.SniperSnapshot
 import goos.core.SniperState.BIDDING
 import goos.ui.swing.Column.ITEM_IDENTIFIER
 import goos.ui.swing.Column.LAST_BID
 import goos.ui.swing.Column.LAST_PRICE
 import goos.ui.swing.Column.SNIPER_STATE
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.IsolationMode.InstancePerTest
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forOne
@@ -68,7 +66,7 @@ class SnipersTableModelTest : StringSpec({
   "sets sniper values in columns" {
 
     val joining = SniperSnapshot.joining("item id")
-    model.addSniperSnapshot(joining)
+    model.sniperStateChanged(joining)
 
     val bidding = joining.copy(state = BIDDING, lastPrice = 555, lastBid = 666)
     model.sniperStateChanged(bidding)
@@ -82,7 +80,7 @@ class SnipersTableModelTest : StringSpec({
 
     model.rowCount shouldBe 0
 
-    model.addSniperSnapshot(joining)
+    model.sniperStateChanged(joining)
 
     model.rowCount shouldBe 1
     model.row(0) shouldMatch joining
@@ -90,8 +88,8 @@ class SnipersTableModelTest : StringSpec({
   }
 
   "holds snipers in addition order" {
-    model.addSniperSnapshot(SniperSnapshot.joining("item 0"))
-    model.addSniperSnapshot(SniperSnapshot.joining("item 1"))
+    model.sniperStateChanged(SniperSnapshot.joining("item 0"))
+    model.sniperStateChanged(SniperSnapshot.joining("item 1"))
 
     model.row(0).column(ITEM_IDENTIFIER) shouldBe "item 0"
     model.row(1).column(ITEM_IDENTIFIER) shouldBe "item 1"
@@ -100,13 +98,13 @@ class SnipersTableModelTest : StringSpec({
   "updates correct row for sniper" {
 
     val item0 = SniperSnapshot.joining("item 0")
-    model.addSniperSnapshot(item0)
+    model.sniperStateChanged(item0)
 
     val item1 = SniperSnapshot.joining("item 1")
-    model.addSniperSnapshot(item1)
+    model.sniperStateChanged(item1)
 
     val item2 = SniperSnapshot.joining("item 2")
-    model.addSniperSnapshot(item2)
+    model.sniperStateChanged(item2)
 
     val updatedItem1 = item1.copy(state = BIDDING, lastPrice = 10, lastBid = 11)
     model.sniperStateChanged(updatedItem1)
@@ -114,15 +112,6 @@ class SnipersTableModelTest : StringSpec({
     model.row(0) shouldMatch item0
     model.row(1) shouldMatch updatedItem1
     model.row(2) shouldMatch item2
-  }
-
-  "throws defect if no existing sniper for an update" {
-
-    val sniperSnapshot = SniperSnapshot.joining("no such item")
-    val e = shouldThrow<Defect> {
-      model.sniperStateChanged(sniperSnapshot)
-    }
-    e.message shouldBe "No sniper for same item as $sniperSnapshot"
   }
 }) {
   override fun isolationMode() = InstancePerTest

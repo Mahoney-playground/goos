@@ -1,9 +1,8 @@
 package goos.ui.swing
 
-import goos.common.Defect
-import goos.core.AuctionSniper
 import goos.core.PortfolioListener
 import goos.core.SniperListener
+import goos.core.SniperNotifier
 import goos.core.SniperSnapshot
 import goos.core.SniperState.BIDDING
 import goos.core.SniperState.JOINING
@@ -12,7 +11,7 @@ import goos.core.SniperState.WINNING
 import goos.core.SniperState.WON
 import javax.swing.table.AbstractTableModel
 
-class SnipersTableModel : AbstractTableModel(), SniperListener, PortfolioListener {
+internal class SnipersTableModel : AbstractTableModel(), SniperListener, PortfolioListener {
 
   private val sniperSnapshots = mutableListOf<SniperSnapshot>()
 
@@ -31,12 +30,15 @@ class SnipersTableModel : AbstractTableModel(), SniperListener, PortfolioListene
     sniperSnapshot: SniperSnapshot
   ) {
     val index = sniperSnapshots.indexOfFirstOrNull { it.isForSameItemAs(sniperSnapshot) }
-      ?: throw Defect("No sniper for same item as $sniperSnapshot")
-    sniperSnapshots[index] = sniperSnapshot
-    fireTableRowsUpdated(index, index)
+    if (index == null) {
+      addSniperSnapshot(sniperSnapshot)
+    } else {
+      sniperSnapshots[index] = sniperSnapshot
+      fireTableRowsUpdated(index, index)
+    }
   }
 
-  fun addSniperSnapshot(sniper: SniperSnapshot) {
+  private fun addSniperSnapshot(sniper: SniperSnapshot) {
     sniperSnapshots.add(sniper)
     fireTableRowsInserted(rowCount - 1, rowCount - 1)
   }
@@ -47,13 +49,12 @@ class SnipersTableModel : AbstractTableModel(), SniperListener, PortfolioListene
     fireTableRowsDeleted(0, rows)
   }
 
-  override fun sniperAdded(sniper: AuctionSniper) {
-    addSniperSnapshot(sniper.snapshot.toUi())
+  override fun sniperAdded(sniper: SniperNotifier) {
     sniper.addSniperListener(SwingThreadSniperListener(this))
   }
 }
 
-enum class Column(val title: String) {
+internal enum class Column(val title: String) {
   ITEM_IDENTIFIER("Item") {
     override fun valueIn(snapshot: SniperSnapshot) = snapshot.itemId
   },

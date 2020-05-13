@@ -8,7 +8,7 @@ import goos.auction.api.AuctionEventListener.PriceSource.FromSniper
 class AuctionSniper(
   val itemId: String,
   private val auction: Auction
-) : AuctionEventListener {
+) : AuctionEventListener, SniperNotifier {
 
   private val sniperListeners = MultiSniperListener()
 
@@ -43,7 +43,8 @@ class AuctionSniper(
     sniperListeners.sniperStateChanged(snapshot.toUi())
   }
 
-  fun addSniperListener(sniperListener: SniperListener) {
+  override fun addSniperListener(sniperListener: SniperListener) {
     sniperListeners.addListener(sniperListener)
+    notifyChange()
   }
 }
