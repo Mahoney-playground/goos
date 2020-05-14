@@ -128,8 +128,39 @@ class AuctionSniperEndToEndTest : StringSpec({
     application.showSniperHasLostAuction(auction, lastPrice = 1_207, lastBid = 1_098)
   }
 
+  "sniper reports invalid auction message and stops responding to events" {
+
+    auction.startSellingItem()
+    application.startBiddingIn(auction)
+
+    auction.hasReceivedJoinRequestFrom(SNIPER_XMPP_ID)
+
+    auction.reportPrice(price = 500, increment = 20, bidder = "other bidder")
+    auction.hasReceivedBid(bid = 520, sniperId = SNIPER_XMPP_ID)
+
+    auction.sendInvalidMessageContaining("a broken message")
+    application.showsSniperHasFailed(auction)
+
+    auction.reportPrice(price = 520, increment = 21, bidder = "other")
+    application.waitForAnotherAuctionEvent(auction2)
+
+//    application.reportsInvalidMessage(auction, "a broken message")
+    application.showsSniperHasFailed(auction)
+  }
+
+  beforeTest { application.reset() }
   afterTest { auction.stop() }
-  afterTest { application.reset() }
+  afterTest { auction2.stop() }
 }) {
   override fun isolationMode() = InstancePerTest
+}
+
+@ExperimentalTime
+fun ApplicationRunner.waitForAnotherAuctionEvent(
+  auction2: FakeAuctionServer
+) {
+  auction2.startSellingItem()
+  startBiddingIn(auction2)
+  auction2.reportPrice(600, 6, "other")
+  hasShownSniperIsBidding(auction2, 600, 606)
 }

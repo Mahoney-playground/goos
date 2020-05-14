@@ -86,8 +86,10 @@ class FakeAuctionServer(
 
   fun stop() {
     try {
-      messageListener.drain()
-      connection.disconnect()
+      if (connection.isConnected) {
+        messageListener.drain()
+        connection.disconnect()
+      }
     } catch (t: Throwable) {
       t.printStackTrace()
     }
@@ -97,6 +99,10 @@ class FakeAuctionServer(
     currentChat!!.sendMessage(
       "SOLVersion: 1.1; Event: PRICE; CurrentPrice: $price; Increment: $increment; Bidder: $bidder;"
     )
+
+  fun sendInvalidMessageContaining(brokenMessage: String) {
+    currentChat!!.sendMessage(brokenMessage)
+  }
 
   companion object {
     const val AUCTION_RESOURCE = "Auction"

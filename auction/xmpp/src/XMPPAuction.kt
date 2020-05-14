@@ -3,7 +3,9 @@ package goos.auction.xmpp
 import goos.auction.api.Auction
 import goos.auction.api.AuctionEventListener
 import goos.auction.api.MultiAuctionEventListener
+import goos.auction.api.NoOpAuctionEventListener
 import org.jivesoftware.smack.XMPPConnection
+import org.jivesoftware.smack.chat.Chat
 import org.jivesoftware.smack.chat.ChatManager
 import org.jxmpp.jid.EntityBareJid
 import org.jxmpp.jid.impl.JidCreate
@@ -16,14 +18,26 @@ internal class XMPPAuction(
 
   private val auctionEventListeners = MultiAuctionEventListener()
 
-  private val chat = ChatManager.getInstanceFor(connection)
-    .createChat(
-      auctionId(itemId, connection.host),
-      AuctionMessageTranslator(
-        connection.user.toString(),
-        auctionEventListeners
-      )
+  private val chat: Chat
+
+  init {
+    val translator = AuctionMessageTranslator(
+      connection.user.toString(),
+      auctionEventListeners
     )
+
+    chat = ChatManager.getInstanceFor(connection)
+      .createChat(
+        auctionId(itemId, connection.host),
+        translator
+      )
+    addAuctionEventListener(chatDisconnectorFor(chat, translator))
+  }
+
+  private fun chatDisconnectorFor(chat: Chat, translator: AuctionMessageTranslator) =
+    object : NoOpAuctionEventListener {
+      override fun auctionFailed() { chat.removeMessageListener(translator) }
+    }
 
   override fun addAuctionEventListener(listener: AuctionEventListener) {
     auctionEventListeners.addListener(listener)

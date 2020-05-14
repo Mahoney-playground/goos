@@ -43,6 +43,11 @@ internal class AuctionSniper(
     notifyChange()
   }
 
+  override fun auctionFailed() {
+    snapshot = snapshot.failed()
+    notifyChange()
+  }
+
   private fun notifyChange() {
     sniperListeners.sniperStateChanged(snapshot)
   }

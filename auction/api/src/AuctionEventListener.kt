@@ -1,5 +1,7 @@
 package goos.auction.api
 
+import goos.auction.api.AuctionEventListener.PriceSource
+
 interface AuctionEventListener {
 
   enum class PriceSource {
@@ -13,6 +15,8 @@ interface AuctionEventListener {
     increment: Int,
     source: PriceSource
   )
+
+  fun auctionFailed()
 }
 
 class MultiAuctionEventListener : AuctionEventListener {
@@ -28,8 +32,16 @@ class MultiAuctionEventListener : AuctionEventListener {
   override fun currentPrice(
     price: Int,
     increment: Int,
-    source: AuctionEventListener.PriceSource
+    source: PriceSource
   ) {
     listeners.forEach { it.currentPrice(price, increment, source) }
   }
+
+  override fun auctionFailed() = listeners.forEach { it.auctionFailed() }
+}
+
+interface NoOpAuctionEventListener : AuctionEventListener {
+  override fun auctionClosed() { /* no-op */ }
+  override fun currentPrice(price: Int, increment: Int, source: PriceSource) { /* no-op */ }
+  override fun auctionFailed() { /* no-op */ }
 }

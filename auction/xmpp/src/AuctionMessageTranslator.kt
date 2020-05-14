@@ -15,15 +15,19 @@ internal class AuctionMessageTranslator(
 ) : ChatMessageListener {
   override fun processMessage(chat: Chat?, message: Message) {
 
-    val event = AuctionEvent.from(message.body ?: "")
+    try {
+      val event = AuctionEvent.from(message.body ?: "")
 
-    when (event.type) {
-      "CLOSE" -> listener.auctionClosed()
-      "PRICE" -> listener.currentPrice(
-        price = event.price,
-        increment = event.increment,
-        source = event.isFrom(sniperId)
-      )
+      when (event.type) {
+        "CLOSE" -> listener.auctionClosed()
+        "PRICE" -> listener.currentPrice(
+          price = event.price,
+          increment = event.increment,
+          source = event.isFrom(sniperId)
+        )
+      }
+    } catch (e: Exception) {
+      listener.auctionFailed()
     }
   }
 }

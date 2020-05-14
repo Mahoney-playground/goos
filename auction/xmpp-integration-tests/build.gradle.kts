@@ -10,6 +10,7 @@ dependencies {
   constraints {
     implementation(mockk)
   }
+  implementation(mockk)
   implementation(project(":auction-xmpp"))
   implementation(project(":xmpp-test-support"))
   implementation(project(":testlauncher"))

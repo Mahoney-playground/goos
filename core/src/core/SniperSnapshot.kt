@@ -1,6 +1,7 @@
 package goos.core
 
 import goos.core.SniperState.BIDDING
+import goos.core.SniperState.FAILED
 import goos.core.SniperState.JOINING
 import goos.core.SniperState.LOSING
 import goos.core.SniperState.WINNING
@@ -23,6 +24,9 @@ data class SniperSnapshot(
 
   internal fun closed() =
     copy(state = state.whenAuctionClosed())
+
+  fun failed() =
+    copy(lastPrice = 0, lastBid = 0, state = FAILED)
 
   fun isForSameItemAs(sniperSnapshot: SniperSnapshot) = item == sniperSnapshot.item
 

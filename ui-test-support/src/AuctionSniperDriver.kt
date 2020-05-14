@@ -6,10 +6,7 @@ import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.runBlocking
 import org.openqa.selenium.By
 import org.openqa.selenium.NoSuchElementException
-import org.openqa.selenium.Platform
 import org.openqa.selenium.WebElement
-import org.openqa.selenium.remote.DesiredCapabilities
-import org.openqa.selenium.remote.RemoteWebDriver
 import java.net.URL
 import kotlin.time.ExperimentalTime
 import kotlin.time.seconds

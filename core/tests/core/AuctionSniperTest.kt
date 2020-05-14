@@ -4,6 +4,8 @@ import goos.auction.api.Auction
 import goos.auction.api.AuctionEventListener.PriceSource.FromOtherBidder
 import goos.auction.api.AuctionEventListener.PriceSource.FromSniper
 import goos.core.SniperState.BIDDING
+import goos.core.SniperState.FAILED
+import goos.core.SniperState.LOSING
 import goos.core.SniperState.LOST
 import goos.core.SniperState.WINNING
 import goos.core.SniperState.WON
@@ -152,7 +154,24 @@ class AuctionSniperTest : StringSpec({
           stopPriceItem,
           lastPrice = price,
           lastBid = 0,
-          state = SniperState.LOSING
+          state = LOSING
+        )
+      )
+    }
+  }
+
+  "reports failed if auction fails when bidding" {
+
+    sniper.currentPrice(100, 10, FromOtherBidder)
+    sniper.auctionFailed()
+
+    verify(exactly = 1) {
+      sniperListener.sniperStateChanged(
+        SniperSnapshot(
+          item,
+          lastPrice = 0,
+          lastBid = 0,
+          state = FAILED
         )
       )
     }

@@ -45,8 +45,16 @@ class ApplicationRunner(
     driver.showSniperState(auction.itemId, lastPrice, lastPrice, STATE_WON)
   }
 
+  fun showsSniperHasFailed(auction: FakeAuctionServer) {
+    driver.showSniperState(auction.itemId, 0, 0, STATE_FAILED)
+  }
+
   fun reset() {
     driver.reset()
+  }
+
+  fun reportsInvalidMessage(auction: FakeAuctionServer, invalidMessage: String) {
+    TODO("not implemented")
   }
 
   companion object {
@@ -57,5 +65,6 @@ class ApplicationRunner(
     const val STATE_JOINING: String = "Joining"
     const val STATE_WINNING: String = "Winning"
     const val STATE_WON: String = "Won"
+    const val STATE_FAILED: String = "Failed"
   }
 }

@@ -10,7 +10,8 @@ enum class SniperState(
   JOINING(LOST),
   BIDDING(LOST),
   WINNING(WON),
-  LOSING(LOST);
+  LOSING(LOST),
+  FAILED(null);
 
   internal fun whenAuctionClosed(): SniperState =
     whenAuctionClosed ?: throw Defect("Auction is already closed")

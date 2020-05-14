@@ -5,6 +5,7 @@ import goos.auction.api.AuctionEventListener.PriceSource.FromOtherBidder
 import goos.auction.api.AuctionEventListener.PriceSource.FromSniper
 import io.kotest.core.spec.IsolationMode.InstancePerTest
 import io.kotest.core.spec.style.StringSpec
+import io.mockk.confirmVerified
 import io.mockk.mockk
 import io.mockk.verify
 import org.jivesoftware.smack.packet.Message
@@ -51,6 +52,30 @@ class AuctionMessageTranslatorTest : StringSpec({
     verify(exactly = 1) {
       listener.currentPrice(192, 7, FromSniper)
     }
+  }
+
+  "notifies auction failed when bad message received" {
+
+    val message = Message().apply {
+      body = "a bad message"
+    }
+
+    translator.processMessage(null, message)
+
+    verify(exactly = 1) {
+      listener.auctionFailed()
+    }
+  }
+
+  "does nothing when unknown event received" {
+
+    val message = Message().apply {
+      body = "SOLVERSION: 1.1; Event: SOMETHING_NEW;"
+    }
+
+    translator.processMessage(null, message)
+
+    confirmVerified(listener)
   }
 }) {
   override fun isolationMode() = InstancePerTest
