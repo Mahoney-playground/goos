@@ -15,11 +15,11 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.seconds
 
 class AuctionSniperDriver(
-  private val driver: RemoteWebDriver
+  private val driver: CompositeWebDriver
 ) {
 
   constructor(url: URL = URL("http://app.internal:1234")) : this(
-    RemoteWebDriver(url, DesiredCapabilities("java", "1.0", Platform.ANY))
+    CompositeRemoteWebDriver(url)
   )
 
   fun hasBasicAttributes() {
@@ -36,7 +36,7 @@ class AuctionSniperDriver(
   ) = runBlocking {
     eventually(5.seconds) {
       val table = JTableDriver(
-        driver.findElementByName(SNIPERS_TABLE_NAME)
+        driver.findElement(By.name(SNIPERS_TABLE_NAME))
       )
 
       table.hasRow(
@@ -53,7 +53,7 @@ class AuctionSniperDriver(
   }
 
   fun hasColumnTitles() {
-    val titles = driver.findElementByName(SNIPERS_TABLE_NAME)
+    val titles = driver.findElement(By.name(SNIPERS_TABLE_NAME))
       .findElements(By.cssSelector(".::header.::all-items"))
       .map { it.text }
 
@@ -73,10 +73,10 @@ class AuctionSniperDriver(
     sendKeys(itemId)
   }
 
-  private fun resetButton() = driver.findElementByName(SNIPER_RESET_BUTTON_NAME)
-  private fun itemIdField() = driver.findElementByName(NEW_ITEM_ID_NAME)
-  private fun stopPriceField() = driver.findElementByName(NEW_ITEM_STOP_PRICE_NAME)
-  private fun bidButton() = driver.findElementByName(JOIN_BUTTON_NAME)
+  private fun resetButton() = driver.findElement(By.name(SNIPER_RESET_BUTTON_NAME))
+  private fun itemIdField() = driver.findElement(By.name(NEW_ITEM_ID_NAME))
+  private fun stopPriceField() = driver.findElement(By.name(NEW_ITEM_STOP_PRICE_NAME))
+  private fun bidButton() = driver.findElement(By.name(JOIN_BUTTON_NAME))
 
   fun close() {
     driver.close()
@@ -94,7 +94,7 @@ class AuctionSniperDriver(
   }
 }
 
-private fun RemoteWebDriver.rootElement() = findElementByCssSelector(".")
+private fun CompositeWebDriver.rootElement() = findElement(By.cssSelector("."))
 
 private class JTableDriver(
   private val element: WebElement

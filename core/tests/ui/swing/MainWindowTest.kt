@@ -4,6 +4,7 @@ import goos.core.Item
 import goos.core.SniperPortfolio
 import goos.core.UserRequestListener
 import goos.uitestsupport.AuctionSniperDriver
+import goos.uitestsupport.CompositeRemoteWebDriver
 import io.kotest.assertions.timing.eventually
 import io.kotest.core.spec.style.StringSpec
 import io.mockk.confirmVerified
@@ -35,7 +36,7 @@ class MainWindowTest : StringSpec({
       mainWindow = MainWindow(SniperPortfolio())
       mainWindow.addUserRequestListener(userRequestListener)
     }
-    driver = AuctionSniperDriver(JavaDriver())
+    driver = AuctionSniperDriver(CompositeRemoteWebDriver(JavaDriver()))
   }
 
   afterTest {
