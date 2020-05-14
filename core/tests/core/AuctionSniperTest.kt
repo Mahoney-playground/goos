@@ -17,7 +17,7 @@ class AuctionSniperTest : StringSpec({
 
   val auction = mockk<Auction>(relaxed = true)
   val sniperListener = mockk<SniperListener>(relaxed = true)
-  val sniper = AuctionSniper(ITEM_ID, auction).apply {
+  val sniper = AuctionSniper(ITEM_ID, 10_000, auction).apply {
     addSniperListener(sniperListener)
   }
 
@@ -124,6 +124,34 @@ class AuctionSniperTest : StringSpec({
           price,
           0,
           WINNING
+        )
+      )
+    }
+  }
+
+  "reports is losing when current price comes from other and next bid is higher than stop price" {
+
+    val price = 1001
+    val increment = 25
+
+    val stopPriceSniper = AuctionSniper(
+      ITEM_ID,
+      stopPrice = (price + increment) - 1,
+      auction = auction
+    ).apply {
+      addSniperListener(sniperListener)
+    }
+
+    stopPriceSniper.currentPrice(price, increment, FromOtherBidder)
+
+    confirmVerified(auction)
+    verify(exactly = 1) {
+      sniperListener.sniperStateChanged(
+        SniperSnapshot(
+          ITEM_ID,
+          lastPrice = price,
+          lastBid = 0,
+          state = SniperState.LOSING
         )
       )
     }

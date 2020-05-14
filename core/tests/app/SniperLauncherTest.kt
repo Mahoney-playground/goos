@@ -18,17 +18,19 @@ class SniperLauncherTest : StringSpec({
   val auctionHouse = mockk<AuctionHouse>(relaxed = true) {
     every { auctionFor(itemId) } returns auction
   }
-  val sniperCollector = SniperPortfolio().apply { mockkObject(this) }
-  val sniperLauncher = SniperLauncher(auctionHouse, sniperCollector)
+  val sniperPortfolio = SniperPortfolio().apply { mockkObject(this) }
+  val sniperLauncher = SniperLauncher(auctionHouse, sniperPortfolio)
 
   "adds new sniper to collector and then joins auction" {
 
+    val stopPrice = 10_000
+
     // when
-    sniperLauncher.joinAuction(itemId)
+    sniperLauncher.joinAuction(itemId, stopPrice)
 
     verifyOrder {
       auction.addAuctionEventListener(match { it is AuctionSniper && it.itemId == itemId })
-      sniperCollector.addSniper(match { it.itemId == itemId })
+      sniperPortfolio.addSniper(match { it.itemId == itemId && it.stopPrice == stopPrice })
       auction.join()
     }
   }

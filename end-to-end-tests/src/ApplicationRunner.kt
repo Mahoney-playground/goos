@@ -16,13 +16,14 @@ class ApplicationRunner(
   }
 
   fun startBiddingIn(
-    vararg auctions: FakeAuctionServer
+    auction: FakeAuctionServer,
+    stopPrice: Int = Int.MAX_VALUE
   ) {
-    auctions.forEach { auction ->
-      driver.startBiddingFor(auction.itemId)
-      driver.showSniperState(auction.itemId, 0, 0, STATE_JOINING)
-    }
+    driver.startBiddingFor(auction.itemId, stopPrice)
+    driver.showSniperState(auction.itemId, 0, 0, STATE_JOINING)
   }
+
+  fun startBiddingIn(vararg auctions: FakeAuctionServer) = auctions.forEach { startBiddingIn(it) }
 
   fun showSniperHasLostAuction(auction: FakeAuctionServer, lastPrice: Int, lastBid: Int) {
     driver.showSniperState(auction.itemId, lastPrice, lastBid, STATE_LOST)
@@ -36,6 +37,10 @@ class ApplicationRunner(
     driver.showSniperState(auction.itemId, winningBid, winningBid, STATE_WINNING)
   }
 
+  fun hasShownSniperIsLosing(auction: FakeAuctionServer, lastPrice: Int, lastBid: Int) {
+    driver.showSniperState(auction.itemId, lastPrice, lastBid, STATE_LOSING)
+  }
+
   fun showSniperHasWonAuction(auction: FakeAuctionServer, lastPrice: Int) {
     driver.showSniperState(auction.itemId, lastPrice, lastPrice, STATE_WON)
   }
@@ -47,6 +52,7 @@ class ApplicationRunner(
   companion object {
     const val SNIPER_XMPP_ID: String = "sniper@auctionhost.internal/Auction"
     const val STATE_LOST: String = "Lost"
+    const val STATE_LOSING: String = "Losing"
     const val STATE_BIDDING: String = "Bidding"
     const val STATE_JOINING: String = "Joining"
     const val STATE_WINNING: String = "Winning"

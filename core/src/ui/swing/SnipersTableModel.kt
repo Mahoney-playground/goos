@@ -6,6 +6,7 @@ import goos.core.SniperNotifier
 import goos.core.SniperSnapshot
 import goos.core.SniperState.BIDDING
 import goos.core.SniperState.JOINING
+import goos.core.SniperState.LOSING
 import goos.core.SniperState.LOST
 import goos.core.SniperState.WINNING
 import goos.core.SniperState.WON
@@ -81,6 +82,7 @@ internal fun SniperSnapshot.stateText(): String = when (state) {
   JOINING -> "Joining"
   BIDDING -> "Bidding"
   WINNING -> "Winning"
+  LOSING -> "Losing"
   LOST -> "Lost"
   WON -> "Won"
 }

@@ -49,11 +49,11 @@ class MainWindowTest : StringSpec({
 
   "make user request when join button clicked" {
 
-    driver.startBiddingFor("an item-id")
+    driver.startBiddingFor("an item-id", 11_000)
 
     eventually(5.seconds) {
       verify(exactly = 1) {
-        userRequestListener.joinAuction("an item-id")
+        userRequestListener.joinAuction("an item-id", 11_000)
       }
     }
     confirmVerified(userRequestListener)

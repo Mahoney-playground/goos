@@ -108,6 +108,26 @@ class AuctionSniperEndToEndTest : StringSpec({
     application.showSniperHasWonAuction(auction2, lastPrice = 521)
   }
 
+  "sniper loses an auction when the price is too high" {
+
+    auction.startSellingItem()
+    application.startBiddingIn(auction, stopPrice = 1_100)
+    auction.hasReceivedJoinRequestFrom(SNIPER_XMPP_ID)
+
+    auction.reportPrice(1000, 98, "other bidder")
+    application.hasShownSniperIsBidding(auction, lastPrice = 1000, lastBid = 1_098)
+    auction.hasReceivedBid(1098, SNIPER_XMPP_ID)
+
+    auction.reportPrice(1197, 10, "third party")
+    application.hasShownSniperIsLosing(auction, lastPrice = 1197, lastBid = 1_098)
+
+    auction.reportPrice(1207, 10, "fourth party")
+    application.hasShownSniperIsLosing(auction, lastPrice = 1207, lastBid = 1_098)
+
+    auction.announceClosed()
+    application.showSniperHasLostAuction(auction, lastPrice = 1_207, lastBid = 1_098)
+  }
+
   afterTest { auction.stop() }
   afterTest { application.reset() }
 }) {

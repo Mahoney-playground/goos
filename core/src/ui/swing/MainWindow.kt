@@ -1,5 +1,6 @@
 package goos.ui.swing
 
+import goos.core.MultiUserRequestListener
 import goos.core.PortfolioNotifier
 import goos.core.UserRequestListener
 import java.awt.BorderLayout
@@ -10,8 +11,11 @@ import java.awt.Component
 import java.awt.FlowLayout
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
+import java.text.NumberFormat
 import javax.swing.JButton
+import javax.swing.JFormattedTextField
 import javax.swing.JFrame
+import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.JScrollPane
 import javax.swing.JTable
@@ -49,15 +53,31 @@ class MainWindow(
   }
 
   private fun makeControls() = JPanel(FlowLayout()).apply {
+
     val itemIdField = JTextField().apply {
       columns = 25
       name = NEW_ITEM_ID_NAME
     }
+
+    val stopPriceField = JFormattedTextField(NumberFormat.getNumberInstance()).apply {
+      columns = 10
+      name = NEW_ITEM_STOP_PRICE_NAME
+    }
+
+    add(JLabel("Item:").apply {
+      labelFor = itemIdField
+    })
     add(itemIdField)
+
+    add(JLabel("Stop price:").apply {
+      labelFor = stopPriceField
+    })
+    add(stopPriceField)
+
     add(JButton("Join Auction").apply {
       name = JOIN_BUTTON_NAME
       addActionListener {
-        userRequests.joinAuction(itemIdField.text)
+        userRequests.joinAuction(itemIdField.text, (stopPriceField.value as Long).toInt())
       }
     })
   }
@@ -94,26 +114,7 @@ class MainWindow(
     const val SNIPERS_TABLE_NAME: String = "snipers table"
     const val SNIPER_RESET_BUTTON_NAME: String = "sniper reset button"
     const val NEW_ITEM_ID_NAME: String = "new item id field"
+    const val NEW_ITEM_STOP_PRICE_NAME: String = "new item stop price field"
     const val JOIN_BUTTON_NAME: String = "join button"
-  }
-}
-
-private class MultiUserRequestListener : UserRequestListener {
-  private val listeners = mutableListOf<UserRequestListener>()
-
-  fun addListener(listener: UserRequestListener) {
-    listeners.add(listener)
-  }
-
-  override fun joinAuction(itemId: String) {
-    listeners.forEach { it.joinAuction(itemId) }
-  }
-
-  override fun reset() {
-    listeners.forEach { it.reset() }
-  }
-
-  override fun disconnect() {
-    listeners.forEach { it.disconnect() }
   }
 }

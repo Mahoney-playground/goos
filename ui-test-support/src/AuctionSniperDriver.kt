@@ -62,14 +62,20 @@ class AuctionSniperDriver(
 
   fun reset() = resetButton().click()
 
-  fun startBiddingFor(itemId: String) {
-    itemIdField().clear()
-    itemIdField().sendKeys(itemId)
+  fun startBiddingFor(itemId: String, stopPrice: Int) {
+    itemIdField().setText(itemId)
+    stopPriceField().setText(stopPrice.toString())
     bidButton().click()
+  }
+
+  private fun WebElement.setText(itemId: String) {
+    clear()
+    sendKeys(itemId)
   }
 
   private fun resetButton() = driver.findElementByName(SNIPER_RESET_BUTTON_NAME)
   private fun itemIdField() = driver.findElementByName(NEW_ITEM_ID_NAME)
+  private fun stopPriceField() = driver.findElementByName(NEW_ITEM_STOP_PRICE_NAME)
   private fun bidButton() = driver.findElementByName(JOIN_BUTTON_NAME)
 
   fun close() {
@@ -83,6 +89,7 @@ class AuctionSniperDriver(
     const val SNIPERS_TABLE_NAME: String = "snipers table"
     const val SNIPER_RESET_BUTTON_NAME: String = "sniper reset button"
     const val NEW_ITEM_ID_NAME: String = "new item id field"
+    const val NEW_ITEM_STOP_PRICE_NAME: String = "new item stop price field"
     const val JOIN_BUTTON_NAME: String = "join button"
   }
 }

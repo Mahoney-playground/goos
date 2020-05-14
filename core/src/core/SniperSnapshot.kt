@@ -2,6 +2,7 @@ package goos.core
 
 import goos.core.SniperState.BIDDING
 import goos.core.SniperState.JOINING
+import goos.core.SniperState.LOSING
 import goos.core.SniperState.WINNING
 
 data class SniperSnapshot(
@@ -16,6 +17,9 @@ data class SniperSnapshot(
 
   internal fun winning(newLastPrice: Int) =
     copy(lastPrice = newLastPrice, state = WINNING)
+
+  internal fun losing(newLastPrice: Int) =
+    copy(lastPrice = newLastPrice, state = LOSING)
 
   internal fun closed() =
     copy(state = state.whenAuctionClosed())

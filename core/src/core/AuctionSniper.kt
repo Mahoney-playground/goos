@@ -7,6 +7,7 @@ import goos.auction.api.AuctionEventListener.PriceSource.FromSniper
 
 internal class AuctionSniper(
   val itemId: String,
+  val stopPrice: Int,
   private val auction: Auction
 ) : AuctionEventListener, SniperNotifier {
 
@@ -33,8 +34,12 @@ internal class AuctionSniper(
       snapshot.winning(price)
     } else {
       val bid = price + increment
-      auction.bid(bid)
-      snapshot.bidding(price, bid)
+      if (bid <= stopPrice) {
+        auction.bid(bid)
+        snapshot.bidding(price, bid)
+      } else {
+        snapshot.losing(price)
+      }
     }
     notifyChange()
   }
