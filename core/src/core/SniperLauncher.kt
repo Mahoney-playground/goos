@@ -7,11 +7,11 @@ internal class SniperLauncher(
   private val portfolio: SniperPortfolio
 ) : UserRequestListener {
 
-  override fun joinAuction(itemId: String, stopPrice: Int) {
+  override fun joinAuction(item: Item) {
 
-    val auction = auctionHouse.auctionFor(itemId)
+    val auction = auctionHouse.auctionFor(item.identifier)
 
-    val sniper = AuctionSniper(itemId, stopPrice, auction)
+    val sniper = AuctionSniper(item, auction)
 
     auction.addAuctionEventListener(sniper)
 

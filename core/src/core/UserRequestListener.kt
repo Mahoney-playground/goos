@@ -3,7 +3,7 @@ package goos.core
 import java.util.EventListener
 
 interface UserRequestListener : EventListener {
-  fun joinAuction(itemId: String, stopPrice: Int)
+  fun joinAuction(item: Item)
   fun reset()
   fun disconnect()
 }
@@ -15,8 +15,8 @@ class MultiUserRequestListener : UserRequestListener {
     listeners.add(listener)
   }
 
-  override fun joinAuction(itemId: String, stopPrice: Int) {
-    listeners.forEach { it.joinAuction(itemId, stopPrice) }
+  override fun joinAuction(item: Item) {
+    listeners.forEach { it.joinAuction(item) }
   }
 
   override fun reset() {

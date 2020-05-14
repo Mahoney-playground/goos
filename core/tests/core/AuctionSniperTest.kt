@@ -17,7 +17,7 @@ class AuctionSniperTest : StringSpec({
 
   val auction = mockk<Auction>(relaxed = true)
   val sniperListener = mockk<SniperListener>(relaxed = true)
-  val sniper = AuctionSniper(ITEM_ID, 10_000, auction).apply {
+  val sniper = AuctionSniper(Item(ITEM_ID, 10_000), auction).apply {
     addSniperListener(sniperListener)
   }
 
@@ -135,8 +135,7 @@ class AuctionSniperTest : StringSpec({
     val increment = 25
 
     val stopPriceSniper = AuctionSniper(
-      ITEM_ID,
-      stopPrice = (price + increment) - 1,
+      Item(ITEM_ID, (price + increment) - 1),
       auction = auction
     ).apply {
       addSniperListener(sniperListener)

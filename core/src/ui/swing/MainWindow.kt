@@ -1,5 +1,6 @@
 package goos.ui.swing
 
+import goos.core.Item
 import goos.core.MultiUserRequestListener
 import goos.core.PortfolioNotifier
 import goos.core.UserRequestListener
@@ -77,7 +78,7 @@ class MainWindow(
     add(JButton("Join Auction").apply {
       name = JOIN_BUTTON_NAME
       addActionListener {
-        userRequests.joinAuction(itemIdField.text, (stopPriceField.value as Long).toInt())
+        userRequests.joinAuction(Item(itemIdField.text, (stopPriceField.value as Long).toInt()))
       }
     })
   }

@@ -1,5 +1,6 @@
 package goos.ui.swing
 
+import goos.core.Item
 import goos.core.SniperPortfolio
 import goos.core.UserRequestListener
 import goos.uitestsupport.AuctionSniperDriver
@@ -53,7 +54,7 @@ class MainWindowTest : StringSpec({
 
     eventually(5.seconds) {
       verify(exactly = 1) {
-        userRequestListener.joinAuction("an item-id", 11_000)
+        userRequestListener.joinAuction(Item("an item-id", stopPrice = 11_000))
       }
     }
     confirmVerified(userRequestListener)

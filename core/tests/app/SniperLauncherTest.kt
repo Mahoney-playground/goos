@@ -3,6 +3,7 @@ package goos.app
 import goos.auction.api.Auction
 import goos.auction.api.AuctionHouse
 import goos.core.AuctionSniper
+import goos.core.Item
 import goos.core.SniperLauncher
 import goos.core.SniperPortfolio
 import io.kotest.core.spec.style.StringSpec
@@ -23,14 +24,14 @@ class SniperLauncherTest : StringSpec({
 
   "adds new sniper to collector and then joins auction" {
 
-    val stopPrice = 10_000
+    val item = Item(itemId, stopPrice = 10_000)
 
     // when
-    sniperLauncher.joinAuction(itemId, stopPrice)
+    sniperLauncher.joinAuction(item)
 
     verifyOrder {
-      auction.addAuctionEventListener(match { it is AuctionSniper && it.itemId == itemId })
-      sniperPortfolio.addSniper(match { it.itemId == itemId && it.stopPrice == stopPrice })
+      auction.addAuctionEventListener(match { it is AuctionSniper && it.item == item })
+      sniperPortfolio.addSniper(match { it.item == item })
       auction.join()
     }
   }

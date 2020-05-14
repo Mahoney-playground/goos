@@ -6,14 +6,13 @@ import goos.auction.api.AuctionEventListener.PriceSource
 import goos.auction.api.AuctionEventListener.PriceSource.FromSniper
 
 internal class AuctionSniper(
-  val itemId: String,
-  val stopPrice: Int,
+  val item: Item,
   private val auction: Auction
 ) : AuctionEventListener, SniperNotifier {
 
   private val sniperListeners = MultiSniperListener()
 
-  var snapshot = SniperSnapshot.joining(itemId)
+  var snapshot = SniperSnapshot.joining(item.identifier)
     private set
 
   init {
@@ -34,7 +33,7 @@ internal class AuctionSniper(
       snapshot.winning(price)
     } else {
       val bid = price + increment
-      if (bid <= stopPrice) {
+      if (bid <= item.stopPrice) {
         auction.bid(bid)
         snapshot.bidding(price, bid)
       } else {
