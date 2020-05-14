@@ -1,0 +1,87 @@
+
+------------------------------------------------------------
+Tasks runnable from root project
+------------------------------------------------------------
+
+Application tasks
+-----------------
+run - Runs this project as a JVM application
+
+Build tasks
+-----------
+assemble - Assembles the outputs of this project.
+build - Assembles and tests this project.
+buildDependents - Assembles and tests this project and all projects that depend on it.
+buildNeeded - Assembles and tests this project and all projects it depends on.
+classes - Assembles main classes.
+clean - Deletes the build directory.
+jar - Assembles a jar archive containing the main classes.
+testClasses - Assembles test classes.
+
+Build Setup tasks
+-----------------
+init - Initializes a new Gradle build.
+wrapper - Generates Gradle wrapper files.
+
+Distribution tasks
+------------------
+assembleDist - Assembles the main distributions
+distTar - Bundles the project as a distribution.
+distZip - Bundles the project as a distribution.
+installDist - Installs the project as a distribution as-is.
+
+Documentation tasks
+-------------------
+javadoc - Generates Javadoc API documentation for the main source code.
+
+Formatting tasks
+----------------
+ktlintFormat - Runs the ktlint formatter on all kotlin sources in this project.
+
+Help tasks
+----------
+addKtlintCheckGitPreCommitHook - Adds git hook to run ktlintCheck on changed files
+addKtlintFormatGitPreCommitHook - Adds git hook to run ktlintFormat on changed files
+buildEnvironment - Displays all buildscript dependencies declared in root project 'goos'.
+components - Displays the components produced by root project 'goos'. [incubating]
+dependencies - Displays all dependencies declared in root project 'goos'.
+dependencyInsight - Displays the insight into a specific dependency in root project 'goos'.
+dependencyUpdates - Displays the dependency updates for the project.
+dependentComponents - Displays the dependent components of components in root project 'goos'. [incubating]
+help - Displays a help message.
+kotlinDslAccessorsReport - Prints the Kotlin code for accessing the currently available project extensions and conventions.
+ktlintApplyToIdea - Generates IDEA built-in formatter rules and apply them to the project.It will overwrite existing ones.
+ktlintApplyToIdeaGlobally - Generates IDEA built-in formatter rules and apply them globally (in IDEA user settings folder). It will overwrite existing ones.
+model - Displays the configuration model of root project 'goos'. [incubating]
+outgoingVariants - Displays the outgoing variants of root project 'goos'.
+projects - Displays the sub-projects of root project 'goos'.
+properties - Displays the properties of root project 'goos'.
+tasks - Displays the tasks runnable from root project 'goos' (some of the displayed tasks may belong to subprojects).
+
+IDE tasks
+---------
+cleanIdea - Cleans IDEA project files (IML, IPR)
+idea - Generates IDEA project files (IML, IPR, IWS)
+
+Reporting tasks
+---------------
+buildDashboard - Generates a dashboard of all the reports produced by this build.
+generateDependencyGraph - Generates a dependency graph
+generateDependencyGraphMain - Generates a dependency graph for main
+projectReport - Generates a report about your project.
+
+Verification tasks
+------------------
+check - Runs all checks.
+ktlintCheck - Runs ktlint on all kotlin sources in this project.
+test - Runs the unit tests.
+
+Rules
+-----
+Pattern: clean<TaskName>: Cleans the output files of a task.
+Pattern: build<ConfigurationName>: Assembles the artifacts of a configuration.
+Pattern: upload<ConfigurationName>: Assembles and uploads the artifacts belonging to a configuration.
+
+To see all tasks and more detail, run gradlew tasks --all
+
+To see more detail about a task, run gradlew help --task <task>
