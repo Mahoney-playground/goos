@@ -12,16 +12,14 @@ internal class AuctionSniper(
 
   private val sniperListeners = MultiSniperListener()
 
-  var snapshot = SniperSnapshot.joining(item)
-    private set
-
-  init {
-    notifyChange()
-  }
+  private var snapshot = SniperSnapshot.joining(item)
+    set(value) {
+      field = value
+      sniperListeners.sniperStateChanged(value)
+    }
 
   override fun auctionClosed() {
     snapshot = snapshot.closed()
-    notifyChange()
   }
 
   override fun currentPrice(
@@ -40,20 +38,14 @@ internal class AuctionSniper(
         snapshot.losing(price)
       }
     }
-    notifyChange()
   }
 
   override fun auctionFailed() {
     snapshot = snapshot.failed()
-    notifyChange()
-  }
-
-  private fun notifyChange() {
-    sniperListeners.sniperStateChanged(snapshot)
   }
 
   override fun addSniperListener(sniperListener: SniperListener) {
+    sniperListener.sniperStateChanged(snapshot)
     sniperListeners.addListener(sniperListener)
-    notifyChange()
   }
 }
