@@ -4,5 +4,5 @@ data class Item(
   val identifier: String,
   private val stopPrice: Int
 ) {
-  fun allowsBid(bid: Int): Boolean = bid <= stopPrice
+  internal fun allowsBid(bid: Int): Boolean = bid <= stopPrice
 }
