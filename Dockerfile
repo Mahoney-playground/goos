@@ -53,7 +53,7 @@ COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/e
 COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/internal ./internal
 COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/end-to-end-tests-0.1.0.jar .
 
-ENTRYPOINT ["java", "-jar", "--illegal-access=deny", "end-to-end-tests-0.1.0.jar"]
+ENTRYPOINT ["java", "-jar", "--illegal-access=deny", "-ea", "end-to-end-tests-0.1.0.jar"]
 
 
 FROM worker as auction-xmpp-integration-tests
@@ -64,14 +64,7 @@ COPY --from=checker --chown=$username $work_dir/auction/xmpp-integration-tests/b
 COPY --from=checker --chown=$username $work_dir/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/internal ./internal
 COPY --from=checker --chown=$username $work_dir/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/auction-xmpp-integration-tests-0.1.0.jar .
 
-ENTRYPOINT ["java", "-jar", "--illegal-access=deny", "auction-xmpp-integration-tests-0.1.0.jar"]
-
-
-FROM worker as app
-ARG username
-ARG work_dir
-
-ENTRYPOINT ["simple-xvfb-run", "java", "--illegal-access=deny", "-jar", "core-0.1.0.jar"]
+ENTRYPOINT ["java", "-jar", "--illegal-access=deny", "-ea", "auction-xmpp-integration-tests-0.1.0.jar"]
 
 
 FROM worker as instrumentedapp
@@ -99,3 +92,14 @@ ENTRYPOINT ["simple-xvfb-run", "java", "-javaagent:external/marathon-java-agent.
 COPY --chown=$username scripts/app-running.sh $work_dir/app-running.sh
 
 HEALTHCHECK --interval=1s --retries=20 --timeout=5s CMD ./app-running.sh
+
+
+FROM worker as app
+ARG username
+ARG work_dir
+
+COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/external ./external
+COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/internal ./internal
+COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/core-0.1.0.jar .
+
+ENTRYPOINT ["simple-xvfb-run", "java", "--illegal-access=deny", "-jar", "core-0.1.0.jar"]
