@@ -1,5 +1,6 @@
 package goos.ui.swing
 
+import goos.core.Item
 import goos.core.SniperSnapshot
 import goos.core.SniperState.BIDDING
 import goos.ui.swing.Column.ITEM_IDENTIFIER
@@ -32,7 +33,7 @@ class SnipersTableModelTest : StringSpec({
   }
 
   infix fun List<Any>.shouldMatch(sniperSnapshot: SniperSnapshot) {
-    get(ITEM_IDENTIFIER.ordinal) shouldBe sniperSnapshot.itemId
+    get(ITEM_IDENTIFIER.ordinal) shouldBe sniperSnapshot.item.identifier
     get(LAST_BID.ordinal) shouldBe sniperSnapshot.lastBid
     get(LAST_PRICE.ordinal) shouldBe sniperSnapshot.lastPrice
     get(SNIPER_STATE.ordinal) shouldBe sniperSnapshot.stateText()
@@ -65,7 +66,7 @@ class SnipersTableModelTest : StringSpec({
 
   "sets sniper values in columns" {
 
-    val joining = SniperSnapshot.joining("item id")
+    val joining = SniperSnapshot.joining(Item("item id", 1_000))
     model.sniperStateChanged(joining)
 
     val bidding = joining.copy(state = BIDDING, lastPrice = 555, lastBid = 666)
@@ -76,7 +77,7 @@ class SnipersTableModelTest : StringSpec({
   }
 
   "notifies listeners when adding a sniper" {
-    val joining = SniperSnapshot.joining("item123")
+    val joining = SniperSnapshot.joining(Item("item123", 1_000))
 
     model.rowCount shouldBe 0
 
@@ -88,8 +89,8 @@ class SnipersTableModelTest : StringSpec({
   }
 
   "holds snipers in addition order" {
-    model.sniperStateChanged(SniperSnapshot.joining("item 0"))
-    model.sniperStateChanged(SniperSnapshot.joining("item 1"))
+    model.sniperStateChanged(SniperSnapshot.joining(Item("item 0", 1_000)))
+    model.sniperStateChanged(SniperSnapshot.joining(Item("item 1", 1_000)))
 
     model.row(0).column(ITEM_IDENTIFIER) shouldBe "item 0"
     model.row(1).column(ITEM_IDENTIFIER) shouldBe "item 1"
@@ -97,13 +98,13 @@ class SnipersTableModelTest : StringSpec({
 
   "updates correct row for sniper" {
 
-    val item0 = SniperSnapshot.joining("item 0")
+    val item0 = SniperSnapshot.joining(Item("item 0", 1_000))
     model.sniperStateChanged(item0)
 
-    val item1 = SniperSnapshot.joining("item 1")
+    val item1 = SniperSnapshot.joining(Item("item 1", 1_000))
     model.sniperStateChanged(item1)
 
-    val item2 = SniperSnapshot.joining("item 2")
+    val item2 = SniperSnapshot.joining(Item("item 2", 1_000))
     model.sniperStateChanged(item2)
 
     val updatedItem1 = item1.copy(state = BIDDING, lastPrice = 10, lastBid = 11)

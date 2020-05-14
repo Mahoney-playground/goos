@@ -12,7 +12,7 @@ internal class AuctionSniper(
 
   private val sniperListeners = MultiSniperListener()
 
-  var snapshot = SniperSnapshot.joining(item.identifier)
+  var snapshot = SniperSnapshot.joining(item)
     private set
 
   init {

@@ -17,7 +17,8 @@ class AuctionSniperTest : StringSpec({
 
   val auction = mockk<Auction>(relaxed = true)
   val sniperListener = mockk<SniperListener>(relaxed = true)
-  val sniper = AuctionSniper(Item(ITEM_ID, 10_000), auction).apply {
+  val item = Item(ITEM_ID, 10_000)
+  val sniper = AuctionSniper(item, auction).apply {
     addSniperListener(sniperListener)
   }
 
@@ -27,7 +28,7 @@ class AuctionSniperTest : StringSpec({
     verify(exactly = 1) {
       sniperListener.sniperStateChanged(
         SniperSnapshot(
-          ITEM_ID,
+          item,
           0,
           0,
           LOST
@@ -43,7 +44,7 @@ class AuctionSniperTest : StringSpec({
     verify(exactly = 1) {
       sniperListener.sniperStateChanged(
         SniperSnapshot(
-          ITEM_ID,
+          item,
           123,
           168,
           BIDDING
@@ -53,7 +54,7 @@ class AuctionSniperTest : StringSpec({
     verify(exactly = 1) {
       sniperListener.sniperStateChanged(
         SniperSnapshot(
-          ITEM_ID,
+          item,
           123,
           168,
           LOST
@@ -69,7 +70,7 @@ class AuctionSniperTest : StringSpec({
     verify(exactly = 1) {
       sniperListener.sniperStateChanged(
         SniperSnapshot(
-          ITEM_ID,
+          item,
           123,
           0,
           WINNING
@@ -79,7 +80,7 @@ class AuctionSniperTest : StringSpec({
     verify(exactly = 1) {
       sniperListener.sniperStateChanged(
         SniperSnapshot(
-          ITEM_ID,
+          item,
           123,
           0,
           WON
@@ -100,7 +101,7 @@ class AuctionSniperTest : StringSpec({
     verify(exactly = 1) {
       sniperListener.sniperStateChanged(
         SniperSnapshot(
-          ITEM_ID,
+          item,
           price,
           bid,
           BIDDING
@@ -120,7 +121,7 @@ class AuctionSniperTest : StringSpec({
     verify(exactly = 1) {
       sniperListener.sniperStateChanged(
         SniperSnapshot(
-          ITEM_ID,
+          item,
           price,
           0,
           WINNING
@@ -134,8 +135,9 @@ class AuctionSniperTest : StringSpec({
     val price = 1001
     val increment = 25
 
+    val stopPriceItem = Item(ITEM_ID, (price + increment) - 1)
     val stopPriceSniper = AuctionSniper(
-      Item(ITEM_ID, (price + increment) - 1),
+      stopPriceItem,
       auction = auction
     ).apply {
       addSniperListener(sniperListener)
@@ -147,7 +149,7 @@ class AuctionSniperTest : StringSpec({
     verify(exactly = 1) {
       sniperListener.sniperStateChanged(
         SniperSnapshot(
-          ITEM_ID,
+          stopPriceItem,
           lastPrice = price,
           lastBid = 0,
           state = SniperState.LOSING

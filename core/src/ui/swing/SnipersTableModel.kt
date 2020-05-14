@@ -59,7 +59,7 @@ internal class SnipersTableModel : AbstractTableModel(),
 
 internal enum class Column(val title: String) {
   ITEM_IDENTIFIER("Item") {
-    override fun valueIn(snapshot: SniperSnapshot) = snapshot.itemId
+    override fun valueIn(snapshot: SniperSnapshot) = snapshot.item.identifier
   },
   LAST_PRICE("Last Price") {
     override fun valueIn(snapshot: SniperSnapshot) = snapshot.lastPrice

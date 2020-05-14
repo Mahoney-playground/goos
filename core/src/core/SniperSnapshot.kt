@@ -6,7 +6,7 @@ import goos.core.SniperState.LOSING
 import goos.core.SniperState.WINNING
 
 data class SniperSnapshot(
-  val itemId: String,
+  val item: Item,
   val lastPrice: Int,
   val lastBid: Int,
   val state: SniperState
@@ -24,9 +24,9 @@ data class SniperSnapshot(
   internal fun closed() =
     copy(state = state.whenAuctionClosed())
 
-  fun isForSameItemAs(sniperSnapshot: SniperSnapshot) = itemId == sniperSnapshot.itemId
+  fun isForSameItemAs(sniperSnapshot: SniperSnapshot) = item == sniperSnapshot.item
 
   companion object {
-    fun joining(itemId: String) = SniperSnapshot(itemId, 0, 0, JOINING)
+    fun joining(item: Item) = SniperSnapshot(item, 0, 0, JOINING)
   }
 }
