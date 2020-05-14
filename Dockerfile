@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile-upstream:1.1.7-experimental
+# syntax=docker/dockerfile:1.1.7-experimental
 ARG username=worker
 ARG work_dir=/home/$username/work
 
