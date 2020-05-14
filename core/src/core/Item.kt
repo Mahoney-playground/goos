@@ -2,5 +2,7 @@ package goos.core
 
 data class Item(
   val identifier: String,
-  val stopPrice: Int
-)
+  private val stopPrice: Int
+) {
+  fun allowsBid(bid: Int): Boolean = bid <= stopPrice
+}

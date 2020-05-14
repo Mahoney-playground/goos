@@ -33,7 +33,7 @@ internal class AuctionSniper(
       snapshot.winning(price)
     } else {
       val bid = price + increment
-      if (bid <= item.stopPrice) {
+      if (item.allowsBid(bid)) {
         auction.bid(bid)
         snapshot.bidding(price, bid)
       } else {
