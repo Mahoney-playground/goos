@@ -7,6 +7,7 @@ import goos.auction.xmpp.XMPPAuctionHouse
 import goos.xmpptestsupport.FakeAuctionServer
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 import io.mockk.confirmVerified
 import io.mockk.mockk
 import io.mockk.verify
@@ -87,7 +88,7 @@ private suspend fun Auction.synchronously(
     override fun auctionFailed() = eventReceived.countDown()
   })
   work()
-  withContext(IO) { eventReceived.await(2, SECONDS) }
+  withContext(IO) { eventReceived.await(2, SECONDS) shouldBe true }
 }
 
 fun confirmNoFurtherInteractionsWith(vararg mocks: Any) = confirmVerified(*mocks)

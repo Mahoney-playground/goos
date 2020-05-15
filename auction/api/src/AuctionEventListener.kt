@@ -1,6 +1,7 @@
 package goos.auction.api
 
 import goos.auction.api.AuctionEventListener.PriceSource
+import java.util.concurrent.CopyOnWriteArrayList
 
 interface AuctionEventListener {
 
@@ -21,7 +22,7 @@ interface AuctionEventListener {
 
 class MultiAuctionEventListener : AuctionEventListener {
 
-  private val listeners = mutableListOf<AuctionEventListener>()
+  private val listeners = CopyOnWriteArrayList<AuctionEventListener>()
 
   fun addListener(listener: AuctionEventListener) {
     listeners.add(listener)
@@ -38,6 +39,8 @@ class MultiAuctionEventListener : AuctionEventListener {
   }
 
   override fun auctionFailed() = listeners.forEach { it.auctionFailed() }
+
+  fun clear() { listeners.clear() }
 }
 
 interface NoOpAuctionEventListener : AuctionEventListener {

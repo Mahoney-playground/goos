@@ -18,25 +18,22 @@ internal class XMPPAuction(
 
   private val auctionEventListeners = MultiAuctionEventListener()
 
-  private val chat: Chat
-
-  init {
-    val translator = AuctionMessageTranslator(
-      connection.user.toString(),
-      auctionEventListeners
+  private val chat = ChatManager.getInstanceFor(connection)
+    .createChat(
+      auctionId(itemId, connection.host),
+      AuctionMessageTranslator(
+        connection.user.toString(),
+        auctionEventListeners
+      )
     )
 
-    chat = ChatManager.getInstanceFor(connection)
-      .createChat(
-        auctionId(itemId, connection.host),
-        translator
-      )
-    addAuctionEventListener(chatDisconnectorFor(chat, translator))
+  init {
+    addAuctionEventListener(disconnectOnFailure())
   }
 
-  private fun chatDisconnectorFor(chat: Chat, translator: AuctionMessageTranslator) =
+  private fun disconnectOnFailure() =
     object : NoOpAuctionEventListener {
-      override fun auctionFailed() { chat.removeMessageListener(translator) }
+      override fun auctionFailed() { auctionEventListeners.clear() }
     }
 
   override fun addAuctionEventListener(listener: AuctionEventListener) {
