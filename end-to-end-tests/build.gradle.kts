@@ -6,6 +6,7 @@ plugins {
 dependencies {
 
   implementation(kotest("core"))
+  implementation(kotest("assertions-core"))
   implementation(kotlinCoroutines("core"))
   constraints {
     implementation(mockk)

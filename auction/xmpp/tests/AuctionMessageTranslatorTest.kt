@@ -74,7 +74,9 @@ class AuctionMessageTranslatorTest : StringSpec({
     }
 
     translator.processMessage(null, message)
+  }
 
+  afterTest {
     confirmVerified(listener)
   }
 }) {

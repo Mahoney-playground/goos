@@ -143,8 +143,6 @@ class AuctionSniperEndToEndTest : StringSpec({
 
     auction.reportPrice(price = 520, increment = 21, bidder = "other")
     application.waitForAnotherAuctionEvent(auction2)
-
-//    application.reportsInvalidMessage(auction, "a broken message")
     application.showsSniperHasFailed(auction)
   }
 

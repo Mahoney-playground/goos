@@ -53,10 +53,6 @@ class ApplicationRunner(
     driver.reset()
   }
 
-  fun reportsInvalidMessage(auction: FakeAuctionServer, invalidMessage: String) {
-    TODO("not implemented")
-  }
-
   companion object {
     const val SNIPER_XMPP_ID: String = "sniper@auctionhost.internal/Auction"
     const val STATE_LOST: String = "Lost"
