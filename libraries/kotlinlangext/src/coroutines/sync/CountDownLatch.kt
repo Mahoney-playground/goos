@@ -6,7 +6,6 @@ import java.util.concurrent.atomic.AtomicInteger
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
-
 class CountDownLatch private constructor(
   private val mutex: Mutex,
   private val counter: AtomicInteger
@@ -17,7 +16,7 @@ class CountDownLatch private constructor(
   }
 
   fun countDown() {
-    counter.updateAndGet { if (it == 0) 0 else it - 1  }
+    counter.updateAndGet { if (it == 0) 0 else it - 1 }
     maybeUnlock()
   }
 
@@ -63,7 +62,7 @@ class CountDownLatch private constructor(
 inline fun <reified T : Throwable> swallow(block: () -> Unit) {
   try {
     block()
-  } catch(t: Throwable) {
+  } catch (t: Throwable) {
     if (t !is T) {
       throw t
     }
