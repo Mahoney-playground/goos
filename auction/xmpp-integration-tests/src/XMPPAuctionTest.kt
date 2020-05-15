@@ -7,14 +7,10 @@ import goos.auction.xmpp.XMPPAuctionHouse
 import goos.xmpptestsupport.FakeAuctionServer
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.shouldBe
 import io.mockk.confirmVerified
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.withContext
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit.SECONDS
+import uk.org.lidalia.kotlinlangext.coroutines.sync.CountDownLatch
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
@@ -82,13 +78,12 @@ private suspend fun Auction.synchronously(
 ) {
   val eventReceived = CountDownLatch(numberOfEvents)
   addAuctionEventListener(object : AuctionEventListener {
-    override fun currentPrice(price: Int, increment: Int, source: PriceSource) =
-      eventReceived.countDown()
+    override fun currentPrice(price: Int, increment: Int, source: PriceSource) = eventReceived.countDown()
     override fun auctionClosed() = eventReceived.countDown()
     override fun auctionFailed() = eventReceived.countDown()
   })
   work()
-  withContext(IO) { eventReceived.await(2, SECONDS) shouldBe true }
+  eventReceived.await()
 }
 
 fun confirmNoFurtherInteractionsWith(vararg mocks: Any) = confirmVerified(*mocks)

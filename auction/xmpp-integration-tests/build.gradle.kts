@@ -14,6 +14,7 @@ dependencies {
   implementation(project(":auction-xmpp"))
   implementation(project(":xmpp-test-support"))
   implementation(project(":testlauncher"))
+  implementation(project(":kotlinlangext"))
 }
 
 application {
