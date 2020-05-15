@@ -5,7 +5,6 @@ import goos.auction.api.AuctionEventListener
 import goos.auction.api.MultiAuctionEventListener
 import goos.auction.api.NoOpAuctionEventListener
 import org.jivesoftware.smack.XMPPConnection
-import org.jivesoftware.smack.chat.Chat
 import org.jivesoftware.smack.chat.ChatManager
 import org.jxmpp.jid.EntityBareJid
 import org.jxmpp.jid.impl.JidCreate
