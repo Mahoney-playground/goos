@@ -1,12 +1,15 @@
 package goos
 
+import goos.goos.AuctionLogDriver
 import goos.uitestsupport.AuctionSniperDriver
 import goos.xmpptestsupport.FakeAuctionServer
+import io.kotest.matchers.string.shouldContain
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 class ApplicationRunner(
-  private val driver: AuctionSniperDriver = AuctionSniperDriver()
+  private val driver: AuctionSniperDriver = AuctionSniperDriver(),
+  private val logDriver: AuctionLogDriver = AuctionLogDriver()
 ) {
 
   init {
@@ -51,10 +54,11 @@ class ApplicationRunner(
 
   fun reset() {
     driver.reset()
+    logDriver.reset()
   }
 
   fun reportsInvalidMessage(auction: FakeAuctionServer, invalidMessage: String) {
-    TODO("not implemented")
+    logDriver.hasEntry { it shouldContain invalidMessage }
   }
 
   companion object {

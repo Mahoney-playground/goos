@@ -22,7 +22,8 @@ internal class XMPPAuction(
       auctionId(itemId, connection.host),
       AuctionMessageTranslator(
         connection.user.toString(),
-        auctionEventListeners
+        auctionEventListeners,
+        TODO()
       )
     )
 

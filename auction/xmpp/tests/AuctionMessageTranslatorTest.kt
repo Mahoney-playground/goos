@@ -13,7 +13,8 @@ import org.jivesoftware.smack.packet.Message
 class AuctionMessageTranslatorTest : StringSpec({
 
   val listener = mockk<AuctionEventListener>(relaxed = true)
-  val translator = AuctionMessageTranslator(SNIPER_ID, listener)
+  val failureReporter = mockk<XMPPFailureReporter>(relaxed = true)
+  val translator = AuctionMessageTranslator(SNIPER_ID, listener, failureReporter)
 
   "notifies auction closed when close message received" {
 
@@ -64,6 +65,7 @@ class AuctionMessageTranslatorTest : StringSpec({
 
     verify(exactly = 1) {
       listener.auctionFailed()
+      failureReporter.cannotTranslateMessage(SNIPER_ID, "a bad message", any())
     }
   }
 
@@ -74,8 +76,11 @@ class AuctionMessageTranslatorTest : StringSpec({
     }
 
     translator.processMessage(null, message)
+  }
 
+  afterTest {
     confirmVerified(listener)
+    confirmVerified(failureReporter)
   }
 }) {
   override fun isolationMode() = InstancePerTest

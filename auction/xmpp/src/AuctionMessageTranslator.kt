@@ -11,7 +11,8 @@ import uk.org.lidalia.kotlinlangext.strings.toMap
 
 internal class AuctionMessageTranslator(
   private val sniperId: String,
-  private val listener: AuctionEventListener
+  private val listener: AuctionEventListener,
+  private val failureReporter: XMPPFailureReporter
 ) : ChatMessageListener {
   override fun processMessage(chat: Chat?, message: Message) {
 
@@ -28,6 +29,7 @@ internal class AuctionMessageTranslator(
       }
     } catch (e: Exception) {
       listener.auctionFailed()
+      failureReporter.cannotTranslateMessage(sniperId, message.body, e)
     }
   }
 }
