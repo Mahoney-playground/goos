@@ -1,5 +1,6 @@
 package goos.ui.swing
 
+import goos.UI
 import goos.core.Item
 import goos.core.SniperPortfolio
 import goos.core.UserRequestListener

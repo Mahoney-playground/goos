@@ -1,8 +1,7 @@
-package goos.ui.swing
+package goos
 
 import io.kotest.core.Tag
 import io.kotest.core.Tags
-import io.kotest.core.config.AbstractProjectConfig
 import io.kotest.core.extensions.TagExtension
 import java.awt.GraphicsDevice
 import java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment
@@ -25,9 +24,4 @@ object UITagExtension : TagExtension {
   private fun GraphicsDevice.isX11() = this::class.java.simpleName.startsWith("X11")
 
   private fun runningAsPartOfBuild() = System.getenv("BUILD_SYSTEM") != null
-}
-
-@Suppress("unused") // read by reflection
-object ProjectConfig : AbstractProjectConfig() {
-  override fun extensions() = listOf(UITagExtension)
 }
