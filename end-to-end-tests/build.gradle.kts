@@ -12,7 +12,6 @@ dependencies {
     implementation(mockk)
   }
 
-  runtimeOnly(marathon("java-agent"))
   implementation(project(":ui-test-support"))
   implementation(project(":xmpp-test-support"))
   implementation(project(":testlauncher"))

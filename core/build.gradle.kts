@@ -3,6 +3,8 @@ plugins {
   id("alt-application-plugin")
 }
 
+val javaAgents by configurations.register("javaAgents")
+
 dependencies {
   implementation(smack("core"))
   implementation(smack("tcp"))
@@ -19,6 +21,8 @@ dependencies {
 
   testImplementation(marathon("java-driver"))
   testImplementation(project(":ui-test-support"))
+
+  javaAgents(marathon("java-agent"))
 }
 
 application {
@@ -36,4 +40,9 @@ val test by tasks.existing(Test::class) {
     "--illegal-access=deny",
     "--add-exports", "java.desktop/sun.awt=ALL-UNNAMED"
   )
+}
+
+tasks.register<Copy>("copyJavaAgents") {
+  from(javaAgents)
+  into(buildDir.resolve("libs/agents"))
 }

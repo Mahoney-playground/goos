@@ -36,7 +36,7 @@ RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
 RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
     --network=none \
     set +e; \
-    simple-xvfb-run ./gradlew --offline check projectReport install; \
+    simple-xvfb-run ./gradlew --offline check projectReport install copyJavaAgents; \
     echo $? > build_result;
 
 FROM builder as checker
@@ -81,9 +81,9 @@ RUN apt-get -qq update && \
 USER $username
 
 COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/external ./external
+COPY --from=checker --chown=$username $work_dir/core/build/libs/agents/marathon-java-agent-*.jar ./external/marathon-java-agent.jar
 COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/internal ./internal
 COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/core-0.1.0.jar .
-COPY --from=end-to-end-tests --chown=$username $work_dir/external/marathon-java-agent-*.jar ./external/marathon-java-agent.jar
 
 EXPOSE 1234
 
