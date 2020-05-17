@@ -36,7 +36,7 @@ RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
 RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
     --network=none \
     set +e; \
-    simple-xvfb-run ./gradlew --offline check projectReport install copyJavaAgents; \
+    simple-xvfb-run ./gradlew --offline build; \
     echo $? > build_result;
 
 FROM builder as checker

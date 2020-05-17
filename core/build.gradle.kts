@@ -33,16 +33,23 @@ idea {
   setPackagePrefix("goos")
 }
 
-val test by tasks.existing(Test::class) {
-  // silence warnings due to using marathon java agent
-  jvmArgs(
-    "-Xshare:off",
-    "--illegal-access=deny",
-    "--add-exports", "java.desktop/sun.awt=ALL-UNNAMED"
-  )
-}
+tasks {
 
-tasks.register<Copy>("copyJavaAgents") {
-  from(javaAgents)
-  into(buildDir.resolve("libs/agents"))
+  named("test", Test::class) {
+    // silence warnings due to using marathon java agent
+    jvmArgs(
+      "-Xshare:off",
+      "--illegal-access=deny",
+      "--add-exports", "java.desktop/sun.awt=ALL-UNNAMED"
+    )
+  }
+
+  val copyJavaAgents by registering(Copy::class) {
+    from(javaAgents)
+    into(buildDir.resolve("libs/agents"))
+  }
+
+  named("build") {
+    dependsOn(copyJavaAgents)
+  }
 }

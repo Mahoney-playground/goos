@@ -10,6 +10,7 @@ import org.gradle.api.distribution.Distribution
 import org.gradle.api.distribution.DistributionContainer
 import org.gradle.api.distribution.plugins.DistributionPlugin
 import org.gradle.api.distribution.plugins.DistributionPlugin.MAIN_DISTRIBUTION_NAME
+import org.gradle.api.distribution.plugins.DistributionPlugin.TASK_INSTALL_NAME
 import org.gradle.api.file.CopySpec
 import org.gradle.api.plugins.ApplicationPluginConvention
 import org.gradle.api.plugins.JavaApplication
@@ -52,10 +53,13 @@ class ApplicationPlugin : Plugin<Project> {
     addCreateScriptsTask(project, pluginConvention)
     configureInstallTask(
       project.tasks.named(
-        DistributionPlugin.TASK_INSTALL_NAME,
+        TASK_INSTALL_NAME,
         Sync::class.java
       ), pluginConvention
     )
+    project.tasks.named("build") {
+      dependsOn(TASK_INSTALL_NAME)
+    }
     configureJarTask(
       project.tasks.named("jar", Jar::class.java),
       pluginConvention
