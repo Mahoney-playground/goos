@@ -80,6 +80,7 @@ RUN apt-get -qq update && \
 
 USER $username
 
+# The duplication with app here is necessary to cache the installation of curl in a layer
 COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/external ./external
 COPY --from=checker --chown=$username $work_dir/core/build/libs/agents/marathon-java-agent-*.jar ./external/marathon-java-agent.jar
 COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/internal ./internal
