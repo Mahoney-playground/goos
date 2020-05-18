@@ -31,9 +31,11 @@ COPY --chown=$username . .
 
 # Can't use docker ARG values in the --mount argument: https://github.com/moby/buildkit/issues/815
 RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
+    --mount=type=cache,target=/home/worker/work/.gradle,gid=1000,uid=1001 \
     ./gradlew downloadDependencies
 
 RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
+    --mount=type=cache,target=/home/worker/work/.gradle,gid=1000,uid=1001 \
     --network=none \
     set +e; \
     simple-xvfb-run ./gradlew --offline build; \
