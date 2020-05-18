@@ -79,4 +79,5 @@ private fun List<File>.directoriesFirst(): List<File> {
 private fun File.addIndexFilesToSubDirs() =
   listFiles().orEmpty()
     .filter { it.isDirectory && !it.isHidden }
+    .parallelStream()
     .forEach { it.addIndexFiles(includeParentLink = true) }
