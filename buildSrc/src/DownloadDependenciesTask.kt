@@ -1,11 +1,15 @@
 import org.gradle.api.DefaultTask
+import org.gradle.api.tasks.CacheableTask
+import org.gradle.api.tasks.Classpath
 import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 
+@CacheableTask
 open class DownloadDependenciesTask : DefaultTask() {
 
   @InputFiles
+  @Classpath
   val inputs = project.configurations.names
     .map { project.configurations.getAt(it) }
     .filter { it.isCanBeResolved && !it.isDeprecated() }
