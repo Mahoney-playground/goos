@@ -21,6 +21,7 @@ dependencies {
 
   testImplementation(marathon("java-driver"))
   testImplementation(project(":ui-test-support"))
+  testImplementation("org.threeten:threeten-extra:1.5.0")
 
   javaAgents(marathon("java-agent"))
 }
