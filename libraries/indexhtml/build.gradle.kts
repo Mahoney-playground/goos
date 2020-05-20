@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
   implementation(kotlinxHtml("jvm"))
+  implementation(kotlinCoroutines("core"))
 }
 
 idea {

@@ -1,5 +1,9 @@
 package uk.org.lidalia.indexhtml
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.html.a
 import kotlinx.html.body
 import kotlinx.html.div
@@ -13,7 +17,11 @@ import kotlinx.html.title
 import kotlinx.html.unsafe
 import java.io.File
 
-fun File.addIndexFiles(includeParentLink: Boolean = false) {
+fun File.addIndexFiles() = runBlocking(Dispatchers.Default) {
+  this@addIndexFiles.addIndexFiles(false)
+}
+
+private suspend fun File.addIndexFiles(includeParentLink: Boolean) {
   if (!containsIndexFile()) {
     addIndexFile(includeParentLink)
     addIndexFilesToSubDirs()
@@ -76,8 +84,17 @@ private fun List<File>.directoriesFirst(): List<File> {
   return directories.sorted() + files.sorted()
 }
 
-private fun File.addIndexFilesToSubDirs() =
+private suspend fun File.addIndexFilesToSubDirs() =
   listFiles().orEmpty()
     .filter { it.isDirectory && !it.isHidden }
-    .parallelStream()
-    .forEach { it.addIndexFiles(includeParentLink = true) }
+    .forEachParallel { it.addIndexFiles(includeParentLink = true) }
+
+suspend fun <T> Iterable<T>.forEachParallel(f: suspend (T) -> Unit) {
+  coroutineScope {
+    forEach { t ->
+      launch {
+        f(t)
+      }
+    }
+  }
+}
