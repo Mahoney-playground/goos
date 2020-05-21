@@ -1,29 +1,14 @@
 import org.gradle.api.DefaultTask
-import org.gradle.api.tasks.CacheableTask
-import org.gradle.api.tasks.Classpath
-import org.gradle.api.tasks.InputFiles
-import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 
-@CacheableTask
 open class DownloadDependenciesTask : DefaultTask() {
-
-  @InputFiles
-  @Classpath
-  val inputs = project.configurations.names
-    .map { project.configurations.getAt(it) }
-    .filter { it.isCanBeResolved && !it.isDeprecated() }
-
-  @OutputFile
-  val result = project.buildDir.resolve("download_dependencies_result.txt")
 
   @TaskAction
   fun downloadDependencies() {
-    val allDeps = inputs
+    val allDeps = project.configurations
+      .filter { it.isCanBeResolved && !it.isDeprecated() }
       .map { it.resolve().size }
       .sum()
-    val message = "Resolved all dependencies: $allDeps"
-    result.writeText(message)
-    project.logger.lifecycle(message)
+    project.logger.lifecycle("Resolved all dependencies: $allDeps")
   }
 }
