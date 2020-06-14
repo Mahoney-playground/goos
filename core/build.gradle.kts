@@ -1,6 +1,7 @@
 plugins {
   kotlin("jvm")
   id("alt-application-plugin")
+  kotlin("plugin.serialization") version "1.3.70"
 }
 
 val javaAgents by configurations.register("javaAgents")
@@ -18,6 +19,7 @@ dependencies {
   implementation(kotlinCoroutines("core-common"))
   implementation(kotlinCoroutines("jdk8"))
   implementation(kotlinCoroutines("swing"))
+  implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
 
   testImplementation(marathon("java-driver"))
   testImplementation(project(":ui-test-support"))
