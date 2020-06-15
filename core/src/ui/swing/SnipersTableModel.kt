@@ -1,6 +1,6 @@
 package goos.ui.swing
 
-import goos.core.SniperListener
+import goos.ui.SniperListener
 import goos.core.SniperSnapshot
 import goos.core.SniperState.BIDDING
 import goos.core.SniperState.FAILED
