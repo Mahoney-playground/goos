@@ -1,17 +1,15 @@
 rootProject.name = "goos"
 
+includeChildrenOf("appSrc") { ":${it.name}" }
+includeChildrenOf("appSrc/auction")
+includeChildrenOf("appSrc/ui")
+includeChildrenOf("libraries") { ":${it.name}" }
+
 include(
-  ":portfolio",
-  ":core",
   ":end-to-end-tests",
   ":ui-test-support",
-  ":xmpp-test-support",
-  ":app"
+  ":xmpp-test-support"
 )
-
-includeChildrenOf("auction")
-includeChildrenOf("ui")
-includeChildrenOf("libraries") { ":${it.name}" }
 
 fun includeChildrenOf(
   container: String,

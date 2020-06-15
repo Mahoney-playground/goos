@@ -15,6 +15,11 @@ dependencies {
 
 application {
   mainClassName = "goos.app.MainKt"
+  applicationName = "goos"
+}
+
+tasks.jar {
+  archiveBaseName.set(application.applicationName)
 }
 
 idea {

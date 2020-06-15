@@ -51,20 +51,20 @@ ARG work_dir
 
 COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/external ./external
 COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/internal ./internal
-COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/end-to-end-tests-0.1.0.jar .
+COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/end-to-end-tests.jar .
 
-ENTRYPOINT ["java", "-jar", "--illegal-access=deny", "-ea", "end-to-end-tests-0.1.0.jar"]
+ENTRYPOINT ["java", "-jar", "--illegal-access=deny", "-ea", "end-to-end-tests.jar"]
 
 
 FROM worker as auction-xmpp-integration-tests
 ARG username
 ARG work_dir
 
-COPY --from=checker --chown=$username $work_dir/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/external ./external
-COPY --from=checker --chown=$username $work_dir/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/internal ./internal
-COPY --from=checker --chown=$username $work_dir/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/auction-xmpp-integration-tests-0.1.0.jar .
+COPY --from=checker --chown=$username $work_dir/appSrc/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/external ./external
+COPY --from=checker --chown=$username $work_dir/appSrc/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/internal ./internal
+COPY --from=checker --chown=$username $work_dir/appSrc/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/auction-xmpp-integration-tests.jar .
 
-ENTRYPOINT ["java", "-jar", "--illegal-access=deny", "-ea", "auction-xmpp-integration-tests-0.1.0.jar"]
+ENTRYPOINT ["java", "-jar", "--illegal-access=deny", "-ea", "auction-xmpp-integration-tests.jar"]
 
 
 FROM worker as instrumentedapp
@@ -81,14 +81,14 @@ RUN apt-get -qq update && \
 USER $username
 
 # The duplication with app here is necessary to cache the installation of curl in a layer
-COPY --from=checker --chown=$username $work_dir/app/build/install/app/lib/external ./external
-COPY --from=checker --chown=$username $work_dir/app/build/libs/agents/marathon-java-agent-*.jar ./external/marathon-java-agent.jar
-COPY --from=checker --chown=$username $work_dir/app/build/install/app/lib/internal ./internal
-COPY --from=checker --chown=$username $work_dir/app/build/install/app/lib/app-0.1.0.jar .
+COPY --from=checker --chown=$username $work_dir/appSrc/app/build/install/goos/lib/external ./external
+COPY --from=checker --chown=$username $work_dir/appSrc/app/build/libs/agents/marathon-java-agent-*.jar ./external/marathon-java-agent.jar
+COPY --from=checker --chown=$username $work_dir/appSrc/app/build/install/goos/lib/internal ./internal
+COPY --from=checker --chown=$username $work_dir/appSrc/app/build/install/goos/lib/goos.jar .
 
 EXPOSE 1234
 
-ENTRYPOINT ["simple-xvfb-run", "java", "-javaagent:external/marathon-java-agent.jar=1234", "-Xshare:off", "--illegal-access=deny", "--add-exports", "java.desktop/sun.awt=ALL-UNNAMED", "-jar", "core-0.1.0.jar"]
+ENTRYPOINT ["simple-xvfb-run", "java", "-javaagent:external/marathon-java-agent.jar=1234", "-Xshare:off", "--illegal-access=deny", "--add-exports", "java.desktop/sun.awt=ALL-UNNAMED", "-jar", "goos.jar"]
 
 COPY --chown=$username scripts/app-running.sh $work_dir/app-running.sh
 
@@ -99,8 +99,8 @@ FROM worker as app
 ARG username
 ARG work_dir
 
-COPY --from=checker --chown=$username $work_dir/app/build/install/app/lib/external ./external
-COPY --from=checker --chown=$username $work_dir/app/build/install/app/lib/internal ./internal
-COPY --from=checker --chown=$username $work_dir/app/build/install/app/lib/app-0.1.0.jar .
+COPY --from=checker --chown=$username $work_dir/appSrc/app/build/install/goos/lib/external ./external
+COPY --from=checker --chown=$username $work_dir/appSrc/app/build/install/goos/lib/internal ./internal
+COPY --from=checker --chown=$username $work_dir/appSrc/app/build/install/goos/lib/goos.jar .
 
-ENTRYPOINT ["simple-xvfb-run", "java", "--illegal-access=deny", "-jar", "core-0.1.0.jar"]
+ENTRYPOINT ["simple-xvfb-run", "java", "--illegal-access=deny", "-jar", "goos.jar"]
