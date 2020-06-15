@@ -1,6 +1,5 @@
 package goos.ui
 
-import goos.core.Item
 import java.util.EventListener
 
 interface UserRequestListener : EventListener {

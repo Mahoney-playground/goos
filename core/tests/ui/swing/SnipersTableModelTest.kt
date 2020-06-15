@@ -1,8 +1,8 @@
 package goos.ui.swing
 
-import goos.core.Item
 import goos.core.SniperSnapshot
 import goos.core.SniperState.BIDDING
+import goos.ui.Item
 import goos.ui.swing.Column.ITEM_IDENTIFIER
 import goos.ui.swing.Column.LAST_BID
 import goos.ui.swing.Column.LAST_PRICE
@@ -89,8 +89,18 @@ class SnipersTableModelTest : StringSpec({
   }
 
   "holds snipers in addition order" {
-    model.sniperStateChanged(SniperSnapshot.joining(Item("item 0", 1_000)))
-    model.sniperStateChanged(SniperSnapshot.joining(Item("item 1", 1_000)))
+    model.sniperStateChanged(SniperSnapshot.joining(
+      Item(
+        "item 0",
+        1_000
+      )
+    ))
+    model.sniperStateChanged(SniperSnapshot.joining(
+      Item(
+        "item 1",
+        1_000
+      )
+    ))
 
     model.row(0).column(ITEM_IDENTIFIER) shouldBe "item 0"
     model.row(1).column(ITEM_IDENTIFIER) shouldBe "item 1"

@@ -1,6 +1,7 @@
 package goos.core
 
 import goos.auction.api.AuctionHouse
+import goos.ui.Item
 import goos.ui.UserRequestListener
 
 internal class SniperLauncher(

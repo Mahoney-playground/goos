@@ -1,4 +1,4 @@
-package goos.core
+package goos.ui
 
 data class Item(
   val identifier: String,

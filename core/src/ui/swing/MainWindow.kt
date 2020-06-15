@@ -1,6 +1,6 @@
 package goos.ui.swing
 
-import goos.core.Item
+import goos.ui.Item
 import goos.ui.MultiUserRequestListener
 import goos.ui.PortfolioListener
 import goos.ui.UI
@@ -81,7 +81,12 @@ class MainWindow : JFrame("Auction Sniper"), UI {
     add(JButton("Join Auction").apply {
       name = JOIN_BUTTON_NAME
       addActionListener {
-        userRequests.joinAuction(Item(itemIdField.text, (stopPriceField.value as Long).toInt()))
+        userRequests.joinAuction(
+          Item(
+            itemIdField.text,
+            (stopPriceField.value as Long).toInt()
+          )
+        )
       }
     })
   }

@@ -9,6 +9,7 @@ import goos.core.SniperState.LOSING
 import goos.core.SniperState.LOST
 import goos.core.SniperState.WINNING
 import goos.core.SniperState.WON
+import goos.ui.Item
 import goos.ui.SniperListener
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.StringSpec
