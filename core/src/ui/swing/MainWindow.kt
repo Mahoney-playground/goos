@@ -1,9 +1,10 @@
 package goos.ui.swing
 
 import goos.core.Item
-import goos.core.MultiUserRequestListener
-import goos.core.PortfolioNotifier
-import goos.core.UserRequestListener
+import goos.core.PortfolioListener
+import goos.ui.MultiUserRequestListener
+import goos.ui.UI
+import goos.ui.UserRequestListener
 import java.awt.BorderLayout
 import java.awt.BorderLayout.CENTER
 import java.awt.BorderLayout.NORTH
@@ -21,33 +22,35 @@ import javax.swing.JPanel
 import javax.swing.JScrollPane
 import javax.swing.JTable
 import javax.swing.JTextField
+import javax.swing.SwingUtilities
 
-class MainWindow(
-  portfolio: PortfolioNotifier
-) : JFrame("Auction Sniper") {
+class MainWindow : JFrame("Auction Sniper"), UI {
+
+  private val model = SnipersTableModel()
+
+  override val portfolioListener: PortfolioListener = model
 
   private val userRequests = MultiUserRequestListener()
 
   init {
     name = MAIN_WINDOW_NAME
-    fillContentPane(makeSnipersTable(portfolio), makeControls(), makeConnectionControls())
-    pack()
-    defaultCloseOperation = EXIT_ON_CLOSE
-    isVisible = true
-    addWindowListener(object : WindowAdapter() {
-      override fun windowClosing(e: WindowEvent) {
-        userRequests.disconnect()
-      }
-    })
   }
 
-  private fun makeSnipersTable(
-    portfolio: PortfolioNotifier
-  ): JTable {
+  override fun start() {
+    SwingUtilities.invokeAndWait {
+      fillContentPane(makeSnipersTable(), makeControls(), makeConnectionControls())
+      pack()
+      defaultCloseOperation = EXIT_ON_CLOSE
+      isVisible = true
+      addWindowListener(object : WindowAdapter() {
+        override fun windowClosing(e: WindowEvent) {
+          userRequests.disconnect()
+        }
+      })
+    }
+  }
 
-    val model = SnipersTableModel()
-    portfolio.addPortfolioListener(model)
-
+  private fun makeSnipersTable(): JTable {
     return JTable(model).apply {
       name = SNIPERS_TABLE_NAME
     }
@@ -106,8 +109,8 @@ class MainWindow(
     })
   }
 
-  fun addUserRequestListener(userRequestListener: UserRequestListener) {
-    userRequests.addListener(userRequestListener)
+  override fun addUserRequestListener(listener: UserRequestListener) {
+    userRequests.addListener(listener)
   }
 
   companion object {

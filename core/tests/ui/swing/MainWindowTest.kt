@@ -2,8 +2,7 @@ package goos.ui.swing
 
 import goos.UI
 import goos.core.Item
-import goos.core.SniperPortfolio
-import goos.core.UserRequestListener
+import goos.ui.UserRequestListener
 import goos.uitestsupport.AuctionSniperDriver
 import goos.uitestsupport.CompositeRemoteWebDriver
 import io.kotest.assertions.timing.eventually
@@ -11,9 +10,6 @@ import io.kotest.core.spec.style.StringSpec
 import io.mockk.confirmVerified
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.swing.Swing
-import kotlinx.coroutines.withContext
 import net.sourceforge.marathon.javadriver.JavaDriver
 import kotlin.time.ExperimentalTime
 import kotlin.time.seconds
@@ -33,10 +29,9 @@ class MainWindowTest : StringSpec({
 
   beforeTest {
     userRequestListener = mockk(relaxed = true)
-    withContext(Dispatchers.Swing) {
-      mainWindow = MainWindow(SniperPortfolio())
-      mainWindow.addUserRequestListener(userRequestListener)
-    }
+    mainWindow = MainWindow()
+    mainWindow.addUserRequestListener(userRequestListener)
+    mainWindow.start()
     driver = AuctionSniperDriver(CompositeRemoteWebDriver(JavaDriver()))
   }
 

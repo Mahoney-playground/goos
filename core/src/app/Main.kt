@@ -2,8 +2,7 @@ package goos.app
 
 import goos.auction.xmpp.XMPPAuctionHouse
 import goos.core.Core
-import goos.ui.swing.buildUi
-import uk.org.lidalia.kotlinlangext.threads.blockUntilShutdown
+import goos.ui.swing.MainWindow
 import java.util.logging.Level.WARNING
 import java.util.logging.Logger
 
@@ -23,10 +22,9 @@ fun main(vararg args: String) {
     password = args[ARG_PASSWORD]
   )
 
-  val core = Core(auctionHouse)
+  val ui = MainWindow()
 
-  buildUi(core)
+  val core = Core(auctionHouse, ui)
 
-  blockUntilShutdown()
-  println("App stopping")
+  core.start()
 }
