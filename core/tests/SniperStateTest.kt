@@ -1,6 +1,5 @@
 package goos.core
 
-import goos.common.Defect
 import goos.core.SniperState.BIDDING
 import goos.core.SniperState.JOINING
 import goos.core.SniperState.LOSING

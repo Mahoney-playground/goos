@@ -81,10 +81,10 @@ RUN apt-get -qq update && \
 USER $username
 
 # The duplication with app here is necessary to cache the installation of curl in a layer
-COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/external ./external
-COPY --from=checker --chown=$username $work_dir/core/build/libs/agents/marathon-java-agent-*.jar ./external/marathon-java-agent.jar
-COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/internal ./internal
-COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/core-0.1.0.jar .
+COPY --from=checker --chown=$username $work_dir/app/build/install/app/lib/external ./external
+COPY --from=checker --chown=$username $work_dir/app/build/libs/agents/marathon-java-agent-*.jar ./external/marathon-java-agent.jar
+COPY --from=checker --chown=$username $work_dir/app/build/install/app/lib/internal ./internal
+COPY --from=checker --chown=$username $work_dir/app/build/install/app/lib/app-0.1.0.jar .
 
 EXPOSE 1234
 
@@ -99,8 +99,8 @@ FROM worker as app
 ARG username
 ARG work_dir
 
-COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/external ./external
-COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/internal ./internal
-COPY --from=checker --chown=$username $work_dir/core/build/install/core/lib/core-0.1.0.jar .
+COPY --from=checker --chown=$username $work_dir/app/build/install/app/lib/external ./external
+COPY --from=checker --chown=$username $work_dir/app/build/install/app/lib/internal ./internal
+COPY --from=checker --chown=$username $work_dir/app/build/install/app/lib/app-0.1.0.jar .
 
 ENTRYPOINT ["simple-xvfb-run", "java", "--illegal-access=deny", "-jar", "core-0.1.0.jar"]

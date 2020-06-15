@@ -1,4 +1,4 @@
-package goos
+package goos.ui.swing
 
 import io.kotest.core.Tag
 import io.kotest.core.Tags

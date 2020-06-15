@@ -1,13 +1,16 @@
 rootProject.name = "goos"
 
 include(
+  ":portfolio",
   ":core",
   ":end-to-end-tests",
   ":ui-test-support",
-  ":xmpp-test-support"
+  ":xmpp-test-support",
+  ":app"
 )
 
 includeChildrenOf("auction")
+includeChildrenOf("ui")
 includeChildrenOf("libraries") { ":${it.name}" }
 
 fun includeChildrenOf(

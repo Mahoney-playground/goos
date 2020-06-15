@@ -1,10 +1,7 @@
-package goos.app
+package goos.core
 
 import goos.auction.api.Auction
 import goos.auction.api.AuctionHouse
-import goos.core.AuctionSniper
-import goos.core.SniperLauncher
-import goos.core.SniperPortfolio
 import goos.portfolio.Item
 import io.kotest.core.spec.style.StringSpec
 import io.mockk.every

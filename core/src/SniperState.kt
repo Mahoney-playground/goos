@@ -1,7 +1,5 @@
 package goos.core
 
-import goos.common.Defect
-
 enum class SniperState(
   private val whenAuctionClosed: SniperState?
 ) {
