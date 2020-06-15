@@ -29,7 +29,7 @@ data class SniperSnapshot(
   fun failed() =
     copy(lastPrice = 0, lastBid = 0, state = FAILED)
 
-  fun isForSameItemAs(sniperSnapshot: SniperSnapshot) = item == sniperSnapshot.item
+  fun toUiSnapshot() = goos.ui.SniperSnapshot(item, lastPrice, lastBid, state.toUiState())
 
   companion object {
     fun joining(item: Item) = SniperSnapshot(item, 0, 0, JOINING)

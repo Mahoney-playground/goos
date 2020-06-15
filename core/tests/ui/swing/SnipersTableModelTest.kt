@@ -1,8 +1,9 @@
 package goos.ui.swing
 
-import goos.core.SniperSnapshot
-import goos.core.SniperState.BIDDING
 import goos.ui.Item
+import goos.ui.SniperSnapshot
+import goos.ui.SniperState.BIDDING
+import goos.ui.SniperState.JOINING
 import goos.ui.swing.Column.ITEM_IDENTIFIER
 import goos.ui.swing.Column.LAST_BID
 import goos.ui.swing.Column.LAST_PRICE
@@ -66,7 +67,7 @@ class SnipersTableModelTest : StringSpec({
 
   "sets sniper values in columns" {
 
-    val joining = SniperSnapshot.joining(Item("item id", 1_000))
+    val joining = joining(Item("item id", 1_000))
     model.sniperStateChanged(joining)
 
     val bidding = joining.copy(state = BIDDING, lastPrice = 555, lastBid = 666)
@@ -77,7 +78,7 @@ class SnipersTableModelTest : StringSpec({
   }
 
   "notifies listeners when adding a sniper" {
-    val joining = SniperSnapshot.joining(Item("item123", 1_000))
+    val joining = joining(Item("item123", 1_000))
 
     model.rowCount shouldBe 0
 
@@ -89,13 +90,13 @@ class SnipersTableModelTest : StringSpec({
   }
 
   "holds snipers in addition order" {
-    model.sniperStateChanged(SniperSnapshot.joining(
+    model.sniperStateChanged(joining(
       Item(
         "item 0",
         1_000
       )
     ))
-    model.sniperStateChanged(SniperSnapshot.joining(
+    model.sniperStateChanged(joining(
       Item(
         "item 1",
         1_000
@@ -108,13 +109,13 @@ class SnipersTableModelTest : StringSpec({
 
   "updates correct row for sniper" {
 
-    val item0 = SniperSnapshot.joining(Item("item 0", 1_000))
+    val item0 = joining(Item("item 0", 1_000))
     model.sniperStateChanged(item0)
 
-    val item1 = SniperSnapshot.joining(Item("item 1", 1_000))
+    val item1 = joining(Item("item 1", 1_000))
     model.sniperStateChanged(item1)
 
-    val item2 = SniperSnapshot.joining(Item("item 2", 1_000))
+    val item2 = joining(Item("item 2", 1_000))
     model.sniperStateChanged(item2)
 
     val updatedItem1 = item1.copy(state = BIDDING, lastPrice = 10, lastBid = 11)
@@ -127,6 +128,8 @@ class SnipersTableModelTest : StringSpec({
 }) {
   override fun isolationMode() = InstancePerTest
 }
+
+private fun joining(item: Item) = SniperSnapshot(item, 0, 0, JOINING)
 
 private fun <E> List<E>.column(enum: Enum<*>): E = get(enum.ordinal)
 

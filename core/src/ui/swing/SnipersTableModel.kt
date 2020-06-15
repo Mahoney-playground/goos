@@ -1,16 +1,16 @@
 package goos.ui.swing
 
-import goos.ui.SniperListener
-import goos.core.SniperSnapshot
-import goos.core.SniperState.BIDDING
-import goos.core.SniperState.FAILED
-import goos.core.SniperState.JOINING
-import goos.core.SniperState.LOSING
-import goos.core.SniperState.LOST
-import goos.core.SniperState.WINNING
-import goos.core.SniperState.WON
 import goos.ui.PortfolioListener
+import goos.ui.SniperListener
 import goos.ui.SniperNotifier
+import goos.ui.SniperSnapshot
+import goos.ui.SniperState.BIDDING
+import goos.ui.SniperState.FAILED
+import goos.ui.SniperState.JOINING
+import goos.ui.SniperState.LOSING
+import goos.ui.SniperState.LOST
+import goos.ui.SniperState.WINNING
+import goos.ui.SniperState.WON
 import javax.swing.table.AbstractTableModel
 
 internal class SnipersTableModel : AbstractTableModel(),

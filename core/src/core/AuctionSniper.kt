@@ -19,7 +19,7 @@ internal class AuctionSniper(
   private var snapshot = SniperSnapshot.joining(item)
     set(value) {
       field = value
-      sniperListeners.sniperStateChanged(value)
+      sniperListeners.sniperStateChanged(value.toUiSnapshot())
     }
 
   override fun auctionClosed() {
@@ -49,7 +49,7 @@ internal class AuctionSniper(
   }
 
   override fun addSniperListener(sniperListener: SniperListener) {
-    sniperListener.sniperStateChanged(snapshot)
+    sniperListener.sniperStateChanged(snapshot.toUiSnapshot())
     sniperListeners.addListener(sniperListener)
   }
 }

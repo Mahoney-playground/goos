@@ -1,6 +1,5 @@
 package goos.ui
 
-import goos.core.SniperSnapshot
 import java.util.EventListener
 
 interface SniperListener : EventListener {
