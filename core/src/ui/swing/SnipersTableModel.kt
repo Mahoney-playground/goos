@@ -1,7 +1,6 @@
 package goos.ui.swing
 
 import goos.core.SniperListener
-import goos.core.SniperNotifier
 import goos.core.SniperSnapshot
 import goos.core.SniperState.BIDDING
 import goos.core.SniperState.FAILED
@@ -11,6 +10,7 @@ import goos.core.SniperState.LOST
 import goos.core.SniperState.WINNING
 import goos.core.SniperState.WON
 import goos.ui.PortfolioListener
+import goos.ui.SniperNotifier
 import javax.swing.table.AbstractTableModel
 
 internal class SnipersTableModel : AbstractTableModel(),
