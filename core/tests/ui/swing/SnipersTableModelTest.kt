@@ -1,9 +1,9 @@
 package goos.ui.swing
 
-import goos.ui.Item
-import goos.ui.SniperSnapshot
-import goos.ui.SniperState.BIDDING
-import goos.ui.SniperState.JOINING
+import goos.portfolio.Item
+import goos.portfolio.SniperSnapshot
+import goos.portfolio.SniperState.BIDDING
+import goos.portfolio.SniperState.JOINING
 import goos.ui.swing.Column.ITEM_IDENTIFIER
 import goos.ui.swing.Column.LAST_BID
 import goos.ui.swing.Column.LAST_PRICE
@@ -129,7 +129,8 @@ class SnipersTableModelTest : StringSpec({
   override fun isolationMode() = InstancePerTest
 }
 
-private fun joining(item: Item) = SniperSnapshot(item, 0, 0, JOINING)
+private fun joining(item: Item) =
+  SniperSnapshot(item, 0, 0, JOINING)
 
 private fun <E> List<E>.column(enum: Enum<*>): E = get(enum.ordinal)
 

@@ -1,8 +1,8 @@
-package goos.ui
+package goos.ui.api
 
-import java.util.EventListener
+import goos.portfolio.Item
 
-interface UserRequestListener : EventListener {
+interface UserRequestListener {
   fun joinAuction(item: Item)
   fun reset()
   fun disconnect()

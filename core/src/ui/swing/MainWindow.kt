@@ -1,10 +1,10 @@
 package goos.ui.swing
 
-import goos.ui.Item
-import goos.ui.MultiUserRequestListener
-import goos.ui.PortfolioListener
-import goos.ui.UI
-import goos.ui.UserRequestListener
+import goos.portfolio.Item
+import goos.portfolio.PortfolioListener
+import goos.ui.api.MultiUserRequestListener
+import goos.ui.api.UI
+import goos.ui.api.UserRequestListener
 import java.awt.BorderLayout
 import java.awt.BorderLayout.CENTER
 import java.awt.BorderLayout.NORTH

@@ -1,8 +1,8 @@
 package goos.ui.swing
 
 import goos.UI
-import goos.ui.Item
-import goos.ui.UserRequestListener
+import goos.portfolio.Item
+import goos.ui.api.UserRequestListener
 import goos.uitestsupport.AuctionSniperDriver
 import goos.uitestsupport.CompositeRemoteWebDriver
 import io.kotest.assertions.timing.eventually

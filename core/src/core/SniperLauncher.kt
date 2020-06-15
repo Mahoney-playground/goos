@@ -1,8 +1,8 @@
 package goos.core
 
 import goos.auction.api.AuctionHouse
-import goos.ui.Item
-import goos.ui.UserRequestListener
+import goos.portfolio.Item
+import goos.ui.api.UserRequestListener
 
 internal class SniperLauncher(
   private val auctionHouse: AuctionHouse,

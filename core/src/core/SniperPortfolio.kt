@@ -1,7 +1,7 @@
 package goos.core
 
-import goos.ui.MultiPortfolioListener
-import goos.ui.PortfolioListener
+import goos.portfolio.MultiPortfolioListener
+import goos.portfolio.PortfolioListener
 
 internal class SniperPortfolio {
 

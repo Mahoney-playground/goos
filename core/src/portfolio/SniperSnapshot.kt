@@ -1,4 +1,4 @@
-package goos.ui
+package goos.portfolio
 
 data class SniperSnapshot(
   val item: Item,

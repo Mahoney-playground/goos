@@ -11,10 +11,10 @@ import goos.core.SniperState.LOSING
 import goos.core.SniperState.LOST
 import goos.core.SniperState.WINNING
 import goos.core.SniperState.WON
-import goos.ui.Item
-import goos.ui.MultiSniperListener
-import goos.ui.SniperListener
-import goos.ui.SniperNotifier
+import goos.portfolio.Item
+import goos.portfolio.MultiSniperListener
+import goos.portfolio.SniperListener
+import goos.portfolio.SniperNotifier
 
 internal class AuctionSniper(
   val item: Item,
@@ -61,7 +61,7 @@ internal class AuctionSniper(
   }
 }
 
-private fun SniperSnapshot.toUiSnapshot() = goos.ui.SniperSnapshot(
+private fun SniperSnapshot.toUiSnapshot() = goos.portfolio.SniperSnapshot(
   item,
   lastPrice,
   lastBid,
@@ -69,11 +69,11 @@ private fun SniperSnapshot.toUiSnapshot() = goos.ui.SniperSnapshot(
 )
 
 private fun SniperState.toUiState() = when (this) {
-  LOST -> goos.ui.SniperState.LOST
-  WON -> goos.ui.SniperState.WON
-  JOINING -> goos.ui.SniperState.JOINING
-  BIDDING -> goos.ui.SniperState.BIDDING
-  WINNING -> goos.ui.SniperState.WINNING
-  LOSING -> goos.ui.SniperState.LOSING
-  FAILED -> goos.ui.SniperState.FAILED
+  LOST -> goos.portfolio.SniperState.LOST
+  WON -> goos.portfolio.SniperState.WON
+  JOINING -> goos.portfolio.SniperState.JOINING
+  BIDDING -> goos.portfolio.SniperState.BIDDING
+  WINNING -> goos.portfolio.SniperState.WINNING
+  LOSING -> goos.portfolio.SniperState.LOSING
+  FAILED -> goos.portfolio.SniperState.FAILED
 }

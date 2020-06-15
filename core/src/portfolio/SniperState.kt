@@ -1,4 +1,4 @@
-package goos.ui
+package goos.portfolio
 
 enum class SniperState {
   LOST,

@@ -1,8 +1,6 @@
-package goos.ui
+package goos.portfolio
 
-import java.util.EventListener
-
-interface SniperListener : EventListener {
+interface SniperListener {
   fun sniperStateChanged(sniperSnapshot: SniperSnapshot)
 }
 

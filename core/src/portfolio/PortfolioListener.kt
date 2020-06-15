@@ -1,8 +1,6 @@
-package goos.ui
+package goos.portfolio
 
-import java.util.EventListener
-
-interface PortfolioListener : EventListener {
+interface PortfolioListener {
   fun sniperAdded(sniper: SniperNotifier)
   fun reset()
 }

@@ -1,7 +1,7 @@
 package goos.core
 
 import goos.auction.api.AuctionHouse
-import goos.ui.UI
+import goos.ui.api.UI
 import uk.org.lidalia.kotlinlangext.threads.blockUntilShutdown
 
 class Core(
