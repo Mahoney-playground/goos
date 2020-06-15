@@ -1,6 +1,9 @@
 package goos.core
 
-internal class SniperPortfolio : PortfolioNotifier {
+import goos.ui.MultiPortfolioListener
+import goos.ui.PortfolioListener
+
+internal class SniperPortfolio {
 
   private val snipers = mutableListOf<AuctionSniper>()
   private val portfolioListeners = MultiPortfolioListener()
@@ -15,7 +18,7 @@ internal class SniperPortfolio : PortfolioNotifier {
     portfolioListeners.reset()
   }
 
-  override fun addPortfolioListener(listener: PortfolioListener) {
+  fun addPortfolioListener(listener: PortfolioListener) {
     portfolioListeners.addListener(listener)
   }
 }

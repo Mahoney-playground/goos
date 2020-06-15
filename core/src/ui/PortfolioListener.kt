@@ -1,5 +1,6 @@
-package goos.core
+package goos.ui
 
+import goos.core.SniperNotifier
 import java.util.EventListener
 
 interface PortfolioListener : EventListener {
