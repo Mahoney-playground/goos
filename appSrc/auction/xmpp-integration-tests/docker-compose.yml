@@ -6,7 +6,7 @@ services:
     image: docker.pkg.github.com/mahoney-playground/goos/openfire:4.5.1
     hostname: auctionhost.internal
     build:
-      context: ../../docker-openfire
+      context: ../../../docker-openfire
 
   auction-xmpp-integration-tests:
     image: docker.pkg.github.com/mahoney-playground/goos/goos-auction-xmpp-integration-tests:${GOOS_TAG:?"You must set GOOS_TAG"}
