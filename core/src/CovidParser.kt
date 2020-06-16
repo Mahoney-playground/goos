@@ -44,7 +44,7 @@ fun main() {
 
 private fun parseDeaths(json: Json) {
   val deaths =
-    json.parse(Deaths.serializer(), File("core/src/coronavirus-deaths_latest.json").readText())
+    json.parse(Deaths.serializer(), File("coronavirus-deaths_latest.json").readText())
   val totalsByDate = deaths.countries.groupBy { it.reportingDate }.mapValues { (_, countries) ->
     val byName = countries.associateBy { it.areaName }
     (byName["England"]?.dailyChangeInDeaths ?: 0) + (byName["Wales"]?.dailyChangeInDeaths ?: 0)
@@ -56,7 +56,7 @@ private fun parseDeaths(json: Json) {
 
 private fun parseCases(json: Json) {
   val cases =
-    json.parse(Cases.serializer(), File("core/src/coronavirus-cases_latest.json").readText())
+    json.parse(Cases.serializer(), File("coronavirus-cases_latest.json").readText())
   val totalsByDate = cases.countries.groupBy { it.specimenDate }.mapValues { (_, countries) ->
     val byName = countries.associateBy { it.areaName }
     val england = byName["England"] ?: AreaCases("", "", "", 0, 0, 0)
@@ -74,7 +74,7 @@ private fun parseCases(json: Json) {
 
 private fun parseLondonCases(json: Json) {
   val cases =
-    json.parse(Cases.serializer(), File("core/src/coronavirus-cases_latest.json").readText())
+    json.parse(Cases.serializer(), File("coronavirus-cases_latest.json").readText())
   val totalsByDate = cases.regions.groupBy { it.specimenDate }.mapValues { (_, countries) ->
     val byName = countries.associateBy { it.areaName }
     val london = byName["London"] ?: AreaCases("", "", "", 0, 0, 0)
