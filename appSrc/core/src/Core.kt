@@ -6,21 +6,23 @@ import uk.org.lidalia.kotlinlangext.threads.blockUntilShutdown
 import java.util.concurrent.CountDownLatch
 
 class Core(
-  auctionHouse: AuctionHouse,
+  private val auctionHouse: AuctionHouse,
   private val ui: UI
 ) {
 
-  private val latch = CountDownLatch(1)
+  fun run() {
 
-  init {
     val portfolio = SniperPortfolio()
-    val sniperLauncher = SniperLauncher(auctionHouse, portfolio, latch)
+    val latch = CountDownLatch(1)
+    val sniperLauncher = SniperLauncher(
+      auctionHouse,
+      portfolio,
+      latch
+    )
 
     ui.addUserRequestListener(sniperLauncher)
     portfolio.addPortfolioListener(ui.portfolioListener)
-  }
 
-  fun run() {
     ui.start()
     blockUntilShutdown(latch)
     println("App stopping")
