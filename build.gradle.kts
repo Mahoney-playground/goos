@@ -80,12 +80,15 @@ subprojects {
 
       withType<Jar> {
         archiveVersion.convention(null as String?)
-        archiveVersion.set(null as String?)
       }
 
       named<Test>("test") {
         environment("BUILD_SYSTEM", "GRADLE")
         useJUnitPlatform()
+        jvmArgs(
+          "-Xshare:off",
+          "--illegal-access=deny"
+        )
       }
 
       register<DownloadDependenciesTask>("downloadDependencies")

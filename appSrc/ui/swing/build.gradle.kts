@@ -18,8 +18,6 @@ tasks {
   named("test", Test::class) {
     // silence warnings due to using marathon java agent
     jvmArgs(
-      "-Xshare:off",
-      "--illegal-access=deny",
       "--add-exports", "java.desktop/sun.awt=ALL-UNNAMED"
     )
   }
