@@ -78,6 +78,7 @@ subprojects {
       }
 
       withType<Jar> {
+        @Suppress("UnstableApiUsage")
         archiveVersion.convention(null as String?)
       }
 
@@ -111,6 +112,15 @@ dependencyGraphGenerator {
   )
 }
 
+val appJavaAgents: Configuration by configurations.creating
+
+dependencies {
+  appJavaAgents(project(mapOf(
+    "path" to ":app",
+    "configuration" to "javaAgents"
+  )))
+}
+
 tasks {
 
   named("build") {
@@ -123,7 +133,7 @@ tasks {
       into(buildDir.resolve(project.name))
     } }
     doLast { copy {
-      from(app.configurations.getByName("javaAgents"))
+      from(appJavaAgents)
       into(buildDir.resolve(project.name).resolve("lib/agents"))
     } }
   }

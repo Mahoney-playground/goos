@@ -3,7 +3,7 @@ plugins {
   id("alt-application-plugin")
 }
 
-val javaAgents by configurations.register("javaAgents")
+val javaAgents by configurations.creating
 
 dependencies {
   implementation(project(":core"))
