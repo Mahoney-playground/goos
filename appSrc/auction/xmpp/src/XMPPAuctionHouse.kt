@@ -50,6 +50,7 @@ class XMPPAuctionHouse(
   }
 
   override fun disconnect() {
-    connection.disconnect()
+    if (connection.isConnected)
+      connection.disconnect()
   }
 }
