@@ -28,8 +28,6 @@ allprojects {
     jcenter()
     mavenCentral()
   }
-
-  apply<ProjectReportsPlugin>()
 }
 
 subprojects {
