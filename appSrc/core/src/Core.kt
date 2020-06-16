@@ -17,7 +17,7 @@ class Core(
     portfolio.addPortfolioListener(ui.portfolioListener)
   }
 
-  fun start() {
+  fun run() {
     ui.start()
     blockUntilShutdown()
     println("App stopping")

@@ -26,5 +26,5 @@ fun main(vararg args: String) {
 
   val core = Core(auctionHouse, ui)
 
-  core.start()
+  core.run()
 }
