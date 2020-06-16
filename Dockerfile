@@ -81,14 +81,14 @@ RUN apt-get -qq update && \
 USER $username
 
 # The duplication with app here is necessary to cache the installation of curl in a layer
-COPY --from=checker --chown=$username $work_dir/appSrc/app/build/install/goos/lib/external ./external
-COPY --from=checker --chown=$username $work_dir/appSrc/app/build/libs/agents/marathon-java-agent-*.jar ./external/marathon-java-agent.jar
-COPY --from=checker --chown=$username $work_dir/appSrc/app/build/install/goos/lib/internal ./internal
-COPY --from=checker --chown=$username $work_dir/appSrc/app/build/install/goos/lib/goos.jar .
+COPY --from=checker --chown=$username $work_dir/build/goos/lib/external ./external
+COPY --from=checker --chown=$username $work_dir/build/goos/lib/agents/marathon-java-agent-*.jar ./agents/marathon-java-agent.jar
+COPY --from=checker --chown=$username $work_dir/build/goos/lib/internal ./internal
+COPY --from=checker --chown=$username $work_dir/build/goos/lib/goos.jar .
 
 EXPOSE 1234
 
-ENTRYPOINT ["simple-xvfb-run", "java", "-javaagent:external/marathon-java-agent.jar=1234", "-Xshare:off", "--illegal-access=deny", "--add-exports", "java.desktop/sun.awt=ALL-UNNAMED", "-jar", "goos.jar"]
+ENTRYPOINT ["simple-xvfb-run", "java", "-javaagent:agents/marathon-java-agent.jar=1234", "-Xshare:off", "--illegal-access=deny", "--add-exports", "java.desktop/sun.awt=ALL-UNNAMED", "-jar", "goos.jar"]
 
 COPY --chown=$username scripts/app-running.sh $work_dir/app-running.sh
 
@@ -99,8 +99,8 @@ FROM worker as app
 ARG username
 ARG work_dir
 
-COPY --from=checker --chown=$username $work_dir/appSrc/app/build/install/goos/lib/external ./external
-COPY --from=checker --chown=$username $work_dir/appSrc/app/build/install/goos/lib/internal ./internal
-COPY --from=checker --chown=$username $work_dir/appSrc/app/build/install/goos/lib/goos.jar .
+COPY --from=checker --chown=$username $work_dir/build/goos/lib/external ./external
+COPY --from=checker --chown=$username $work_dir/build/goos/lib/internal ./internal
+COPY --from=checker --chown=$username $work_dir/build/goos/lib/goos.jar .
 
 ENTRYPOINT ["simple-xvfb-run", "java", "--illegal-access=deny", "-jar", "goos.jar"]

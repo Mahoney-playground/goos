@@ -4,6 +4,12 @@ DOCKER_BUILDKIT=1 \
 docker build .
 ```
 
+To build locally with JDK >= 14 installed:
+```bash
+./gradlew build
+```
+The output will be in `build/goos`.
+
 To run the end to end tests:
 ```bash
 COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 \
@@ -28,7 +34,6 @@ To run the end to end tests locally:
   ```bash
   DOCKER_BUILDKIT=1 docker build -t goos-instrumentedapp . && docker run -p 1234:1234 goos-instrumentedapp
   cd docker-openfire && docker build -t openfire . && docker run -p 5222:5222 -p 9090:9090 -h auctionhost.internal openfire 
-  ```
   ```
 You should now be able to run the tests locally.
 ```plantuml

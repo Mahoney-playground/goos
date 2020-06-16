@@ -1,5 +1,6 @@
 import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorExtension.Generator
 import org.gradle.api.JavaVersion.VERSION_14
+import org.gradle.api.distribution.plugins.DistributionPlugin.TASK_INSTALL_NAME
 import org.jetbrains.gradle.ext.IdeaExtPlugin
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -108,4 +109,22 @@ dependencyGraphGenerator {
       includeProject = { it.pluginManager.hasPlugin("java") }
     )
   )
+}
+
+tasks {
+
+  named("build") {
+    val app = project(":app")
+    val appInstallTask = app.tasks.getByName(TASK_INSTALL_NAME)
+
+    dependsOn(appInstallTask)
+    doLast { copy {
+      from(appInstallTask)
+      into(buildDir.resolve(project.name))
+    } }
+    doLast { copy {
+      from(app.configurations.getByName("javaAgents"))
+      into(buildDir.resolve(project.name).resolve("lib/agents"))
+    } }
+  }
 }
