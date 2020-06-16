@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="App" type="JetRunConfigurationType">
-    <module name="goos.core.main" />
-    <option name="VM_PARAMETERS" value="-javaagent:core/build/libs/agents/marathon-java-agent-5.2.6.0.jar=1234 -Xshare:off --illegal-access=deny --add-exports java.desktop/sun.awt=ALL-UNNAMED" />
+    <module name="goos.app.main" />
+    <option name="VM_PARAMETERS" value="-javaagent:appSrc/app/build/libs/agents/marathon-java-agent-5.2.6.0.jar=1234 -Xshare:off --illegal-access=deny --add-exports java.desktop/sun.awt=ALL-UNNAMED" />
     <option name="PROGRAM_PARAMETERS" value="auctionhost.internal sniper sniper" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
     <option name="ALTERNATIVE_JRE_PATH" />
@@ -10,7 +10,7 @@
     <option name="WORKING_DIRECTORY" value="" />
     <method v="2">
       <option name="Make" enabled="true" />
-      <option name="Gradle.BeforeRunTask" enabled="false" tasks="copyJavaAgents" externalProjectPath="$PROJECT_DIR$/core" vmOptions="" scriptParameters="" />
+      <option name="Gradle.BeforeRunTask" enabled="false" tasks="copyJavaAgents" externalProjectPath="$PROJECT_DIR$/appSrc/app" vmOptions="" scriptParameters="" />
     </method>
   </configuration>
 </component>
