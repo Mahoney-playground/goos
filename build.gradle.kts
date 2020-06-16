@@ -78,6 +78,11 @@ subprojects {
         kotlinOptions.jvmTarget = "13" // hardcoded until kotlin can cope with 14
       }
 
+      withType<Jar> {
+        archiveVersion.convention(null as String?)
+        archiveVersion.set(null as String?)
+      }
+
       named<Test>("test") {
         environment("BUILD_SYSTEM", "GRADLE")
         useJUnitPlatform()

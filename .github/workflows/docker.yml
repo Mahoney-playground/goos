@@ -13,7 +13,7 @@ env:
   COMPOSE_DOCKER_CLI_BUILD: 1
   DOCKER_BUILDKIT: 1
   BUILDKIT_PROGRESS: plain
-  cache-name: docker-cache-8
+  cache-name: docker-cache-9
 
 jobs:
   build:
@@ -95,7 +95,7 @@ jobs:
     - name: Run auction xmpp integration tests
       env:
         GOOS_TAG: ${{ github.sha }}
-      run: cd auction/xmpp-integration-tests &&
+      run: cd appSrc/auction/xmpp-integration-tests &&
            docker-compose pull -q &&
            docker-compose up --no-build --exit-code-from auction-xmpp-integration-tests --abort-on-container-exit
 
