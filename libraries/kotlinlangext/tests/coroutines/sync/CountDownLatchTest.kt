@@ -80,7 +80,7 @@ class CountDownLatchTest : StringSpec({
       events.add(3)
     }
     val job2 = launch {
-      delay(100)
+      delay(100.milliseconds)
       events.add(2)
       latch.countDown()
     }
@@ -92,12 +92,12 @@ class CountDownLatchTest : StringSpec({
   "remains open forever" {
     val latch = CountDownLatch(1)
     val job = launch {
-      inParallel(100, 10) {
+      inParallel(numberOfCoroutines = 100, repeatsPerCoroutine = 10) {
         latch.await()
         latch.await()
       }
     }
-    delay(50)
+    delay(50.milliseconds)
     latch.countDown()
     job.join()
   }
