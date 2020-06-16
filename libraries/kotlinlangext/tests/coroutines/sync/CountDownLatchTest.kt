@@ -10,10 +10,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.IllegalArgumentException
 import kotlin.time.ExperimentalTime
 import kotlin.time.milliseconds
-import kotlin.time.seconds
 
 @ExperimentalTime
 class CountDownLatchTest : StringSpec({
