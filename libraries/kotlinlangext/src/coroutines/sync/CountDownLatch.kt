@@ -1,7 +1,7 @@
 package uk.org.lidalia.kotlinlangext.coroutines.sync
 
 import kotlinx.coroutines.sync.Mutex
-import java.lang.IllegalStateException
+import kotlinx.coroutines.withTimeoutOrNull
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
@@ -36,13 +36,8 @@ class CountDownLatch private constructor(
   }
 
   @ExperimentalTime
-  suspend fun await(until: Duration): Boolean {
-    if (mutex.isLocked) {
-      mutex.lock()
-      mutex.unlock()
-    }
-    return true
-  }
+  suspend fun await(until: Duration): Boolean =
+    withTimeoutOrNull(until) { await(); true } ?: false
 
   val count: Int
     get() = counter.get()

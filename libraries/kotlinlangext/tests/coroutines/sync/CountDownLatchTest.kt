@@ -4,13 +4,18 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.IllegalArgumentException
+import kotlin.time.ExperimentalTime
+import kotlin.time.milliseconds
+import kotlin.time.seconds
 
+@ExperimentalTime
 class CountDownLatchTest : StringSpec({
 
   "default initial count is 1" {
@@ -95,6 +100,46 @@ class CountDownLatchTest : StringSpec({
     delay(50)
     latch.countDown()
     job.join()
+  }
+
+  "returns true if await completes inside time" {
+    val latch = CountDownLatch()
+    val events = mutableListOf<Int>()
+    val awaitedInTime = async {
+      events.add(1)
+      val inTime = latch.await(200.milliseconds)
+      events.add(3)
+      inTime
+    }
+    val job2 = launch {
+      delay(100.milliseconds)
+      events.add(2)
+      latch.countDown()
+    }
+    joinAll(awaitedInTime, job2)
+
+    awaitedInTime.await() shouldBe true
+    events shouldBe listOf(1, 2, 3)
+  }
+
+  "returns false if await does not complete inside time" {
+    val latch = CountDownLatch()
+    val events = mutableListOf<Int>()
+    val awaitedInTime = async {
+      events.add(1)
+      val inTime = latch.await(100.milliseconds)
+      events.add(2)
+      inTime
+    }
+    val job2 = launch {
+      delay(200.milliseconds)
+      events.add(3)
+      latch.countDown()
+    }
+    joinAll(awaitedInTime, job2)
+
+    awaitedInTime.await() shouldBe false
+    events shouldBe listOf(1, 2, 3)
   }
 })
 
