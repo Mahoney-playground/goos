@@ -15,7 +15,7 @@ idea {
 
 tasks {
 
-  named("test", Test::class) {
+  named<Test>("test") {
     // silence warnings due to using marathon java agent
     jvmArgs(
       "--add-exports", "java.desktop/sun.awt=ALL-UNNAMED"
