@@ -31,7 +31,8 @@ data class AreaCases(
 @Serializable
 data class Cases(
   val countries: List<AreaCases>,
-  val regions: List<AreaCases>
+  val regions: List<AreaCases>,
+  val ltlas: List<AreaCases>
 )
 
 @ExperimentalStdlibApi
@@ -39,7 +40,8 @@ fun main() {
   val json = Json(JsonConfiguration.Default.copy(ignoreUnknownKeys = true))
 //  parseDeaths(json)
 //  parseCases(json)
-  parseLondonCases(json)
+//  parseLondonCases(json)
+  parseLocalCases(json)
 }
 
 private fun parseDeaths(json: Json) {
@@ -79,6 +81,21 @@ private fun parseLondonCases(json: Json) {
     val byName = countries.associateBy { it.areaName }
     val london = byName["London"] ?: AreaCases("", "", "", 0, 0, 0)
     val confirmedCases = london.dailyLabConfirmedCases ?: 0
+    "$confirmedCases"
+  }
+  totalsByDate.toList().sortedBy { it.first }.forEach { (date, data) ->
+    println("$date,$data")
+  }
+}
+
+private fun parseLocalCases(json: Json) {
+  val cases =
+    json.parse(Cases.serializer(), File("coronavirus-cases_latest.json").readText())
+  val totalsByDate = cases.ltlas.groupBy { it.specimenDate }.mapValues { (_, countries) ->
+    val byName = countries.associateBy { it.areaName }
+    val richmond = byName["Richmond upon Thames"] ?: AreaCases("", "", "", 0, 0, 0)
+    val hounslow = byName["Hounslow"] ?: AreaCases("", "", "", 0, 0, 0)
+    val confirmedCases = (richmond.dailyLabConfirmedCases ?: 0) + (hounslow.dailyLabConfirmedCases ?: 0)
     "$confirmedCases"
   }
   totalsByDate.toList().sortedBy { it.first }.forEach { (date, data) ->
