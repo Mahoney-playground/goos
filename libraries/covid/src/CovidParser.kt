@@ -39,7 +39,7 @@ data class Cases(
   val ltlas: List<AreaCases>
 )
 
-val rootUri = URI("https://c19downloads.azureedge.net/downloads/json")
+val rootUri = URI("https://c19downloads.azureedge.net/downloads/json/")
 
 @ExperimentalStdlibApi
 fun main() {
@@ -74,6 +74,7 @@ private fun parseCases(json: Json) {
       val confirmedCases = england.dailyCases + wales.dailyCases
       "$previous,$change,$confirmedCases"
     }
+    .filterKeys { it.isAfter(LocalDate.of(2020, 2, 29)) }
   totalsByDate.toList().sortedBy { it.first }.forEach { (date, data) ->
     println("$date,$data")
   }
@@ -88,6 +89,7 @@ private fun parseLondonCases(json: Json) {
       val london = byName.getCases("London")
       london.dailyCases.toString()
     }
+    .filterKeys { it.isAfter(LocalDate.of(2020, 2, 29)) }
   totalsByDate.toList().sortedBy { it.first }.forEach { (date, data) ->
     println("$date,$data")
   }
@@ -104,8 +106,9 @@ private fun parseLocalCases(json: Json) {
       val confirmedCases = richmond.dailyCases + hounslow.dailyCases + kingston.dailyCases
       confirmedCases.toString()
     }
-  totalsByDate.toList().sortedBy { it.first }.forEach { (date, data) ->
-    println("$date,$data")
+    .filterKeys { it.isAfter(LocalDate.of(2020, 2, 29)) }
+  totalsByDate.toList().sortedBy { it.first }.forEach { (_, data) ->
+    println(data)
   }
 }
 
