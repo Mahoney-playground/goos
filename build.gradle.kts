@@ -66,8 +66,9 @@ subprojects {
 
       api(kotlin("stdlib"))
 
-      testImplementation(kotest("core"))
-      testImplementation(kotest("runner-junit5"))
+      testImplementation(kotest("runner-junit5-jvm"))
+      testImplementation(kotest("runner-console-jvm"))
+      testImplementation(kotest("assertions-core-jvm"))
       testImplementation(mockk)
     }
 
