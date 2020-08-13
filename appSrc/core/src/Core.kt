@@ -25,6 +25,5 @@ class Core(
 
     ui.start()
     blockUntilShutdown(latch)
-    println("App stopping")
   }
 }

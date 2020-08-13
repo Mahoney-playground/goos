@@ -27,4 +27,6 @@ fun main(vararg args: String) {
   val core = Core(auctionHouse, ui)
 
   core.run()
+
+  println("App stopping")
 }
