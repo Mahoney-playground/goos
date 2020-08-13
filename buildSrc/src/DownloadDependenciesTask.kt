@@ -4,11 +4,7 @@ import org.gradle.api.tasks.TaskAction
 open class DownloadDependenciesTask : DefaultTask() {
 
   @TaskAction
-  fun downloadDependencies() {
-    val allDeps = project.configurations
-      .filter { it.isCanBeResolved && !it.isDeprecated() }
-      .map { it.resolve().size }
-      .sum()
-    project.logger.lifecycle("Resolved all dependencies: $allDeps")
-  }
+  fun downloadDependencies() = project.configurations
+    .filter { it.isCanBeResolved && !it.isDeprecated() }
+    .forEach { it.resolve() }
 }
