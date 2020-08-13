@@ -44,7 +44,7 @@ class MainWindow : JFrame("Auction Sniper"), UI {
       isVisible = true
       addWindowListener(object : WindowAdapter() {
         override fun windowClosing(e: WindowEvent) {
-          userRequests.disconnect()
+          userRequests.closeApplication()
         }
       })
     }

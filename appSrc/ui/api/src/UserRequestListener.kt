@@ -5,7 +5,7 @@ import goos.portfolio.Item
 interface UserRequestListener {
   fun joinAuction(item: Item)
   fun reset()
-  fun disconnect()
+  fun closeApplication()
 }
 
 class MultiUserRequestListener : UserRequestListener {
@@ -23,7 +23,7 @@ class MultiUserRequestListener : UserRequestListener {
     listeners.forEach { it.reset() }
   }
 
-  override fun disconnect() {
-    listeners.forEach { it.disconnect() }
+  override fun closeApplication() {
+    listeners.forEach { it.closeApplication() }
   }
 }

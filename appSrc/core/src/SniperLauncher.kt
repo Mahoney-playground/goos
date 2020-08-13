@@ -28,7 +28,7 @@ internal class SniperLauncher(
     portfolio.reset()
   }
 
-  override fun disconnect() {
+  override fun closeApplication() {
     auctionHouse.disconnect()
     latch.countDown()
   }
