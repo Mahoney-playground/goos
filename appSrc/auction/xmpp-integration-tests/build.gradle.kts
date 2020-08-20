@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  implementation(kotest("core-jvm"))
+  implementation(kotest("framework-api"))
   implementation(kotlinCoroutines("core"))
   implementation(kotlinCoroutines("jdk8"))
   constraints {

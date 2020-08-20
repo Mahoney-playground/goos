@@ -8,7 +8,7 @@ dependencies {
     api(byteBuddy)
   }
 
-  implementation(kotest("assertions-core-jvm"))
+  implementation(kotest("assertions-core"))
   implementation(kotlinCoroutines("core"))
   constraints {
     implementation(mockk)

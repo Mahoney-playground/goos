@@ -8,7 +8,7 @@ dependencies {
   implementation(smack("extensions"))
   implementation(smack("java7"))
   implementation(smack("im"))
-  implementation(kotest("assertions-core-jvm"))
+  implementation(kotest("assertions-core"))
   constraints {
     implementation(mockk)
   }

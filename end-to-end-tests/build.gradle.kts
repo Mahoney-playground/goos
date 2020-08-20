@@ -5,8 +5,7 @@ plugins {
 
 dependencies {
 
-  implementation(kotest("core-jvm"))
-  implementation(kotest("assertions-core-jvm"))
+  implementation(kotest("framework-api"))
   implementation(kotlinCoroutines("core"))
   constraints {
     implementation(mockk)
