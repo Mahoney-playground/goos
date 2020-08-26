@@ -6,7 +6,6 @@ plugins {
 dependencies {
   implementation(kotest("framework-api"))
   implementation(kotlinCoroutines("core"))
-  implementation(kotlinCoroutines("jdk8"))
   constraints {
     implementation(mockk)
   }
