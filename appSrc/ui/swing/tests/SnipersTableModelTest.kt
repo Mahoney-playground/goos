@@ -90,18 +90,22 @@ class SnipersTableModelTest : StringSpec({
   }
 
   "holds snipers in addition order" {
-    model.sniperStateChanged(joining(
-      Item(
-        "item 0",
-        1_000
+    model.sniperStateChanged(
+      joining(
+        Item(
+          "item 0",
+          1_000
+        )
       )
-    ))
-    model.sniperStateChanged(joining(
-      Item(
-        "item 1",
-        1_000
+    )
+    model.sniperStateChanged(
+      joining(
+        Item(
+          "item 1",
+          1_000
+        )
       )
-    ))
+    )
 
     model.row(0).column(ITEM_IDENTIFIER) shouldBe "item 0"
     model.row(1).column(ITEM_IDENTIFIER) shouldBe "item 1"

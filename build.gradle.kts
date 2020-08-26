@@ -114,10 +114,14 @@ dependencyGraphGenerator {
 val appJavaAgents: Configuration by configurations.creating
 
 dependencies {
-  appJavaAgents(project(mapOf(
-    "path" to ":app",
-    "configuration" to "javaAgents"
-  )))
+  appJavaAgents(
+    project(
+      mapOf(
+        "path" to ":app",
+        "configuration" to "javaAgents"
+      )
+    )
+  )
 }
 
 tasks {
@@ -127,13 +131,17 @@ tasks {
     val appInstallTask = app.tasks.getByName(TASK_INSTALL_NAME)
 
     dependsOn(appInstallTask)
-    doLast { copy {
-      from(appInstallTask)
-      into(buildDir.resolve(project.name))
-    } }
-    doLast { copy {
-      from(appJavaAgents)
-      into(buildDir.resolve(project.name).resolve("lib/agents"))
-    } }
+    doLast {
+      copy {
+        from(appInstallTask)
+        into(buildDir.resolve(project.name))
+      }
+    }
+    doLast {
+      copy {
+        from(appJavaAgents)
+        into(buildDir.resolve(project.name).resolve("lib/agents"))
+      }
+    }
   }
 }

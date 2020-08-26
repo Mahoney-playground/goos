@@ -48,9 +48,11 @@ private class AuctionEvent(
   private fun getInt(key: String) = fields.getValue(key).toInt()
 
   companion object {
-    fun from(message: String): AuctionEvent = AuctionEvent(message.toMap(
-      pairDelimiter = ';',
-      keyValueSeparator = ':'
-    ))
+    fun from(message: String): AuctionEvent = AuctionEvent(
+      message.toMap(
+        pairDelimiter = ';',
+        keyValueSeparator = ':'
+      )
+    )
   }
 }

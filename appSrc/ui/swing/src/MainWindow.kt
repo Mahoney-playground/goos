@@ -68,27 +68,33 @@ class MainWindow : JFrame("Auction Sniper"), UI {
       name = NEW_ITEM_STOP_PRICE_NAME
     }
 
-    add(JLabel("Item:").apply {
-      labelFor = itemIdField
-    })
+    add(
+      JLabel("Item:").apply {
+        labelFor = itemIdField
+      }
+    )
     add(itemIdField)
 
-    add(JLabel("Stop price:").apply {
-      labelFor = stopPriceField
-    })
+    add(
+      JLabel("Stop price:").apply {
+        labelFor = stopPriceField
+      }
+    )
     add(stopPriceField)
 
-    add(JButton("Join Auction").apply {
-      name = JOIN_BUTTON_NAME
-      addActionListener {
-        userRequests.joinAuction(
-          Item(
-            itemIdField.text,
-            (stopPriceField.value as Long).toInt()
+    add(
+      JButton("Join Auction").apply {
+        name = JOIN_BUTTON_NAME
+        addActionListener {
+          userRequests.joinAuction(
+            Item(
+              itemIdField.text,
+              (stopPriceField.value as Long).toInt()
+            )
           )
-        )
+        }
       }
-    })
+    )
   }
 
   private fun fillContentPane(
@@ -97,21 +103,25 @@ class MainWindow : JFrame("Auction Sniper"), UI {
     connectionControls: Component
   ) {
     contentPane.apply {
-      add(JPanel().apply {
-        layout = BorderLayout()
-        add(controls, NORTH)
-        add(JScrollPane(snipersTable), CENTER)
-        add(connectionControls, SOUTH)
-        pack()
-      })
+      add(
+        JPanel().apply {
+          layout = BorderLayout()
+          add(controls, NORTH)
+          add(JScrollPane(snipersTable), CENTER)
+          add(connectionControls, SOUTH)
+          pack()
+        }
+      )
     }
   }
 
   private fun makeConnectionControls() = JPanel(FlowLayout()).apply {
-    add(JButton("Reset").apply {
-      name = SNIPER_RESET_BUTTON_NAME
-      addActionListener { userRequests.reset() }
-    })
+    add(
+      JButton("Reset").apply {
+        name = SNIPER_RESET_BUTTON_NAME
+        addActionListener { userRequests.reset() }
+      }
+    )
   }
 
   override fun addUserRequestListener(listener: UserRequestListener) {

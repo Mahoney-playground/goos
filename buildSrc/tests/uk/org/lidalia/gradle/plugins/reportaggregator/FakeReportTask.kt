@@ -52,9 +52,11 @@ open class FakeReportTask @Inject constructor(
     reports.filterNotNull().forEach { report ->
       report.required.convention(true)
       report.outputLocation.convention(
-        project.layout.projectDirectory.file(project.provider {
-          File(reporting.baseDir, name).absolutePath
-        })
+        project.layout.projectDirectory.file(
+          project.provider {
+            File(reporting.baseDir, name).absolutePath
+          }
+        )
       )
     }
     project.tasks.named<DefaultTask>("check").get().dependsOn += this

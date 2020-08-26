@@ -18,7 +18,7 @@ fun includeChildrenOf(
   .directories()
   .containingBuildScript()
   .forEach {
-      createProject(it, nameFunc(it))
+    createProject(it, nameFunc(it))
   }
 
 fun File.directories() = listFiles()

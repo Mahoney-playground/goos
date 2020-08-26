@@ -13,7 +13,8 @@ import goos.portfolio.SniperState.WINNING
 import goos.portfolio.SniperState.WON
 import javax.swing.table.AbstractTableModel
 
-internal class SnipersTableModel : AbstractTableModel(),
+internal class SnipersTableModel :
+  AbstractTableModel(),
   SniperListener,
   PortfolioListener {
 

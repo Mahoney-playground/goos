@@ -55,7 +55,8 @@ class ApplicationPlugin : Plugin<Project> {
       project.tasks.named(
         TASK_INSTALL_NAME,
         Sync::class.java
-      ), pluginConvention
+      ),
+      pluginConvention
     )
     project.tasks.named("build") {
       dependsOn(TASK_INSTALL_NAME)
@@ -164,14 +165,18 @@ class ApplicationPlugin : Plugin<Project> {
     val libChildSpec = project.copySpec().apply {
       into("lib")
       from(jar)
-      with(project.copySpec().apply {
-        into("internal")
-        from(internalDependencies)
-      })
-      with(project.copySpec().apply {
-        into("external")
-        from(externalDependencies)
-      })
+      with(
+        project.copySpec().apply {
+          into("internal")
+          from(internalDependencies)
+        }
+      )
+      with(
+        project.copySpec().apply {
+          into("external")
+          from(externalDependencies)
+        }
+      )
     }
 
     val binChildSpec = project.copySpec().apply {
@@ -239,15 +244,15 @@ private class PreventDestinationOverwrite internal constructor(
       val children = destinationDir.list()
         ?: throw UncheckedIOException("Could not list directory $destinationDir")
       if (children.isNotEmpty()) {
-        if (!File(destinationDir, "lib").isDirectory || !File(
-            destinationDir,
-            pluginConvention.executableDir
-          ).isDirectory
-        ) {
-          throw GradleException(nonEmptyDestinationError(
-            destinationDir,
-            pluginConvention.applicationName
-          ))
+        val lib = File(destinationDir, "lib")
+        val exec = File(destinationDir, pluginConvention.executableDir)
+        if (!lib.isDirectory || !exec.isDirectory) {
+          throw GradleException(
+            nonEmptyDestinationError(
+              destinationDir,
+              pluginConvention.applicationName
+            )
+          )
         }
       }
     }
@@ -257,7 +262,8 @@ private class PreventDestinationOverwrite internal constructor(
 private fun nonEmptyDestinationError(
   destinationDir: File,
   applicationName: String
-): String = """
+): String =
+  """
   The specified installation directory '$destinationDir' is neither empty nor does it contain an
   installation for '$applicationName'.
   If you really want to install to this directory, delete it and run the install task again.

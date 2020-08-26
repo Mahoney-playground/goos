@@ -56,7 +56,7 @@ class FakeAuctionServer(
         .setSecurityMode(disabled)
         .setXmppDomain(XMPP_DOMAIN)
         .build()
-      )
+    )
     c.connect()
     c.login("admin", "admin")
     ServiceAdministrationManager.getInstanceFor(c).addUser(

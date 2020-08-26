@@ -5,8 +5,8 @@ fun String.toMap(
   keyValueSeparator: Char
 ): Map<String, String> =
   split(pairDelimiter)
-  .map { it.split(keyValueSeparator, limit = 2) }
-  .toMap()
+    .map { it.split(keyValueSeparator, limit = 2) }
+    .toMap()
 
 fun List<List<String>>.toMap(): Map<String, String> =
   mapNotNull { it.toPair() }.toMap()
