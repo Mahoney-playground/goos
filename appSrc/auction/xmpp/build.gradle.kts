@@ -12,6 +12,9 @@ dependencies {
   implementation(jxmpp("jid"))
   implementation(project(":kotlinlangext"))
 
+  runtimeOnly(smack("extensions"))
+  runtimeOnly(smack("java7"))
+
   testImplementation(project(":xmpp-test-support"))
 }
 
