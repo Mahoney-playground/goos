@@ -16,4 +16,7 @@ dependencies {
   constraints {
     implementation(mockk)
   }
+
+  runtimeOnly(smack("java7"))
+  runtimeOnly(smack("im"))
 }
