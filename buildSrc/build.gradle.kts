@@ -28,7 +28,7 @@ kotlin {
 
 dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2")
-  implementation("gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:0.7")
+  implementation("gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:0.9")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
 }
 
