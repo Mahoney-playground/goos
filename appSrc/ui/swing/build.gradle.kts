@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
   api(project(":ui-api"))
+  api(project(":portfolio"))
 
   testImplementation(marathon("java-driver"))
   testImplementation(project(":ui-test-support"))

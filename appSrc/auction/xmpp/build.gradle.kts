@@ -8,9 +8,8 @@ dependencies {
 
   implementation(smack("tcp"))
   implementation(smack("core"))
-  implementation(smack("extensions"))
-  implementation(smack("java7"))
   implementation(smack("im"))
+  implementation(jxmpp("jid"))
   implementation(project(":kotlinlangext"))
 
   testImplementation(project(":xmpp-test-support"))

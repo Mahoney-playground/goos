@@ -3,13 +3,17 @@ plugins {
 }
 
 dependencies {
-  api("org.seleniumhq.selenium:selenium-remote-driver:3.14.0")
-  constraints {
-    implementation(byteBuddy)
-  }
+  api(kotlin("stdlib"))
+  api(selenium("api"))
+  api(selenium("remote-driver"))
+//  constraints {
+//    implementation(byteBuddy)
+//  }
 
   implementation(kotest("assertions-core"))
+  implementation(kotest("assertions-shared-jvm"))
   implementation(kotlinCoroutines("core"))
+  implementation(kotlinCoroutines("core-jvm"))
   constraints {
     implementation(mockk)
   }

@@ -9,6 +9,7 @@ import org.jlleitschuh.gradle.ktlint.KtlintPlugin
 plugins {
   base
   kotlin("jvm") version kotlinVersion apply false
+  id("com.autonomousapps.dependency-analysis") version "0.56.0"
   id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
   id("com.vanniktech.dependency.graph.generator") version "0.5.0"
   id("com.github.ben-manes.versions") version "0.27.0"
@@ -61,10 +62,10 @@ subprojects {
 
     dependencies {
 
-      val api by configurations
+      val implementation by configurations
       val testImplementation by configurations
 
-      api(kotlin("stdlib"))
+      implementation(kotlin("stdlib"))
 
       testImplementation(kotest("runner-junit5"))
       testImplementation(mockk)

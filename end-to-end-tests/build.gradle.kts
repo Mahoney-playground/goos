@@ -5,14 +5,17 @@ plugins {
 
 dependencies {
 
-  implementation(kotest("framework-api"))
+  api(kotlin("stdlib"))
+  api(kotest("framework-api"))
+  api(kotest("framework-api-jvm"))
+  api(project(":ui-test-support"))
+  api(project(":xmpp-test-support"))
+
   implementation(kotlinCoroutines("core"))
   constraints {
     implementation(mockk)
   }
 
-  implementation(project(":ui-test-support"))
-  implementation(project(":xmpp-test-support"))
   implementation(project(":testlauncher"))
 }
 

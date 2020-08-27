@@ -7,7 +7,11 @@ val javaAgents by configurations.creating
 
 dependencies {
   implementation(project(":core"))
+
+  implementation(project(":ui-api"))
   implementation(project(":ui-swing"))
+
+  implementation(project(":auction-api"))
   implementation(project(":auction-xmpp"))
 
   javaAgents(marathon("java-agent"))

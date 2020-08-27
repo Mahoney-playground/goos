@@ -3,6 +3,9 @@ plugins {
 }
 
 dependencies {
-  implementation(arrow("core"))
+  api(kotlin("stdlib"))
+
+  implementation(arrow("core-data"))
   implementation(kotlinCoroutines("core"))
+  implementation(kotlinCoroutines("core-jvm"))
 }
