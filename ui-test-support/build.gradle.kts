@@ -5,7 +5,7 @@ plugins {
 dependencies {
   api("org.seleniumhq.selenium:selenium-remote-driver:3.14.0")
   constraints {
-    api(byteBuddy)
+    implementation(byteBuddy)
   }
 
   implementation(kotest("assertions-core"))
