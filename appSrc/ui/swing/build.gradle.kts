@@ -9,7 +9,7 @@ dependencies {
   implementation(kotlin("stdlib"))
 
   testImplementation(marathon("java-driver"))
-  testImplementation(project(":ui-test-support"))
+  testImplementation(project(":ui-swing-test-support"))
 }
 
 idea {

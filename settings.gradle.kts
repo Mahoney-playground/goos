@@ -7,7 +7,6 @@ includeChildrenOf("libraries") { ":${it.name}" }
 
 include(
   ":end-to-end-tests",
-  ":ui-test-support",
   ":xmpp-test-support"
 )
 
