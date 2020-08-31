@@ -6,8 +6,7 @@ includeChildrenOf("appSrc/ui")
 includeChildrenOf("libraries") { ":${it.name}" }
 
 include(
-  ":end-to-end-tests",
-  ":xmpp-test-support"
+  ":end-to-end-tests"
 )
 
 fun includeChildrenOf(

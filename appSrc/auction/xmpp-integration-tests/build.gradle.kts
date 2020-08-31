@@ -13,7 +13,7 @@ dependencies {
   implementation(mockk("dsl-jvm"))
   implementation(project(":auction-api"))
   implementation(project(":auction-xmpp"))
-  implementation(project(":xmpp-test-support"))
+  implementation(project(":auction-xmpp-test-support"))
   implementation(project(":testlauncher"))
   implementation(project(":kotlinlangext"))
   constraints {
