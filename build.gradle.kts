@@ -129,6 +129,7 @@ tasks {
     val appInstallTask = app.tasks.getByName(TASK_INSTALL_NAME)
 
     dependsOn(appInstallTask)
+    dependsOn(named("buildHealth"))
     doLast {
       copy {
         from(appInstallTask)
@@ -139,6 +140,18 @@ tasks {
       copy {
         from(appJavaAgents)
         into(buildDir.resolve(project.name).resolve("lib/agents"))
+      }
+    }
+  }
+}
+
+dependencyAnalysis {
+  issues {
+    // configure for all projects
+    all {
+      // set behavior for all issue types
+      onAny {
+        severity("fail")
       }
     }
   }
