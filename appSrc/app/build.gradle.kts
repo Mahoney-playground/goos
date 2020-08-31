@@ -6,6 +6,9 @@ plugins {
 val javaAgents by configurations.creating
 
 dependencies {
+
+  implementation(kotlin("stdlib"))
+
   implementation(project(":core"))
 
   implementation(project(":ui-api"))

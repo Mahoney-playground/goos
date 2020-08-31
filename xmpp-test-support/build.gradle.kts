@@ -18,5 +18,4 @@ dependencies {
   }
 
   runtimeOnly(smack("java7"))
-  runtimeOnly(smack("im"))
 }

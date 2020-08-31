@@ -62,10 +62,7 @@ subprojects {
 
     dependencies {
 
-      val implementation by configurations
       val testImplementation by configurations
-
-      implementation(kotlin("stdlib"))
 
       testImplementation(kotest("runner-junit5"))
       testImplementation(mockk)

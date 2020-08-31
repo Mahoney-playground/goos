@@ -6,6 +6,7 @@ plugins {
 dependencies {
   api(kotest("framework-api-jvm"))
 
+  implementation(kotlin("stdlib"))
   implementation(kotest("framework-api"))
   implementation(kotlinCoroutines("core"))
   implementation(mockk)

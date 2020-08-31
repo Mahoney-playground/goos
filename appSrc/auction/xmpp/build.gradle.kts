@@ -6,6 +6,7 @@ dependencies {
 
   api(project(":auction-api"))
 
+  implementation(kotlin("stdlib"))
   implementation(smack("tcp"))
   implementation(smack("core"))
   implementation(smack("im"))

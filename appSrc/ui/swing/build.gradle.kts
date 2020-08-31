@@ -6,6 +6,8 @@ dependencies {
   api(project(":ui-api"))
   api(project(":portfolio"))
 
+  implementation(kotlin("stdlib"))
+
   testImplementation(marathon("java-driver"))
   testImplementation(project(":ui-test-support"))
 }
