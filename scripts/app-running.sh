@@ -11,4 +11,4 @@ checkAppHasActiveElements() {
   curl -fsS -X POST "$sessionPath/element/active" | grep '"status":0'
 }
 
-checkAppHasActiveElements $(makeSession)
+checkAppHasActiveElements "$(makeSession)"

@@ -234,7 +234,7 @@ class ApplicationPlugin : Plugin<Project> {
 private fun <A, B> Provider<Pair<A, B>>.unzip(): Pair<Provider<A>, Provider<B>> =
   map(Pair<A, B>::first) to map(Pair<A, B>::second)
 
-private class PreventDestinationOverwrite internal constructor(
+private class PreventDestinationOverwrite constructor(
   private val pluginConvention: ApplicationPluginConvention
 ) : Action<Task> {
   override fun execute(task: Task) {
