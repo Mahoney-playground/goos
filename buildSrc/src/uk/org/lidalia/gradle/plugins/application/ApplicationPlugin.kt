@@ -2,9 +2,9 @@ package uk.org.lidalia.gradle.plugins.application
 
 import org.gradle.api.Action
 import org.gradle.api.GradleException
-import org.gradle.api.Task
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.Task
 import org.gradle.api.UncheckedIOException
 import org.gradle.api.distribution.Distribution
 import org.gradle.api.distribution.DistributionContainer
@@ -92,8 +92,10 @@ class ApplicationPlugin : Plugin<Project> {
     pluginConvention.applicationName = project.name
     project.convention.plugins["application"] = pluginConvention
     project.extensions.create(
-      JavaApplication::class.java, "application",
-      DefaultJavaApplication::class.java, pluginConvention
+      JavaApplication::class.java,
+      "application",
+      DefaultJavaApplication::class.java,
+      pluginConvention
     )
     return pluginConvention
   }

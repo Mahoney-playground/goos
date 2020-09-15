@@ -91,6 +91,10 @@ subprojects {
       register<DownloadDependenciesTask>("downloadDependencies")
       register<DependencyReportTask>("allDeps")
     }
+
+    ktlint {
+      version.set("0.39.0")
+    }
   }
 }
 

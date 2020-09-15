@@ -1,10 +1,10 @@
 package uk.org.lidalia.retry
 
+import arrow.core.Either
+import kotlinx.coroutines.delay
 import java.time.Clock
 import java.time.Duration
 import java.time.Instant
-import arrow.core.Either
-import kotlinx.coroutines.delay
 
 suspend fun <A> retry(
   clock: Clock = Clock.systemUTC(),

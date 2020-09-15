@@ -25,7 +25,9 @@ open class FakeReport @Inject constructor(
   task: Task?,
   callbackActionDecorator: CollectionCallbackActionDecorator?
 ) : TaskReportContainer<SingleFileReport?>(
-  SingleFileReport::class.java, task!!, callbackActionDecorator!!
+  SingleFileReport::class.java,
+  task!!,
+  callbackActionDecorator!!
 ) {
   init {
     add(
