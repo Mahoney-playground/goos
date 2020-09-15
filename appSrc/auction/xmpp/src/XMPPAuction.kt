@@ -32,7 +32,7 @@ internal class XMPPAuction(
 
   private fun disconnectOnFailure() =
     object : NoOpAuctionEventListener {
-      override fun auctionFailed() { auctionEventListeners.clear() }
+      override fun auctionFailed() = auctionEventListeners.clear()
     }
 
   override fun addAuctionEventListener(listener: AuctionEventListener) {

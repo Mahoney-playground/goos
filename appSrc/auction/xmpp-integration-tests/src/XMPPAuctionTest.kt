@@ -80,6 +80,7 @@ private suspend fun Auction.synchronously(
   addAuctionEventListener(object : AuctionEventListener {
     override fun currentPrice(price: Int, increment: Int, source: PriceSource) =
       eventReceived.countDown()
+
     override fun auctionClosed() = eventReceived.countDown()
     override fun auctionFailed() = eventReceived.countDown()
   })

@@ -14,8 +14,9 @@ val IdeaModel.packagePrefix: PackagePrefixContainer
     return packagePrefix
   }
 
-val Project.sourceSets: SourceSetContainer get() =
-  (this as ExtensionAware).extensions.getByName("sourceSets") as SourceSetContainer
+val Project.sourceSets: SourceSetContainer
+  get() =
+    (this as ExtensionAware).extensions.getByName("sourceSets") as SourceSetContainer
 
 fun IdeaModel.setPackagePrefix(prefix: String) {
 

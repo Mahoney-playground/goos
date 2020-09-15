@@ -40,7 +40,7 @@ class MultiAuctionEventListener : AuctionEventListener {
 
   override fun auctionFailed() = listeners.forEach { it.auctionFailed() }
 
-  fun clear() { listeners.clear() }
+  fun clear() = listeners.clear()
 }
 
 interface NoOpAuctionEventListener : AuctionEventListener {

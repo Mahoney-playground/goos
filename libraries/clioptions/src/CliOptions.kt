@@ -17,7 +17,7 @@ fun Array<String>.getOption(
   shortOption: Char?,
   longOption: String
 ): String? {
-  val shortOptionIndex = if (shortOption == null) null else { this.indexOfOrNull("-$shortOption") }
+  val shortOptionIndex = shortOption?.let { this.indexOfOrNull("-$shortOption") }
   return if (shortOptionIndex != null) {
     this.getOrNull(shortOptionIndex + 1)
   } else {
