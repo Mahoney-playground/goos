@@ -1,5 +1,4 @@
 plugins {
-  kotlin("jvm") version "1.4.10"
   `kotlin-dsl`
   id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
   `java-gradle-plugin`
@@ -27,9 +26,9 @@ kotlin {
 }
 
 dependencies {
-  implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2")
+  implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.1")
   implementation("gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:0.9")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8")
 }
 
 gradlePlugin {
