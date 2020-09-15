@@ -2,7 +2,7 @@
 
 fun kotlinCoroutines(module: String) = "org.jetbrains.kotlinx:kotlinx-coroutines-$module:1.3.9"
 fun kotest(module: String) = "io.kotest:kotest-$module:4.2.2"
-fun arrow(module: String) = "io.arrow-kt:arrow-$module:0.10.5"
+fun arrow(module: String) = "io.arrow-kt:arrow-$module:0.11.0"
 fun smack(module: String) = "org.igniterealtime.smack:smack-$module:4.3.4"
 fun jxmpp(module: String) = "org.jxmpp:jxmpp-$module:0.6.4"
 private const val mockkVersion = "1.10.0"
