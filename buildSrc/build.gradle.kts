@@ -31,6 +31,10 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8")
 }
 
+ktlint {
+  version.set("0.39.0")
+}
+
 gradlePlugin {
   plugins {
     create("alt-application-plugin") {
