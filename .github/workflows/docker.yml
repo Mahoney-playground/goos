@@ -41,10 +41,7 @@ jobs:
         run: docker build . --target builder -t goos-builder:$GITHUB_SHA
 
       - name: Capture the reports as artifacts
-        run: container_id=$(docker create goos-builder:$GITHUB_SHA) &&
-          mkdir -p builds/${{ github.sha }} &&
-          docker cp "$container_id":/home/worker/work/build/reports builds/${{ github.sha }} &&
-          mv builds/${{ github.sha }}/reports builds/${{ github.sha }}/build-reports
+        run: ./scripts/retrieve-docker-build-logs.sh goos-builder ${{ github.sha }}
 
       - name: Archive reports
         uses: actions/upload-artifact@v1
