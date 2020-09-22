@@ -4,13 +4,13 @@ import org.gradle.api.distribution.plugins.DistributionPlugin.TASK_INSTALL_NAME
 import org.jetbrains.gradle.ext.IdeaExtPlugin
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jlleitschuh.gradle.ktlint.KtlintPlugin
+import org.jmailen.gradle.kotlinter.KotlinterPlugin
 
 plugins {
   base
   kotlin("jvm") version "1.4.10" apply false
   id("com.autonomousapps.dependency-analysis") version "0.56.0"
-  id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
+  id("org.jmailen.kotlinter") version "3.2.0"
   id("com.vanniktech.dependency.graph.generator") version "0.5.0"
   id("com.github.ben-manes.versions") version "0.27.0"
   id("report-aggregator")
@@ -36,7 +36,7 @@ subprojects {
 
   pluginManager.withPlugin("kotlin") {
 
-    apply<KtlintPlugin>()
+    apply<KotlinterPlugin>()
     apply<BuildDashboardPlugin>()
     apply<IdeaExtPlugin>()
 
@@ -90,10 +90,6 @@ subprojects {
 
       register<DownloadDependenciesTask>("downloadDependencies")
       register<DependencyReportTask>("allDeps")
-    }
-
-    ktlint {
-      version.set("0.39.0")
     }
   }
 }
