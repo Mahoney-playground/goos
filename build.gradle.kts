@@ -30,6 +30,8 @@ allprojects {
     jcenter()
     mavenCentral()
   }
+
+  tasks.register<DownloadDependenciesTask>("downloadDependencies")
 }
 
 subprojects {
@@ -88,7 +90,6 @@ subprojects {
         )
       }
 
-      register<DownloadDependenciesTask>("downloadDependencies")
       register<DependencyReportTask>("allDeps")
     }
   }
