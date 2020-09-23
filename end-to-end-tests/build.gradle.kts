@@ -20,5 +20,5 @@ dependencies {
 }
 
 application {
-  mainClassName = "goos.MainKt"
+  mainClass.set("goos.MainKt")
 }
