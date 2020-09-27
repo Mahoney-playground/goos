@@ -1,7 +1,8 @@
 package goos
 
 import goos.ApplicationRunner.Companion.SNIPER_XMPP_ID
-import goos.xmpptestsupport.FakeAuctionServer
+import goos.xmpptestsupport.AuctionDriver
+import goos.xmpptestsupport.XmppAuctionDriver
 import io.kotest.core.spec.IsolationMode.InstancePerTest
 import io.kotest.core.spec.style.StringSpec
 import kotlin.time.ExperimentalTime
@@ -9,8 +10,8 @@ import kotlin.time.ExperimentalTime
 @ExperimentalTime
 class AuctionSniperEndToEndTest : StringSpec({
 
-  val auction = FakeAuctionServer("item-54321")
-  val auction2 = FakeAuctionServer("item-65432")
+  val auction: AuctionDriver = XmppAuctionDriver("item-54321")
+  val auction2: AuctionDriver = XmppAuctionDriver("item-65432")
   val application = ApplicationRunner()
 
   "sniper joins auction, loses without bidding" {
@@ -147,15 +148,15 @@ class AuctionSniperEndToEndTest : StringSpec({
   }
 
   beforeTest { application.reset() }
-  afterTest { auction.stop() }
-  afterTest { auction2.stop() }
+  afterTest { auction.close() }
+  afterTest { auction2.close() }
 }) {
   override fun isolationMode() = InstancePerTest
 }
 
 @ExperimentalTime
 fun ApplicationRunner.waitForAnotherAuctionEvent(
-  auction2: FakeAuctionServer
+  auction2: AuctionDriver
 ) {
   auction2.startSellingItem()
   startBiddingIn(auction2)

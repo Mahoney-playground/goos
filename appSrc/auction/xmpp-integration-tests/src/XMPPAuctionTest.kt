@@ -4,7 +4,8 @@ import goos.auction.api.Auction
 import goos.auction.api.AuctionEventListener
 import goos.auction.api.AuctionEventListener.PriceSource
 import goos.auction.xmpp.XMPPAuctionHouse
-import goos.xmpptestsupport.FakeAuctionServer
+import goos.xmpptestsupport.AuctionDriver
+import goos.xmpptestsupport.XmppAuctionDriver
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.StringSpec
 import io.mockk.confirmVerified
@@ -16,7 +17,7 @@ import kotlin.time.ExperimentalTime
 @ExperimentalTime
 class XMPPAuctionTest : StringSpec({
 
-  val auctionServer = FakeAuctionServer("item-879")
+  val auctionServer: AuctionDriver = XmppAuctionDriver("item-879")
 
   val auctionListener = mockk<AuctionEventListener>(relaxed = true)
 

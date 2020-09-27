@@ -16,9 +16,9 @@ import java.util.concurrent.BlockingQueue
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import java.util.concurrent.TimeUnit.SECONDS
 
-class FakeAuctionServer(
-  val itemId: String
-) {
+class XmppAuctionDriver(
+  override val itemId: String
+) : AuctionDriver {
 
   private val connection = XMPPTCPConnection(
     XMPPTCPConnectionConfiguration.builder()
@@ -34,7 +34,7 @@ class FakeAuctionServer(
   private val messageListener = SingleMessageListener()
   private var currentChat: Chat? = null
 
-  fun startSellingItem() {
+  override fun startSellingItem() {
 
     createAuctionItem(itemId)
     connection.connect()
@@ -66,11 +66,11 @@ class FakeAuctionServer(
     c.disconnect()
   }
 
-  fun hasReceivedJoinRequestFrom(sniperId: String) = receivesAMessageMatching(sniperId) {
+  override fun hasReceivedJoinRequestFrom(sniperId: String) = receivesAMessageMatching(sniperId) {
     it shouldBe "SOLVersion: 1.1; Command: JOIN;"
   }
 
-  fun hasReceivedBid(bid: Int, sniperId: String) = receivesAMessageMatching(sniperId) {
+  override fun hasReceivedBid(bid: Int, sniperId: String) = receivesAMessageMatching(sniperId) {
     it shouldBe "SOLVersion: 1.1; Command: BID; Price: $bid;"
   }
 
@@ -82,9 +82,9 @@ class FakeAuctionServer(
     currentChat!!.participant shouldBe sniperId
   }
 
-  fun announceClosed() = currentChat!!.sendMessage("SOLVersion: 1.1; Event: CLOSE;")
+  override fun announceClosed() = currentChat!!.sendMessage("SOLVersion: 1.1; Event: CLOSE;")
 
-  fun stop() {
+  override fun close() {
     try {
       if (connection.isConnected) {
         messageListener.drain()
@@ -95,12 +95,12 @@ class FakeAuctionServer(
     }
   }
 
-  fun reportPrice(price: Int, increment: Int, bidder: String) =
+  override fun reportPrice(price: Int, increment: Int, bidder: String) =
     currentChat!!.sendMessage(
       "SOLVersion: 1.1; Event: PRICE; CurrentPrice: $price; Increment: $increment; Bidder: $bidder;"
     )
 
-  fun sendInvalidMessageContaining(brokenMessage: String) {
+  override fun sendInvalidMessageContaining(brokenMessage: String) {
     currentChat!!.sendMessage(brokenMessage)
   }
 

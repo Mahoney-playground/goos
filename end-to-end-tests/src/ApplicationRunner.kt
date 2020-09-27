@@ -1,7 +1,8 @@
 package goos
 
 import goos.uitestsupport.AuctionSniperDriver
-import goos.xmpptestsupport.FakeAuctionServer
+import goos.xmpptestsupport.AuctionDriver
+import goos.xmpptestsupport.XmppAuctionDriver
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
@@ -16,36 +17,36 @@ class ApplicationRunner(
   }
 
   fun startBiddingIn(
-    auction: FakeAuctionServer,
-    stopPrice: Int = Int.MAX_VALUE
+      auction: AuctionDriver,
+      stopPrice: Int = Int.MAX_VALUE
   ) {
     driver.startBiddingFor(auction.itemId, stopPrice)
     driver.showSniperState(auction.itemId, 0, 0, STATE_JOINING)
   }
 
-  fun startBiddingIn(vararg auctions: FakeAuctionServer) = auctions.forEach { startBiddingIn(it) }
+  fun startBiddingIn(vararg auctions: AuctionDriver) = auctions.forEach { startBiddingIn(it) }
 
-  fun showSniperHasLostAuction(auction: FakeAuctionServer, lastPrice: Int, lastBid: Int) {
+  fun showSniperHasLostAuction(auction: AuctionDriver, lastPrice: Int, lastBid: Int) {
     driver.showSniperState(auction.itemId, lastPrice, lastBid, STATE_LOST)
   }
 
-  fun hasShownSniperIsBidding(auction: FakeAuctionServer, lastPrice: Int, lastBid: Int) {
+  fun hasShownSniperIsBidding(auction: AuctionDriver, lastPrice: Int, lastBid: Int) {
     driver.showSniperState(auction.itemId, lastPrice, lastBid, STATE_BIDDING)
   }
 
-  fun hasShownSniperIsWinning(auction: FakeAuctionServer, winningBid: Int) {
+  fun hasShownSniperIsWinning(auction: AuctionDriver, winningBid: Int) {
     driver.showSniperState(auction.itemId, winningBid, winningBid, STATE_WINNING)
   }
 
-  fun hasShownSniperIsLosing(auction: FakeAuctionServer, lastPrice: Int, lastBid: Int) {
+  fun hasShownSniperIsLosing(auction: AuctionDriver, lastPrice: Int, lastBid: Int) {
     driver.showSniperState(auction.itemId, lastPrice, lastBid, STATE_LOSING)
   }
 
-  fun showSniperHasWonAuction(auction: FakeAuctionServer, lastPrice: Int) {
+  fun showSniperHasWonAuction(auction: AuctionDriver, lastPrice: Int) {
     driver.showSniperState(auction.itemId, lastPrice, lastPrice, STATE_WON)
   }
 
-  fun showsSniperHasFailed(auction: FakeAuctionServer) {
+  fun showsSniperHasFailed(auction: AuctionDriver) {
     driver.showSniperState(auction.itemId, 0, 0, STATE_FAILED)
   }
 
