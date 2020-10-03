@@ -1,4 +1,4 @@
-package goos.auction.xmpp
+package goos.auction.sol
 
 import goos.auction.api.AuctionEventListener
 import goos.auction.api.AuctionEventListener.PriceSource.FromOtherBidder
@@ -8,7 +8,6 @@ import io.kotest.core.spec.style.StringSpec
 import io.mockk.confirmVerified
 import io.mockk.mockk
 import io.mockk.verify
-import org.jivesoftware.smack.packet.Message
 
 class AuctionMessageTranslatorTest : StringSpec({
 
@@ -17,11 +16,7 @@ class AuctionMessageTranslatorTest : StringSpec({
 
   "notifies auction closed when close message received" {
 
-    val message = Message().apply {
-      body = "SOLVERSION: 1.1; Event: CLOSE;"
-    }
-
-    translator.processMessage(null, message)
+    translator.processMessage("SOLVERSION: 1.1; Event: CLOSE;")
 
     verify(exactly = 1) {
       listener.auctionClosed()
@@ -30,11 +25,9 @@ class AuctionMessageTranslatorTest : StringSpec({
 
   "notifies bid details when current price message received from other bidder" {
 
-    val message = Message().apply {
-      body = "SOLVERSION: 1.1; Event: PRICE; CurrentPrice: 192; Increment: 7; Bidder: Someone else;"
-    }
-
-    translator.processMessage(null, message)
+    translator.processMessage(
+      "SOLVERSION: 1.1; Event: PRICE; CurrentPrice: 192; Increment: 7; Bidder: Someone else;"
+    )
 
     verify(exactly = 1) {
       listener.currentPrice(192, 7, FromOtherBidder)
@@ -43,11 +36,9 @@ class AuctionMessageTranslatorTest : StringSpec({
 
   "notifies bid details when current price message received from sniper" {
 
-    val message = Message().apply {
-      body = "SOLVERSION: 1.1; Event: PRICE; CurrentPrice: 192; Increment: 7; Bidder: $SNIPER_ID;"
-    }
-
-    translator.processMessage(null, message)
+    translator.processMessage(
+      "SOLVERSION: 1.1; Event: PRICE; CurrentPrice: 192; Increment: 7; Bidder: $SNIPER_ID;"
+    )
 
     verify(exactly = 1) {
       listener.currentPrice(192, 7, FromSniper)
@@ -56,11 +47,9 @@ class AuctionMessageTranslatorTest : StringSpec({
 
   "notifies auction failed when bad message received" {
 
-    val message = Message().apply {
-      body = "a bad message"
-    }
-
-    translator.processMessage(null, message)
+    translator.processMessage(
+      "a bad message"
+    )
 
     verify(exactly = 1) {
       listener.auctionFailed()
@@ -68,12 +57,7 @@ class AuctionMessageTranslatorTest : StringSpec({
   }
 
   "does nothing when unknown event received" {
-
-    val message = Message().apply {
-      body = "SOLVERSION: 1.1; Event: SOMETHING_NEW;"
-    }
-
-    translator.processMessage(null, message)
+    translator.processMessage("SOLVERSION: 1.1; Event: SOMETHING_NEW;")
   }
 
   afterTest {

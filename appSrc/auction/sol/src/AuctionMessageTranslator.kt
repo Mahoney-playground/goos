@@ -1,22 +1,18 @@
-package goos.auction.xmpp
+package goos.auction.sol
 
 import goos.auction.api.AuctionEventListener
 import goos.auction.api.AuctionEventListener.PriceSource
 import goos.auction.api.AuctionEventListener.PriceSource.FromOtherBidder
 import goos.auction.api.AuctionEventListener.PriceSource.FromSniper
-import org.jivesoftware.smack.chat.Chat
-import org.jivesoftware.smack.chat.ChatMessageListener
-import org.jivesoftware.smack.packet.Message
 import uk.org.lidalia.kotlinlangext.strings.toMap
 
 internal class AuctionMessageTranslator(
   private val sniperId: String,
   private val listener: AuctionEventListener
-) : ChatMessageListener {
-  override fun processMessage(chat: Chat?, message: Message) {
-
+) {
+  fun processMessage(messageText: String?) {
     try {
-      val event = AuctionEvent.from(message.body ?: "")
+      val event = AuctionEvent.from(messageText ?: "")
 
       when (event.type) {
         "CLOSE" -> listener.auctionClosed()
