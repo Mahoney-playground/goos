@@ -9,7 +9,7 @@ class StubAuction(
   val sniperId: String,
   private val stubAuctionHouse: StubAuctionHouse,
   private val auctionEventListener: MultiAuctionEventListener = MultiAuctionEventListener()
-): Auction, AuctionEventListener by auctionEventListener {
+) : Auction, AuctionEventListener by auctionEventListener {
 
   override fun addAuctionEventListener(listener: AuctionEventListener) {
     auctionEventListener.addListener(listener)

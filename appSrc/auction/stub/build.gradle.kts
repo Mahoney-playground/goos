@@ -3,11 +3,11 @@ plugins {
 }
 
 dependencies {
-  implementation(kotlin("stdlib"))
+  api(kotlin("stdlib"))
   api(project(":auction-api"))
   implementation(kotest("assertions-core"))
   implementation(kotest("assertions-shared"))
-  implementation(kotest("assertions-shared-jvm"))
+  implementation(kotest("assertions-core-jvm"))
 }
 
 idea {

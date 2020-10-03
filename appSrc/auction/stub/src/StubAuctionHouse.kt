@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 class StubAuctionHouse(
   private val sniperId: String
-): AuctionHouse {
+) : AuctionHouse {
 
   private val connected: AtomicBoolean = AtomicBoolean(false)
   private val auctions = ConcurrentHashMap<String, StubGeneralAuction>()

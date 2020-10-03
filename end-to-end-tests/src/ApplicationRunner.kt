@@ -2,7 +2,6 @@ package goos
 
 import goos.uitestsupport.AuctionSniperDriver
 import goos.xmpptestsupport.AuctionDriver
-import goos.xmpptestsupport.XmppAuctionDriver
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
@@ -17,8 +16,8 @@ class ApplicationRunner(
   }
 
   fun startBiddingIn(
-      auction: AuctionDriver,
-      stopPrice: Int = Int.MAX_VALUE
+    auction: AuctionDriver,
+    stopPrice: Int = Int.MAX_VALUE
   ) {
     driver.startBiddingFor(auction.itemId, stopPrice)
     driver.showSniperState(auction.itemId, 0, 0, STATE_JOINING)
