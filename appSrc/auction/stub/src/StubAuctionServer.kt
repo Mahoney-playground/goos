@@ -1,4 +1,4 @@
-package goos.xmpptestsupport
+package goos.auction.stub
 
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
@@ -19,7 +19,7 @@ class StubAuctionServer {
     }
   }
 
-    fun sendToSubscribers(itemId: String, message: String) {
+  fun sendToSubscribers(itemId: String, message: String) {
     liveAuctions[itemId]?.sendAuctionServerMessage(message)
   }
 

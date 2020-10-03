@@ -5,6 +5,7 @@ import goos.auction.api.AuctionEventListener
 import goos.auction.api.AuctionEventListener.PriceSource
 import goos.auction.api.AuctionHouse
 import goos.auction.stub.StubAuctionHouse
+import goos.auction.stub.StubAuctionServer
 import goos.xmpptestsupport.AuctionDriver
 import goos.xmpptestsupport.StubAuctionDriver
 import io.kotest.core.spec.IsolationMode
@@ -20,16 +21,12 @@ import kotlin.time.seconds
 class StubAuctionTest : StringSpec({
 
   val sniperId = "MY_SNIPER"
-  val stubAuctionDriver = StubAuctionDriver("item-879")
-  val auctionServer: AuctionDriver = stubAuctionDriver
-  val stubAuctionHouse = StubAuctionHouse(
+  val stubAuctionServer = StubAuctionServer()
+  val auctionServer: AuctionDriver = StubAuctionDriver("item-879", stubAuctionServer)
+  val auctionHouse: AuctionHouse = StubAuctionHouse(
     sniperId,
-    { id, message ->
-      stubAuctionDriver.sendMessage(id, message)
-    },
-    { messageListener -> stubAuctionDriver.register(messageListener) }
+    stubAuctionServer
   )
-  val auctionHouse: AuctionHouse = stubAuctionHouse
 
   val auctionListener = mockk<AuctionEventListener>(relaxed = true)
 

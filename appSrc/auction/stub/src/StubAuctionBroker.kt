@@ -1,4 +1,4 @@
-package goos.xmpptestsupport
+package goos.auction.stub
 
 import goos.auction.sol.MessageListener
 import java.util.concurrent.ConcurrentHashMap
@@ -17,7 +17,7 @@ class StubAuctionBroker {
     subscriptions.add(messageListener)
   }
 
-    fun sendAuctionServerMessage(message: String) {
+  fun sendAuctionServerMessage(message: String) {
     subscriptions.forEach { it.processMessage(message) }
   }
 }

@@ -16,7 +16,6 @@ dependencies {
   implementation(project(":auction-api"))
   implementation(project(":auction-xmpp"))
   implementation(project(":auction-stub"))
-  implementation(project(":auction-sol"))
   implementation(project(":auction-xmpp-test-support"))
   implementation(project(":testlauncher"))
   implementation(project(":kotlinlangext"))

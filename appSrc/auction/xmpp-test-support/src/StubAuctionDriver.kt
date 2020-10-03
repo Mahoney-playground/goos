@@ -1,6 +1,7 @@
 package goos.xmpptestsupport
 
-import goos.auction.sol.MessageListener
+import goos.auction.stub.Message
+import goos.auction.stub.StubAuctionServer
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.nulls.shouldNotBeNull
 
@@ -46,12 +47,4 @@ class StubAuctionDriver(
   }
 
   override fun close() {}
-
-  fun sendMessage(sniperId: String, message: String) {
-    auctionServer.liveAuctions[itemId]?.receiveMessage(Message(sniperId, message))
-  }
-
-  fun register(messageListener: MessageListener) {
-    auctionServer.liveAuctions[itemId]?.subscribe(messageListener)
-  }
 }

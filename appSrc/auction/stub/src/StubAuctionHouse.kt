@@ -2,7 +2,6 @@ package goos.auction.stub
 
 import goos.auction.api.Auction
 import goos.auction.api.AuctionHouse
-import goos.auction.sol.MessageListener
 import goos.auction.sol.MessageTransport
 import goos.auction.sol.SolAuction
 import java.util.concurrent.ConcurrentHashMap
@@ -10,8 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 class StubAuctionHouse(
   private val sniperId: String,
-  private val messageSink: (String, String) -> Unit,
-  private val subscribers: (MessageListener) -> Unit
+  private val stubAuctionServer: StubAuctionServer
 ) : AuctionHouse {
 
   private val connected: AtomicBoolean = AtomicBoolean(false)
@@ -22,8 +20,10 @@ class StubAuctionHouse(
     connected.set(true)
     return auctions.computeIfAbsent(itemId) {
       SolAuction(itemId) { messageListener ->
-        subscribers(messageListener)
-        StubMessageTransport(sniperId, messageSink)
+        stubAuctionServer.liveAuctions[itemId]?.subscribe(messageListener)
+        StubMessageTransport(sniperId) { sniperId, message ->
+          stubAuctionServer.liveAuctions[itemId]?.receiveMessage(Message(sniperId, message))
+        }
       }
     }
   }
