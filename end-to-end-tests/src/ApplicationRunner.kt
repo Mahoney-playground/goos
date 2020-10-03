@@ -1,7 +1,7 @@
 package goos
 
+import goos.auction.api.AuctionDriver
 import goos.uitestsupport.AuctionSniperDriver
-import goos.xmpptestsupport.AuctionDriver
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime

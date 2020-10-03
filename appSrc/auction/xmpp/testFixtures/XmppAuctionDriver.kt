@@ -1,5 +1,6 @@
-package goos.xmpptestsupport
+package goos.auction.xmpp
 
+import goos.auction.api.AuctionDriver
 import io.kotest.matchers.shouldBe
 import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode.disabled
 import org.jivesoftware.smack.chat.Chat
@@ -111,7 +112,7 @@ class XmppAuctionDriver(
   }
 }
 
-class SingleMessageListener : ChatMessageListener {
+internal class SingleMessageListener : ChatMessageListener {
 
   private val messages: BlockingQueue<Message> = ArrayBlockingQueue(1)
 

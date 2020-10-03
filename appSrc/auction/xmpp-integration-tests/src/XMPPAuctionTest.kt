@@ -1,7 +1,8 @@
 package goos
 
+import goos.auction.api.auctionApiTests
 import goos.auction.xmpp.XMPPAuctionHouse
-import goos.xmpptestsupport.XmppAuctionDriver
+import goos.auction.xmpp.XmppAuctionDriver
 import io.kotest.core.spec.IsolationMode.InstancePerTest
 import io.kotest.core.spec.style.StringSpec
 import kotlin.time.ExperimentalTime

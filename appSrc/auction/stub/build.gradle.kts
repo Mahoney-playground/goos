@@ -1,13 +1,24 @@
 plugins {
   kotlin("jvm")
+  `java-test-fixtures`
 }
 
 dependencies {
+
   api(kotlin("stdlib"))
   api(project(":auction-api"))
   api(project(":auction-sol"))
-  implementation(kotest("assertions-core"))
-  implementation(kotest("assertions-shared"))
+
+  testImplementation(kotest("assertions-core"))
+  testImplementation(kotest("assertions-shared"))
+
+  testFixturesApi(testFixtures(project(":auction-api")))
+  testFixturesImplementation(kotest("assertions-core"))
+  testFixturesImplementation(kotest("assertions-core-jvm"))
+  testFixturesImplementation(kotest("assertions-shared"))
+  constraints {
+    testFixturesImplementation(mockk)
+  }
 }
 
 idea {

@@ -1,10 +1,6 @@
-package goos
+package goos.auction.api
 
-import goos.auction.api.Auction
-import goos.auction.api.AuctionEventListener
 import goos.auction.api.AuctionEventListener.PriceSource
-import goos.auction.api.AuctionHouse
-import goos.xmpptestsupport.AuctionDriver
 import io.kotest.core.spec.style.stringSpec
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.mockk.confirmVerified

@@ -1,8 +1,6 @@
-package goos
+package goos.auction.stub
 
-import goos.auction.stub.StubAuctionHouse
-import goos.auction.stub.StubAuctionServer
-import goos.xmpptestsupport.StubAuctionDriver
+import goos.auction.api.auctionApiTests
 import io.kotest.core.spec.IsolationMode.InstancePerTest
 import io.kotest.core.spec.style.StringSpec
 import kotlin.time.ExperimentalTime

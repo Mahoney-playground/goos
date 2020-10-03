@@ -1,4 +1,4 @@
-package goos.xmpptestsupport
+package goos.auction.api
 
 interface AuctionDriver : AutoCloseable {
   val itemId: String

@@ -93,6 +93,21 @@ subprojects {
       register<DependencyReportTask>("allDeps")
     }
   }
+
+  pluginManager.withPlugin("java-test-fixtures") {
+    val testFixturesSrc = setOf("testFixtures")
+
+    configure<JavaPluginExtension> {
+      configure<SourceSetContainer> {
+        named("testFixtures") { java.setSrcDirs(testFixturesSrc) }
+      }
+    }
+    configure<KotlinJvmProjectExtension> {
+      sourceSets {
+        named("testFixtures") { kotlin.setSrcDirs(testFixturesSrc) }
+      }
+    }
+  }
 }
 
 dependencyGraphGenerator {

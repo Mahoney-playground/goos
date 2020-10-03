@@ -1,7 +1,6 @@
-package goos.xmpptestsupport
+package goos.auction.stub
 
-import goos.auction.stub.Message
-import goos.auction.stub.StubAuctionServer
+import goos.auction.api.AuctionDriver
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.nulls.shouldNotBeNull
 
