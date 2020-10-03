@@ -5,6 +5,8 @@ plugins {
 
 dependencies {
   api(kotest("framework-api-jvm"))
+  api(project(":auction-xmpp-test-support"))
+  api(project(":auction-api"))
 
   implementation(kotlin("stdlib"))
   implementation(kotest("framework-api"))
@@ -13,10 +15,8 @@ dependencies {
   implementation(kotlinCoroutines("core"))
   implementation(mockk)
   implementation(mockk("dsl-jvm"))
-  implementation(project(":auction-api"))
   implementation(project(":auction-xmpp"))
   implementation(project(":auction-stub"))
-  implementation(project(":auction-xmpp-test-support"))
   implementation(project(":testlauncher"))
   implementation(project(":kotlinlangext"))
   constraints {
