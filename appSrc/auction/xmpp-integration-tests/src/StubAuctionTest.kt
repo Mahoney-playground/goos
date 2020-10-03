@@ -3,7 +3,7 @@ package goos
 import goos.auction.stub.StubAuctionHouse
 import goos.auction.stub.StubAuctionServer
 import goos.xmpptestsupport.StubAuctionDriver
-import io.kotest.core.spec.IsolationMode
+import io.kotest.core.spec.IsolationMode.InstancePerTest
 import io.kotest.core.spec.style.StringSpec
 import kotlin.time.ExperimentalTime
 
@@ -25,5 +25,5 @@ class StubAuctionTest : StringSpec({
     ),
   ))
 }) {
-  override fun isolationMode() = IsolationMode.InstancePerTest
+  override fun isolationMode() = InstancePerTest
 }

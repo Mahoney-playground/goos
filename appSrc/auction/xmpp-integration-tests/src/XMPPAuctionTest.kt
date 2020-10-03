@@ -2,17 +2,15 @@ package goos
 
 import goos.auction.xmpp.XMPPAuctionHouse
 import goos.xmpptestsupport.XmppAuctionDriver
-import io.kotest.core.spec.IsolationMode
+import io.kotest.core.spec.IsolationMode.InstancePerTest
 import io.kotest.core.spec.style.StringSpec
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 class XMPPAuctionTest : StringSpec({
 
-  val sniperId = "sniper@auctionhost.internal/Auction"
-
   include(auctionApiTests(
-    sniperId = sniperId,
+    sniperId = "sniper@auctionhost.internal/Auction",
     auctionServer = XmppAuctionDriver("item-879"),
     auctionHouse = XMPPAuctionHouse(
       hostname = "auctionhost.internal",
@@ -21,5 +19,5 @@ class XMPPAuctionTest : StringSpec({
     )
   ))
 }) {
-  override fun isolationMode() = IsolationMode.InstancePerTest
+  override fun isolationMode() = InstancePerTest
 }
