@@ -33,7 +33,7 @@ To run the end to end tests locally:
 * Run up the required docker containers:
   ```bash
   DOCKER_BUILDKIT=1 docker build -t goos-instrumentedapp . && docker run -p 1234:1234 goos-instrumentedapp
-  cd docker-openfire && docker build -t openfire . && docker run -p 5222:5222 -p 9090:9090 -h auctionhost.internal openfire 
+  cd docker-openfire && docker build -t openfire . && docker run -p 5222:5222 -p 9090:9090 -h auctionhost.internal openfire
   ```
 You should now be able to run the tests locally.
 ```plantuml

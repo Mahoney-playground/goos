@@ -9,15 +9,17 @@ import kotlin.time.ExperimentalTime
 @ExperimentalTime
 class XMPPAuctionTest : StringSpec({
 
-  include(auctionApiTests(
-    sniperId = "sniper@auctionhost.internal/Auction",
-    auctionServer = XmppAuctionDriver("item-879"),
-    auctionHouse = XMPPAuctionHouse(
-      hostname = "auctionhost.internal",
-      username = "sniper",
-      password = "sniper"
+  include(
+    auctionApiTests(
+      sniperId = "sniper@auctionhost.internal/Auction",
+      auctionServer = XmppAuctionDriver("item-879"),
+      auctionHouse = XMPPAuctionHouse(
+        hostname = "auctionhost.internal",
+        username = "sniper",
+        password = "sniper"
+      )
     )
-  ))
+  )
 }) {
   override fun isolationMode() = InstancePerTest
 }

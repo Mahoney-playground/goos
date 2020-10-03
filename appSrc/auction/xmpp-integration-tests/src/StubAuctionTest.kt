@@ -13,17 +13,19 @@ class StubAuctionTest : StringSpec({
   val sniperId = "MY_SNIPER"
   val stubAuctionServer = StubAuctionServer()
 
-  include(auctionApiTests(
-    sniperId = sniperId,
-    auctionServer = StubAuctionDriver(
-      itemId = "item-879",
-      auctionServer = stubAuctionServer
-    ),
-    auctionHouse = StubAuctionHouse(
-      sniperId,
-      stubAuctionServer
-    ),
-  ))
+  include(
+    auctionApiTests(
+      sniperId = sniperId,
+      auctionServer = StubAuctionDriver(
+        itemId = "item-879",
+        auctionServer = stubAuctionServer
+      ),
+      auctionHouse = StubAuctionHouse(
+        sniperId,
+        stubAuctionServer
+      ),
+    )
+  )
 }) {
   override fun isolationMode() = InstancePerTest
 }
