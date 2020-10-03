@@ -7,6 +7,8 @@ dependencies {
   api(smack("core"))
   api(smack("im"))
 
+  api(project(":auction-stub"))
+
   implementation(smack("tcp"))
   implementation(smack("extensions"))
   implementation(jxmpp("jid"))

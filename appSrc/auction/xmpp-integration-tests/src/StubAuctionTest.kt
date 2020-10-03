@@ -1,0 +1,87 @@
+package goos
+
+import goos.auction.api.Auction
+import goos.auction.api.AuctionEventListener
+import goos.auction.api.AuctionEventListener.PriceSource
+import goos.auction.api.AuctionHouse
+import goos.auction.stub.StubAuctionHouse
+import goos.xmpptestsupport.AuctionDriver
+import goos.xmpptestsupport.StubAuctionDriver
+import io.kotest.core.spec.IsolationMode
+import io.kotest.core.spec.style.StringSpec
+import io.mockk.mockk
+import io.mockk.verify
+import uk.org.lidalia.kotlinlangext.coroutines.sync.CountDownLatch
+import kotlin.time.ExperimentalTime
+
+@ExperimentalTime
+class StubAuctionTest : StringSpec({
+
+  val sniperId = "MY_SNIPER"
+  val stubAuctionHouse = StubAuctionHouse(sniperId)
+  val auctionHouse: AuctionHouse = stubAuctionHouse
+  val auctionServer: AuctionDriver = StubAuctionDriver("item-879", stubAuctionHouse)
+
+  val auctionListener = mockk<AuctionEventListener>(relaxed = true)
+
+  val auction = auctionHouse
+    .auctionFor(auctionServer.itemId)
+    .apply {
+      addAuctionEventListener(auctionListener)
+    }
+
+  "receives events from auction server after joining" {
+
+    auctionServer.startSellingItem()
+    auction.join()
+    auctionServer.hasReceivedJoinRequestFrom(sniperId)
+    auction.synchronously {
+      auctionServer.announceClosed()
+    }
+
+    verify(exactly = 1) {
+      auctionListener.auctionClosed()
+    }
+  }
+
+  "stops receiving events from auction server after failure" {
+
+    auctionServer.startSellingItem()
+    auction.join()
+    auctionServer.hasReceivedJoinRequestFrom(sniperId)
+
+    auction.synchronously {
+      auctionServer.sendInvalidMessageContaining("broken")
+    }
+
+    verify(exactly = 1) {
+      auctionListener.auctionFailed()
+    }
+
+    auction.synchronously {
+      auctionServer.reportPrice(price = 100, increment = 10, bidder = "other")
+    }
+
+    confirmNoFurtherInteractionsWith(auctionListener)
+  }
+
+  afterTest { auctionHouse.disconnect() }
+}) {
+  override fun isolationMode() = IsolationMode.InstancePerTest
+}
+
+private suspend fun Auction.synchronously(
+  numberOfEvents: Int = 1,
+  work: () -> Unit
+) {
+  val eventReceived = CountDownLatch(numberOfEvents)
+  addAuctionEventListener(object : AuctionEventListener {
+    override fun currentPrice(price: Int, increment: Int, source: PriceSource) =
+      eventReceived.countDown()
+
+    override fun auctionClosed() = eventReceived.countDown()
+    override fun auctionFailed() = eventReceived.countDown()
+  })
+  work()
+  eventReceived.await()
+}
