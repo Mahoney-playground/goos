@@ -7,12 +7,13 @@ dependencies {
   api(smack("core"))
   api(smack("im"))
 
-  api(project(":auction-stub"))
+  api(project(":auction-sol"))
 
   implementation(smack("tcp"))
   implementation(smack("extensions"))
   implementation(jxmpp("jid"))
   implementation(kotest("assertions-core"))
+  implementation(kotest("assertions-core-jvm"))
   implementation(kotest("assertions-shared"))
   implementation(kotest("assertions-shared-jvm"))
   constraints {
