@@ -1,4 +1,4 @@
-package goos.uitestsupport
+package goos.ui.swing
 
 import io.kotest.assertions.timing.eventually
 import io.kotest.inspectors.forOne
@@ -7,6 +7,8 @@ import kotlinx.coroutines.runBlocking
 import org.openqa.selenium.By
 import org.openqa.selenium.NoSuchElementException
 import org.openqa.selenium.WebElement
+import uk.org.lidalia.seleniumext.CompositeRemoteWebDriver
+import uk.org.lidalia.seleniumext.CompositeWebDriver
 import java.net.URL
 import kotlin.time.ExperimentalTime
 import kotlin.time.seconds

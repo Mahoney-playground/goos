@@ -8,8 +8,8 @@ dependencies {
   api(kotlin("stdlib"))
   api(kotest("framework-api"))
   api(kotest("framework-api-jvm"))
-  api(project(":ui-swing-test-support"))
   api(testFixtures(project(":auction-api")))
+  api(testFixtures(project(":ui-swing")))
 
   implementation(testFixtures(project(":auction-xmpp")))
   implementation(kotlinCoroutines("core"))

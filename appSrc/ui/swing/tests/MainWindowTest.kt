@@ -2,14 +2,13 @@ package goos.ui.swing
 
 import goos.ui.api.Item
 import goos.ui.api.UserRequestListener
-import goos.uitestsupport.AuctionSniperDriver
-import goos.uitestsupport.CompositeRemoteWebDriver
 import io.kotest.assertions.timing.eventually
 import io.kotest.core.spec.style.StringSpec
 import io.mockk.confirmVerified
 import io.mockk.mockk
 import io.mockk.verify
 import net.sourceforge.marathon.javadriver.JavaDriver
+import uk.org.lidalia.seleniumext.CompositeRemoteWebDriver
 import kotlin.time.ExperimentalTime
 import kotlin.time.seconds
 

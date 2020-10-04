@@ -1,5 +1,6 @@
 plugins {
   kotlin("jvm")
+  `java-test-fixtures`
 }
 
 dependencies {
@@ -7,8 +8,17 @@ dependencies {
 
   implementation(kotlin("stdlib"))
 
+  testFixturesApi(selenium("api"))
+  testFixturesApi(selenium("remote-driver"))
+
+  testFixturesImplementation(project(":seleniumext"))
+  testFixturesImplementation(kotest("assertions-core"))
+  testFixturesImplementation(kotest("assertions-shared-jvm"))
+  testFixturesImplementation(kotlinCoroutines("core"))
+  testFixturesImplementation(kotlinCoroutines("core-jvm"))
+
+  testImplementation(project(":seleniumext"))
   testImplementation(marathon("java-driver"))
-  testImplementation(project(":ui-swing-test-support"))
 }
 
 idea {

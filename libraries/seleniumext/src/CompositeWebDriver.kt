@@ -1,4 +1,4 @@
-package goos.uitestsupport
+package uk.org.lidalia.seleniumext
 
 import org.openqa.selenium.Platform
 import org.openqa.selenium.WebDriver
