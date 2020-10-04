@@ -4,7 +4,6 @@ plugins {
 
 dependencies {
   api(project(":ui-api"))
-  api(project(":portfolio"))
 
   implementation(kotlin("stdlib"))
 

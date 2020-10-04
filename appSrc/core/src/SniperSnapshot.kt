@@ -5,7 +5,7 @@ import goos.core.SniperState.FAILED
 import goos.core.SniperState.JOINING
 import goos.core.SniperState.LOSING
 import goos.core.SniperState.WINNING
-import goos.portfolio.Item
+import goos.ui.api.Item
 
 data class SniperSnapshot(
   val item: Item,

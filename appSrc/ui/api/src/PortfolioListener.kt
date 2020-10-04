@@ -1,4 +1,4 @@
-package goos.portfolio
+package goos.ui.api
 
 interface PortfolioListener {
   fun sniperAdded(sniper: SniperNotifier)

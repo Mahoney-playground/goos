@@ -1,8 +1,8 @@
 package goos.ui.swing
 
-import goos.portfolio.Item
-import goos.portfolio.PortfolioListener
+import goos.ui.api.Item
 import goos.ui.api.MultiUserRequestListener
+import goos.ui.api.PortfolioListener
 import goos.ui.api.UI
 import goos.ui.api.UserRequestListener
 import java.awt.BorderLayout

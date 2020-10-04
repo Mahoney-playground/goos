@@ -1,7 +1,5 @@
 package goos.ui.api
 
-import goos.portfolio.Item
-
 interface UserRequestListener {
   fun joinAuction(item: Item)
   fun reset()

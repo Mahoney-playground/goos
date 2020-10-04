@@ -1,6 +1,7 @@
 package goos.auction.api
 
 import goos.auction.api.AuctionEventListener.PriceSource
+import io.kotest.core.factory.TestFactory
 import io.kotest.core.spec.style.stringSpec
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.mockk.confirmVerified
@@ -15,7 +16,7 @@ fun auctionApiTests(
   sniperId: String,
   auctionServer: AuctionDriver,
   auctionHouse: AuctionHouse
-) = stringSpec {
+): TestFactory = stringSpec {
   val auctionListener = mockk<AuctionEventListener>(relaxed = true)
 
   "receives events from auction server after joining" {
@@ -85,4 +86,4 @@ private suspend fun Auction.synchronously(
   eventReceived.await(5.seconds).shouldBeTrue()
 }
 
-fun confirmNoFurtherInteractionsWith(vararg mocks: Any) = confirmVerified(*mocks)
+private fun confirmNoFurtherInteractionsWith(vararg mocks: Any) = confirmVerified(*mocks)

@@ -1,7 +1,7 @@
 package goos.core
 
 import goos.auction.api.AuctionHouse
-import goos.portfolio.Item
+import goos.ui.api.Item
 import goos.ui.api.UserRequestListener
 import java.util.concurrent.CountDownLatch
 

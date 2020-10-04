@@ -3,8 +3,6 @@ plugins {
 }
 
 dependencies {
-  api(project(":portfolio"))
-
   implementation(kotlin("stdlib"))
 }
 

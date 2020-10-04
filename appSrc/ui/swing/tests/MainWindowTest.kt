@@ -1,6 +1,6 @@
 package goos.ui.swing
 
-import goos.portfolio.Item
+import goos.ui.api.Item
 import goos.ui.api.UserRequestListener
 import goos.uitestsupport.AuctionSniperDriver
 import goos.uitestsupport.CompositeRemoteWebDriver

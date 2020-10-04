@@ -1,9 +1,9 @@
 package goos.ui.swing
 
-import goos.portfolio.Item
-import goos.portfolio.SniperSnapshot
-import goos.portfolio.SniperState.BIDDING
-import goos.portfolio.SniperState.JOINING
+import goos.ui.api.Item
+import goos.ui.api.SniperSnapshot
+import goos.ui.api.SniperState.BIDDING
+import goos.ui.api.SniperState.JOINING
 import goos.ui.swing.Column.ITEM_IDENTIFIER
 import goos.ui.swing.Column.LAST_BID
 import goos.ui.swing.Column.LAST_PRICE

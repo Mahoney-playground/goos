@@ -1,4 +1,4 @@
-package goos.portfolio
+package goos.ui.api
 
 interface SniperListener {
   fun sniperStateChanged(sniperSnapshot: SniperSnapshot)
