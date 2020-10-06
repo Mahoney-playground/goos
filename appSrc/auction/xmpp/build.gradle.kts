@@ -33,6 +33,10 @@ dependencies {
   }
 
   testFixturesRuntimeOnly(smack("java7"))
+
+  testImplementation(kotest("extensions-testcontainers"))
+  testImplementation("org.testcontainers:testcontainers:1.15.0-rc2")
+  testImplementation("ch.qos.logback:logback-classic:1.2.3")
 }
 
 idea {

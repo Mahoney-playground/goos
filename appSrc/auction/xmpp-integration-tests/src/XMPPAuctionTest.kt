@@ -1,26 +1,13 @@
-package goos
+package goos.auction.xmpp.integration
 
-import goos.auction.api.auctionApiTests
-import goos.auction.xmpp.XMPPAuctionHouse
-import goos.auction.xmpp.XmppAuctionDriver
+import goos.auction.xmpp.xmppAuctionApiTests
 import io.kotest.core.spec.IsolationMode.InstancePerTest
 import io.kotest.core.spec.style.StringSpec
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 class XMPPAuctionTest : StringSpec({
-
-  include(
-    auctionApiTests(
-      sniperId = "sniper@auctionhost.internal/Auction",
-      auctionServer = XmppAuctionDriver("item-879"),
-      auctionHouse = XMPPAuctionHouse(
-        hostname = "auctionhost.internal",
-        username = "sniper",
-        password = "sniper"
-      )
-    )
-  )
+  include(xmppAuctionApiTests())
 }) {
   override fun isolationMode() = InstancePerTest
 }

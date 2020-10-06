@@ -1,4 +1,4 @@
-package goos
+package goos.auction.xmpp.integration
 
 import uk.org.lidalia.testlauncher.runTests
 import java.util.logging.Level.WARNING

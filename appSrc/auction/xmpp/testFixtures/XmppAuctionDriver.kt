@@ -21,15 +21,14 @@ class XmppAuctionDriver(
   override val itemId: String
 ) : AuctionDriver {
 
-  private val connection = XMPPTCPConnection(
-    XMPPTCPConnectionConfiguration.builder()
-      .setSecurityMode(disabled)
-      .setXmppDomain(XMPP_DOMAIN)
-      .build()
-  )
-
-  init {
+  private val connection by lazy {
     createUser("sniper", "sniper")
+    XMPPTCPConnection(
+      XMPPTCPConnectionConfiguration.builder()
+        .setSecurityMode(disabled)
+        .setXmppDomain(XMPP_DOMAIN)
+        .build()
+    )
   }
 
   private val messageListener = SingleMessageListener()
