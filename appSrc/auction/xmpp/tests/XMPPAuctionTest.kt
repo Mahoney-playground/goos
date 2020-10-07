@@ -18,9 +18,7 @@ class XMPPAuctionTest : StringSpec({
 
   tags(Docker)
 
-  rootLogger().apply {
-    level = INFO
-  }
+  rootLogger.level = INFO
 
   @Suppress("DEPRECATION") // This is just a way to run on an ad hoc basis
   val dockerContainer = FixedHostPortGenericContainer<Nothing>(
@@ -41,4 +39,4 @@ class XMPPAuctionTest : StringSpec({
   override fun isolationMode() = InstancePerTest
 }
 
-private fun rootLogger() = LoggerFactory.getLogger(ROOT_LOGGER_NAME) as Logger
+private val rootLogger = LoggerFactory.getLogger(ROOT_LOGGER_NAME) as Logger
