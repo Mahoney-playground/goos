@@ -16,7 +16,7 @@ dependencies {
 }
 
 application {
-  mainClass.set("goos.auction.xmpp.integration.MainKt")
+  mainClassName = "goos.auction.xmpp.integration.MainKt"
 }
 
 idea {
