@@ -22,6 +22,7 @@ class XMPPAuctionTest : StringSpec({
     level = INFO
   }
 
+  @Suppress("DEPRECATION") // This is just a way to run on an ad hoc basis
   val dockerContainer = FixedHostPortGenericContainer<Nothing>(
     ImageFromDockerfile()
       .withFileFromPath(".", Paths.get(".").resolve("../../../docker-openfire"))
