@@ -12,16 +12,12 @@ import org.gradle.api.distribution.plugins.DistributionPlugin
 import org.gradle.api.distribution.plugins.DistributionPlugin.MAIN_DISTRIBUTION_NAME
 import org.gradle.api.distribution.plugins.DistributionPlugin.TASK_INSTALL_NAME
 import org.gradle.api.file.CopySpec
-import org.gradle.api.file.FileCollection
-import org.gradle.api.internal.provider.Providers
 import org.gradle.api.plugins.ApplicationPluginConvention
 import org.gradle.api.plugins.JavaApplication
 import org.gradle.api.plugins.JavaPlugin
-import org.gradle.api.plugins.JavaPlugin.COMPILE_JAVA_TASK_NAME
 import org.gradle.api.plugins.JavaPlugin.JAR_TASK_NAME
 import org.gradle.api.plugins.JavaPlugin.RUNTIME_CLASSPATH_CONFIGURATION_NAME
 import org.gradle.api.plugins.JavaPluginConvention
-import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.plugins.internal.DefaultApplicationPluginConvention
 import org.gradle.api.plugins.internal.DefaultJavaApplication
 import org.gradle.api.provider.Provider
@@ -31,9 +27,6 @@ import org.gradle.api.tasks.Sync
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.api.tasks.application.CreateStartScripts
 import org.gradle.api.tasks.bundling.Jar
-import org.gradle.api.tasks.compile.JavaCompile
-import org.gradle.jvm.toolchain.JavaToolchainService
-import org.gradle.jvm.toolchain.JavaToolchainSpec
 import java.io.File
 import java.util.concurrent.Callable
 
@@ -45,39 +38,32 @@ import java.util.concurrent.Callable
  * The plugin can be configured via its companion [ApplicationPluginConvention]
  * object.
  */
-@Suppress("unused", "UnstableApiUsage")
+@Suppress("unused")
 class ApplicationPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
-    val tasks = project.tasks
 
     project.pluginManager.apply(JavaPlugin::class.java)
     project.pluginManager.apply(DistributionPlugin::class.java)
 
-    val pluginConvention = addConvention(project)
-    val pluginExtension = addExtensions(project, pluginConvention)
-    addRunTask(project, pluginExtension, pluginConvention)
-    addCreateScriptsTask(project, pluginExtension, pluginConvention)
+    val pluginConvention = addExtensions(project)
+    val javaPluginConvention = project.convention.getPlugin(JavaPluginConvention::class.java)
+
+    addRunTask(project, pluginConvention, javaPluginConvention)
+    addCreateScriptsTask(project, pluginConvention)
     configureInstallTask(
-      tasks.named(
+      project.tasks.named(
         TASK_INSTALL_NAME,
         Sync::class.java
       ),
       pluginConvention
     )
-    tasks.named("build") {
+    project.tasks.named("build") {
       dependsOn(TASK_INSTALL_NAME)
     }
-    configureJavaCompileTask(
-      tasks.named(
-        COMPILE_JAVA_TASK_NAME,
-        JavaCompile::class.java
-      ),
-      pluginExtension
-    )
     configureJarTask(
-      tasks.named(JAR_TASK_NAME, Jar::class.java),
-      pluginExtension
+      project.tasks.named("jar", Jar::class.java),
+      pluginConvention
     )
 
     val distributions =
@@ -100,26 +86,24 @@ class ApplicationPlugin : Plugin<Project> {
     }
   }
 
-  private fun addConvention(project: Project): ApplicationPluginConvention {
-    val pluginConvention = DefaultApplicationPluginConvention(project).apply {
-      applicationName = project.name
-    }
+  private fun addExtensions(project: Project): ApplicationPluginConvention {
+    val pluginConvention: ApplicationPluginConvention =
+      DefaultApplicationPluginConvention(project)
+    pluginConvention.applicationName = project.name
     project.convention.plugins["application"] = pluginConvention
+    project.extensions.create(
+      JavaApplication::class.java,
+      "application",
+      DefaultJavaApplication::class.java,
+      pluginConvention
+    )
     return pluginConvention
   }
 
-  private fun addExtensions(
-    project: Project,
-    pluginConvention: ApplicationPluginConvention
-  ) = project.extensions.create(
-    JavaApplication::class.java, "application",
-    DefaultJavaApplication::class.java, pluginConvention
-  )
-
   private fun addRunTask(
     project: Project,
-    pluginExtension: JavaApplication,
-    pluginConvention: ApplicationPluginConvention
+    pluginConvention: ApplicationPluginConvention,
+    javaPluginConvention: JavaPluginConvention
   ) {
     project.tasks.register(
       TASK_RUN_NAME,
@@ -127,50 +111,17 @@ class ApplicationPlugin : Plugin<Project> {
     ) {
       description = "Runs this project as a JVM application"
       group = APPLICATION_GROUP
-      val runtimeClasspath = project.files().from(
-        {
-          if (mainModule.isPresent) {
-            jarsOnlyRuntimeClasspath(project)
-          } else {
-            runtimeClasspath(project)
-          }
-        }
-      )
-      classpath = runtimeClasspath
-      mainModule.set(pluginExtension.mainModule)
-      mainClass.set(pluginExtension.mainClass)
-      conventionMapping.map("jvmArgs") { pluginConvention.applicationDefaultJvmArgs }
-
-      val javaPluginExtension = project.extensions.getByType(
-        JavaPluginExtension::class.java
-      )
-      modularity.inferModulePath.convention(javaPluginExtension.modularity.inferModulePath)
-      javaLauncher.convention(getToolchainTool(project, JavaToolchainService::launcherFor))
+      classpath = javaPluginConvention.sourceSets.getByName(MAIN_SOURCE_SET_NAME).runtimeClasspath
+      conventionMapping.apply {
+        map("main") { pluginConvention.mainClassName }
+        map("jvmArgs") { pluginConvention.applicationDefaultJvmArgs }
+      }
     }
   }
-
-  private fun <T> getToolchainTool(
-    project: Project,
-    toolMapper: (JavaToolchainService, JavaToolchainSpec) -> Provider<T>
-  ): Provider<T> {
-    val extension = project.extensions.getByType(JavaPluginExtension::class.java)
-    val service = project.extensions.getByType(JavaToolchainService::class.java)
-    return toolMapper(service, extension.toolchain).orElse(Providers.notDefined())
-  }
-
-  private fun runtimeClasspath(project: Project): FileCollection? =
-    project.convention.getPlugin(JavaPluginConvention::class.java).sourceSets.getByName(
-      MAIN_SOURCE_SET_NAME
-    ).runtimeClasspath
-
-  private fun jarsOnlyRuntimeClasspath(project: Project): FileCollection =
-    project.tasks.getAt(JAR_TASK_NAME).outputs.files +
-      project.configurations.getByName(RUNTIME_CLASSPATH_CONFIGURATION_NAME)
 
   // @Todo: refactor this task configuration to extend a copy task and use replace tokens
   private fun addCreateScriptsTask(
     project: Project,
-    pluginExtension: JavaApplication,
     pluginConvention: ApplicationPluginConvention
   ) {
     project.tasks.register(
@@ -178,17 +129,16 @@ class ApplicationPlugin : Plugin<Project> {
       CreateStartScripts::class.java
     ) {
       description = "Creates OS specific scripts to run the project as a JVM application."
-      classpath = jarsOnlyRuntimeClasspath(project)
-      mainModule.set(pluginExtension.mainModule)
-      mainClass.set(pluginExtension.mainClass)
+      classpath = project.tasks.getAt(JAR_TASK_NAME).outputs.files.plus(
+        project.configurations.getByName(RUNTIME_CLASSPATH_CONFIGURATION_NAME)
+      )
       conventionMapping.apply {
+        map("mainClassName") { pluginConvention.mainClassName }
         map("applicationName") { pluginConvention.applicationName }
         map("outputDir") { File(project.buildDir, "scripts") }
         map("executableDir") { pluginConvention.executableDir }
         map("defaultJvmOpts") { pluginConvention.applicationDefaultJvmArgs }
       }
-      val javaPluginExtension = project.extensions.getByType(JavaPluginExtension::class.java)
-      modularity.inferModulePath.convention(javaPluginExtension.modularity.inferModulePath)
     }
   }
 
@@ -198,6 +148,7 @@ class ApplicationPlugin : Plugin<Project> {
     pluginConvention: ApplicationPluginConvention
   ): CopySpec {
 
+    @Suppress("UnstableApiUsage")
     mainDistribution
       .distributionBaseName
       .convention(project.provider { pluginConvention.applicationName })
@@ -248,20 +199,12 @@ class ApplicationPlugin : Plugin<Project> {
     }
   }
 
-  private fun configureJavaCompileTask(
-    javaCompile: TaskProvider<JavaCompile>,
-    pluginExtension: JavaApplication
-  ) {
-    javaCompile.configure {
-      options.javaModuleMainClass.convention(pluginExtension.mainClass)
-    }
-  }
-
   private fun configureJarTask(
     jarTask: TaskProvider<Jar>,
-    pluginExtension: JavaApplication
+    applicationConvention: ApplicationPluginConvention
   ) {
     jarTask.configure {
+      @Suppress("UnstableApiUsage")
       manifest {
         val classpath = project.configurations
           .named(RUNTIME_CLASSPATH_CONFIGURATION_NAME).map { configuration ->
@@ -275,7 +218,7 @@ class ApplicationPlugin : Plugin<Project> {
 
             (projectDeps + externalDeps).joinToString(" ")
           }
-        attributes["Main-Class"] = pluginExtension.mainClass
+        attributes["Main-Class"] = project.provider(applicationConvention::getMainClassName)
         attributes["Class-Path"] = classpath
       }
     }
