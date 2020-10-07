@@ -41,7 +41,9 @@ class XMPPAuctionTest : StringSpec({
 
 private val rootLogger = LoggerFactory.getLogger(ROOT_LOGGER_NAME) as Logger
 
-class FixedHostPortGenericContainer(image: Future<String>) : GenericContainer<FixedHostPortGenericContainer>(image) {
+class FixedHostPortGenericContainer(
+  image: Future<String>
+) : GenericContainer<FixedHostPortGenericContainer>(image) {
   fun withFixedExposedPort(hostPort: Int, containerPort: Int): FixedHostPortGenericContainer {
     super.addFixedExposedPort(hostPort, containerPort)
     return this
