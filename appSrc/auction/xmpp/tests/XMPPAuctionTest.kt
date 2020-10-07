@@ -7,10 +7,11 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.extensions.testcontainers.perSpec
 import org.slf4j.Logger.ROOT_LOGGER_NAME
 import org.slf4j.LoggerFactory
-import org.testcontainers.containers.FixedHostPortGenericContainer
+import org.testcontainers.containers.GenericContainer
 import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.images.builder.ImageFromDockerfile
 import java.nio.file.Paths
+import java.util.concurrent.Future
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
@@ -21,10 +22,9 @@ class XMPPAuctionTest : StringSpec({
   rootLogger.level = INFO
 
   @Suppress("DEPRECATION") // This is just a way to run on an ad hoc basis
-  val dockerContainer = FixedHostPortGenericContainer<Nothing>(
+  val dockerContainer = FixedHostPortGenericContainer(
     ImageFromDockerfile()
       .withFileFromPath(".", Paths.get(".").resolve("../../../docker-openfire"))
-      .get()
   ).apply {
     withFixedExposedPort(5222, 5222)
     withFixedExposedPort(9090, 9090)
@@ -40,3 +40,10 @@ class XMPPAuctionTest : StringSpec({
 }
 
 private val rootLogger = LoggerFactory.getLogger(ROOT_LOGGER_NAME) as Logger
+
+class FixedHostPortGenericContainer(image: Future<String>) : GenericContainer<FixedHostPortGenericContainer>(image) {
+  fun withFixedExposedPort(hostPort: Int, containerPort: Int): FixedHostPortGenericContainer {
+    super.addFixedExposedPort(hostPort, containerPort)
+    return this
+  }
+}
