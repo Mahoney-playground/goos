@@ -22,3 +22,12 @@ application {
 idea {
   setPackagePrefix("goos.auction.xmpp.integration")
 }
+
+// Workaround for https://github.com/autonomousapps/dependency-analysis-android-gradle-plugin/issues/298
+dependencyAnalysis {
+  issues {
+    onUnusedDependencies {
+      exclude(":auction-xmpp")
+    }
+  }
+}
