@@ -38,18 +38,22 @@ jobs:
         run: docker login --username Mahoney-playground --password-stdin docker.pkg.github.com < <(echo "${{ secrets.GITHUB_TOKEN }}")
 
       - name: Do the build
-        run: docker build . --target builder -t goos-builder:$GITHUB_SHA
+        run: docker build . --target builder -t goos-builder:$GITHUB_SHA &&
+             docker build . --target checker
 
       - name: Capture the reports as artifacts
+        if: always()
         run: ./scripts/retrieve-docker-build-logs.sh goos-builder ${{ github.sha }}
 
       - name: Archive reports
+        if: always()
         uses: actions/upload-artifact@v1
         with:
           name: build-reports
           path: builds/${{ github.sha }}/build-reports
 
       - name: Publish Reports
+        if: always()
         uses: JamesIves/github-pages-deploy-action@3.4.2
         with:
           ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -58,6 +62,7 @@ jobs:
           TARGET_FOLDER: builds
 
       - name: Link to Reports
+        if: always()
         run: echo "Reports are published at https://mahoney-playground.github.io/goos/builds/${{ github.sha }}/build-reports"
 
       - name: Build Auction XMPP Integration Tests with Docker

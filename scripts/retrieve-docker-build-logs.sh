@@ -9,7 +9,7 @@ main() {
   local container_id
   container_id=$(docker create "$build_image:$build_identifier")
 
-  mkdir -p "builds/$build_identifier/build-reports"
+  mkdir -p "builds/$build_identifier"
 
   set +e
   docker cp "$container_id:/home/worker/work/build/reports" "builds/$build_identifier" &&
