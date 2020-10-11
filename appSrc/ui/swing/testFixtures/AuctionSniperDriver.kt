@@ -1,5 +1,6 @@
 package goos.ui.swing
 
+import goos.ui.api.UiDriver
 import io.kotest.assertions.timing.eventually
 import io.kotest.inspectors.forOne
 import io.kotest.matchers.shouldBe
@@ -15,19 +16,19 @@ import kotlin.time.seconds
 
 class AuctionSniperDriver(
   private val driver: CompositeWebDriver
-) {
+) : UiDriver {
 
   constructor(url: URL = URL("http://app.internal:1234")) : this(
     CompositeRemoteWebDriver(url)
   )
 
-  fun hasBasicAttributes() {
+  override fun hasBasicAttributes() {
     driver.rootElement().getAttribute("name") shouldBe MAIN_WINDOW_NAME
     driver.rootElement().isDisplayed shouldBe true
   }
 
   @ExperimentalTime
-  fun showSniperState(
+  override fun showSniperState(
     itemId: String,
     lastPrice: Int,
     lastBid: Int,
@@ -47,11 +48,11 @@ class AuctionSniperDriver(
     }
   }
 
-  fun hasTitle(title: String) {
+  override fun hasTitle(title: String) {
     driver.title shouldBe title
   }
 
-  fun hasColumnTitles() {
+  override fun hasColumnTitles() {
     val titles = driver.findElement(By.name(SNIPERS_TABLE_NAME))
       .findElements(By.cssSelector(".::header.::all-items"))
       .map { it.text }
@@ -59,9 +60,9 @@ class AuctionSniperDriver(
     titles shouldBe listOf("Item", "Last Price", "Last Bid", "State")
   }
 
-  fun reset() = resetButton().click()
+  override fun reset() = resetButton().click()
 
-  fun startBiddingFor(itemId: String, stopPrice: Int) {
+  override fun startBiddingFor(itemId: String, stopPrice: Int) {
     itemIdField().setText(itemId)
     stopPriceField().setText(stopPrice.toString())
     bidButton().click()
@@ -77,7 +78,7 @@ class AuctionSniperDriver(
   private fun stopPriceField() = driver.findElement(By.name(NEW_ITEM_STOP_PRICE_NAME))
   private fun bidButton() = driver.findElement(By.name(JOIN_BUTTON_NAME))
 
-  fun close() {
+  override fun close() {
     driver.close()
   }
 

@@ -16,6 +16,7 @@ dependencies {
   testFixturesImplementation(kotest("assertions-shared-jvm"))
   testFixturesImplementation(kotlinCoroutines("core"))
   testFixturesImplementation(kotlinCoroutines("core-jvm"))
+  testFixturesApi(testFixtures(project(":ui-api")))
 
   testImplementation(project(":seleniumext"))
   testImplementation(marathon("java-driver"))
