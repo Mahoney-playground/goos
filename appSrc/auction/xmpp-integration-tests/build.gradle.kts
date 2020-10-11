@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  api(kotest("framework-api-jvm"))
+  implementation(kotest("framework-api-jvm"))
 
   implementation(kotlin("stdlib"))
   implementation(kotlinCoroutines("core"))

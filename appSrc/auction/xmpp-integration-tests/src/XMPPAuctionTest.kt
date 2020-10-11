@@ -6,7 +6,7 @@ import io.kotest.core.spec.style.StringSpec
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
-class XMPPAuctionTest : StringSpec({
+internal class XMPPAuctionTest : StringSpec({
   include(xmppAuctionApiTests())
 }) {
   override fun isolationMode() = InstancePerTest

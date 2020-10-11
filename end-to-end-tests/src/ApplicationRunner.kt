@@ -1,15 +1,15 @@
 package goos
 
 import goos.auction.api.AuctionDriver
-import goos.ui.swing.AuctionSniperDriver
+import goos.ui.api.UiDriver
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
-class ApplicationRunner(
-  private val driver: AuctionSniperDriver = AuctionSniperDriver()
+internal class ApplicationRunner(
+  private val driver: UiDriver
 ) {
 
-  init {
+  fun hasCorrectAppearance() {
     driver.hasBasicAttributes()
     driver.hasTitle("Auction Sniper")
     driver.hasColumnTitles()
