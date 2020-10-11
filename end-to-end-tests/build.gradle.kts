@@ -13,6 +13,7 @@ dependencies {
   implementation(testFixtures(project(":ui-swing")))
   implementation(testFixtures(project(":auction-api")))
   implementation(testFixtures(project(":auction-xmpp")))
+  implementation("org.seleniumhq.selenium:selenium-remote-driver:3.14.0")
 
   implementation(kotlinCoroutines("core"))
   constraints {

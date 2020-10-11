@@ -4,7 +4,6 @@ import org.testcontainers.containers.GenericContainer
 import org.testcontainers.containers.wait.strategy.Wait
 import org.testcontainers.images.builder.ImageFromDockerfile
 import java.nio.file.Path
-import java.nio.file.Paths
 import java.util.concurrent.Future
 
 @Suppress("DEPRECATION") // This is just a way to run on an ad hoc basis
