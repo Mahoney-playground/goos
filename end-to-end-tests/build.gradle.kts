@@ -11,10 +11,8 @@ dependencies {
 
   implementation(testFixtures(project(":ui-api")))
   implementation(testFixtures(project(":ui-swing")))
-  implementation(testFixtures(project(":ui-stub")))
   implementation(testFixtures(project(":auction-api")))
   implementation(testFixtures(project(":auction-xmpp")))
-  implementation(testFixtures(project(":auction-stub")))
   implementation("org.seleniumhq.selenium:selenium-remote-driver:3.14.0")
 
   implementation(kotlinCoroutines("core"))
@@ -30,6 +28,9 @@ dependencies {
   testImplementation(project(":seleniumext"))
   testImplementation(marathon("java-driver"))
   testImplementation(project(":app"))
+  testImplementation(testFixtures(project(":ui-stub")))
+  testImplementation(testFixtures(project(":auction-stub")))
+  testImplementation(project(":core"))
 }
 
 application {

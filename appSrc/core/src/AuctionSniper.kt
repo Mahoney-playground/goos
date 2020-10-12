@@ -68,7 +68,7 @@ private fun SniperSnapshot.toUiSnapshot() = goos.ui.api.SniperSnapshot(
   state.toUiState()
 )
 
-private fun SniperState.toUiState() = when (this) {
+fun SniperState.toUiState() = when (this) {
   LOST -> goos.ui.api.SniperState.LOST
   WON -> goos.ui.api.SniperState.WON
   JOINING -> goos.ui.api.SniperState.JOINING

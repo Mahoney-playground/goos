@@ -13,7 +13,7 @@ import kotlin.time.ExperimentalTime
 internal class AuctionSniperEndToEndStubbedTest : StringSpec({
 
   val stubAuctionServer = StubAuctionServer()
-  val auctionHouse = StubAuctionHouse("", stubAuctionServer)
+  val auctionHouse = StubAuctionHouse("sniper@auctionhost.internal/Auction", stubAuctionServer)
 
   val ui = StubUi()
 

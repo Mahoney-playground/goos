@@ -24,4 +24,8 @@ class StubAuctionServer {
   }
 
   fun allAuctions() = liveAuctions + closedAuctions
+  fun reset() {
+    liveAuctions.clear()
+    closedAuctions.clear()
+  }
 }

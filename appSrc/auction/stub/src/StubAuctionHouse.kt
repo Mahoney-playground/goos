@@ -14,16 +14,12 @@ class StubAuctionHouse(
 
   private val connected: AtomicBoolean = AtomicBoolean(false)
 
-  private val auctions = ConcurrentHashMap<String, SolAuction>()
-
   override fun auctionFor(itemId: String): Auction {
     connected.set(true)
-    return auctions.computeIfAbsent(itemId) {
-      SolAuction(itemId) { messageListener ->
-        stubAuctionServer.liveAuctions[itemId]?.subscribe(messageListener)
-        StubMessageTransport(sniperId) { sniperId, message ->
-          stubAuctionServer.liveAuctions[itemId]?.receiveMessage(Message(sniperId, message))
-        }
+    return SolAuction(itemId) { messageListener ->
+      stubAuctionServer.liveAuctions[itemId]?.subscribe(messageListener)
+      StubMessageTransport(sniperId) { sniperId, message ->
+        stubAuctionServer.liveAuctions[itemId]?.receiveMessage(Message(sniperId, message))
       }
     }
   }

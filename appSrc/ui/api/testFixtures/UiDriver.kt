@@ -6,7 +6,7 @@ interface UiDriver : AutoCloseable {
   fun hasBasicAttributes()
 
   @ExperimentalTime
-  fun showSniperState(
+  suspend fun showSniperState(
     itemId: String,
     lastPrice: Int,
     lastBid: Int,

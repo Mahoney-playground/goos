@@ -1,8 +1,11 @@
 package goos.auction.stub
 
 import goos.auction.api.AuctionDriver
+import io.kotest.assertions.timing.eventually
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.nulls.shouldNotBeNull
+import kotlin.time.ExperimentalTime
+import kotlin.time.seconds
 
 class StubAuctionDriver(
   override val itemId: String,
@@ -31,19 +34,26 @@ class StubAuctionDriver(
     )
   }
 
-  override fun hasReceivedJoinRequestFrom(sniperId: String) {
+  @ExperimentalTime
+  override suspend fun hasReceivedJoinRequestFrom(sniperId: String) {
     hasReceivedMessage(sniperId, "SOLVersion: 1.1; Command: JOIN;")
   }
 
-  override fun hasReceivedBid(bid: Int, sniperId: String) {
+  @ExperimentalTime
+  override suspend fun hasReceivedBid(bid: Int, sniperId: String) {
     hasReceivedMessage(sniperId, "SOLVersion: 1.1; Command: BID; Price: $bid;")
   }
 
-  private fun hasReceivedMessage(sniperId: String, expectedMessage: String) {
+  @ExperimentalTime
+  private suspend fun hasReceivedMessage(sniperId: String, expectedMessage: String) {
     val auctionBroker = auctionServer.allAuctions()[itemId]
     auctionBroker.shouldNotBeNull()
-    auctionBroker.messages shouldContain Message(sniperId, expectedMessage)
+    eventually(1.seconds) {
+      auctionBroker.messages shouldContain Message(sniperId, expectedMessage)
+    }
   }
 
-  override fun close() {}
+  override fun close() {
+    auctionServer.reset()
+  }
 }

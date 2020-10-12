@@ -28,24 +28,22 @@ class AuctionSniperDriver(
   }
 
   @ExperimentalTime
-  override fun showSniperState(
+  override suspend fun showSniperState(
     itemId: String,
     lastPrice: Int,
     lastBid: Int,
     stateText: String
-  ) = runBlocking {
-    eventually(5.seconds) {
-      val table = JTableDriver(
-        driver.findElement(By.name(SNIPERS_TABLE_NAME))
-      )
+  ) = eventually(5.seconds) {
+    val table = JTableDriver(
+      driver.findElement(By.name(SNIPERS_TABLE_NAME))
+    )
 
-      table.hasRow(
-        { it shouldBe itemId },
-        { it shouldBe lastPrice.toString() },
-        { it shouldBe lastBid.toString() },
-        { it shouldBe stateText }
-      )
-    }
+    table.hasRow(
+      { it shouldBe itemId },
+      { it shouldBe lastPrice.toString() },
+      { it shouldBe lastBid.toString() },
+      { it shouldBe stateText }
+    )
   }
 
   override fun hasTitle(title: String) {

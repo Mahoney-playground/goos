@@ -4,13 +4,7 @@ import goos.ui.api.PortfolioListener
 import goos.ui.api.SniperListener
 import goos.ui.api.SniperNotifier
 import goos.ui.api.SniperSnapshot
-import goos.ui.api.SniperState.BIDDING
-import goos.ui.api.SniperState.FAILED
-import goos.ui.api.SniperState.JOINING
-import goos.ui.api.SniperState.LOSING
-import goos.ui.api.SniperState.LOST
-import goos.ui.api.SniperState.WINNING
-import goos.ui.api.SniperState.WON
+import goos.ui.api.stateText
 import javax.swing.table.AbstractTableModel
 
 internal class SnipersTableModel :
@@ -78,16 +72,6 @@ internal enum class Column(val title: String) {
   companion object {
     fun at(offset: Int) = values()[offset]
   }
-}
-
-internal fun SniperSnapshot.stateText(): String = when (state) {
-  JOINING -> "Joining"
-  BIDDING -> "Bidding"
-  WINNING -> "Winning"
-  LOSING -> "Losing"
-  LOST -> "Lost"
-  WON -> "Won"
-  FAILED -> "Failed"
 }
 
 private fun <T> List<T>.indexOfFirstOrNull(predicate: (T) -> Boolean): Int? {

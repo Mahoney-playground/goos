@@ -15,7 +15,7 @@ internal class ApplicationRunner(
     driver.hasColumnTitles()
   }
 
-  fun startBiddingIn(
+  suspend fun startBiddingIn(
     auction: AuctionDriver,
     stopPrice: Int = Int.MAX_VALUE
   ) {
@@ -23,29 +23,29 @@ internal class ApplicationRunner(
     driver.showSniperState(auction.itemId, 0, 0, STATE_JOINING)
   }
 
-  fun startBiddingIn(vararg auctions: AuctionDriver) = auctions.forEach { startBiddingIn(it) }
+  suspend fun startBiddingIn(vararg auctions: AuctionDriver) = auctions.forEach { startBiddingIn(it) }
 
-  fun showSniperHasLostAuction(auction: AuctionDriver, lastPrice: Int, lastBid: Int) {
+  suspend fun showSniperHasLostAuction(auction: AuctionDriver, lastPrice: Int, lastBid: Int) {
     driver.showSniperState(auction.itemId, lastPrice, lastBid, STATE_LOST)
   }
 
-  fun hasShownSniperIsBidding(auction: AuctionDriver, lastPrice: Int, lastBid: Int) {
+  suspend fun hasShownSniperIsBidding(auction: AuctionDriver, lastPrice: Int, lastBid: Int) {
     driver.showSniperState(auction.itemId, lastPrice, lastBid, STATE_BIDDING)
   }
 
-  fun hasShownSniperIsWinning(auction: AuctionDriver, winningBid: Int) {
+  suspend fun hasShownSniperIsWinning(auction: AuctionDriver, winningBid: Int) {
     driver.showSniperState(auction.itemId, winningBid, winningBid, STATE_WINNING)
   }
 
-  fun hasShownSniperIsLosing(auction: AuctionDriver, lastPrice: Int, lastBid: Int) {
+  suspend fun hasShownSniperIsLosing(auction: AuctionDriver, lastPrice: Int, lastBid: Int) {
     driver.showSniperState(auction.itemId, lastPrice, lastBid, STATE_LOSING)
   }
 
-  fun showSniperHasWonAuction(auction: AuctionDriver, lastPrice: Int) {
+  suspend fun showSniperHasWonAuction(auction: AuctionDriver, lastPrice: Int) {
     driver.showSniperState(auction.itemId, lastPrice, lastPrice, STATE_WON)
   }
 
-  fun showsSniperHasFailed(auction: AuctionDriver) {
+  suspend fun showsSniperHasFailed(auction: AuctionDriver) {
     driver.showSniperState(auction.itemId, 0, 0, STATE_FAILED)
   }
 

@@ -173,7 +173,7 @@ internal fun auctionSniperEndToEndTest(
 }
 
 @ExperimentalTime
-internal fun ApplicationRunner.waitForAnotherAuctionEvent(
+internal suspend fun ApplicationRunner.waitForAnotherAuctionEvent(
   auction2: AuctionDriver
 ) {
   auction2.startSellingItem()
