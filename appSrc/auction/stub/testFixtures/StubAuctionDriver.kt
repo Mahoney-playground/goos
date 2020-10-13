@@ -45,9 +45,8 @@ class StubAuctionDriver(
 
   @ExperimentalTime
   private suspend fun hasReceivedMessage(sniperId: String, expectedMessage: String) {
-    val messages = auctionServer.messagesFor(itemId)
     eventually(1.seconds) {
-      messages shouldContain Message(sniperId, expectedMessage)
+      auctionServer.messagesFor(itemId) shouldContain Message(sniperId, expectedMessage)
     }
   }
 
