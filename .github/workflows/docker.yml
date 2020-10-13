@@ -5,6 +5,7 @@ on:
     branches-ignore:
       - 'abandoned-*'
   schedule:
+    # Daily at 2AM
     # * is a special character in YAML so you have to quote this string
     - cron: '0 2 * * *'
 
@@ -30,6 +31,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ runner.temp }}/docker_cache
+          # Always want a cache miss on the first build of the day, which should be the scheduled
+          # overnight one. Proves the build works from scratch, and gives you a nice clean cache to
+          # work with each day.
           key: ${{ env.cache-name }}_${{ steps.date.outputs.date }}-${{ github.ref }}-${{ github.run_number }}
           restore-keys: |
             ${{ env.cache-name }}_${{ steps.date.outputs.date }}-${{ github.ref }}-
