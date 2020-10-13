@@ -92,6 +92,10 @@ subprojects {
 
       register<DependencyReportTask>("allDeps")
     }
+
+    kotlinter {
+      reporters = arrayOf("checkstyle", "plain", "html")
+    }
   }
 
   pluginManager.withPlugin("java-test-fixtures") {

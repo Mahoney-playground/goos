@@ -6,9 +6,9 @@ import goos.ui.api.PortfolioListener
 import goos.ui.api.SniperListener
 import goos.ui.api.SniperNotifier
 import goos.ui.api.SniperSnapshot
-import goos.ui.api.stateText
 import goos.ui.api.UI
 import goos.ui.api.UserRequestListener
+import goos.ui.api.stateText
 import java.util.concurrent.atomic.AtomicBoolean
 
 class StubUi : UI {
@@ -24,7 +24,7 @@ class StubUi : UI {
 
   private val userRequestListeners = MultiUserRequestListener()
 
-  override val portfolioListener: PortfolioListener =  object : PortfolioListener {
+  override val portfolioListener: PortfolioListener = object : PortfolioListener {
     override fun sniperAdded(sniper: SniperNotifier) {
       sniper.addSniperListener(object : SniperListener {
         override fun sniperStateChanged(sniperSnapshot: SniperSnapshot) {

@@ -23,7 +23,9 @@ internal class ApplicationRunner(
     driver.showSniperState(auction.itemId, 0, 0, STATE_JOINING)
   }
 
-  suspend fun startBiddingIn(vararg auctions: AuctionDriver) = auctions.forEach { startBiddingIn(it) }
+  suspend fun startBiddingIn(vararg auctions: AuctionDriver) = auctions.forEach {
+    startBiddingIn(it)
+  }
 
   suspend fun showSniperHasLostAuction(auction: AuctionDriver, lastPrice: Int, lastBid: Int) {
     driver.showSniperState(auction.itemId, lastPrice, lastBid, STATE_LOST)

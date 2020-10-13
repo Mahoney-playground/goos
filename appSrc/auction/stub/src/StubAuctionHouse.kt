@@ -4,7 +4,6 @@ import goos.auction.api.Auction
 import goos.auction.api.AuctionHouse
 import goos.auction.sol.MessageTransport
 import goos.auction.sol.SolAuction
-import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
 
 class StubAuctionHouse(
@@ -16,7 +15,7 @@ class StubAuctionHouse(
 
   override fun auctionFor(itemId: String): Auction {
     connected.set(true)
-    return SolAuction(itemId) { messageListener ->
+    return SolAuction(sniperId) { messageListener ->
       stubAuctionServer.liveAuctions[itemId]?.subscribe(messageListener)
       StubMessageTransport(sniperId) { sniperId, message ->
         stubAuctionServer.liveAuctions[itemId]?.receiveMessage(Message(sniperId, message))

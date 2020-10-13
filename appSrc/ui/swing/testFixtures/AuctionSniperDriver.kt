@@ -4,7 +4,6 @@ import goos.ui.api.UiDriver
 import io.kotest.assertions.timing.eventually
 import io.kotest.inspectors.forOne
 import io.kotest.matchers.shouldBe
-import kotlinx.coroutines.runBlocking
 import org.openqa.selenium.By
 import org.openqa.selenium.NoSuchElementException
 import org.openqa.selenium.WebElement

@@ -11,7 +11,12 @@ class StubUiDriver(
   override fun hasBasicAttributes() {}
 
   @ExperimentalTime
-  override suspend fun showSniperState(itemId: String, lastPrice: Int, lastBid: Int, stateText: String) {
+  override suspend fun showSniperState(
+    itemId: String,
+    lastPrice: Int,
+    lastBid: Int,
+    stateText: String,
+  ) {
     ui.snipers[itemId] shouldBe SniperRow(itemId, lastPrice, lastBid, stateText)
   }
 

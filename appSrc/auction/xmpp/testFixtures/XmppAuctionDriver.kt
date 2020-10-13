@@ -66,15 +66,15 @@ class XmppAuctionDriver(
     c.disconnect()
   }
 
-  override suspend fun hasReceivedJoinRequestFrom(sniperId: String) = receivesAMessageMatching(sniperId) {
+  override suspend fun hasReceivedJoinRequestFrom(sniperId: String) = hasReceivedMessage(sniperId) {
     it shouldBe "SOLVersion: 1.1; Command: JOIN;"
   }
 
-  override suspend fun hasReceivedBid(bid: Int, sniperId: String) = receivesAMessageMatching(sniperId) {
+  override suspend fun hasReceivedBid(bid: Int, sniperId: String) = hasReceivedMessage(sniperId) {
     it shouldBe "SOLVersion: 1.1; Command: BID; Price: $bid;"
   }
 
-  private fun receivesAMessageMatching(
+  private fun hasReceivedMessage(
     sniperId: String,
     matcher: (String?) -> Unit
   ) {

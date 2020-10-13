@@ -5,8 +5,9 @@ plugins {
 
 dependencies {
 
-  api(kotlin("stdlib"))
   api(project(":ui-api"))
+
+  implementation(kotlin("stdlib"))
 
   testImplementation(kotest("assertions-core"))
   testImplementation(kotest("assertions-shared"))
