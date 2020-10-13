@@ -1,31 +1,57 @@
 package goos.auction.stub
 
+import goos.auction.sol.MessageListener
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
+import java.util.concurrent.CopyOnWriteArrayList
 
 class StubAuctionServer {
 
-  val liveAuctions: ConcurrentMap<String, StubAuctionBroker> = ConcurrentHashMap()
-  val closedAuctions: ConcurrentMap<String, StubAuctionBroker> = ConcurrentHashMap()
+  private val auctions: ConcurrentMap<String, StubAuctionBroker> = ConcurrentHashMap()
 
   fun startAuction(itemId: String) {
-    liveAuctions[itemId] = StubAuctionBroker()
+    auctions[itemId] = StubAuctionBroker()
   }
 
   fun close(itemId: String) {
     sendToSubscribers(itemId, "SOLVersion: 1.1; Event: CLOSE;")
-    liveAuctions.remove(itemId)?.let { auction ->
-      closedAuctions[itemId] = auction
-    }
   }
 
   fun sendToSubscribers(itemId: String, message: String) {
-    liveAuctions[itemId]?.sendAuctionServerMessage(message)
+    auctions[itemId]?.sendAuctionServerMessage(message)
   }
 
-  fun allAuctions() = liveAuctions + closedAuctions
   fun reset() {
-    liveAuctions.clear()
-    closedAuctions.clear()
+    auctions.clear()
+  }
+
+  fun messagesFor(itemId: String): List<Message> = auctions[itemId]?.messages ?: emptyList()
+
+  fun subscribe(itemId: String, messageListener: MessageListener) {
+    auctions[itemId]?.subscribe(messageListener)
+  }
+
+  fun receiveMessage(itemId: String, message: Message) {
+    auctions[itemId]?.receiveMessage(message)
   }
 }
+
+private class StubAuctionBroker {
+
+  val messages: MutableList<Message> = CopyOnWriteArrayList()
+  private val subscriptions: MutableSet<MessageListener> = ConcurrentHashMap.newKeySet()
+
+  fun receiveMessage(message: Message) {
+    messages.add(message)
+  }
+
+  fun subscribe(messageListener: MessageListener) {
+    subscriptions.add(messageListener)
+  }
+
+  fun sendAuctionServerMessage(message: String) {
+    subscriptions.forEach { it.processMessage(message) }
+  }
+}
+
+data class Message(val from: String, val text: String)

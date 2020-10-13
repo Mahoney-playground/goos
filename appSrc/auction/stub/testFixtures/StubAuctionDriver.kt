@@ -3,7 +3,6 @@ package goos.auction.stub
 import goos.auction.api.AuctionDriver
 import io.kotest.assertions.timing.eventually
 import io.kotest.matchers.collections.shouldContain
-import io.kotest.matchers.nulls.shouldNotBeNull
 import kotlin.time.ExperimentalTime
 import kotlin.time.seconds
 
@@ -46,10 +45,9 @@ class StubAuctionDriver(
 
   @ExperimentalTime
   private suspend fun hasReceivedMessage(sniperId: String, expectedMessage: String) {
-    val auctionBroker = auctionServer.allAuctions()[itemId]
-    auctionBroker.shouldNotBeNull()
+    val messages = auctionServer.messagesFor(itemId)
     eventually(1.seconds) {
-      auctionBroker.messages shouldContain Message(sniperId, expectedMessage)
+      messages shouldContain Message(sniperId, expectedMessage)
     }
   }
 

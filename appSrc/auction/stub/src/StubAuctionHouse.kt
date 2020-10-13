@@ -16,9 +16,9 @@ class StubAuctionHouse(
   override fun auctionFor(itemId: String): Auction {
     connected.set(true)
     return SolAuction(sniperId) { messageListener ->
-      stubAuctionServer.liveAuctions[itemId]?.subscribe(messageListener)
+      stubAuctionServer.subscribe(itemId, messageListener)
       StubMessageTransport(sniperId) { sniperId, message ->
-        stubAuctionServer.liveAuctions[itemId]?.receiveMessage(Message(sniperId, message))
+        stubAuctionServer.receiveMessage(itemId, Message(sniperId, message))
       }
     }
   }
