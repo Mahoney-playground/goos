@@ -32,6 +32,8 @@ allprojects {
   }
 
   tasks.register<DownloadDependenciesTask>("downloadDependencies")
+
+  buildDir = File("$rootDir/build/${projectDir.absolutePath.substringAfter(rootDir.absolutePath)}")
 }
 
 subprojects {
@@ -153,13 +155,13 @@ tasks {
     doLast {
       copy {
         from(appInstallTask)
-        into(buildDir.resolve(project.name))
+        into(rootDir.resolve("output").resolve(project.name))
       }
     }
     doLast {
       copy {
         from(appJavaAgents)
-        into(buildDir.resolve(project.name).resolve("lib/agents"))
+        into(buildDir.resolve("output").resolve(project.name).resolve("lib/agents"))
       }
     }
   }

@@ -33,10 +33,18 @@ COPY --chown=$username . .
 # Can't use docker ARG values in the --mount argument: https://github.com/moby/buildkit/issues/815
 # Do all the downloading in one step...
 RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
+    --mount=type=cache,target=/home/worker/work/.gradle,gid=1000,uid=1001 \
+    --mount=type=cache,target=/home/worker/work/build,gid=1000,uid=1001 \
+    --mount=type=cache,target=/home/worker/work/buildSrc/.gradle,gid=1000,uid=1001 \
+    --mount=type=cache,target=/home/worker/work/buildSrc/build,gid=1000,uid=1001 \
     ./gradlew downloadDependencies
 
 # So the actual build can run without network access. Proves no tests rely on external services.
 RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
+    --mount=type=cache,target=/home/worker/work/.gradle,gid=1000,uid=1001 \
+    --mount=type=cache,target=/home/worker/work/build,gid=1000,uid=1001 \
+    --mount=type=cache,target=/home/worker/work/buildSrc/.gradle,gid=1000,uid=1001 \
+    --mount=type=cache,target=/home/worker/work/buildSrc/build,gid=1000,uid=1001 \
     --network=none \
     set +e; \
     simple-xvfb-run ./gradlew --offline build; \
@@ -110,10 +118,10 @@ FROM worker as app
 ARG username
 ARG work_dir
 
-# By coping across 3rd party dependencies in a separate step we allow caching of that layer, which
+# By copying across 3rd party dependencies in a separate step we allow caching of that layer, which
 # should be much less changeable than the jars we build
-COPY --from=checker --chown=$username $work_dir/build/goos/lib/external ./external
-COPY --from=checker --chown=$username $work_dir/build/goos/lib/internal ./internal
-COPY --from=checker --chown=$username $work_dir/build/goos/lib/goos.jar .
+COPY --from=checker --chown=$username $work_dir/output/goos/lib/external ./external
+COPY --from=checker --chown=$username $work_dir/output/goos/lib/internal ./internal
+COPY --from=checker --chown=$username $work_dir/output/goos/lib/goos.jar .
 
 ENTRYPOINT ["simple-xvfb-run", "java", "--illegal-access=deny", "-jar", "goos.jar"]
