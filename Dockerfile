@@ -6,6 +6,7 @@ FROM openjdk:14.0.1-jdk-slim as worker
 ARG username
 ARG work_dir
 
+# Install xvfb so that a GUI (and GUI tests) can run
 RUN apt-get -qq update && \
     DEBIAN_FRONTEND=noninteractive apt-get -qq -o=Dpkg::Use-Pty=0 install \
       libxrender1 libxtst6 libxi6 \
@@ -30,15 +31,25 @@ ENV GRADLE_OPTS='-Dorg.gradle.daemon=false -Xms256m -Xmx2g --illegal-access=deny
 COPY --chown=$username . .
 
 # Can't use docker ARG values in the --mount argument: https://github.com/moby/buildkit/issues/815
+# Do all the downloading in one step...
 RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
     ./gradlew downloadDependencies
 
+# So the actual build can run without network access. Proves no tests rely on external services.
 RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
     --network=none \
     set +e; \
     simple-xvfb-run ./gradlew --offline build; \
     echo $? > build_result;
 
+# The previous step is guaranteed not to fail, so that the worker output can be tagged and its
+# contents (build reports) extracted.
+# You run this as:
+# `docker build . --target builder -t goos-builder:$GITHUB_SHA && docker build . --target checker`
+# and you can then use
+# `docker cp $(docker create "goos-builder:$GITHUB_SHA"):/home/worker/work/build/reports reports`
+# to retrieve them whether or not the previous line exited successfully.
+# Workaround for https://github.com/moby/buildkit/issues/1421
 FROM builder as checker
 RUN build_result=$(cat build_result); \
     if [ "$build_result" -gt 0 ]; then >&2 echo "The build failed, check output of builder stage"; fi; \
@@ -99,6 +110,8 @@ FROM worker as app
 ARG username
 ARG work_dir
 
+# By coping across 3rd party dependencies in a separate step we allow caching of that layer, which
+# should be much less changeable than the jars we build
 COPY --from=checker --chown=$username $work_dir/build/goos/lib/external ./external
 COPY --from=checker --chown=$username $work_dir/build/goos/lib/internal ./internal
 COPY --from=checker --chown=$username $work_dir/build/goos/lib/goos.jar .
