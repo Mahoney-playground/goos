@@ -9,7 +9,7 @@ fun uiApiTests(
   uiDriver: UiDriver
 ): TestFactory = stringSpec {
 
-  "a possible test" {
+  "a test" {
 
     true shouldBe true
   }
