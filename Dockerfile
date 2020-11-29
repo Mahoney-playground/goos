@@ -43,7 +43,7 @@ RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
     echo $? > build_result;
 
 
-FROM scratch as test-results
+FROM scratch as build-reports
 ARG work_dir
 
 COPY --from=builder $work_dir/build/reports ./build-reports
