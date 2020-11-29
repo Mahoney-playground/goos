@@ -52,7 +52,7 @@ jobs:
 
       - name: Capture the reports as artifacts
         if: always()
-        run: ./scripts/retrieve-docker-build-logs.sh goos-builder ${{ github.sha }}
+        run: docker build . --target test-results --output builds/${{ github.sha }}/build-reports
 
       - name: Archive reports
         if: always()

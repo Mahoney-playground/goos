@@ -42,6 +42,12 @@ RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
     simple-xvfb-run ./gradlew --offline build; \
     echo $? > build_result;
 
+
+FROM scratch as test-results
+ARG work_dir
+
+COPY --from=builder $work_dir/build/reports ./build-reports
+
 # The previous step is guaranteed not to fail, so that the worker output can be tagged and its
 # contents (build reports) extracted.
 # You run this as:
@@ -52,7 +58,7 @@ RUN --mount=type=cache,target=/home/worker/.gradle,gid=1000,uid=1001 \
 # Workaround for https://github.com/moby/buildkit/issues/1421
 FROM builder as checker
 RUN build_result=$(cat build_result); \
-    if [ "$build_result" -gt 0 ]; then >&2 echo "The build failed, check output of builder stage"; fi; \
+    if [ "$build_result" -gt 0 ]; then >&2 echo "The build failed with ecit status $build_result, check output of builder stage"; fi; \
     exit "$build_result"
 
 
