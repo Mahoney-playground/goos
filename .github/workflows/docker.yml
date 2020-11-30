@@ -52,7 +52,7 @@ jobs:
 
       - name: Capture the reports as artifacts
         if: always()
-        run: docker build . --target build-reports --output builds/${{ github.sha }}/build-reports
+        run: docker build . --target build-reports --output builds/${{ github.sha }}
 
       - name: Archive reports
         if: always()
