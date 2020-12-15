@@ -1,27 +1,17 @@
 package goos.ui.api
 
+import uk.org.lidalia.kotlinlangext.notifiers.Notifier
+
 interface UserRequestListener {
   fun joinAuction(item: Item)
   fun reset()
   fun closeApplication()
 }
 
-class MultiUserRequestListener : UserRequestListener {
-  private val listeners = mutableListOf<UserRequestListener>()
+class MultiUserRequestListener : UserRequestListener, Notifier<UserRequestListener>() {
+  override fun joinAuction(item: Item) = notify { joinAuction(item) }
 
-  fun addListener(listener: UserRequestListener) {
-    listeners.add(listener)
-  }
+  override fun reset() = notify { reset() }
 
-  override fun joinAuction(item: Item) {
-    listeners.forEach { it.joinAuction(item) }
-  }
-
-  override fun reset() {
-    listeners.forEach { it.reset() }
-  }
-
-  override fun closeApplication() {
-    listeners.forEach { it.closeApplication() }
-  }
+  override fun closeApplication() = notify { closeApplication() }
 }

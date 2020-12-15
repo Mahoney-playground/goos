@@ -1,7 +1,7 @@
 package goos.auction.api
 
 import goos.auction.api.AuctionEventListener.PriceSource
-import java.util.concurrent.CopyOnWriteArrayList
+import uk.org.lidalia.kotlinlangext.notifiers.Notifier
 
 interface AuctionEventListener {
 
@@ -20,27 +20,17 @@ interface AuctionEventListener {
   fun auctionFailed()
 }
 
-class MultiAuctionEventListener : AuctionEventListener {
+class MultiAuctionEventListener : AuctionEventListener, Notifier<AuctionEventListener>() {
 
-  private val listeners = CopyOnWriteArrayList<AuctionEventListener>()
-
-  fun addListener(listener: AuctionEventListener) {
-    listeners.add(listener)
-  }
-
-  override fun auctionClosed() = listeners.forEach { it.auctionClosed() }
+  override fun auctionClosed() = notify { auctionClosed() }
 
   override fun currentPrice(
     price: Int,
     increment: Int,
     source: PriceSource
-  ) {
-    listeners.forEach { it.currentPrice(price, increment, source) }
-  }
+  ) = notify { currentPrice(price, increment, source) }
 
-  override fun auctionFailed() = listeners.forEach { it.auctionFailed() }
-
-  fun clear() = listeners.clear()
+  override fun auctionFailed() = notify { auctionFailed() }
 }
 
 interface NoOpAuctionEventListener : AuctionEventListener {

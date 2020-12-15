@@ -1,18 +1,14 @@
 package goos.ui.api
 
+import uk.org.lidalia.kotlinlangext.notifiers.Notifier
+
 interface SniperListener {
   fun sniperStateChanged(sniperSnapshot: SniperSnapshot)
 }
 
-class MultiSniperListener : SniperListener {
-
-  private val listeners = mutableListOf<SniperListener>()
+class MultiSniperListener : SniperListener, Notifier<SniperListener>() {
 
   override fun sniperStateChanged(sniperSnapshot: SniperSnapshot) {
-    listeners.forEach { it.sniperStateChanged(sniperSnapshot) }
-  }
-
-  fun addListener(sniperListener: SniperListener) {
-    listeners.add(sniperListener)
+    notify { sniperStateChanged(sniperSnapshot) }
   }
 }

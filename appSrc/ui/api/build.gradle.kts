@@ -4,6 +4,7 @@ plugins {
 }
 
 dependencies {
+  api(project(":kotlinlangext"))
   implementation(kotlin("stdlib"))
 
   testFixturesImplementation(kotlin("stdlib"))
