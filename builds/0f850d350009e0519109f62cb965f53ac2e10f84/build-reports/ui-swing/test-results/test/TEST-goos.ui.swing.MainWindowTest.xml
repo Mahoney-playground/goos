@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="goos.ui.swing.MainWindowTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2020-12-17T21:10:48" hostname="buildkitsandbox" time="3.775">
+  <properties/>
+  <testcase name="window has expected features" classname="goos.ui.swing.MainWindowTest" time="2.998"/>
+  <testcase name="make user request when join button clicked" classname="goos.ui.swing.MainWindowTest" time="0.598"/>
+  <testcase name="make user request when reset button clicked" classname="goos.ui.swing.MainWindowTest" time="0.173"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(POST /session): {
+  "desiredCapabilities": {
+    "browserName": "java",
+    "platform": "ANY"
+  },
+  "capabilities": {
+    "firstMatch": [
+      {
+        "browserName": "java"
+      }
+    ]
+  }
+}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer createSession
+INFO: Creating device with type: EVENT_QUEUE
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.Device getDevice
+INFO: Creating a EVENT_QUEUE device
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: POST(/session, {"desiredCapabilities":{"browserName":"java","platform":"ANY"},"capabilities":{"firstMatch":[{"browserName":"java"}]}}) = {data=, status=REDIRECT}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(GET /session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd): {}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: GET(/session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd) = {data={"name":"getCapabilities","sessionId":"b01e387e-6b08-46f7-b4f9-2c3e90e41ecd","value":{"applicationCacheEnabled":false,"rotatable":false,"loggingPrefs":{"driver":"ALL"},"handlesAlerts":false,"databaseEnabled":false,"version":"1.0","platform":"ANY","browserConnectionEnabled":false,"nativeEvents":false,"acceptSslCerts":false,"locationContextEnabled":false,"webStorageEnabled":false,"browserName":"java","takesScreenshot":true,"javascriptEnabled":true,"cssSelectorsEnabled":false},"status":0}, status=OK}
+Dec 17, 2020 9:10:51 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+INFO: Detected dialect: OSS
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(POST /session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/element): {
+  "using": "css selector",
+  "value": "."
+}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: POST(/session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/element, {"using":"css selector","value":"."}) = {data={"name":"findElement","sessionId":"b01e387e-6b08-46f7-b4f9-2c3e90e41ecd","value":{"ELEMENT":"145fc6c2-6217-4ba2-a017-711f0cba270c"},"status":0}, status=OK}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(GET /session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/element/145fc6c2-6217-4ba2-a017-711f0cba270c/attribute/name): {}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: GET(/session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/element/145fc6c2-6217-4ba2-a017-711f0cba270c/attribute/name) = {data={"name":"getElementAttribute","sessionId":"b01e387e-6b08-46f7-b4f9-2c3e90e41ecd","value":"Auction Sniper Name","status":0}, status=OK}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(POST /session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/element): {
+  "using": "css selector",
+  "value": "."
+}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: POST(/session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/element, {"using":"css selector","value":"."}) = {data={"name":"findElement","sessionId":"b01e387e-6b08-46f7-b4f9-2c3e90e41ecd","value":{"ELEMENT":"145fc6c2-6217-4ba2-a017-711f0cba270c"},"status":0}, status=OK}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(GET /session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/element/145fc6c2-6217-4ba2-a017-711f0cba270c/displayed): {}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: GET(/session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/element/145fc6c2-6217-4ba2-a017-711f0cba270c/displayed) = {data={"name":"isDisplayed","sessionId":"b01e387e-6b08-46f7-b4f9-2c3e90e41ecd","value":true,"status":0}, status=OK}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(GET /session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/title): {}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: GET(/session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/title) = {data={"name":"getWindowTitle","sessionId":"b01e387e-6b08-46f7-b4f9-2c3e90e41ecd","value":"Auction Sniper","status":0}, status=OK}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(POST /session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/element): {
+  "using": "name",
+  "value": "snipers table"
+}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: POST(/session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/element, {"using":"name","value":"snipers table"}) = {data={"name":"findElement","sessionId":"b01e387e-6b08-46f7-b4f9-2c3e90e41ecd","value":{"ELEMENT":"f84a9653-8492-49ac-822b-6c6ea5f25385"},"status":0}, status=OK}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(POST /session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/element/f84a9653-8492-49ac-822b-6c6ea5f25385/elements): {
+  "id": "f84a9653-8492-49ac-822b-6c6ea5f25385",
+  "using": "css selector",
+  "value": ".::header.::all-items"
+}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: POST(/session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/element/f84a9653-8492-49ac-822b-6c6ea5f25385/elements, {"using":"css selector","id":"f84a9653-8492-49ac-822b-6c6ea5f25385","value":".::header.::all-items"}) = {data={"name":"findElementsOfElement","sessionId":"b01e387e-6b08-46f7-b4f9-2c3e90e41ecd","value":[{"ELEMENT":"23299656-dab1-421a-bc93-62cca42454d4%23%7B%22selector%22%3A%22nth-item%22%2C%22parameters%22%3A%5B1%5D%7D"},{"ELEMENT":"23299656-dab1-421a-bc93-62cca42454d4%23%7B%22selector%22%3A%22nth-item%22%2C%22parameters%22%3A%5B2%5D%7D"},{"ELEMENT":"23299656-dab1-421a-bc93-62cca42454d4%23%7B%22selector%22%3A%22nth-item%22%2C%22parameters%22%3A%5B3%5D%7D"},{"ELEMENT":"23299656-dab1-421a-bc93-62cca42454d4%23%7B%22selector%22%3A%22nth-item%22%2C%22parameters%22%3A%5B4%5D%7D"}],"status":0}, status=OK}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(GET /session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/element/23299656-dab1-421a-bc93-62cca42454d4%23%7B%22selector%22%3A%22nth-item%22%2C%22parameters%22%3A%5B1%5D%7D/text): {}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: GET(/session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/element/23299656-dab1-421a-bc93-62cca42454d4%23%7B%22selector%22%3A%22nth-item%22%2C%22parameters%22%3A%5B1%5D%7D/text) = {data={"name":"getElementText","sessionId":"b01e387e-6b08-46f7-b4f9-2c3e90e41ecd","value":"Item","status":0}, status=OK}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(GET /session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/element/23299656-dab1-421a-bc93-62cca42454d4%23%7B%22selector%22%3A%22nth-item%22%2C%22parameters%22%3A%5B2%5D%7D/text): {}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: GET(/session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/element/23299656-dab1-421a-bc93-62cca42454d4%23%7B%22selector%22%3A%22nth-item%22%2C%22parameters%22%3A%5B2%5D%7D/text) = {data={"name":"getElementText","sessionId":"b01e387e-6b08-46f7-b4f9-2c3e90e41ecd","value":"Last Price","status":0}, status=OK}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(GET /session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/element/23299656-dab1-421a-bc93-62cca42454d4%23%7B%22selector%22%3A%22nth-item%22%2C%22parameters%22%3A%5B3%5D%7D/text): {}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: GET(/session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/element/23299656-dab1-421a-bc93-62cca42454d4%23%7B%22selector%22%3A%22nth-item%22%2C%22parameters%22%3A%5B3%5D%7D/text) = {data={"name":"getElementText","sessionId":"b01e387e-6b08-46f7-b4f9-2c3e90e41ecd","value":"Last Bid","status":0}, status=OK}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(GET /session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/element/23299656-dab1-421a-bc93-62cca42454d4%23%7B%22selector%22%3A%22nth-item%22%2C%22parameters%22%3A%5B4%5D%7D/text): {}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: GET(/session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/element/23299656-dab1-421a-bc93-62cca42454d4%23%7B%22selector%22%3A%22nth-item%22%2C%22parameters%22%3A%5B4%5D%7D/text) = {data={"name":"getElementText","sessionId":"b01e387e-6b08-46f7-b4f9-2c3e90e41ecd","value":"State","status":0}, status=OK}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(DELETE /session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/window): {}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: DELETE(/session/b01e387e-6b08-46f7-b4f9-2c3e90e41ecd/window) = {data={"name":"closeSession","sessionId":"b01e387e-6b08-46f7-b4f9-2c3e90e41ecd","status":0}, status=OK}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(POST /session): {
+  "desiredCapabilities": {
+    "browserName": "java",
+    "platform": "ANY"
+  },
+  "capabilities": {
+    "firstMatch": [
+      {
+        "browserName": "java"
+      }
+    ]
+  }
+}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer createSession
+INFO: Creating device with type: EVENT_QUEUE
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.Device getDevice
+INFO: Creating a EVENT_QUEUE device
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: POST(/session, {"desiredCapabilities":{"browserName":"java","platform":"ANY"},"capabilities":{"firstMatch":[{"browserName":"java"}]}}) = {data=, status=REDIRECT}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(GET /session/bcd79950-5ef4-46b6-92ce-37e77cec6b0f): {}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: GET(/session/bcd79950-5ef4-46b6-92ce-37e77cec6b0f) = {data={"name":"getCapabilities","sessionId":"bcd79950-5ef4-46b6-92ce-37e77cec6b0f","value":{"applicationCacheEnabled":false,"rotatable":false,"loggingPrefs":{"driver":"ALL"},"handlesAlerts":false,"databaseEnabled":false,"version":"1.0","platform":"ANY","browserConnectionEnabled":false,"nativeEvents":false,"acceptSslCerts":false,"locationContextEnabled":false,"webStorageEnabled":false,"browserName":"java","takesScreenshot":true,"javascriptEnabled":true,"cssSelectorsEnabled":false},"status":0}, status=OK}
+Dec 17, 2020 9:10:51 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+INFO: Detected dialect: OSS
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(POST /session/bcd79950-5ef4-46b6-92ce-37e77cec6b0f/element): {
+  "using": "name",
+  "value": "new item id field"
+}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: POST(/session/bcd79950-5ef4-46b6-92ce-37e77cec6b0f/element, {"using":"name","value":"new item id field"}) = {data={"name":"findElement","sessionId":"bcd79950-5ef4-46b6-92ce-37e77cec6b0f","value":{"ELEMENT":"1c46c231-f6a3-4eb0-83d1-106f517aacec"},"status":0}, status=OK}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(POST /session/bcd79950-5ef4-46b6-92ce-37e77cec6b0f/element/1c46c231-f6a3-4eb0-83d1-106f517aacec/clear): {
+  "id": "1c46c231-f6a3-4eb0-83d1-106f517aacec"
+}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: POST(/session/bcd79950-5ef4-46b6-92ce-37e77cec6b0f/element/1c46c231-f6a3-4eb0-83d1-106f517aacec/clear, {"id":"1c46c231-f6a3-4eb0-83d1-106f517aacec"}) = {data={"name":"clearElement","sessionId":"bcd79950-5ef4-46b6-92ce-37e77cec6b0f","status":0}, status=OK}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(POST /session/bcd79950-5ef4-46b6-92ce-37e77cec6b0f/element/1c46c231-f6a3-4eb0-83d1-106f517aacec/value): {
+  "id": "1c46c231-f6a3-4eb0-83d1-106f517aacec",
+  "value": [
+    "an item-id"
+  ]
+}
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_PRESSED,keyCode=65,keyText=A,keyChar='a',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_TYPED,keyCode=0,keyText=Unknown keyCode: 0x0,keyChar='a',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_RELEASED,keyCode=65,keyText=A,keyChar='a',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:51 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_PRESSED,keyCode=78,keyText=N,keyChar='n',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_TYPED,keyCode=0,keyText=Unknown keyCode: 0x0,keyChar='n',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_RELEASED,keyCode=78,keyText=N,keyChar='n',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_PRESSED,keyCode=16,keyText=Shift,keyChar=Undefined keyChar,modifiers=Shift,extModifiers=Shift,keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_PRESSED,keyCode=32,keyText=Space,keyChar=' ',modifiers=Shift,extModifiers=Shift,keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_TYPED,keyCode=0,keyText=Unknown keyCode: 0x0,keyChar=' ',modifiers=Shift,extModifiers=Shift,keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_RELEASED,keyCode=32,keyText=Space,keyChar=' ',modifiers=Shift,extModifiers=Shift,keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_RELEASED,keyCode=16,keyText=Shift,keyChar=Undefined keyChar,keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_PRESSED,keyCode=73,keyText=I,keyChar='i',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_TYPED,keyCode=0,keyText=Unknown keyCode: 0x0,keyChar='i',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_RELEASED,keyCode=73,keyText=I,keyChar='i',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_PRESSED,keyCode=84,keyText=T,keyChar='t',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_TYPED,keyCode=0,keyText=Unknown keyCode: 0x0,keyChar='t',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_RELEASED,keyCode=84,keyText=T,keyChar='t',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_PRESSED,keyCode=69,keyText=E,keyChar='e',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_TYPED,keyCode=0,keyText=Unknown keyCode: 0x0,keyChar='e',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_RELEASED,keyCode=69,keyText=E,keyChar='e',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_PRESSED,keyCode=77,keyText=M,keyChar='m',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_TYPED,keyCode=0,keyText=Unknown keyCode: 0x0,keyChar='m',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_RELEASED,keyCode=77,keyText=M,keyChar='m',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_PRESSED,keyCode=45,keyText=Minus,keyChar='-',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_TYPED,keyCode=0,keyText=Unknown keyCode: 0x0,keyChar='-',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_RELEASED,keyCode=45,keyText=Minus,keyChar='-',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_PRESSED,keyCode=73,keyText=I,keyChar='i',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_TYPED,keyCode=0,keyText=Unknown keyCode: 0x0,keyChar='i',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_RELEASED,keyCode=73,keyText=I,keyChar='i',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_PRESSED,keyCode=68,keyText=D,keyChar='d',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_TYPED,keyCode=0,keyText=Unknown keyCode: 0x0,keyChar='d',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_RELEASED,keyCode=68,keyText=D,keyChar='d',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item id field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: POST(/session/bcd79950-5ef4-46b6-92ce-37e77cec6b0f/element/1c46c231-f6a3-4eb0-83d1-106f517aacec/value, {"id":"1c46c231-f6a3-4eb0-83d1-106f517aacec","value":["an item-id"]}) = {data={"name":"sendKeysElement","sessionId":"bcd79950-5ef4-46b6-92ce-37e77cec6b0f","status":0}, status=OK}
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(POST /session/bcd79950-5ef4-46b6-92ce-37e77cec6b0f/element): {
+  "using": "name",
+  "value": "new item stop price field"
+}
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: POST(/session/bcd79950-5ef4-46b6-92ce-37e77cec6b0f/element, {"using":"name","value":"new item stop price field"}) = {data={"name":"findElement","sessionId":"bcd79950-5ef4-46b6-92ce-37e77cec6b0f","value":{"ELEMENT":"b1ab511b-7684-45d5-a7b7-cfeeef49d365"},"status":0}, status=OK}
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(POST /session/bcd79950-5ef4-46b6-92ce-37e77cec6b0f/element/b1ab511b-7684-45d5-a7b7-cfeeef49d365/clear): {
+  "id": "b1ab511b-7684-45d5-a7b7-cfeeef49d365"
+}
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: POST(/session/bcd79950-5ef4-46b6-92ce-37e77cec6b0f/element/b1ab511b-7684-45d5-a7b7-cfeeef49d365/clear, {"id":"b1ab511b-7684-45d5-a7b7-cfeeef49d365"}) = {data={"name":"clearElement","sessionId":"bcd79950-5ef4-46b6-92ce-37e77cec6b0f","status":0}, status=OK}
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(POST /session/bcd79950-5ef4-46b6-92ce-37e77cec6b0f/element/b1ab511b-7684-45d5-a7b7-cfeeef49d365/value): {
+  "id": "b1ab511b-7684-45d5-a7b7-cfeeef49d365",
+  "value": [
+    "11000"
+  ]
+}
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_PRESSED,keyCode=49,keyText=1,keyChar='1',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item stop price field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_TYPED,keyCode=0,keyText=Unknown keyCode: 0x0,keyChar='1',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item stop price field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_RELEASED,keyCode=49,keyText=1,keyChar='1',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item stop price field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_PRESSED,keyCode=49,keyText=1,keyChar='1',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item stop price field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_TYPED,keyCode=0,keyText=Unknown keyCode: 0x0,keyChar='1',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item stop price field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_RELEASED,keyCode=49,keyText=1,keyChar='1',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item stop price field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_PRESSED,keyCode=48,keyText=0,keyChar='0',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item stop price field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_TYPED,keyCode=0,keyText=Unknown keyCode: 0x0,keyChar='0',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item stop price field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_RELEASED,keyCode=48,keyText=0,keyChar='0',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item stop price field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_PRESSED,keyCode=48,keyText=0,keyChar='0',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item stop price field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_TYPED,keyCode=0,keyText=Unknown keyCode: 0x0,keyChar='0',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item stop price field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_RELEASED,keyCode=48,keyText=0,keyChar='0',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item stop price field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_PRESSED,keyCode=48,keyText=0,keyChar='0',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item stop price field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_TYPED,keyCode=0,keyText=Unknown keyCode: 0x0,keyChar='0',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item stop price field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.KeyEvent[KEY_RELEASED,keyCode=48,keyText=0,keyChar='0',keyLocation=KEY_LOCATION_UNKNOWN,rawCode=0,primaryLevelUnicode=0,scancode=0,extendedKeyCode=0x0] on new item stop price field
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: POST(/session/bcd79950-5ef4-46b6-92ce-37e77cec6b0f/element/b1ab511b-7684-45d5-a7b7-cfeeef49d365/value, {"id":"b1ab511b-7684-45d5-a7b7-cfeeef49d365","value":["11000"]}) = {data={"name":"sendKeysElement","sessionId":"bcd79950-5ef4-46b6-92ce-37e77cec6b0f","status":0}, status=OK}
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(POST /session/bcd79950-5ef4-46b6-92ce-37e77cec6b0f/element): {
+  "using": "name",
+  "value": "join button"
+}
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: POST(/session/bcd79950-5ef4-46b6-92ce-37e77cec6b0f/element, {"using":"name","value":"join button"}) = {data={"name":"findElement","sessionId":"bcd79950-5ef4-46b6-92ce-37e77cec6b0f","value":{"ELEMENT":"8fb66d29-889c-4db9-ab41-f61c413edf5a"},"status":0}, status=OK}
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(POST /session/bcd79950-5ef4-46b6-92ce-37e77cec6b0f/element/8fb66d29-889c-4db9-ab41-f61c413edf5a/click): {
+  "id": "8fb66d29-889c-4db9-ab41-f61c413edf5a"
+}
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.MouseEvent[MOUSE_PRESSED,(58,12),absolute(589,17),button=1,modifiers=Button1,extModifiers=Button1,clickCount=1] on join button
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.MouseEvent[MOUSE_RELEASED,(58,12),absolute(589,17),button=1,modifiers=Button1,clickCount=1] on join button
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.MouseEvent[MOUSE_CLICKED,(58,12),absolute(589,17),button=1,modifiers=Button1,clickCount=1] on join button
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: POST(/session/bcd79950-5ef4-46b6-92ce-37e77cec6b0f/element/8fb66d29-889c-4db9-ab41-f61c413edf5a/click, {"id":"8fb66d29-889c-4db9-ab41-f61c413edf5a"}) = {data={"name":"clickElement","sessionId":"bcd79950-5ef4-46b6-92ce-37e77cec6b0f","status":0}, status=OK}
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(DELETE /session/bcd79950-5ef4-46b6-92ce-37e77cec6b0f/window): {}
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: DELETE(/session/bcd79950-5ef4-46b6-92ce-37e77cec6b0f/window) = {data={"name":"closeSession","sessionId":"bcd79950-5ef4-46b6-92ce-37e77cec6b0f","status":0}, status=OK}
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(POST /session): {
+  "desiredCapabilities": {
+    "browserName": "java",
+    "platform": "ANY"
+  },
+  "capabilities": {
+    "firstMatch": [
+      {
+        "browserName": "java"
+      }
+    ]
+  }
+}
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer createSession
+INFO: Creating device with type: EVENT_QUEUE
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.Device getDevice
+INFO: Creating a EVENT_QUEUE device
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: POST(/session, {"desiredCapabilities":{"browserName":"java","platform":"ANY"},"capabilities":{"firstMatch":[{"browserName":"java"}]}}) = {data=, status=REDIRECT}
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(GET /session/722a58f6-e57a-48ba-a2bb-4b64225b451d): {}
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: GET(/session/722a58f6-e57a-48ba-a2bb-4b64225b451d) = {data={"name":"getCapabilities","sessionId":"722a58f6-e57a-48ba-a2bb-4b64225b451d","value":{"applicationCacheEnabled":false,"rotatable":false,"loggingPrefs":{"driver":"ALL"},"handlesAlerts":false,"databaseEnabled":false,"version":"1.0","platform":"ANY","browserConnectionEnabled":false,"nativeEvents":false,"acceptSslCerts":false,"locationContextEnabled":false,"webStorageEnabled":false,"browserName":"java","takesScreenshot":true,"javascriptEnabled":true,"cssSelectorsEnabled":false},"status":0}, status=OK}
+Dec 17, 2020 9:10:52 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+INFO: Detected dialect: OSS
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(POST /session/722a58f6-e57a-48ba-a2bb-4b64225b451d/element): {
+  "using": "name",
+  "value": "sniper reset button"
+}
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: POST(/session/722a58f6-e57a-48ba-a2bb-4b64225b451d/element, {"using":"name","value":"sniper reset button"}) = {data={"name":"findElement","sessionId":"722a58f6-e57a-48ba-a2bb-4b64225b451d","value":{"ELEMENT":"f2a5b5b4-f221-4042-b07f-d624e07352b1"},"status":0}, status=OK}
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(POST /session/722a58f6-e57a-48ba-a2bb-4b64225b451d/element/f2a5b5b4-f221-4042-b07f-d624e07352b1/click): {
+  "id": "f2a5b5b4-f221-4042-b07f-d624e07352b1"
+}
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.MouseEvent[MOUSE_PRESSED,(37,12),absolute(326,474),button=1,modifiers=Button1,extModifiers=Button1,clickCount=1] on sniper reset button
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.MouseEvent[MOUSE_RELEASED,(37,12),absolute(326,474),button=1,modifiers=Button1,clickCount=1] on sniper reset button
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.EventQueueDevice dispatchEvent
+INFO: java.awt.event.MouseEvent[MOUSE_CLICKED,(37,12),absolute(326,474),button=1,modifiers=Button1,clickCount=1] on sniper reset button
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: POST(/session/722a58f6-e57a-48ba-a2bb-4b64225b451d/element/f2a5b5b4-f221-4042-b07f-d624e07352b1/click, {"id":"f2a5b5b4-f221-4042-b07f-d624e07352b1"}) = {data={"name":"clickElement","sessionId":"722a58f6-e57a-48ba-a2bb-4b64225b451d","status":0}, status=OK}
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(DELETE /session/722a58f6-e57a-48ba-a2bb-4b64225b451d/window): {}
+Dec 17, 2020 9:10:52 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: DELETE(/session/722a58f6-e57a-48ba-a2bb-4b64225b451d/window) = {data={"name":"closeSession","sessionId":"722a58f6-e57a-48ba-a2bb-4b64225b451d","status":0}, status=OK}
+]]></system-err>
+</testsuite>
