@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Kotest" tests="2" skipped="0" failures="0" errors="1" time="2.573" hostname="6623ce21118e" timestamp="2020-12-17T22:38:06">
+<properties>
+<property name="file.encoding" value="UTF-8"/>
+<property name="file.separator" value="/"/>
+<property name="java.class.path" value="auction-xmpp-integration-tests.jar"/>
+<property name="java.class.version" value="59.0"/>
+<property name="java.home" value="/usr/local/openjdk-15"/>
+<property name="java.io.tmpdir" value="/tmp"/>
+<property name="java.library.path" value="/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib"/>
+<property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+<property name="java.runtime.version" value="15.0.1+9-18"/>
+<property name="java.specification.name" value="Java Platform API Specification"/>
+<property name="java.specification.vendor" value="Oracle Corporation"/>
+<property name="java.specification.version" value="15"/>
+<property name="java.vendor" value="Oracle Corporation"/>
+<property name="java.vendor.url" value="https://java.oracle.com/"/>
+<property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+<property name="java.version" value="15.0.1"/>
+<property name="java.version.date" value="2020-10-20"/>
+<property name="java.vm.compressedOopsMode" value="32-bit"/>
+<property name="java.vm.info" value="mixed mode, sharing"/>
+<property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+<property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+<property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+<property name="java.vm.specification.version" value="15"/>
+<property name="java.vm.vendor" value="Oracle Corporation"/>
+<property name="java.vm.version" value="15.0.1+9-18"/>
+<property name="jdk.debug" value="release"/>
+<property name="line.separator" value="
+"/>
+<property name="os.arch" value="amd64"/>
+<property name="os.name" value="Linux"/>
+<property name="os.version" value="5.4.0-1032-azure"/>
+<property name="path.separator" value=":"/>
+<property name="sun.arch.data.model" value="64"/>
+<property name="sun.boot.library.path" value="/usr/local/openjdk-15/lib"/>
+<property name="sun.cpu.endian" value="little"/>
+<property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+<property name="sun.java.command" value="auction-xmpp-integration-tests.jar --disable-banner --reports-dir=build/reports"/>
+<property name="sun.java.launcher" value="SUN_STANDARD"/>
+<property name="sun.jnu.encoding" value="UTF-8"/>
+<property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+<property name="user.dir" value="/home/worker/work"/>
+<property name="user.home" value="/home/worker"/>
+<property name="user.language" value="en"/>
+<property name="user.name" value="worker"/>
+<property name="user.timezone" value="Etc/UTC"/>
+</properties>
+<testcase name="receives events from auction server after joining" classname="goos.auction.xmpp.integration.XMPPAuctionTest" time="1.107">
+<system-out><![CDATA[
+unique-id: [engine:kotest]/[spec:goos.auction.xmpp.integration.XMPPAuctionTest]/[test:receives events from auction server after joining]
+display-name: receives events from auction server after joining
+]]></system-out>
+</testcase>
+<testcase name="stops receiving events from auction server after failure" classname="goos.auction.xmpp.integration.XMPPAuctionTest" time="0.126">
+<error message="Cannot read field &quot;version&quot; because &quot;capsVersionAndHash&quot; is null" type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException: Cannot read field "version" because "capsVersionAndHash" is null
+	at org.jivesoftware.smackx.caps.EntityCapsManager.addCapsExtension(EntityCapsManager.java:316)
+	at org.jivesoftware.smack.AbstractXMPPConnection.fireMessageOrPresenceInterceptors(AbstractXMPPConnection.java:1301)
+	at org.jivesoftware.smack.AbstractXMPPConnection.firePacketInterceptors(AbstractXMPPConnection.java:1342)
+	at org.jivesoftware.smack.AbstractXMPPConnection.sendStanza(AbstractXMPPConnection.java:879)
+	at org.jivesoftware.smack.AbstractXMPPConnection.afterSuccessfulLogin(AbstractXMPPConnection.java:806)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection.afterSuccessfulLogin(XMPPTCPConnection.java:371)
+	at org.jivesoftware.smack.tcp.XMPPTCPConnection.loginInternal(XMPPTCPConnection.java:469)
+	at org.jivesoftware.smack.AbstractXMPPConnection.login(AbstractXMPPConnection.java:641)
+	at org.jivesoftware.smack.AbstractXMPPConnection.login(AbstractXMPPConnection.java:615)
+	at goos.auction.xmpp.XmppAuctionDriver.createUser(XmppAuctionDriver.kt:61)
+	at goos.auction.xmpp.XmppAuctionDriver.access$createUser(XmppAuctionDriver.kt:20)
+	at goos.auction.xmpp.XmppAuctionDriver$connection$2.invoke(XmppAuctionDriver.kt:25)
+	at goos.auction.xmpp.XmppAuctionDriver$connection$2.invoke(XmppAuctionDriver.kt:20)
+	at kotlin.SynchronizedLazyImpl.getValue(LazyJVM.kt:74)
+	at goos.auction.xmpp.XmppAuctionDriver.getConnection(XmppAuctionDriver.kt)
+	at goos.auction.xmpp.XmppAuctionDriver.startSellingItem(XmppAuctionDriver.kt:40)
+	at goos.auction.api.AuctionApiTestsKt$auctionApiTests$1$2.invokeSuspend(AuctionApiTests.kt:40)
+	at goos.auction.api.AuctionApiTestsKt$auctionApiTests$1$2.invoke(AuctionApiTests.kt)
+	at io.kotest.core.internal.ExecutionsKt$executeWithBehaviours$2$1.invokeSuspend(executions.kt:13)
+	at io.kotest.core.internal.ExecutionsKt$executeWithBehaviours$2$1.invoke(executions.kt)
+	at io.kotest.core.internal.ExecutionsKt.wrapTestWithGlobalAssert(executions.kt:39)
+	at io.kotest.core.internal.ExecutionsKt$executeWithBehaviours$2.invokeSuspend(executions.kt:12)
+	at io.kotest.core.internal.ExecutionsKt$executeWithBehaviours$2.invoke(executions.kt)
+	at io.kotest.core.internal.ExecutionsKt$wrapTestWithAssertionModeCheck$2.invokeSuspend(executions.kt:25)
+	at io.kotest.core.internal.ExecutionsKt$wrapTestWithAssertionModeCheck$2.invoke(executions.kt)
+	at io.kotest.core.internal.AssertionsCheckKt.executeWithAssertionsCheck(assertionsCheck.kt:25)
+	at io.kotest.core.internal.ExecutionsKt.wrapTestWithAssertionModeCheck(executions.kt:24)
+	at io.kotest.core.internal.ExecutionsKt.executeWithBehaviours(executions.kt:11)
+	at io.kotest.core.internal.TestCaseExecutor$executeInScope$2.invokeSuspend(TestCaseExecutor.kt:258)
+	at io.kotest.core.internal.TestCaseExecutor$executeInScope$2.invoke(TestCaseExecutor.kt)
+	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturn(Undispatched.kt:91)
+	at kotlinx.coroutines.CoroutineScopeKt.coroutineScope(CoroutineScope.kt:194)
+	at io.kotest.core.internal.TestCaseExecutor.executeInScope(TestCaseExecutor.kt:252)
+	at io.kotest.core.internal.TestCaseExecutor$executeAndWait$2$1$3$1$1.invokeSuspend(TestCaseExecutor.kt:227)
+	at io.kotest.core.internal.TestCaseExecutor$executeAndWait$2$1$3$1$1.invoke(TestCaseExecutor.kt)
+	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturnIgnoreTimeout(Undispatched.kt:102)
+	at kotlinx.coroutines.TimeoutKt.setupTimeout(Timeout.kt:148)
+	at kotlinx.coroutines.TimeoutKt.withTimeout(Timeout.kt:44)
+	at io.kotest.core.internal.TestCaseExecutor$executeAndWait$2$1$3$1.invokeSuspend(TestCaseExecutor.kt:226)
+	at io.kotest.core.internal.TestCaseExecutor$executeAndWait$2$1$3$1.invoke(TestCaseExecutor.kt)
+	at io.kotest.engine.ExecutorExecutionContext$executeWithTimeoutInterruption$$inlined$suspendCoroutine$lambda$2.invokeSuspend(ExecutorExecutionContext.kt:56)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:106)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:274)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:84)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:59)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source)
+	at io.kotest.engine.ExecutorExecutionContext.executeWithTimeoutInterruption(ExecutorExecutionContext.kt:55)
+	at io.kotest.core.internal.TestCaseExecutor$executeAndWait$2$1$3.invokeSuspend(TestCaseExecutor.kt:225)
+	at io.kotest.core.internal.TestCaseExecutor$executeAndWait$2$1$3.invoke(TestCaseExecutor.kt)
+	at io.kotest.mpp.ReplayKt.replay(replay.kt:18)
+	at io.kotest.core.internal.TestCaseExecutor$executeAndWait$2$1.invokeSuspend(TestCaseExecutor.kt:220)
+	at io.kotest.core.internal.TestCaseExecutor$executeAndWait$2$1.invoke(TestCaseExecutor.kt)
+	at io.kotest.engine.ExecutorExecutionContext$executeWithTimeoutInterruption$$inlined$suspendCoroutine$lambda$2.invokeSuspend(ExecutorExecutionContext.kt:56)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:106)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:274)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:84)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:59)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source)
+	at io.kotest.engine.ExecutorExecutionContext.executeWithTimeoutInterruption(ExecutorExecutionContext.kt:55)
+	at io.kotest.core.internal.TestCaseExecutor$executeAndWait$2.invokeSuspend(TestCaseExecutor.kt:213)
+	at io.kotest.core.internal.TestCaseExecutor$executeAndWait$2.invoke(TestCaseExecutor.kt)
+	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturnIgnoreTimeout(Undispatched.kt:102)
+	at kotlinx.coroutines.TimeoutKt.setupTimeout(Timeout.kt:148)
+	at kotlinx.coroutines.TimeoutKt.withTimeout(Timeout.kt:44)
+	at io.kotest.core.internal.TestCaseExecutor.executeAndWait(TestCaseExecutor.kt:212)
+	at io.kotest.core.internal.TestCaseExecutor.invokeTestCase(TestCaseExecutor.kt:180)
+	at io.kotest.core.internal.TestCaseExecutor.executeActiveTest(TestCaseExecutor.kt:149)
+	at io.kotest.core.internal.TestCaseExecutor$intercept$innerExecute$1$1.invokeSuspend(TestCaseExecutor.kt:87)
+	at io.kotest.core.internal.TestCaseExecutor$intercept$innerExecute$1$1.invoke(TestCaseExecutor.kt)
+	at io.kotest.core.internal.TestCaseExecutor.executeIfActive(TestCaseExecutor.kt:113)
+	at io.kotest.core.internal.TestCaseExecutor$intercept$innerExecute$1.invokeSuspend(TestCaseExecutor.kt:87)
+	at io.kotest.core.internal.TestCaseExecutor$intercept$innerExecute$1.invoke(TestCaseExecutor.kt)
+	at io.kotest.core.internal.TestCaseExecutor.intercept(TestCaseExecutor.kt:101)
+	at io.kotest.core.internal.TestCaseExecutor.execute(TestCaseExecutor.kt:67)
+	at io.kotest.engine.runners.InstancePerTestSpecRunner$run$2.invokeSuspend(InstancePerTestSpecRunner.kt:149)
+	at io.kotest.engine.runners.InstancePerTestSpecRunner$run$2.invoke(InstancePerTestSpecRunner.kt)
+	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturn(Undispatched.kt:91)
+	at kotlinx.coroutines.CoroutineScopeKt.coroutineScope(CoroutineScope.kt:194)
+	at io.kotest.engine.runners.InstancePerTestSpecRunner.run(InstancePerTestSpecRunner.kt:113)
+	at io.kotest.engine.runners.InstancePerTestSpecRunner.interceptAndRun(InstancePerTestSpecRunner.kt:107)
+	at io.kotest.engine.runners.InstancePerTestSpecRunner.executeInCleanSpec(InstancePerTestSpecRunner.kt:98)
+	at io.kotest.engine.runners.InstancePerTestSpecRunner$execute$$inlined$invoke$lambda$1.invokeSuspend(InstancePerTestSpecRunner.kt:77)
+	at io.kotest.engine.runners.InstancePerTestSpecRunner$execute$$inlined$invoke$lambda$1.invoke(InstancePerTestSpecRunner.kt)
+	at io.kotest.engine.spec.SpecRunner$runParallel$$inlined$map$lambda$2$1.invokeSuspend(SpecRunner.kt:80)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:106)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:274)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:84)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:59)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:38)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source)
+	at io.kotest.engine.spec.SpecRunner$runParallel$$inlined$map$lambda$2.run(SpecRunner.kt:79)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+	at java.base/java.lang.Thread.run(Thread.java:832)
+]]></error>
+<system-out><![CDATA[
+unique-id: [engine:kotest]/[spec:goos.auction.xmpp.integration.XMPPAuctionTest]/[test:stops receiving events from auction server after failure]
+display-name: stops receiving events from auction server after failure
+]]></system-out>
+</testcase>
+<system-out><![CDATA[
+unique-id: [engine:kotest]
+display-name: Kotest
+]]></system-out>
+</testsuite>
