@@ -8,7 +8,7 @@ import org.jmailen.gradle.kotlinter.KotlinterPlugin
 
 plugins {
   base
-  kotlin("jvm") version "1.4.10" apply false
+  kotlin("jvm") version "1.4.21" apply false
   id("com.autonomousapps.dependency-analysis") version "0.69.0"
   id("org.jmailen.kotlinter") version "3.3.0"
   id("com.vanniktech.dependency.graph.generator") version "0.5.0"
