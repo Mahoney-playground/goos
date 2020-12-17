@@ -7,7 +7,7 @@ dependencies {
   constraints {
     implementation(mockk)
   }
-  implementation("org.junit.platform:junit-platform-console:1.6.0")
+  implementation("org.junit.platform:junit-platform-console:1.7.0")
 
   implementation(project(":clioptions"))
   implementation(project(":indexhtml"))
