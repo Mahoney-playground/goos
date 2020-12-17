@@ -5,7 +5,6 @@ plugins {
 
 dependencies {
 
-  implementation(kotlin("stdlib"))
   implementation(kotest("framework-api"))
   implementation(kotest("framework-api-jvm"))
 

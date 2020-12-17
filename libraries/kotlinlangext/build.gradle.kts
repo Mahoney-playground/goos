@@ -5,7 +5,6 @@ plugins {
 group = "uk.org.lidalia"
 
 dependencies {
-  api(kotlin("stdlib"))
   api(kotlinCoroutines("core-jvm"))
 
   implementation(kotlinCoroutines("core"))

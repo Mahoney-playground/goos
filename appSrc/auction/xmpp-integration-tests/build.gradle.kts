@@ -6,7 +6,6 @@ plugins {
 dependencies {
   implementation(kotest("framework-api-jvm"))
 
-  implementation(kotlin("stdlib"))
   implementation(kotlinCoroutines("core"))
 
   implementation(project(":testlauncher"))

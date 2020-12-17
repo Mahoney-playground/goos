@@ -4,7 +4,6 @@ plugins {
 
 dependencies {
   api(project(":auction-api"))
-  api(kotlin("stdlib"))
   implementation(project(":kotlinlangext"))
 }
 

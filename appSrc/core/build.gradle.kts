@@ -6,7 +6,6 @@ dependencies {
   api(project(":ui-api"))
   api(project(":auction-api"))
 
-  implementation(kotlin("stdlib"))
   implementation(project(":kotlinlangext"))
 }
 

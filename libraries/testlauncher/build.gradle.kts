@@ -3,7 +3,6 @@ plugins {
 }
 
 dependencies {
-  implementation(kotlin("stdlib"))
   implementation(kotest("runner-junit5"))
   constraints {
     implementation(mockk)

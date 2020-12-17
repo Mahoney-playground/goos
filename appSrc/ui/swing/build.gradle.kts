@@ -6,8 +6,6 @@ plugins {
 dependencies {
   api(project(":ui-api"))
 
-  implementation(kotlin("stdlib"))
-
   testFixturesApi(selenium("api"))
   testFixturesApi(selenium("remote-driver"))
 

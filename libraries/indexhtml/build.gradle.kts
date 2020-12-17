@@ -3,8 +3,6 @@ plugins {
 }
 
 dependencies {
-  api(kotlin("stdlib"))
-
   implementation(kotlinxHtml("jvm"))
   implementation(kotlinCoroutines("core"))
   implementation(kotlinCoroutines("core-jvm"))

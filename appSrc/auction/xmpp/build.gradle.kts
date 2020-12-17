@@ -8,7 +8,6 @@ dependencies {
   api(project(":auction-api"))
   implementation(project(":auction-sol"))
 
-  implementation(kotlin("stdlib"))
   implementation(smack("tcp"))
   implementation(smack("core"))
   implementation(smack("im"))
@@ -18,7 +17,6 @@ dependencies {
   runtimeOnly(smack("java7"))
 
   testFixturesApi(testFixtures(project(":auction-api")))
-  testFixturesApi(kotlin("stdlib"))
   testFixturesApi(smack("core"))
   testFixturesApi(smack("im"))
 
