@@ -12,7 +12,6 @@ dependencies {
   implementation(testFixtures(project(":ui-swing")))
   implementation(testFixtures(project(":auction-api")))
   implementation(testFixtures(project(":auction-xmpp")))
-  implementation(selenium("remote-driver"))
 
   implementation(kotlinCoroutines("core"))
   constraints {
@@ -20,11 +19,11 @@ dependencies {
   }
 
   implementation(project(":testlauncher"))
+  implementation(selenium("api"))
 
   testImplementation(project(":testcontainers"))
   testImplementation("ch.qos.logback:logback-classic:1.2.3")
   testImplementation(kotest("extensions-testcontainers"))
-  testImplementation(project(":seleniumext"))
   testImplementation(marathon("java-driver"))
   testImplementation(project(":app"))
   testImplementation(testFixtures(project(":ui-stub")))

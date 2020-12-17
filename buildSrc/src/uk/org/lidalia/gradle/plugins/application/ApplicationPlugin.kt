@@ -290,8 +290,8 @@ class ApplicationPlugin : Plugin<Project> {
   }
 }
 
-private fun <A, B> Provider<Pair<A, B>>.unzip(): Pair<Provider<A>, Provider<B>> =
-  map(Pair<A, B>::first) to map(Pair<A, B>::second)
+private fun <A : Any, B : Any> Provider<Pair<A, B>>.unzip(): Pair<Provider<A>, Provider<B>> =
+  map { it.first } to map { it.second }
 
 private class PreventDestinationOverwrite constructor(
   private val pluginConvention: ApplicationPluginConvention

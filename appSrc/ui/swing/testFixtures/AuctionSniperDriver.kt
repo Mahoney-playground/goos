@@ -6,19 +6,21 @@ import io.kotest.inspectors.forOne
 import io.kotest.matchers.shouldBe
 import org.openqa.selenium.By
 import org.openqa.selenium.NoSuchElementException
+import org.openqa.selenium.Platform
+import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
-import uk.org.lidalia.seleniumext.CompositeRemoteWebDriver
-import uk.org.lidalia.seleniumext.CompositeWebDriver
+import org.openqa.selenium.remote.DesiredCapabilities
+import org.openqa.selenium.remote.RemoteWebDriver
 import java.net.URL
 import kotlin.time.ExperimentalTime
 import kotlin.time.seconds
 
 class AuctionSniperDriver(
-  private val driver: CompositeWebDriver
+  private val driver: WebDriver
 ) : UiDriver {
 
   constructor(url: URL = URL("http://app.internal:1234")) : this(
-    CompositeRemoteWebDriver(url)
+    RemoteWebDriver(url, DesiredCapabilities("java", "1.0", Platform.ANY))
   )
 
   override fun hasBasicAttributes() {
@@ -91,7 +93,7 @@ class AuctionSniperDriver(
   }
 }
 
-private fun CompositeWebDriver.rootElement() = findElement(By.cssSelector("."))
+private fun WebDriver.rootElement() = findElement(By.cssSelector("."))
 
 private class JTableDriver(
   private val element: WebElement

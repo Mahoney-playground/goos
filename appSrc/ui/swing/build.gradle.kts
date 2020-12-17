@@ -9,14 +9,12 @@ dependencies {
   testFixturesApi(selenium("api"))
   testFixturesApi(selenium("remote-driver"))
 
-  testFixturesImplementation(project(":seleniumext"))
   testFixturesImplementation(kotest("assertions-core"))
   testFixturesImplementation(kotest("assertions-shared-jvm"))
   testFixturesImplementation(kotlinCoroutines("core"))
   testFixturesImplementation(kotlinCoroutines("core-jvm"))
   testFixturesApi(testFixtures(project(":ui-api")))
 
-  testImplementation(project(":seleniumext"))
   testImplementation(marathon("java-driver"))
 }
 

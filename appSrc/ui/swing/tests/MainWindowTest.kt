@@ -8,7 +8,6 @@ import io.mockk.confirmVerified
 import io.mockk.mockk
 import io.mockk.verify
 import net.sourceforge.marathon.javadriver.JavaDriver
-import uk.org.lidalia.seleniumext.CompositeRemoteWebDriver
 import kotlin.time.ExperimentalTime
 import kotlin.time.seconds
 
@@ -30,7 +29,7 @@ class MainWindowTest : StringSpec({
     mainWindow = MainWindow()
     mainWindow.addUserRequestListener(userRequestListener)
     mainWindow.start()
-    driver = AuctionSniperDriver(CompositeRemoteWebDriver(JavaDriver()))
+    driver = AuctionSniperDriver(JavaDriver())
   }
 
   afterTest {

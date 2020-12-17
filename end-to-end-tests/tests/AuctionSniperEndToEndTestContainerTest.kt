@@ -10,7 +10,6 @@ import io.kotest.extensions.testcontainers.perSpec
 import net.sourceforge.marathon.javadriver.JavaDriver
 import org.slf4j.Logger.ROOT_LOGGER_NAME
 import org.slf4j.LoggerFactory
-import uk.org.lidalia.seleniumext.CompositeRemoteWebDriver
 import java.nio.file.Paths
 import kotlin.time.ExperimentalTime
 
@@ -27,7 +26,7 @@ internal class AuctionSniperEndToEndTestContainerTest : StringSpec({
     auctionSniperEndToEndTest(
       XmppAuctionDriver("item-54321"),
       XmppAuctionDriver("item-65432"),
-      ApplicationRunner(AuctionSniperDriver(CompositeRemoteWebDriver(JavaDriver())))
+      ApplicationRunner(AuctionSniperDriver(JavaDriver()))
     )
   )
 
