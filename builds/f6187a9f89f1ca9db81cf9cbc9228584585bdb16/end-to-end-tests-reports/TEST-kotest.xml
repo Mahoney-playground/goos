@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Kotest" tests="8" skipped="0" failures="0" errors="6" time="5.154" hostname="83d124c67ea8" timestamp="2020-12-19T02:26:58">
+<testsuite name="Kotest" tests="8" skipped="0" failures="0" errors="5" time="7.178" hostname="453a8c311c86" timestamp="2020-12-20T02:25:27">
 <properties>
 <property name="file.encoding" value="UTF-8"/>
 <property name="file.separator" value="/"/>
@@ -47,19 +47,13 @@
 <property name="user.name" value="worker"/>
 <property name="user.timezone" value="Etc/UTC"/>
 </properties>
-<testcase name="basic appearance of the app" classname="goos.AuctionSniperEndToEndTest" time="1.064">
+<testcase name="basic appearance of the app" classname="goos.AuctionSniperEndToEndTest" time="1.22">
 <system-out><![CDATA[
 unique-id: [engine:kotest]/[spec:goos.AuctionSniperEndToEndTest]/[test:basic appearance of the app]
 display-name: basic appearance of the app
 ]]></system-out>
 </testcase>
-<testcase name="sniper joins auction, loses without bidding" classname="goos.AuctionSniperEndToEndTest" time="1.642">
-<system-out><![CDATA[
-unique-id: [engine:kotest]/[spec:goos.AuctionSniperEndToEndTest]/[test:sniper joins auction, loses without bidding]
-display-name: sniper joins auction, loses without bidding
-]]></system-out>
-</testcase>
-<testcase name="sniper joins auction, bids and loses" classname="goos.AuctionSniperEndToEndTest" time="0.377">
+<testcase name="sniper joins auction, loses without bidding" classname="goos.AuctionSniperEndToEndTest" time="0.265">
 <error message="Cannot read field &quot;version&quot; because &quot;capsVersionAndHash&quot; is null" type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException: Cannot read field "version" because "capsVersionAndHash" is null
 	at org.jivesoftware.smackx.caps.EntityCapsManager.addCapsExtension(EntityCapsManager.java:316)
 	at org.jivesoftware.smack.AbstractXMPPConnection.fireMessageOrPresenceInterceptors(AbstractXMPPConnection.java:1301)
@@ -77,8 +71,8 @@ display-name: sniper joins auction, loses without bidding
 	at kotlin.SynchronizedLazyImpl.getValue(LazyJVM.kt:74)
 	at goos.auction.xmpp.XmppAuctionDriver.getConnection(XmppAuctionDriver.kt)
 	at goos.auction.xmpp.XmppAuctionDriver.startSellingItem(XmppAuctionDriver.kt:40)
-	at goos.AuctionSniperEndToEndTestKt$auctionSniperEndToEndTest$1$3.invokeSuspend(AuctionSniperEndToEndTest.kt:50)
-	at goos.AuctionSniperEndToEndTestKt$auctionSniperEndToEndTest$1$3.invoke(AuctionSniperEndToEndTest.kt)
+	at goos.AuctionSniperEndToEndTestKt$auctionSniperEndToEndTest$1$2.invokeSuspend(AuctionSniperEndToEndTest.kt:39)
+	at goos.AuctionSniperEndToEndTestKt$auctionSniperEndToEndTest$1$2.invoke(AuctionSniperEndToEndTest.kt)
 	at io.kotest.core.internal.ExecutionsKt$executeWithBehaviours$2$1.invokeSuspend(executions.kt:13)
 	at io.kotest.core.internal.ExecutionsKt$executeWithBehaviours$2$1.invoke(executions.kt)
 	at io.kotest.core.internal.ExecutionsKt.wrapTestWithGlobalAssert(executions.kt:39)
@@ -163,11 +157,17 @@ display-name: sniper joins auction, loses without bidding
 	at java.base/java.lang.Thread.run(Thread.java:832)
 ]]></error>
 <system-out><![CDATA[
+unique-id: [engine:kotest]/[spec:goos.AuctionSniperEndToEndTest]/[test:sniper joins auction, loses without bidding]
+display-name: sniper joins auction, loses without bidding
+]]></system-out>
+</testcase>
+<testcase name="sniper joins auction, bids and loses" classname="goos.AuctionSniperEndToEndTest" time="1.723">
+<system-out><![CDATA[
 unique-id: [engine:kotest]/[spec:goos.AuctionSniperEndToEndTest]/[test:sniper joins auction, bids and loses]
 display-name: sniper joins auction, bids and loses
 ]]></system-out>
 </testcase>
-<testcase name="sniper wins an auction by bidding higher" classname="goos.AuctionSniperEndToEndTest" time="0.334">
+<testcase name="sniper wins an auction by bidding higher" classname="goos.AuctionSniperEndToEndTest" time="0.35">
 <error message="Cannot read field &quot;version&quot; because &quot;capsVersionAndHash&quot; is null" type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException: Cannot read field "version" because "capsVersionAndHash" is null
 	at org.jivesoftware.smackx.caps.EntityCapsManager.addCapsExtension(EntityCapsManager.java:316)
 	at org.jivesoftware.smack.AbstractXMPPConnection.fireMessageOrPresenceInterceptors(AbstractXMPPConnection.java:1301)
@@ -275,7 +275,13 @@ unique-id: [engine:kotest]/[spec:goos.AuctionSniperEndToEndTest]/[test:sniper wi
 display-name: sniper wins an auction by bidding higher
 ]]></system-out>
 </testcase>
-<testcase name="sniper loses an auction after bidding" classname="goos.AuctionSniperEndToEndTest" time="0.162">
+<testcase name="sniper loses an auction after bidding" classname="goos.AuctionSniperEndToEndTest" time="1.79">
+<system-out><![CDATA[
+unique-id: [engine:kotest]/[spec:goos.AuctionSniperEndToEndTest]/[test:sniper loses an auction after bidding]
+display-name: sniper loses an auction after bidding
+]]></system-out>
+</testcase>
+<testcase name="sniper bids for multiple items" classname="goos.AuctionSniperEndToEndTest" time="0.598">
 <error message="Cannot read field &quot;version&quot; because &quot;capsVersionAndHash&quot; is null" type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException: Cannot read field "version" because "capsVersionAndHash" is null
 	at org.jivesoftware.smackx.caps.EntityCapsManager.addCapsExtension(EntityCapsManager.java:316)
 	at org.jivesoftware.smack.AbstractXMPPConnection.fireMessageOrPresenceInterceptors(AbstractXMPPConnection.java:1301)
@@ -289,108 +295,7 @@ display-name: sniper wins an auction by bidding higher
 	at goos.auction.xmpp.XmppAuctionDriver.createUser(XmppAuctionDriver.kt:61)
 	at goos.auction.xmpp.XmppAuctionDriver.createAuctionItem(XmppAuctionDriver.kt:51)
 	at goos.auction.xmpp.XmppAuctionDriver.startSellingItem(XmppAuctionDriver.kt:39)
-	at goos.AuctionSniperEndToEndTestKt$auctionSniperEndToEndTest$1$5.invokeSuspend(AuctionSniperEndToEndTest.kt:83)
-	at goos.AuctionSniperEndToEndTestKt$auctionSniperEndToEndTest$1$5.invoke(AuctionSniperEndToEndTest.kt)
-	at io.kotest.core.internal.ExecutionsKt$executeWithBehaviours$2$1.invokeSuspend(executions.kt:13)
-	at io.kotest.core.internal.ExecutionsKt$executeWithBehaviours$2$1.invoke(executions.kt)
-	at io.kotest.core.internal.ExecutionsKt.wrapTestWithGlobalAssert(executions.kt:39)
-	at io.kotest.core.internal.ExecutionsKt$executeWithBehaviours$2.invokeSuspend(executions.kt:12)
-	at io.kotest.core.internal.ExecutionsKt$executeWithBehaviours$2.invoke(executions.kt)
-	at io.kotest.core.internal.ExecutionsKt$wrapTestWithAssertionModeCheck$2.invokeSuspend(executions.kt:25)
-	at io.kotest.core.internal.ExecutionsKt$wrapTestWithAssertionModeCheck$2.invoke(executions.kt)
-	at io.kotest.core.internal.AssertionsCheckKt.executeWithAssertionsCheck(assertionsCheck.kt:25)
-	at io.kotest.core.internal.ExecutionsKt.wrapTestWithAssertionModeCheck(executions.kt:24)
-	at io.kotest.core.internal.ExecutionsKt.executeWithBehaviours(executions.kt:11)
-	at io.kotest.core.internal.TestCaseExecutor$executeInScope$2.invokeSuspend(TestCaseExecutor.kt:258)
-	at io.kotest.core.internal.TestCaseExecutor$executeInScope$2.invoke(TestCaseExecutor.kt)
-	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturn(Undispatched.kt:91)
-	at kotlinx.coroutines.CoroutineScopeKt.coroutineScope(CoroutineScope.kt:194)
-	at io.kotest.core.internal.TestCaseExecutor.executeInScope(TestCaseExecutor.kt:252)
-	at io.kotest.core.internal.TestCaseExecutor$executeAndWait$2$1$3$1$1.invokeSuspend(TestCaseExecutor.kt:227)
-	at io.kotest.core.internal.TestCaseExecutor$executeAndWait$2$1$3$1$1.invoke(TestCaseExecutor.kt)
-	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturnIgnoreTimeout(Undispatched.kt:102)
-	at kotlinx.coroutines.TimeoutKt.setupTimeout(Timeout.kt:148)
-	at kotlinx.coroutines.TimeoutKt.withTimeout(Timeout.kt:44)
-	at io.kotest.core.internal.TestCaseExecutor$executeAndWait$2$1$3$1.invokeSuspend(TestCaseExecutor.kt:226)
-	at io.kotest.core.internal.TestCaseExecutor$executeAndWait$2$1$3$1.invoke(TestCaseExecutor.kt)
-	at io.kotest.engine.ExecutorExecutionContext$executeWithTimeoutInterruption$$inlined$suspendCoroutine$lambda$2.invokeSuspend(ExecutorExecutionContext.kt:56)
-	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
-	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:106)
-	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:274)
-	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:84)
-	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:59)
-	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source)
-	at io.kotest.engine.ExecutorExecutionContext.executeWithTimeoutInterruption(ExecutorExecutionContext.kt:55)
-	at io.kotest.core.internal.TestCaseExecutor$executeAndWait$2$1$3.invokeSuspend(TestCaseExecutor.kt:225)
-	at io.kotest.core.internal.TestCaseExecutor$executeAndWait$2$1$3.invoke(TestCaseExecutor.kt)
-	at io.kotest.mpp.ReplayKt.replay(replay.kt:18)
-	at io.kotest.core.internal.TestCaseExecutor$executeAndWait$2$1.invokeSuspend(TestCaseExecutor.kt:220)
-	at io.kotest.core.internal.TestCaseExecutor$executeAndWait$2$1.invoke(TestCaseExecutor.kt)
-	at io.kotest.engine.ExecutorExecutionContext$executeWithTimeoutInterruption$$inlined$suspendCoroutine$lambda$2.invokeSuspend(ExecutorExecutionContext.kt:56)
-	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
-	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:106)
-	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:274)
-	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:84)
-	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:59)
-	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source)
-	at io.kotest.engine.ExecutorExecutionContext.executeWithTimeoutInterruption(ExecutorExecutionContext.kt:55)
-	at io.kotest.core.internal.TestCaseExecutor$executeAndWait$2.invokeSuspend(TestCaseExecutor.kt:213)
-	at io.kotest.core.internal.TestCaseExecutor$executeAndWait$2.invoke(TestCaseExecutor.kt)
-	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturnIgnoreTimeout(Undispatched.kt:102)
-	at kotlinx.coroutines.TimeoutKt.setupTimeout(Timeout.kt:148)
-	at kotlinx.coroutines.TimeoutKt.withTimeout(Timeout.kt:44)
-	at io.kotest.core.internal.TestCaseExecutor.executeAndWait(TestCaseExecutor.kt:212)
-	at io.kotest.core.internal.TestCaseExecutor.invokeTestCase(TestCaseExecutor.kt:180)
-	at io.kotest.core.internal.TestCaseExecutor.executeActiveTest(TestCaseExecutor.kt:149)
-	at io.kotest.core.internal.TestCaseExecutor$intercept$innerExecute$1$1.invokeSuspend(TestCaseExecutor.kt:87)
-	at io.kotest.core.internal.TestCaseExecutor$intercept$innerExecute$1$1.invoke(TestCaseExecutor.kt)
-	at io.kotest.core.internal.TestCaseExecutor.executeIfActive(TestCaseExecutor.kt:113)
-	at io.kotest.core.internal.TestCaseExecutor$intercept$innerExecute$1.invokeSuspend(TestCaseExecutor.kt:87)
-	at io.kotest.core.internal.TestCaseExecutor$intercept$innerExecute$1.invoke(TestCaseExecutor.kt)
-	at io.kotest.core.internal.TestCaseExecutor.intercept(TestCaseExecutor.kt:101)
-	at io.kotest.core.internal.TestCaseExecutor.execute(TestCaseExecutor.kt:67)
-	at io.kotest.engine.runners.InstancePerTestSpecRunner$run$2.invokeSuspend(InstancePerTestSpecRunner.kt:149)
-	at io.kotest.engine.runners.InstancePerTestSpecRunner$run$2.invoke(InstancePerTestSpecRunner.kt)
-	at kotlinx.coroutines.intrinsics.UndispatchedKt.startUndispatchedOrReturn(Undispatched.kt:91)
-	at kotlinx.coroutines.CoroutineScopeKt.coroutineScope(CoroutineScope.kt:194)
-	at io.kotest.engine.runners.InstancePerTestSpecRunner.run(InstancePerTestSpecRunner.kt:113)
-	at io.kotest.engine.runners.InstancePerTestSpecRunner.interceptAndRun(InstancePerTestSpecRunner.kt:107)
-	at io.kotest.engine.runners.InstancePerTestSpecRunner.executeInCleanSpec(InstancePerTestSpecRunner.kt:98)
-	at io.kotest.engine.runners.InstancePerTestSpecRunner$execute$$inlined$invoke$lambda$1.invokeSuspend(InstancePerTestSpecRunner.kt:77)
-	at io.kotest.engine.runners.InstancePerTestSpecRunner$execute$$inlined$invoke$lambda$1.invoke(InstancePerTestSpecRunner.kt)
-	at io.kotest.engine.spec.SpecRunner$runParallel$$inlined$map$lambda$2$1.invokeSuspend(SpecRunner.kt:80)
-	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
-	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:106)
-	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:274)
-	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:84)
-	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:59)
-	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source)
-	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:38)
-	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source)
-	at io.kotest.engine.spec.SpecRunner$runParallel$$inlined$map$lambda$2.run(SpecRunner.kt:79)
-	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
-	at java.base/java.lang.Thread.run(Thread.java:832)
-]]></error>
-<system-out><![CDATA[
-unique-id: [engine:kotest]/[spec:goos.AuctionSniperEndToEndTest]/[test:sniper loses an auction after bidding]
-display-name: sniper loses an auction after bidding
-]]></system-out>
-</testcase>
-<testcase name="sniper bids for multiple items" classname="goos.AuctionSniperEndToEndTest" time="0.42">
-<error message="Cannot read field &quot;version&quot; because &quot;capsVersionAndHash&quot; is null" type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException: Cannot read field "version" because "capsVersionAndHash" is null
-	at org.jivesoftware.smackx.caps.EntityCapsManager.addCapsExtension(EntityCapsManager.java:316)
-	at org.jivesoftware.smack.AbstractXMPPConnection.fireMessageOrPresenceInterceptors(AbstractXMPPConnection.java:1301)
-	at org.jivesoftware.smack.AbstractXMPPConnection.firePacketInterceptors(AbstractXMPPConnection.java:1342)
-	at org.jivesoftware.smack.AbstractXMPPConnection.sendStanza(AbstractXMPPConnection.java:879)
-	at org.jivesoftware.smack.AbstractXMPPConnection.afterSuccessfulLogin(AbstractXMPPConnection.java:806)
-	at org.jivesoftware.smack.tcp.XMPPTCPConnection.afterSuccessfulLogin(XMPPTCPConnection.java:371)
-	at org.jivesoftware.smack.tcp.XMPPTCPConnection.loginInternal(XMPPTCPConnection.java:469)
-	at org.jivesoftware.smack.AbstractXMPPConnection.login(AbstractXMPPConnection.java:641)
-	at goos.auction.xmpp.XmppAuctionDriver.startSellingItem(XmppAuctionDriver.kt:41)
-	at goos.AuctionSniperEndToEndTestKt$auctionSniperEndToEndTest$1$6.invokeSuspend(AuctionSniperEndToEndTest.kt:106)
+	at goos.AuctionSniperEndToEndTestKt$auctionSniperEndToEndTest$1$6.invokeSuspend(AuctionSniperEndToEndTest.kt:107)
 	at goos.AuctionSniperEndToEndTestKt$auctionSniperEndToEndTest$1$6.invoke(AuctionSniperEndToEndTest.kt)
 	at io.kotest.core.internal.ExecutionsKt$executeWithBehaviours$2$1.invokeSuspend(executions.kt:13)
 	at io.kotest.core.internal.ExecutionsKt$executeWithBehaviours$2$1.invoke(executions.kt)
@@ -584,7 +489,7 @@ unique-id: [engine:kotest]/[spec:goos.AuctionSniperEndToEndTest]/[test:sniper lo
 display-name: sniper loses an auction when the price is too high
 ]]></system-out>
 </testcase>
-<testcase name="sniper reports invalid auction message and stops responding to events" classname="goos.AuctionSniperEndToEndTest" time="0.212">
+<testcase name="sniper reports invalid auction message and stops responding to events" classname="goos.AuctionSniperEndToEndTest" time="0.102">
 <error message="Cannot read field &quot;version&quot; because &quot;capsVersionAndHash&quot; is null" type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException: Cannot read field "version" because "capsVersionAndHash" is null
 	at org.jivesoftware.smackx.caps.EntityCapsManager.addCapsExtension(EntityCapsManager.java:316)
 	at org.jivesoftware.smack.AbstractXMPPConnection.fireMessageOrPresenceInterceptors(AbstractXMPPConnection.java:1301)
