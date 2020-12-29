@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Kotest" tests="8" skipped="0" failures="0" errors="5" time="7.093" hostname="c42fffc34e00" timestamp="2020-12-27T02:38:30">
+<testsuite name="Kotest" tests="8" skipped="0" failures="0" errors="5" time="6.984" hostname="6e5467db84d6" timestamp="2020-12-29T02:41:04">
 <properties>
 <property name="file.encoding" value="UTF-8"/>
 <property name="file.separator" value="/"/>
@@ -47,25 +47,25 @@
 <property name="user.name" value="worker"/>
 <property name="user.timezone" value="Etc/UTC"/>
 </properties>
-<testcase name="basic appearance of the app" classname="goos.AuctionSniperEndToEndTest" time="1.191">
+<testcase name="basic appearance of the app" classname="goos.AuctionSniperEndToEndTest" time="1.27">
 <system-out><![CDATA[
 unique-id: [engine:kotest]/[spec:goos.AuctionSniperEndToEndTest]/[test:basic appearance of the app]
 display-name: basic appearance of the app
 ]]></system-out>
 </testcase>
-<testcase name="sniper joins auction, loses without bidding" classname="goos.AuctionSniperEndToEndTest" time="1.695">
+<testcase name="sniper joins auction, loses without bidding" classname="goos.AuctionSniperEndToEndTest" time="1.727">
 <system-out><![CDATA[
 unique-id: [engine:kotest]/[spec:goos.AuctionSniperEndToEndTest]/[test:sniper joins auction, loses without bidding]
 display-name: sniper joins auction, loses without bidding
 ]]></system-out>
 </testcase>
-<testcase name="sniper joins auction, bids and loses" classname="goos.AuctionSniperEndToEndTest" time="1.694">
+<testcase name="sniper joins auction, bids and loses" classname="goos.AuctionSniperEndToEndTest" time="1.496">
 <system-out><![CDATA[
 unique-id: [engine:kotest]/[spec:goos.AuctionSniperEndToEndTest]/[test:sniper joins auction, bids and loses]
 display-name: sniper joins auction, bids and loses
 ]]></system-out>
 </testcase>
-<testcase name="sniper wins an auction by bidding higher" classname="goos.AuctionSniperEndToEndTest" time="0.306">
+<testcase name="sniper wins an auction by bidding higher" classname="goos.AuctionSniperEndToEndTest" time="0.219">
 <error message="Cannot read field &quot;version&quot; because &quot;capsVersionAndHash&quot; is null" type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException: Cannot read field "version" because "capsVersionAndHash" is null
 	at org.jivesoftware.smackx.caps.EntityCapsManager.addCapsExtension(EntityCapsManager.java:316)
 	at org.jivesoftware.smack.AbstractXMPPConnection.fireMessageOrPresenceInterceptors(AbstractXMPPConnection.java:1301)
@@ -77,12 +77,8 @@ display-name: sniper joins auction, bids and loses
 	at org.jivesoftware.smack.AbstractXMPPConnection.login(AbstractXMPPConnection.java:641)
 	at org.jivesoftware.smack.AbstractXMPPConnection.login(AbstractXMPPConnection.java:615)
 	at goos.auction.xmpp.XmppAuctionDriver.createUser(XmppAuctionDriver.kt:61)
-	at goos.auction.xmpp.XmppAuctionDriver.access$createUser(XmppAuctionDriver.kt:20)
-	at goos.auction.xmpp.XmppAuctionDriver$connection$2.invoke(XmppAuctionDriver.kt:25)
-	at goos.auction.xmpp.XmppAuctionDriver$connection$2.invoke(XmppAuctionDriver.kt:20)
-	at kotlin.SynchronizedLazyImpl.getValue(LazyJVM.kt:74)
-	at goos.auction.xmpp.XmppAuctionDriver.getConnection(XmppAuctionDriver.kt)
-	at goos.auction.xmpp.XmppAuctionDriver.startSellingItem(XmppAuctionDriver.kt:40)
+	at goos.auction.xmpp.XmppAuctionDriver.createAuctionItem(XmppAuctionDriver.kt:51)
+	at goos.auction.xmpp.XmppAuctionDriver.startSellingItem(XmppAuctionDriver.kt:39)
 	at goos.AuctionSniperEndToEndTestKt$auctionSniperEndToEndTest$1$4.invokeSuspend(AuctionSniperEndToEndTest.kt:65)
 	at goos.AuctionSniperEndToEndTestKt$auctionSniperEndToEndTest$1$4.invoke(AuctionSniperEndToEndTest.kt)
 	at io.kotest.core.internal.ExecutionsKt$executeWithBehaviours$2$1.invokeSuspend(executions.kt:13)
@@ -173,7 +169,7 @@ unique-id: [engine:kotest]/[spec:goos.AuctionSniperEndToEndTest]/[test:sniper wi
 display-name: sniper wins an auction by bidding higher
 ]]></system-out>
 </testcase>
-<testcase name="sniper loses an auction after bidding" classname="goos.AuctionSniperEndToEndTest" time="0.195">
+<testcase name="sniper loses an auction after bidding" classname="goos.AuctionSniperEndToEndTest" time="0.405">
 <error message="Cannot read field &quot;version&quot; because &quot;capsVersionAndHash&quot; is null" type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException: Cannot read field "version" because "capsVersionAndHash" is null
 	at org.jivesoftware.smackx.caps.EntityCapsManager.addCapsExtension(EntityCapsManager.java:316)
 	at org.jivesoftware.smack.AbstractXMPPConnection.fireMessageOrPresenceInterceptors(AbstractXMPPConnection.java:1301)
@@ -185,8 +181,12 @@ display-name: sniper wins an auction by bidding higher
 	at org.jivesoftware.smack.AbstractXMPPConnection.login(AbstractXMPPConnection.java:641)
 	at org.jivesoftware.smack.AbstractXMPPConnection.login(AbstractXMPPConnection.java:615)
 	at goos.auction.xmpp.XmppAuctionDriver.createUser(XmppAuctionDriver.kt:61)
-	at goos.auction.xmpp.XmppAuctionDriver.createAuctionItem(XmppAuctionDriver.kt:51)
-	at goos.auction.xmpp.XmppAuctionDriver.startSellingItem(XmppAuctionDriver.kt:39)
+	at goos.auction.xmpp.XmppAuctionDriver.access$createUser(XmppAuctionDriver.kt:20)
+	at goos.auction.xmpp.XmppAuctionDriver$connection$2.invoke(XmppAuctionDriver.kt:25)
+	at goos.auction.xmpp.XmppAuctionDriver$connection$2.invoke(XmppAuctionDriver.kt:20)
+	at kotlin.SynchronizedLazyImpl.getValue(LazyJVM.kt:74)
+	at goos.auction.xmpp.XmppAuctionDriver.getConnection(XmppAuctionDriver.kt)
+	at goos.auction.xmpp.XmppAuctionDriver.startSellingItem(XmppAuctionDriver.kt:40)
 	at goos.AuctionSniperEndToEndTestKt$auctionSniperEndToEndTest$1$5.invokeSuspend(AuctionSniperEndToEndTest.kt:83)
 	at goos.AuctionSniperEndToEndTestKt$auctionSniperEndToEndTest$1$5.invoke(AuctionSniperEndToEndTest.kt)
 	at io.kotest.core.internal.ExecutionsKt$executeWithBehaviours$2$1.invokeSuspend(executions.kt:13)
@@ -277,7 +277,7 @@ unique-id: [engine:kotest]/[spec:goos.AuctionSniperEndToEndTest]/[test:sniper lo
 display-name: sniper loses an auction after bidding
 ]]></system-out>
 </testcase>
-<testcase name="sniper bids for multiple items" classname="goos.AuctionSniperEndToEndTest" time="0.505">
+<testcase name="sniper bids for multiple items" classname="goos.AuctionSniperEndToEndTest" time="0.454">
 <error message="Cannot read field &quot;version&quot; because &quot;capsVersionAndHash&quot; is null" type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException: Cannot read field "version" because "capsVersionAndHash" is null
 	at org.jivesoftware.smackx.caps.EntityCapsManager.addCapsExtension(EntityCapsManager.java:316)
 	at org.jivesoftware.smack.AbstractXMPPConnection.fireMessageOrPresenceInterceptors(AbstractXMPPConnection.java:1301)
@@ -287,11 +287,8 @@ display-name: sniper loses an auction after bidding
 	at org.jivesoftware.smack.tcp.XMPPTCPConnection.afterSuccessfulLogin(XMPPTCPConnection.java:371)
 	at org.jivesoftware.smack.tcp.XMPPTCPConnection.loginInternal(XMPPTCPConnection.java:469)
 	at org.jivesoftware.smack.AbstractXMPPConnection.login(AbstractXMPPConnection.java:641)
-	at org.jivesoftware.smack.AbstractXMPPConnection.login(AbstractXMPPConnection.java:615)
-	at goos.auction.xmpp.XmppAuctionDriver.createUser(XmppAuctionDriver.kt:61)
-	at goos.auction.xmpp.XmppAuctionDriver.createAuctionItem(XmppAuctionDriver.kt:51)
-	at goos.auction.xmpp.XmppAuctionDriver.startSellingItem(XmppAuctionDriver.kt:39)
-	at goos.AuctionSniperEndToEndTestKt$auctionSniperEndToEndTest$1$6.invokeSuspend(AuctionSniperEndToEndTest.kt:107)
+	at goos.auction.xmpp.XmppAuctionDriver.startSellingItem(XmppAuctionDriver.kt:41)
+	at goos.AuctionSniperEndToEndTestKt$auctionSniperEndToEndTest$1$6.invokeSuspend(AuctionSniperEndToEndTest.kt:106)
 	at goos.AuctionSniperEndToEndTestKt$auctionSniperEndToEndTest$1$6.invoke(AuctionSniperEndToEndTest.kt)
 	at io.kotest.core.internal.ExecutionsKt$executeWithBehaviours$2$1.invokeSuspend(executions.kt:13)
 	at io.kotest.core.internal.ExecutionsKt$executeWithBehaviours$2$1.invoke(executions.kt)
@@ -381,7 +378,7 @@ unique-id: [engine:kotest]/[spec:goos.AuctionSniperEndToEndTest]/[test:sniper bi
 display-name: sniper bids for multiple items
 ]]></system-out>
 </testcase>
-<testcase name="sniper loses an auction when the price is too high" classname="goos.AuctionSniperEndToEndTest" time="0.184">
+<testcase name="sniper loses an auction when the price is too high" classname="goos.AuctionSniperEndToEndTest" time="0.159">
 <error message="Cannot read field &quot;version&quot; because &quot;capsVersionAndHash&quot; is null" type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException: Cannot read field "version" because "capsVersionAndHash" is null
 	at org.jivesoftware.smackx.caps.EntityCapsManager.addCapsExtension(EntityCapsManager.java:316)
 	at org.jivesoftware.smack.AbstractXMPPConnection.fireMessageOrPresenceInterceptors(AbstractXMPPConnection.java:1301)
@@ -485,7 +482,7 @@ unique-id: [engine:kotest]/[spec:goos.AuctionSniperEndToEndTest]/[test:sniper lo
 display-name: sniper loses an auction when the price is too high
 ]]></system-out>
 </testcase>
-<testcase name="sniper reports invalid auction message and stops responding to events" classname="goos.AuctionSniperEndToEndTest" time="0.225">
+<testcase name="sniper reports invalid auction message and stops responding to events" classname="goos.AuctionSniperEndToEndTest" time="0.228">
 <error message="Cannot read field &quot;version&quot; because &quot;capsVersionAndHash&quot; is null" type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException: Cannot read field "version" because "capsVersionAndHash" is null
 	at org.jivesoftware.smackx.caps.EntityCapsManager.addCapsExtension(EntityCapsManager.java:316)
 	at org.jivesoftware.smack.AbstractXMPPConnection.fireMessageOrPresenceInterceptors(AbstractXMPPConnection.java:1301)
@@ -497,12 +494,8 @@ display-name: sniper loses an auction when the price is too high
 	at org.jivesoftware.smack.AbstractXMPPConnection.login(AbstractXMPPConnection.java:641)
 	at org.jivesoftware.smack.AbstractXMPPConnection.login(AbstractXMPPConnection.java:615)
 	at goos.auction.xmpp.XmppAuctionDriver.createUser(XmppAuctionDriver.kt:61)
-	at goos.auction.xmpp.XmppAuctionDriver.access$createUser(XmppAuctionDriver.kt:20)
-	at goos.auction.xmpp.XmppAuctionDriver$connection$2.invoke(XmppAuctionDriver.kt:25)
-	at goos.auction.xmpp.XmppAuctionDriver$connection$2.invoke(XmppAuctionDriver.kt:20)
-	at kotlin.SynchronizedLazyImpl.getValue(LazyJVM.kt:74)
-	at goos.auction.xmpp.XmppAuctionDriver.getConnection(XmppAuctionDriver.kt)
-	at goos.auction.xmpp.XmppAuctionDriver.startSellingItem(XmppAuctionDriver.kt:40)
+	at goos.auction.xmpp.XmppAuctionDriver.createAuctionItem(XmppAuctionDriver.kt:51)
+	at goos.auction.xmpp.XmppAuctionDriver.startSellingItem(XmppAuctionDriver.kt:39)
 	at goos.AuctionSniperEndToEndTestKt$auctionSniperEndToEndTest$1$8.invokeSuspend(AuctionSniperEndToEndTest.kt:154)
 	at goos.AuctionSniperEndToEndTestKt$auctionSniperEndToEndTest$1$8.invoke(AuctionSniperEndToEndTest.kt)
 	at io.kotest.core.internal.ExecutionsKt$executeWithBehaviours$2$1.invokeSuspend(executions.kt:13)
