@@ -14,7 +14,7 @@ dependencies {
   implementation(jxmpp("jid"))
 
   runtimeOnly(smack("extensions"))
-  runtimeOnly(smack("java8"))
+  runtimeOnly(smack("java7"))
 
   testFixturesApi(testFixtures(project(":auction-api")))
   testFixturesApi(smack("core"))
@@ -30,7 +30,7 @@ dependencies {
     testFixturesImplementation(mockk)
   }
 
-  testFixturesRuntimeOnly(smack("java8"))
+  testFixturesRuntimeOnly(smack("java7"))
 
   testImplementation(kotest("extensions-testcontainers"))
   testImplementation(project(":testcontainers"))
