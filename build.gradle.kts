@@ -53,12 +53,22 @@ subprojects {
         named("main") { java.setSrcDirs(mainSrc) }
         named("test") { java.setSrcDirs(testSrc) }
       }
+
+      consistentResolution {
+        useCompileClasspathVersions()
+      }
     }
 
     configure<KotlinJvmProjectExtension> {
       sourceSets {
         named("main") { kotlin.setSrcDirs(mainSrc) }
         named("test") { kotlin.setSrcDirs(testSrc) }
+      }
+    }
+
+    configurations.all {
+      resolutionStrategy {
+        failOnNonReproducibleResolution()
       }
     }
 

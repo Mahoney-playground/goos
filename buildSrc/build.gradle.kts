@@ -1,5 +1,4 @@
 plugins {
-  kotlin("jvm") version "1.4.10"
   `kotlin-dsl`
   `java-gradle-plugin`
   id("org.jmailen.kotlinter") version "3.2.0"
