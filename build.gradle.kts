@@ -54,6 +54,7 @@ subprojects {
         named("test") { java.setSrcDirs(testSrc) }
       }
 
+      @Suppress("UnstableApiUsage")
       consistentResolution {
         useCompileClasspathVersions()
       }
@@ -68,6 +69,7 @@ subprojects {
 
     configurations.all {
       resolutionStrategy {
+        @Suppress("UnstableApiUsage")
         failOnNonReproducibleResolution()
       }
     }
