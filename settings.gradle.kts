@@ -9,24 +9,21 @@ include(
   ":end-to-end-tests"
 )
 
-open class SmackCoreRule: ComponentMetadataRule {
-  override fun execute(context: ComponentMetadataContext) {
-    context.details.allVariants {
-      withDependencies {
-        find { it.group == "org.minidns" && it.name == "minidns-core" }?.version {
-          require("0.3.4")
-        }
-        find { it.group == "org.jxmpp" && it.name == "jxmpp-jid" }?.version {
-          require("0.6.4")
-        }
-      }
+fun ComponentMetadataDetails.lockVersion(group: String, name: String, version: String) {
+  allVariants {
+    withDependencies {
+      find { it.group == group && it.name == name }?.version { require(version) }
     }
   }
 }
 
 dependencyResolutionManagement {
+  @Suppress("UnstableApiUsage")
   components {
-    withModule<SmackCoreRule>("org.igniterealtime.smack:smack-core")
+    withModule("org.igniterealtime.smack:smack-core") {
+      lockVersion("org.minidns", "minidns-core", "0.3.4")
+      lockVersion("org.jxmpp", "jxmpp-jid", "0.6.4")
+    }
   }
 }
 
