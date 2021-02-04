@@ -1,5 +1,5 @@
 import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorExtension.Generator
-import org.gradle.api.JavaVersion.VERSION_14
+import org.gradle.api.JavaVersion.VERSION_15
 import org.gradle.api.distribution.plugins.DistributionPlugin.TASK_INSTALL_NAME
 import org.jetbrains.gradle.ext.IdeaExtPlugin
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
@@ -8,7 +8,7 @@ import org.jmailen.gradle.kotlinter.KotlinterPlugin
 
 plugins {
   base
-  kotlin("jvm") version "1.4.21" apply false
+  kotlin("jvm") version "1.4.30" apply false
   id("com.autonomousapps.dependency-analysis") version "0.70.0"
   id("org.jmailen.kotlinter") version "3.3.0"
   id("com.vanniktech.dependency.graph.generator") version "0.5.0"
@@ -18,7 +18,7 @@ plugins {
 }
 
 @Suppress("UnstableApiUsage")
-val javaVersion by extra(VERSION_14)
+val javaVersion by extra(VERSION_15)
 
 apply<ReportingBasePlugin>()
 
@@ -85,7 +85,7 @@ subprojects {
     tasks {
 
       withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "13" // hardcoded until kotlin can cope with 14
+        kotlinOptions.jvmTarget = "15" // hardcoded until kotlin can cope with 14
       }
 
       withType<Jar> {

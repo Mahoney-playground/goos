@@ -2,7 +2,7 @@
 ARG username=worker
 ARG work_dir=/home/$username/work
 
-FROM openjdk:15.0.1-jdk-slim as worker
+FROM openjdk:15.0.2-jdk-slim as worker
 ARG username
 ARG work_dir
 
