@@ -42,7 +42,7 @@ private fun File.addIndexFile(includeParentLink: Boolean) =
 private fun File.indexFileHtml(
   includeParentLink: Boolean
 ): String = buildString {
-  appendln("<!DOCTYPE html>")
+  appendLine("<!DOCTYPE html>")
   appendHTML()
     .html {
       lang = "en"

@@ -10,10 +10,6 @@ repositories {
   gradlePluginPortal()
 }
 
-kotlinDslPluginOptions {
-  experimentalWarning.set(false)
-}
-
 kotlin {
   sourceSets {
     main {
