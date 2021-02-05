@@ -85,7 +85,10 @@ subprojects {
     tasks {
 
       withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "15" // hardcoded until kotlin can cope with 14
+        kotlinOptions.apply {
+          jvmTarget = "15"
+          useIR = true
+        }
       }
 
       withType<Jar> {
