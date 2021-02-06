@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package goos.auction.xmpp
 
 import goos.auction.api.AuctionDriver
