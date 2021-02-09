@@ -6,7 +6,7 @@ plugins {
 dependencies {
   implementation(kotest("framework-api-jvm"))
 
-  implementation(kotlinCoroutines("core"))
+  implementation(libs.coroutines.core)
 
   implementation(project(":testlauncher"))
   implementation(testFixtures(project(":auction-xmpp")))

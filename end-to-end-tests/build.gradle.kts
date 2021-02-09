@@ -13,7 +13,7 @@ dependencies {
   implementation(testFixtures(project(":auction-api")))
   implementation(testFixtures(project(":auction-xmpp")))
 
-  implementation(kotlinCoroutines("core"))
+  implementation(libs.coroutines.core)
   constraints {
     implementation(mockk)
   }

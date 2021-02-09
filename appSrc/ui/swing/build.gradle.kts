@@ -11,8 +11,8 @@ dependencies {
 
   testFixturesImplementation(kotest("assertions-core"))
   testFixturesImplementation(kotest("assertions-shared-jvm"))
-  testFixturesImplementation(kotlinCoroutines("core"))
-  testFixturesImplementation(kotlinCoroutines("core-jvm"))
+  testFixturesImplementation(libs.coroutines.core)
+  testFixturesImplementation(libs.coroutines.corejvm)
   testFixturesApi(testFixtures(project(":ui-api")))
 
   testImplementation(marathon("java-driver"))

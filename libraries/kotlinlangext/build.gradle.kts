@@ -5,9 +5,9 @@ plugins {
 group = "uk.org.lidalia"
 
 dependencies {
-  api(kotlinCoroutines("core-jvm"))
+  api(libs.coroutines.corejvm)
 
-  implementation(kotlinCoroutines("core"))
+  implementation(libs.coroutines.core)
 }
 
 idea {

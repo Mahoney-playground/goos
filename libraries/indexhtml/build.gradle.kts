@@ -4,8 +4,8 @@ plugins {
 
 dependencies {
   implementation(kotlinxHtml("jvm"))
-  implementation(kotlinCoroutines("core"))
-  implementation(kotlinCoroutines("core-jvm"))
+  implementation(libs.coroutines.core)
+  implementation(libs.coroutines.corejvm)
 }
 
 idea {

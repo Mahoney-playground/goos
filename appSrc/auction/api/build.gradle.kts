@@ -11,7 +11,7 @@ dependencies {
   testFixturesImplementation(kotest("framework-api"))
   testFixturesImplementation(kotest("assertions-core"))
   testFixturesImplementation(kotest("assertions-core-jvm"))
-  testFixturesImplementation(kotlinCoroutines("core"))
+  testFixturesImplementation(libs.coroutines.core)
   testFixturesImplementation(mockk)
   testFixturesImplementation(mockk("dsl-jvm"))
   testFixturesImplementation(project(":kotlinlangext"))
