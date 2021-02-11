@@ -8,20 +8,20 @@ dependencies {
   api(project(":auction-api"))
   implementation(project(":auction-sol"))
 
-  implementation(smack("tcp"))
-  implementation(smack("core"))
-  implementation(smack("im"))
+  implementation(libs.smack.tcp)
+  implementation(libs.smack.core)
+  implementation(libs.smack.im)
   implementation(libs.jxmpp.jid)
 
-  runtimeOnly(smack("extensions"))
-  runtimeOnly(smack("java7"))
+  runtimeOnly(libs.smack.extensions)
+  runtimeOnly(libs.smack.java7)
 
   testFixturesApi(testFixtures(project(":auction-api")))
-  testFixturesApi(smack("core"))
-  testFixturesApi(smack("im"))
+  testFixturesApi(libs.smack.core)
+  testFixturesApi(libs.smack.im)
 
-  testFixturesImplementation(smack("tcp"))
-  testFixturesImplementation(smack("extensions"))
+  testFixturesImplementation(libs.smack.tcp)
+  testFixturesImplementation(libs.smack.extensions)
   testFixturesImplementation(libs.jxmpp.jid)
   testFixturesImplementation(kotest("assertions-core"))
   testFixturesImplementation(kotest("assertions-shared"))
@@ -30,7 +30,7 @@ dependencies {
     testFixturesImplementation(libs.mockk.core)
   }
 
-  testFixturesRuntimeOnly(smack("java7"))
+  testFixturesRuntimeOnly(libs.smack.java7)
 
   testImplementation(kotest("extensions-testcontainers"))
   testImplementation(project(":testcontainers"))

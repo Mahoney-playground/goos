@@ -16,7 +16,15 @@ dependencyResolutionManagement {
     create("libs") {
       version("kotest", "4.3.2")
       version("arrow", "0.11.0")
-      version("smack", "4.3.4")
+      versionCatalog(
+        "smack",
+        "org.igniterealtime.smack", { "smack-$it" }, "4.3.4",
+        "core",
+        "tcp",
+        "im",
+        "extensions",
+        "java7",
+      )
       versionCatalog(
         "jxmpp",
         "org.jxmpp", { "jxmpp-$it" }, jxmppVersion,
