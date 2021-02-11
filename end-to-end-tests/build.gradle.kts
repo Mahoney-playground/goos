@@ -15,7 +15,7 @@ dependencies {
 
   implementation(libs.coroutines.core)
   constraints {
-    implementation(mockk)
+    implementation(libs.mockk.core)
   }
 
   implementation(project(":testlauncher"))

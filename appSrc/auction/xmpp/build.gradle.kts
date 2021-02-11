@@ -27,7 +27,7 @@ dependencies {
   testFixturesImplementation(kotest("assertions-shared"))
   testFixturesImplementation(kotest("assertions-shared-jvm"))
   constraints {
-    testFixturesImplementation(mockk)
+    testFixturesImplementation(libs.mockk.core)
   }
 
   testFixturesRuntimeOnly(smack("java7"))

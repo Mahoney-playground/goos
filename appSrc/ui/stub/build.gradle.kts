@@ -15,7 +15,7 @@ dependencies {
   testFixturesImplementation(kotest("assertions-core-jvm"))
   testFixturesImplementation(kotest("assertions-shared"))
   constraints {
-    testFixturesImplementation(mockk)
+    testFixturesImplementation(libs.mockk.core)
   }
 }
 

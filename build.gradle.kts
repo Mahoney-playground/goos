@@ -74,12 +74,13 @@ subprojects {
       }
     }
 
+    @Suppress("UnstableApiUsage")
     dependencies {
 
       val testImplementation by configurations
 
       testImplementation(kotest("runner-junit5"))
-      testImplementation(mockk)
+      testImplementation(libs.mockk.core)
     }
 
     tasks {

@@ -5,7 +5,7 @@ plugins {
 dependencies {
   implementation(kotest("runner-junit5"))
   constraints {
-    implementation(mockk)
+    implementation(libs.mockk.core)
   }
   implementation("org.junit.platform:junit-platform-console:1.7.0")
 

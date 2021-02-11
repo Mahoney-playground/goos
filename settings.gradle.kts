@@ -16,8 +16,12 @@ dependencyResolutionManagement {
       version("arrow", "0.11.0")
       version("smack", "4.3.4")
       version("jxmpp", "0.6.4")
-      version("mockk", "1.10.5")
-      version("mockk", "1.10.5")
+      versionCatalog(
+        "mockk",
+        "io.mockk", { if (it == null) "mockk" else "mockk-$it" }, "1.10.5",
+        null,
+        "dsl-jvm",
+      )
       versionCatalog(
         "kotlinxHtml",
         "org.jetbrains.kotlinx", { "kotlinx-html-$it" }, "0.7.2",
@@ -52,13 +56,14 @@ dependencyResolutionManagement {
 fun VersionCatalogBuilder.versionCatalog(
   alias: String,
   group: String,
-  artifactTemplate: (String) -> String,
+  artifactTemplate: (String?) -> String,
   version: String,
-  vararg modules: String,
+  vararg modules: String?,
 ) {
   version(alias, version)
   modules.forEach { module ->
-    alias("$alias-${module.replace("-", "")}")
+    val sanitisedModuleName = module?.replace("-", "") ?: "core"
+    alias("$alias-$sanitisedModuleName")
       .to(group, artifactTemplate(module))
       .versionRef(alias)
   }
