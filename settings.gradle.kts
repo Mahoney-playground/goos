@@ -9,13 +9,19 @@ includeChildrenOf("libraries") { ":${it.name}" }
 
 include(":end-to-end-tests")
 
+val jxmppVersion = "0.6.4"
+
 dependencyResolutionManagement {
   versionCatalogs {
     create("libs") {
       version("kotest", "4.3.2")
       version("arrow", "0.11.0")
       version("smack", "4.3.4")
-      version("jxmpp", "0.6.4")
+      versionCatalog(
+        "jxmpp",
+        "org.jxmpp", { "jxmpp-$it" }, jxmppVersion,
+        "jid",
+      )
       versionCatalog(
         "mockk",
         "io.mockk", { if (it == null) "mockk" else "mockk-$it" }, "1.10.5",
@@ -82,7 +88,7 @@ dependencyResolutionManagement {
   components {
     withModule("org.igniterealtime.smack:smack-core") {
       lockVersion("org.minidns", "minidns-core", "0.3.4")
-      lockVersion("org.jxmpp", "jxmpp-jid", "0.6.4")
+      lockVersion("org.jxmpp", "jxmpp-jid", jxmppVersion)
     }
   }
 }

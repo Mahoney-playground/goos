@@ -11,7 +11,7 @@ dependencies {
   implementation(smack("tcp"))
   implementation(smack("core"))
   implementation(smack("im"))
-  implementation(jxmpp("jid"))
+  implementation(libs.jxmpp.jid)
 
   runtimeOnly(smack("extensions"))
   runtimeOnly(smack("java7"))
@@ -22,7 +22,7 @@ dependencies {
 
   testFixturesImplementation(smack("tcp"))
   testFixturesImplementation(smack("extensions"))
-  testFixturesImplementation(jxmpp("jid"))
+  testFixturesImplementation(libs.jxmpp.jid)
   testFixturesImplementation(kotest("assertions-core"))
   testFixturesImplementation(kotest("assertions-shared"))
   testFixturesImplementation(kotest("assertions-shared-jvm"))
