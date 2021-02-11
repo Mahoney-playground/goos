@@ -6,8 +6,8 @@ plugins {
 dependencies {
   api(project(":ui-api"))
 
-  testFixturesApi(selenium("api"))
-  testFixturesApi(selenium("remote-driver"))
+  testFixturesApi(libs.selenium.api)
+  testFixturesApi(libs.selenium.remotedriver)
 
   testFixturesImplementation(kotest("assertions-core"))
   testFixturesImplementation(kotest("assertions-shared-jvm"))

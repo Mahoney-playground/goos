@@ -21,18 +21,36 @@ dependencyResolutionManagement {
       version("kotlinxHtml", "0.7.2")
       version("marathon", "5.4.0.0")
       version("byteBuddy", "1.10.9")
-      version("selenium", "3.141.59")
-      version("coroutines", "1.4.2")
-      coroutines("core")
-      coroutines("core-jvm")
+      versionCatalog(
+        "selenium",
+        "org.seleniumhq.selenium", { "selenium-$it" }, "3.141.59",
+        "api",
+        "remote-driver",
+      )
+      versionCatalog(
+        "coroutines",
+        "org.jetbrains.kotlinx", { "kotlinx-coroutines-$it" }, "1.4.2",
+        "core",
+        "core-jvm",
+      )
     }
   }
 }
 
-fun VersionCatalogBuilder.coroutines(module: String) =
-  alias("coroutines-${module.replace("-", "")}")
-    .to("org.jetbrains.kotlinx", "kotlinx-coroutines-$module")
-    .versionRef("coroutines")
+fun VersionCatalogBuilder.versionCatalog(
+  alias: String,
+  group: String,
+  artifactTemplate: (String) -> String,
+  version: String,
+  vararg modules: String,
+) {
+  version(alias, version)
+  modules.forEach { module ->
+    alias("$alias-${module.replace("-", "")}")
+      .to(group, artifactTemplate(module))
+      .versionRef(alias)
+  }
+}
 
 fun ComponentMetadataDetails.lockVersion(group: String, name: String, version: String) {
   allVariants {

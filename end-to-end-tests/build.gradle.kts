@@ -19,7 +19,7 @@ dependencies {
   }
 
   implementation(project(":testlauncher"))
-  implementation(selenium("api"))
+  implementation(libs.selenium.api)
 
   testImplementation(project(":testcontainers"))
   testImplementation("ch.qos.logback:logback-classic:1.2.3")
