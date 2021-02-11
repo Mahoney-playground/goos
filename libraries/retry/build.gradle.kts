@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-  implementation(arrow("core-data"))
+  implementation(libs.arrow.coredata)
   implementation(libs.coroutines.core)
   implementation(libs.coroutines.corejvm)
 }

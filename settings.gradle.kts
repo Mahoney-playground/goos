@@ -15,7 +15,11 @@ dependencyResolutionManagement {
   versionCatalogs {
     create("libs") {
       version("kotest", "4.3.2")
-      version("arrow", "0.11.0")
+      versionCatalog(
+        "arrow",
+        "io.arrow-kt", { "arrow-$it" }, "0.11.0",
+        "core-data",
+      )
       versionCatalog(
         "smack",
         "org.igniterealtime.smack", { "smack-$it" }, "4.3.4",
