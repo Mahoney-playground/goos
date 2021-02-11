@@ -21,6 +21,9 @@ dependencyResolutionManagement {
       version("kotlinxHtml", "0.7.2")
       version("marathon", "5.4.0.0")
       version("byteBuddy", "1.10.9")
+      alias("byteBuddy")
+        .to("net.bytebuddy", "byte-buddy")
+        .versionRef("byteBuddy")
       versionCatalog(
         "selenium",
         "org.seleniumhq.selenium", { "selenium-$it" }, "3.141.59",
