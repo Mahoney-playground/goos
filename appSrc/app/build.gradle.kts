@@ -15,7 +15,8 @@ dependencies {
   implementation(project(":auction-api"))
   implementation(project(":auction-xmpp"))
 
-  javaAgents(marathon("java-agent"))
+  @Suppress("UnstableApiUsage")
+  javaAgents(libs.marathon.javaagent)
 }
 
 application {

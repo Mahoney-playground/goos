@@ -19,7 +19,12 @@ dependencyResolutionManagement {
       version("mockk", "1.10.5")
       version("mockk", "1.10.5")
       version("kotlinxHtml", "0.7.2")
-      version("marathon", "5.4.0.0")
+      versionCatalog(
+        "marathon",
+        "com.jaliansystems", { "marathon-$it" }, "5.4.0.0",
+        "java-agent",
+        "java-driver",
+      )
       version("byteBuddy", "1.10.9")
       alias("byteBuddy")
         .to("net.bytebuddy", "byte-buddy")

@@ -15,7 +15,7 @@ dependencies {
   testFixturesImplementation(libs.coroutines.corejvm)
   testFixturesApi(testFixtures(project(":ui-api")))
 
-  testImplementation(marathon("java-driver"))
+  testImplementation(libs.marathon.javadriver)
 }
 
 idea {
