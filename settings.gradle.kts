@@ -18,7 +18,11 @@ dependencyResolutionManagement {
       version("jxmpp", "0.6.4")
       version("mockk", "1.10.5")
       version("mockk", "1.10.5")
-      version("kotlinxHtml", "0.7.2")
+      versionCatalog(
+        "kotlinxHtml",
+        "org.jetbrains.kotlinx", { "kotlinx-html-$it" }, "0.7.2",
+        "jvm",
+      )
       versionCatalog(
         "marathon",
         "com.jaliansystems", { "marathon-$it" }, "5.4.0.0",

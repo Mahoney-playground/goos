@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-  implementation(kotlinxHtml("jvm"))
+  implementation(libs.kotlinxHtml.jvm)
   implementation(libs.coroutines.core)
   implementation(libs.coroutines.corejvm)
 }
