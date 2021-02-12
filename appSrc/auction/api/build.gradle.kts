@@ -13,7 +13,7 @@ dependencies {
   testFixturesImplementation(kotest("assertions-core-jvm"))
   testFixturesImplementation(libs.coroutines.core)
   testFixturesImplementation(libs.mockk.core)
-  testFixturesImplementation(libs.mockk.dsljvm)
+  testFixturesImplementation(libs.mockk.dslJvm)
   testFixturesImplementation(project(":kotlinlangext"))
   constraints {
     testFixturesImplementation(libs.mockk.core)

@@ -24,7 +24,7 @@ dependencies {
   testImplementation(project(":testcontainers"))
   testImplementation("ch.qos.logback:logback-classic:1.2.3")
   testImplementation(kotest("extensions-testcontainers"))
-  testImplementation(libs.marathon.javadriver)
+  testImplementation(libs.marathon.javaDriver)
   testImplementation(project(":app"))
   testImplementation(testFixtures(project(":ui-stub")))
   testImplementation(testFixtures(project(":auction-stub")))

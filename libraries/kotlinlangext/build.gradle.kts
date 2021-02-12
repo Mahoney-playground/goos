@@ -5,7 +5,7 @@ plugins {
 group = "uk.org.lidalia"
 
 dependencies {
-  api(libs.coroutines.corejvm)
+  api(libs.coroutines.coreJvm)
 
   implementation(libs.coroutines.core)
 }

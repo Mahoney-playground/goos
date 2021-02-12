@@ -5,7 +5,7 @@ plugins {
 dependencies {
   implementation(libs.kotlinxHtml.jvm)
   implementation(libs.coroutines.core)
-  implementation(libs.coroutines.corejvm)
+  implementation(libs.coroutines.coreJvm)
 }
 
 idea {

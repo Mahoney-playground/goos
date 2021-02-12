@@ -80,7 +80,7 @@ fun VersionCatalogBuilder.versionCatalog(
 ) {
   version(alias, version)
   modules.forEach { module ->
-    val sanitisedModuleName = module?.replace("-", "") ?: "core"
+    val sanitisedModuleName = module?.hyphenToCamelCase() ?: "core"
     alias("$alias-$sanitisedModuleName")
       .to(group, artifactTemplate(module))
       .versionRef(alias)
@@ -132,3 +132,7 @@ fun createProject(file: File, projectName: String) {
 }
 
 fun File.isBuildScript() = extension == "gradle" || name == "build.gradle.kts"
+
+fun String.hyphenToCamelCase(): String {
+  return this.replace("-([a-zA-Z])".toRegex()) { matchResult -> matchResult.groupValues[1].toUpperCase() }
+}

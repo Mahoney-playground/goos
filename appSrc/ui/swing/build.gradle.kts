@@ -7,15 +7,15 @@ dependencies {
   api(project(":ui-api"))
 
   testFixturesApi(libs.selenium.api)
-  testFixturesApi(libs.selenium.remotedriver)
+  testFixturesApi(libs.selenium.remoteDriver)
 
   testFixturesImplementation(kotest("assertions-core"))
   testFixturesImplementation(kotest("assertions-shared-jvm"))
   testFixturesImplementation(libs.coroutines.core)
-  testFixturesImplementation(libs.coroutines.corejvm)
+  testFixturesImplementation(libs.coroutines.coreJvm)
   testFixturesApi(testFixtures(project(":ui-api")))
 
-  testImplementation(libs.marathon.javadriver)
+  testImplementation(libs.marathon.javaDriver)
 }
 
 idea {
