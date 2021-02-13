@@ -87,9 +87,8 @@ fun VersionCatalogBuilder.versionCatalog(
   artifact: String,
   version: String,
 ) {
-  val x = alias(alias).to(group, artifact)
   version(alias, version)
-  x.versionRef(alias)
+  alias(alias).to(group, artifact).versionRef(alias)
 }
 
 fun VersionCatalogBuilder.versionCatalog(
@@ -100,11 +99,11 @@ fun VersionCatalogBuilder.versionCatalog(
   vararg modules: String?,
 ) {
   modules.forEach { module ->
-    val sanitisedModuleName = module?.hyphenToCamelCase() ?: "core"
-    val to = alias("$alias-$sanitisedModuleName")
-      .to(group, artifactTemplate(module))
     version(alias, version)
-    to.versionRef(alias)
+    val sanitisedModuleName = module?.hyphenToCamelCase() ?: "core"
+    alias("$alias-$sanitisedModuleName")
+      .to(group, artifactTemplate(module))
+      .versionRef(alias)
   }
 }
 
