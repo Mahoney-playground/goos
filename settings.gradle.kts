@@ -62,10 +62,10 @@ dependencyResolutionManagement {
         "java-agent",
         "java-driver",
       )
-      version("byteBuddy", "1.10.9")
-      alias("byteBuddy")
-        .to("net.bytebuddy", "byte-buddy")
-        .versionRef("byteBuddy")
+      versionCatalog(
+        "byteBuddy",
+        "net.bytebuddy", "byte-buddy", "1.10.9"
+      )
       versionCatalog(
         "selenium",
         "org.seleniumhq.selenium", { "selenium-$it" }, "3.141.59",
@@ -82,6 +82,18 @@ dependencyResolutionManagement {
   }
 }
 
+
+fun VersionCatalogBuilder.versionCatalog(
+  alias: String,
+  group: String,
+  artifact: String,
+  version: String,
+) {
+  val x = alias(alias).to(group, artifact)
+  version(alias, version)
+  x.versionRef(alias)
+}
+
 fun VersionCatalogBuilder.versionCatalog(
   alias: String,
   group: String,
@@ -89,12 +101,12 @@ fun VersionCatalogBuilder.versionCatalog(
   version: String,
   vararg modules: String?,
 ) {
-  version(alias, version)
   modules.forEach { module ->
     val sanitisedModuleName = module?.hyphenToCamelCase() ?: "core"
-    alias("$alias-$sanitisedModuleName")
+    val to = alias("$alias-$sanitisedModuleName")
       .to(group, artifactTemplate(module))
-      .versionRef(alias)
+    version(alias, version)
+    to.versionRef(alias)
   }
 }
 
