@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-  implementation(kotest("runner-junit5"))
+  implementation(libs.kotest.runnerJunit5)
   constraints {
     implementation(libs.mockk.core)
   }

@@ -6,11 +6,11 @@ plugins {
 dependencies {
   api(project(":kotlinlangext"))
 
-  testFixturesApi(kotest("framework-api-jvm"))
+  testFixturesApi(libs.kotest.frameworkApiJvm)
 
-  testFixturesImplementation(kotest("framework-api"))
-  testFixturesImplementation(kotest("assertions-core"))
-  testFixturesImplementation(kotest("assertions-core-jvm"))
+  testFixturesImplementation(libs.kotest.frameworkApi)
+  testFixturesImplementation(libs.kotest.assertionsCore)
+  testFixturesImplementation(libs.kotest.assertionsCoreJvm)
   testFixturesImplementation(libs.coroutines.core)
   testFixturesImplementation(libs.mockk.core)
   testFixturesImplementation(libs.mockk.dslJvm)

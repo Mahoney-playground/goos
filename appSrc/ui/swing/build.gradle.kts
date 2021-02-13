@@ -9,8 +9,8 @@ dependencies {
   testFixturesApi(libs.selenium.api)
   testFixturesApi(libs.selenium.remoteDriver)
 
-  testFixturesImplementation(kotest("assertions-core"))
-  testFixturesImplementation(kotest("assertions-shared-jvm"))
+  testFixturesImplementation(libs.kotest.assertionsCore)
+  testFixturesImplementation(libs.kotest.assertionsSharedJvm)
   testFixturesImplementation(libs.coroutines.core)
   testFixturesImplementation(libs.coroutines.coreJvm)
   testFixturesApi(testFixtures(project(":ui-api")))

@@ -4,14 +4,14 @@ plugins {
 }
 
 dependencies {
-  implementation(kotest("framework-api-jvm"))
+  implementation(libs.kotest.frameworkApiJvm)
 
   implementation(libs.coroutines.core)
 
   implementation(project(":testlauncher"))
   implementation(testFixtures(project(":auction-xmpp")))
 
-  implementation(kotest("framework-api"))
+  implementation(libs.kotest.frameworkApi)
 }
 
 application {

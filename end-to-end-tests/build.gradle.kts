@@ -5,8 +5,8 @@ plugins {
 
 dependencies {
 
-  implementation(kotest("framework-api"))
-  implementation(kotest("framework-api-jvm"))
+  implementation(libs.kotest.frameworkApi)
+  implementation(libs.kotest.frameworkApiJvm)
 
   implementation(testFixtures(project(":ui-api")))
   implementation(testFixtures(project(":ui-swing")))
@@ -23,7 +23,7 @@ dependencies {
 
   testImplementation(project(":testcontainers"))
   testImplementation("ch.qos.logback:logback-classic:1.2.3")
-  testImplementation(kotest("extensions-testcontainers"))
+  testImplementation(libs.kotest.extensionsTestcontainers)
   testImplementation(libs.marathon.javaDriver)
   testImplementation(project(":app"))
   testImplementation(testFixtures(project(":ui-stub")))

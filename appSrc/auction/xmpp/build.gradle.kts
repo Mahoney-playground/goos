@@ -23,16 +23,16 @@ dependencies {
   testFixturesImplementation(libs.smack.tcp)
   testFixturesImplementation(libs.smack.extensions)
   testFixturesImplementation(libs.jxmpp.jid)
-  testFixturesImplementation(kotest("assertions-core"))
-  testFixturesImplementation(kotest("assertions-shared"))
-  testFixturesImplementation(kotest("assertions-shared-jvm"))
+  testFixturesImplementation(libs.kotest.assertionsCore)
+  testFixturesImplementation(libs.kotest.assertionsShared)
+  testFixturesImplementation(libs.kotest.assertionsSharedJvm)
   constraints {
     testFixturesImplementation(libs.mockk.core)
   }
 
   testFixturesRuntimeOnly(libs.smack.java7)
 
-  testImplementation(kotest("extensions-testcontainers"))
+  testImplementation(libs.kotest.extensionsTestcontainers)
   testImplementation(project(":testcontainers"))
   testImplementation("ch.qos.logback:logback-classic:1.2.3")
 }

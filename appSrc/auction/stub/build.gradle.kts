@@ -8,13 +8,13 @@ dependencies {
   api(project(":auction-api"))
   api(project(":auction-sol"))
 
-  testImplementation(kotest("assertions-core"))
-  testImplementation(kotest("assertions-shared"))
+  testImplementation(libs.kotest.assertionsCore)
+  testImplementation(libs.kotest.assertionsShared)
 
   testFixturesApi(testFixtures(project(":auction-api")))
-  testFixturesImplementation(kotest("assertions-core"))
-  testFixturesImplementation(kotest("assertions-core-jvm"))
-  testFixturesImplementation(kotest("assertions-shared"))
+  testFixturesImplementation(libs.kotest.assertionsCore)
+  testFixturesImplementation(libs.kotest.assertionsCoreJvm)
+  testFixturesImplementation(libs.kotest.assertionsShared)
   constraints {
     testFixturesImplementation(libs.mockk.core)
   }

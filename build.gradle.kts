@@ -79,7 +79,7 @@ subprojects {
 
       val testImplementation by configurations
 
-      testImplementation(kotest("runner-junit5"))
+      testImplementation(libs.kotest.runnerJunit5)
       testImplementation(libs.mockk.core)
     }
 

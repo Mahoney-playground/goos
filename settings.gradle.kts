@@ -14,7 +14,18 @@ val jxmppVersion = "0.6.4"
 dependencyResolutionManagement {
   versionCatalogs {
     create("libs") {
-      version("kotest", "4.3.2")
+      versionCatalog(
+        "kotest",
+        "io.kotest", { "kotest-$it" }, "4.3.2",
+        "framework-api",
+        "framework-api-jvm",
+        "assertions-core",
+        "assertions-core-jvm",
+        "assertions-shared",
+        "assertions-shared-jvm",
+        "runner-junit5",
+        "extensions-testcontainers",
+      )
       versionCatalog(
         "arrow",
         "io.arrow-kt", { "arrow-$it" }, "0.11.0",
