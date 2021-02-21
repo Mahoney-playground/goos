@@ -1,5 +1,8 @@
+@file:Suppress("UnstableApiUsage")
+
 import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorExtension.Generator
 import org.gradle.api.distribution.plugins.DistributionPlugin.TASK_INSTALL_NAME
+import org.gradle.internal.deprecation.DeprecatableConfiguration
 import org.jetbrains.gradle.ext.IdeaExtPlugin
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -16,7 +19,6 @@ plugins {
   id("com.dorongold.task-tree") version "1.5"
 }
 
-@Suppress("UnstableApiUsage")
 val javaVersion by extra(JavaLanguageVersion.of(15))
 
 apply<ReportingBasePlugin>()
@@ -45,7 +47,6 @@ subprojects {
     val testSrc = setOf("tests")
 
     configure<JavaPluginExtension> {
-      @Suppress("UnstableApiUsage")
       toolchain {
         languageVersion.set(javaVersion)
         vendor.set(JvmVendorSpec.ADOPTOPENJDK)
@@ -56,7 +57,6 @@ subprojects {
         named("test") { java.setSrcDirs(testSrc) }
       }
 
-      @Suppress("UnstableApiUsage")
       consistentResolution {
         useCompileClasspathVersions()
       }
@@ -71,12 +71,10 @@ subprojects {
 
     configurations.all {
       resolutionStrategy {
-        @Suppress("UnstableApiUsage")
         failOnNonReproducibleResolution()
       }
     }
 
-    @Suppress("UnstableApiUsage")
     dependencies {
 
       val testImplementation by configurations
@@ -95,7 +93,6 @@ subprojects {
       }
 
       withType<Jar> {
-        @Suppress("UnstableApiUsage")
         archiveVersion.convention(null as String?)
       }
 
@@ -132,15 +129,17 @@ subprojects {
 
     dependencies {
       constraints {
-        configurations.forEach { conf ->
-          add(conf.name, "org.minidns:minidns-core") {
-            version {
-              strictly("0.3.4")
-              because("minidns-core is declared by smack-core as a dependency range but we fail on non reproducible resolution")
+        configurations
+          .filter { it !is DeprecatableConfiguration || it.declarationAlternatives == null }
+          .forEach { conf ->
+            add(conf.name, "org.minidns:minidns-core") {
+              version {
+                strictly("0.3.4")
+                because("minidns-core is declared by smack-core as a dependency range but we fail on non reproducible resolution")
+              }
             }
+            add(conf.name, libs.jxmpp.jid)
           }
-          add(conf.name, libs.jxmpp.jid)
-        }
       }
     }
   }
