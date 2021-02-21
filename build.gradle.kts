@@ -1,5 +1,4 @@
 import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorExtension.Generator
-import org.gradle.api.JavaVersion.VERSION_15
 import org.gradle.api.distribution.plugins.DistributionPlugin.TASK_INSTALL_NAME
 import org.jetbrains.gradle.ext.IdeaExtPlugin
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
@@ -18,7 +17,7 @@ plugins {
 }
 
 @Suppress("UnstableApiUsage")
-val javaVersion by extra(VERSION_15)
+val javaVersion by extra(JavaLanguageVersion.of(15))
 
 apply<ReportingBasePlugin>()
 
@@ -46,8 +45,11 @@ subprojects {
     val testSrc = setOf("tests")
 
     configure<JavaPluginExtension> {
-      sourceCompatibility = javaVersion
-      targetCompatibility = javaVersion
+      @Suppress("UnstableApiUsage")
+      toolchain {
+        languageVersion.set(javaVersion)
+        vendor.set(JvmVendorSpec.ADOPTOPENJDK)
+      }
 
       configure<SourceSetContainer> {
         named("main") { java.setSrcDirs(mainSrc) }
@@ -87,7 +89,7 @@ subprojects {
 
       withType<KotlinCompile> {
         kotlinOptions.apply {
-          jvmTarget = "15"
+          jvmTarget = javaVersion.toString()
           useIR = true
         }
       }
