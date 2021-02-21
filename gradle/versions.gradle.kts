@@ -71,16 +71,6 @@ dependencyResolutionManagement {
   }
 }
 
-dependencyResolutionManagement {
-  @Suppress("UnstableApiUsage")
-  components {
-    withModule("org.igniterealtime.smack:smack-core") {
-      lockVersion("org.minidns", "minidns-core", "0.3.4")
-      lockVersion("org.jxmpp", "jxmpp-jid", jxmppVersion)
-    }
-  }
-}
-
 fun VersionCatalogBuilder.versionCatalog(
   alias: String,
   group: String,
@@ -104,14 +94,6 @@ fun VersionCatalogBuilder.versionCatalog(
     alias("$alias-$sanitisedModuleName")
       .to(group, artifactTemplate(module))
       .versionRef(alias)
-  }
-}
-
-fun ComponentMetadataDetails.lockVersion(group: String, name: String, version: String) {
-  allVariants {
-    withDependencies {
-      find { it.group == group && it.name == name }?.version { require(version) }
-    }
   }
 }
 

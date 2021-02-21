@@ -129,6 +129,20 @@ subprojects {
         named("testFixtures") { kotlin.setSrcDirs(testFixturesSrc) }
       }
     }
+
+    dependencies {
+      constraints {
+        configurations.forEach { conf ->
+          add(conf.name, "org.minidns:minidns-core") {
+            version {
+              strictly("0.3.4")
+              because("minidns-core is declared by smack-core as a dependency range but we fail on non reproducible resolution")
+            }
+          }
+          add(conf.name, libs.jxmpp.jid)
+        }
+      }
+    }
   }
 }
 
