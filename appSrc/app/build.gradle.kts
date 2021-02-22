@@ -1,6 +1,7 @@
 plugins {
   kotlin("jvm")
   id("alt-application-plugin")
+  id("dev.jacomet.logging-capabilities") version "0.9.0"
 }
 
 val javaAgents: Configuration by configurations.creating
@@ -42,4 +43,8 @@ tasks {
   named("build") {
     dependsOn(copyJavaAgents)
   }
+}
+
+loggingCapabilities {
+  enforceLogback()
 }
