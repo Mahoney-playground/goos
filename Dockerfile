@@ -99,7 +99,7 @@ USER $username
 
 # The duplication with app here is necessary to cache the installation of curl in a layer
 COPY --from=checker --chown=$username $work_dir/build/goos/lib/external ./external
-COPY --from=checker --chown=$username $work_dir/build/goos/lib/agents/marathon-java-agent-*.jar ./agents/marathon-java-agent.jar
+COPY --from=checker --chown=$username $work_dir/build/goos/lib/agents ./agents
 COPY --from=checker --chown=$username $work_dir/build/goos/lib/internal ./internal
 COPY --from=checker --chown=$username $work_dir/build/goos/lib/goos.jar .
 

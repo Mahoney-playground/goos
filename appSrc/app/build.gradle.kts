@@ -36,8 +36,10 @@ idea {
 tasks {
 
   val copyJavaAgents by registering(Copy::class) {
-    from(javaAgents)
-    into(buildDir.resolve("libs/agents"))
+    copyWithoutVersion(
+      from = javaAgents,
+      into = buildDir.resolve("libs/agents"),
+    )
   }
 
   named("build") {

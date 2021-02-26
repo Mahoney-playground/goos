@@ -189,8 +189,10 @@ tasks {
     }
     doLast {
       copy {
-        from(appJavaAgents)
-        into(buildDir.resolve(project.name).resolve("lib/agents"))
+        copyWithoutVersion(
+          from = appJavaAgents,
+          into = buildDir.resolve(project.name).resolve("lib/agents"),
+        )
       }
     }
   }
