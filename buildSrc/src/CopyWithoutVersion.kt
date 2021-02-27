@@ -17,12 +17,12 @@ fun CopySpec.copyWithoutVersion(
   }
 }
 
+private val artifactType = Attribute.of("artifactType", String::class.java)
+
 private fun ResolvedArtifactResult.filenameWithoutVersion(): String? {
-  val type = variant.attributes.getAttribute(
-    Attribute.of("artifactType", String::class.java)
-  )
   @Suppress("UnstableApiUsage")
   val owner = variant.owner
+  val type = variant.attributes.getAttribute(artifactType)
   return if (owner is ModuleComponentIdentifier && type != null) {
     "${owner.module}.$type"
   } else {
