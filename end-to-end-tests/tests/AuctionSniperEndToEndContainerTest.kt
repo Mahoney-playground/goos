@@ -14,7 +14,7 @@ import java.nio.file.Paths
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
-internal class AuctionSniperEndToEndTestContainerTest : StringSpec({
+internal class AuctionSniperEndToEndContainerTest : StringSpec({
 
   tags(Docker)
 
