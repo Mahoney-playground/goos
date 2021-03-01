@@ -108,48 +108,58 @@ The app has the following modules:
     There would typically be at least two implementations:
     - a real one, constructing the app with the adapters defined in `{port}/{adapter}/src` and the
       tests with the drivers defined in `{port}/{adapter}/testFixtures`
-      
+
+Diagram key:
+- Solid line means `a` constructs `b`.
+- Dashed line mean `a` implements `b`.
+- Dotted line means `a` depends on `b` without either constructing or implementing it.
+- Rounded elements are interfaces - they contain no logic, only declare interfaces and data classes
+- Components contain logic. They are not executable.
+- Remaining boxes are executable. The only logic they contain is the choice of components to
+  instantiate and wire together.
 ```plantuml
 digraph Test {
 
-  app 
-  core 
+  node [shape=box]
 
-  port
-  "port-contract-test"
-  "port-test-driver"
+  app [style=filled]
+  core [style=filled shape=component]
+
+  port [style="filled,rounded"]
+  "port-contract-test" [shape=component]
+  "port-test-driver" [style=rounded]
   
-  adapter 
+  adapter [style=filled shape=component]
   "adapter-contract-test"
-  "adapter-test-driver"
+  "adapter-test-driver" [shape=component]
   
-  "stub-adapter"
+  "stub-adapter" [shape=component]
   "stub-contract-test"
-  "stub-test-driver"
+  "stub-test-driver" [shape=component]
   
-  "end-to-end-contract-test"
+  "end-to-end-contract-test" [shape=component]
   "end-to-end-real-test"
   "end-to-end-stubbed-test"
   
   app -> core
   app -> adapter
-  core -> port
-  adapter -> port
+  core -> port [style=dotted]
+  adapter -> port [style=dashed]
   
-  "stub-adapter" -> port
+  "stub-adapter" -> port [style=dashed]
   
-  "port-contract-test" -> "port-test-driver"
-  "adapter-test-driver" -> "port-test-driver"
+  "port-contract-test" -> "port-test-driver" [style=dotted]
+  "adapter-test-driver" -> "port-test-driver" [style=dashed]
   "adapter-contract-test" -> "port-contract-test"
   "adapter-contract-test" -> "adapter-test-driver"
   "adapter-contract-test" -> "adapter"
   
-  "stub-test-driver" -> "port-test-driver"
+  "stub-test-driver" -> "port-test-driver" [style=dashed]
   "stub-contract-test" -> "port-contract-test"
   "stub-contract-test" -> "stub-test-driver"
   "stub-contract-test" -> "stub-adapter"
   
-  "end-to-end-contract-test" -> "port-test-driver"
+  "end-to-end-contract-test" -> "port-test-driver" [style=dotted]
 
   "end-to-end-stubbed-test" -> "end-to-end-contract-test"
   "end-to-end-stubbed-test" -> "stub-test-driver"
