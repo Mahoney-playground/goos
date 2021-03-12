@@ -21,12 +21,12 @@ fun includeChildrenOf(
     createProject(it, nameFunc(it))
   }
 
-fun File.directories() = listFiles()
-  ?.filter { it.isDirectory }
-  ?.toList() ?: emptyList()
+fun File.directories() = filter { isDirectory }
 
-fun File.files() = listFiles()
-  ?.filter { it.isFile }
+fun File.files() = filter { isFile }
+
+fun File.filter(predicate: File.() -> Boolean) = listFiles()
+  ?.filter(predicate)
   ?.toList() ?: emptyList()
 
 fun Iterable<File>.containingBuildScript() =
