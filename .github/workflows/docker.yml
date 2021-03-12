@@ -106,7 +106,7 @@ jobs:
       - name: Run auction xmpp integration tests
         env:
           GOOS_TAG: ${{ github.sha }}
-        run: cd appSrc/auction/xmpp-integration-tests &&
+        run: cd app-src/auction/xmpp-integration-tests &&
           docker-compose pull -q &&
           docker-compose up --no-build --exit-code-from auction-xmpp-integration-tests --abort-on-container-exit
 

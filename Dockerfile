@@ -77,9 +77,9 @@ FROM worker as auction-xmpp-integration-tests
 ARG username
 ARG work_dir
 
-COPY --from=checker --chown=$username $work_dir/appSrc/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/external ./external
-COPY --from=checker --chown=$username $work_dir/appSrc/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/internal ./internal
-COPY --from=checker --chown=$username $work_dir/appSrc/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/auction-xmpp-integration-tests.jar .
+COPY --from=checker --chown=$username $work_dir/app-src/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/external ./external
+COPY --from=checker --chown=$username $work_dir/app-src/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/internal ./internal
+COPY --from=checker --chown=$username $work_dir/app-src/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/auction-xmpp-integration-tests.jar .
 
 ENTRYPOINT ["java", "-jar", "--illegal-access=deny", "-ea", "auction-xmpp-integration-tests.jar"]
 

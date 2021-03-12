@@ -16,7 +16,7 @@ kotlin {
       kotlin.setSrcDirs(setOf("src"))
     }
     test {
-      kotlin.setSrcDirs(setOf("tests"))
+      kotlin.setSrcDirs(setOf("test"))
     }
   }
 }

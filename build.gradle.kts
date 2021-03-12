@@ -44,7 +44,9 @@ subprojects {
     apply<IdeaExtPlugin>()
 
     val mainSrc = setOf("src")
-    val testSrc = setOf("tests")
+    val mainSrcResources = setOf("src-resources")
+    val testSrc = setOf("test")
+    val testSrcResources = setOf("test-resources")
 
     configure<JavaPluginExtension> {
       toolchain {
@@ -53,8 +55,14 @@ subprojects {
       }
 
       configure<SourceSetContainer> {
-        named("main") { java.setSrcDirs(mainSrc) }
-        named("test") { java.setSrcDirs(testSrc) }
+        named("main") {
+          java.setSrcDirs(mainSrc)
+          resources.setSrcDirs(mainSrcResources)
+        }
+        named("test") {
+          java.setSrcDirs(testSrc)
+          resources.setSrcDirs(testSrcResources)
+        }
       }
 
       consistentResolution {
@@ -114,7 +122,7 @@ subprojects {
   }
 
   pluginManager.withPlugin("java-test-fixtures") {
-    val testFixturesSrc = setOf("testFixtures")
+    val testFixturesSrc = setOf("test-fixtures")
 
     configure<JavaPluginExtension> {
       configure<SourceSetContainer> {

@@ -2,9 +2,9 @@
 
 rootProject.name = "goos"
 
-includeChildrenOf("appSrc") { ":${it.name}" }
-includeChildrenOf("appSrc/auction")
-includeChildrenOf("appSrc/ui")
+includeChildrenOf("app-src") { ":${it.name}" }
+includeChildrenOf("app-src/auction")
+includeChildrenOf("app-src/ui")
 includeChildrenOf("libraries") { ":${it.name}" }
 
 include(":end-to-end-tests")
