@@ -25,9 +25,7 @@ fun File.directories() = filter { isDirectory }
 
 fun File.files() = filter { isFile }
 
-fun File.filter(predicate: File.() -> Boolean) = listFiles()
-  ?.filter(predicate)
-  ?.toList() ?: emptyList()
+fun File.filter(predicate: File.() -> Boolean) = listFiles()?.filter(predicate) ?: emptyList()
 
 fun Iterable<File>.containingBuildScript() =
   filter { dir -> dir.files().any { it.isBuildScript() } }
