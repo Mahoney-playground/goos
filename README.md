@@ -117,6 +117,7 @@ Diagram key:
 - Components contain logic. They are not executable.
 - Remaining boxes are executable. The only logic they contain is the choice of components to
   instantiate and wire together.
+- Grey boxes represent production modules.
 ```plantuml
 digraph Test {
 
@@ -128,51 +129,86 @@ digraph Test {
   port [style="filled,rounded"]
   "port-contract-test" [shape=component]
   "port-test-driver" [style=rounded]
-  
+
   adapter [style=filled shape=component]
-  "adapter-contract-test"
-  "adapter-test-driver" [shape=component]
-  
+
   "stub-adapter" [shape=component]
   "stub-contract-test"
   "stub-test-driver" [shape=component]
-  
+
   "end-to-end-contract-test" [shape=component]
-  "end-to-end-real-test"
   "end-to-end-stubbed-test"
-  
+
   app -> core
   app -> adapter
   core -> port [style=dotted]
   adapter -> port [style=dashed]
-  
+
   "stub-adapter" -> port [style=dashed]
-  
+
+  "port-contract-test" -> "port" [style=dotted]
   "port-contract-test" -> "port-test-driver" [style=dotted]
-  "adapter-test-driver" -> "port-test-driver" [style=dashed]
-  "adapter-contract-test" -> "port-contract-test"
-  "adapter-contract-test" -> "adapter-test-driver"
-  "adapter-contract-test" -> "adapter"
-  
+
   "stub-test-driver" -> "port-test-driver" [style=dashed]
   "stub-contract-test" -> "port-contract-test"
   "stub-contract-test" -> "stub-test-driver"
   "stub-contract-test" -> "stub-adapter"
-  
+
   "end-to-end-contract-test" -> "port-test-driver" [style=dotted]
+  "end-to-end-contract-test" -> "port" [style=dotted]
 
   "end-to-end-stubbed-test" -> "end-to-end-contract-test"
   "end-to-end-stubbed-test" -> "stub-test-driver"
   "end-to-end-stubbed-test" -> "core"
   "end-to-end-stubbed-test" -> "stub-adapter"
+
+  { rank = same; port; "port-test-driver"; }
+  { rank = same; "end-to-end-contract-test"; "port-contract-test"; }
+  { rank = same; "adapter"; "stub-adapter"; }
+}
+```
+
+```plantuml
+digraph Test {
+
+  node [shape=box]
+
+  app [style=filled]
+  core [style=filled shape=component]
+
+  port [style="filled,rounded"]
+  "port-contract-test" [shape=component]
+  "port-test-driver" [style=rounded]
+
+  adapter [style=filled shape=component]
+
+  "adapter-contract-test"
+  "adapter-test-driver" [shape=component]
+
+  "end-to-end-contract-test" [shape=component]
+  "end-to-end-real-test"
+
+  app -> core
+  app -> adapter
+  core -> port [style=dotted]
+  adapter -> port [style=dashed]
+
+  "port-contract-test" -> "port" [style=dotted]
+  "port-contract-test" -> "port-test-driver" [style=dotted]
+
+  "adapter-test-driver" -> "port-test-driver" [style=dashed]
+  "adapter-contract-test" -> "port-contract-test"
+  "adapter-contract-test" -> "adapter-test-driver"
+  "adapter-contract-test" -> "adapter"
   
+  "end-to-end-contract-test" -> "port-test-driver" [style=dotted]
+  "end-to-end-contract-test" -> "port" [style=dotted]
+
   "end-to-end-real-test" -> "end-to-end-contract-test"
   "end-to-end-real-test" -> "adapter-test-driver"
   "end-to-end-real-test" -> "app"
-  
+
   { rank = same; port; "port-test-driver"; }
-  { rank = same; "end-to-end-real-test"; "end-to-end-stubbed-test"; }
   { rank = same; "end-to-end-contract-test"; "port-contract-test"; }
-  { rank = same; "adapter"; "stub-adapter"; }
 }
 ```
