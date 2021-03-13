@@ -2,23 +2,23 @@
 
 rootProject.name = "goos"
 
-includeChildrenOf("app-src") { ":${it.name}" }
+includeChildrenOf("app-src") { ":$name" }
 includeChildrenOf("app-src/auction")
 includeChildrenOf("app-src/ui")
-includeChildrenOf("libraries") { ":${it.name}" }
+includeChildrenOf("libraries") { ":$name" }
 
 include(":end-to-end-tests")
 
 apply(from = "gradle/versions.gradle.kts")
 
 fun includeChildrenOf(
-  container: String,
-  nameFunc: (File) -> String = { ":${it.parentFile.name}-${it.name}" }
-) = file(container)
+  dir: String,
+  toProjectName: File.() -> String = { ":${parentFile.name}-$name" }
+) = file(dir)
   .directories()
-  .containingBuildScript()
-  .forEach {
-    createProject(it, nameFunc(it))
+  .filter { it.containsBuildScript() }
+  .forEach { projectDir ->
+    createProject(projectDir, projectDir.toProjectName())
   }
 
 fun File.directories() = filter { isDirectory }
@@ -27,12 +27,11 @@ fun File.files() = filter { isFile }
 
 fun File.filter(predicate: File.() -> Boolean) = listFiles()?.filter(predicate) ?: emptyList()
 
-fun Iterable<File>.containingBuildScript() =
-  filter { dir -> dir.files().any { it.isBuildScript() } }
+fun File.containsBuildScript(): Boolean = files().any { it.isBuildScript() }
 
-fun createProject(file: File, projectName: String) {
+fun createProject(projectDir: File, projectName: String) {
   include(projectName)
-  project(projectName).projectDir = file
+  project(projectName).projectDir = projectDir
 }
 
 fun File.isBuildScript() = extension == "gradle" || name == "build.gradle.kts"
