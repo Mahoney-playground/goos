@@ -1,6 +1,7 @@
 plugins {
   kotlin("jvm")
   id("alt-application-plugin")
+  id("lidalia-idea-plugin")
   id("dev.jacomet.logging-capabilities") version "0.9.0"
 }
 

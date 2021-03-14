@@ -2,6 +2,8 @@
 
 rootProject.name = "goos"
 
+includeBuildChildrenOf("gradle")
+
 includeChildrenOf("app-src") { ":$name" }
 includeChildrenOf("app-src/auction")
 includeChildrenOf("app-src/ui")
@@ -14,12 +16,20 @@ apply(from = "gradle/versions.gradle.kts")
 fun includeChildrenOf(
   dir: String,
   toProjectName: File.() -> String = { ":${parentFile.name}-$name" }
-) = file(dir)
-  .directories()
-  .filter { it.containsBuildScript() }
-  .forEach { projectDir ->
+) =
+  dir.forEachChildWithABuildScript { projectDir ->
     createProject(projectDir, projectDir.toProjectName())
   }
+
+fun includeBuildChildrenOf(dir: String) =
+  dir.forEachChildWithABuildScript { projectDir ->
+    includeBuild(projectDir)
+  }
+
+fun String.forEachChildWithABuildScript(action: (File) -> Unit) = file(this)
+  .directories()
+  .filter { it.containsBuildScript() }
+  .forEach(action)
 
 fun File.directories() = filter { isDirectory }
 

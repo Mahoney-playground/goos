@@ -1,6 +1,7 @@
 plugins {
   kotlin("jvm")
   id("alt-application-plugin")
+  id("lidalia-idea-plugin")
 }
 
 dependencies {
