@@ -5,9 +5,13 @@ plugins {
 }
 
 repositories {
-  jcenter()
   mavenCentral()
   gradlePluginPortal()
+  jcenter() {
+    content {
+      includeModule("org.jetbrains.kotlinx", "kotlinx-html-jvm")
+    }
+  }
 }
 
 kotlin {
