@@ -183,15 +183,13 @@ dependencies {
 
 tasks {
 
-  named("build") {
+  assemble {
     val app = project(":app")
-    val appInstallTask = app.tasks.getByName(TASK_INSTALL_NAME)
 
-    dependsOn(appInstallTask)
-    dependsOn(named("buildHealth"))
+    dependsOn(app.tasks.assemble)
     doLast {
       copy {
-        from(appInstallTask)
+        from(app.tasks.getByName(TASK_INSTALL_NAME))
         into(buildDir.resolve(project.name))
       }
     }
@@ -203,6 +201,10 @@ tasks {
         )
       }
     }
+  }
+
+  check {
+    dependsOn(named("buildHealth"))
   }
 }
 

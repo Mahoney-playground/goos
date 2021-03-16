@@ -65,7 +65,7 @@ class ApplicationPlugin : Plugin<Project> {
       ),
       pluginConvention
     )
-    tasks.named("build") {
+    tasks.named("assemble") {
       dependsOn(TASK_INSTALL_NAME)
     }
     configureJavaCompileTask(
