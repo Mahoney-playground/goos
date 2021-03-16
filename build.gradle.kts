@@ -31,6 +31,7 @@ allprojects {
     jcenter {
       content {
         includeModule("org.jetbrains.kotlinx", "kotlinx-html-jvm")
+        includeModule("org.jetbrains.kotlinx", "kotlinx-html-common")
       }
     }
   }
