@@ -27,8 +27,12 @@ allprojects {
   version = "0.1.0"
 
   repositories {
-    jcenter()
     mavenCentral()
+    jcenter {
+      content {
+        includeModule("org.jetbrains.kotlinx", "kotlinx-html-jvm")
+      }
+    }
   }
 
   tasks.register<DownloadDependenciesTask>("downloadDependencies")
