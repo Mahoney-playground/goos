@@ -3,7 +3,6 @@
 import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorExtension.Generator
 import org.gradle.api.distribution.plugins.DistributionPlugin.TASK_INSTALL_NAME
 import org.gradle.internal.deprecation.DeprecatableConfiguration
-import org.jetbrains.gradle.ext.IdeaExtPlugin
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jmailen.gradle.kotlinter.KotlinterPlugin
@@ -41,7 +40,7 @@ subprojects {
 
     apply<KotlinterPlugin>()
     apply<BuildDashboardPlugin>()
-    apply<IdeaExtPlugin>()
+    apply<IdeaPlugin>()
 
     val mainSrc = setOf("src")
     val mainSrcResources = setOf("src-resources")

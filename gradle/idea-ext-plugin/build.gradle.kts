@@ -44,7 +44,7 @@ tasks {
 }
 
 dependencies {
-  implementation("gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:0.9")
+  api("gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:1.0")
 }
 
 gradlePlugin {
