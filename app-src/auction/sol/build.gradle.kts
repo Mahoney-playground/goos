@@ -1,6 +1,5 @@
 plugins {
   kotlin("jvm")
-  id("uk.org.lidalia.idea-ext-plugin")
 }
 
 dependencies {
