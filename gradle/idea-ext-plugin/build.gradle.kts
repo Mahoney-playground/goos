@@ -50,7 +50,7 @@ dependencies {
 gradlePlugin {
   plugins {
     create("idea-ext-plugin") {
-      id = "lidalia-idea-plugin"
+      id = "uk.org.lidalia.idea-ext-plugin"
       implementationClass =
         "uk.org.lidalia.gradle.plugins.idea.IdeaPlugin"
     }

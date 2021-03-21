@@ -1,6 +1,6 @@
 plugins {
   kotlin("jvm")
-  id("lidalia-idea-plugin")
+  id("uk.org.lidalia.idea-ext-plugin")
   `java-test-fixtures`
 }
 
