@@ -5,6 +5,7 @@ import org.gradle.api.distribution.plugins.DistributionPlugin.TASK_INSTALL_NAME
 import org.gradle.internal.deprecation.DeprecatableConfiguration
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jmailen.gradle.kotlinter.KotlinterPlugin
+import uk.org.lidalia.gradle.plugins.downloaddeps.DownloadDependenciesPlugin
 import uk.org.lidalia.gradle.plugins.idea.IdeaPlugin
 import uk.org.lidalia.gradle.plugins.kotlinflat.KotlinFlatPlugin
 
@@ -13,6 +14,7 @@ plugins {
   kotlin("jvm") version "1.4.31" apply false
   id("uk.org.lidalia.kotlin-flat-plugin") apply false
   id("uk.org.lidalia.idea-ext-plugin") apply false
+  id("uk.org.lidalia.download-dependencies-plugin")
   id("com.autonomousapps.dependency-analysis") version "0.70.0"
   id("org.jmailen.kotlinter") version "3.3.0"
   id("com.vanniktech.dependency.graph.generator") version "0.5.0"
@@ -39,8 +41,7 @@ allprojects {
       }
     }
   }
-
-  tasks.register<DownloadDependenciesTask>("downloadDependencies")
+  apply<DownloadDependenciesPlugin>()
 }
 
 subprojects {

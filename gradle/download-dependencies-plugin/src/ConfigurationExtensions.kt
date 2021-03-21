@@ -1,3 +1,5 @@
+package uk.org.lidalia.gradle.plugins.downloaddeps
+
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.artifacts.ConfigurationContainer
 import org.gradle.internal.deprecation.DeprecatableConfiguration
