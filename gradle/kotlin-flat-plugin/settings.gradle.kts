@@ -1,0 +1,1 @@
+includeBuild("../idea-ext-plugin")

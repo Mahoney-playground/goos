@@ -3,14 +3,15 @@
 import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorExtension.Generator
 import org.gradle.api.distribution.plugins.DistributionPlugin.TASK_INSTALL_NAME
 import org.gradle.internal.deprecation.DeprecatableConfiguration
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jmailen.gradle.kotlinter.KotlinterPlugin
 import uk.org.lidalia.gradle.plugins.idea.IdeaPlugin
+import uk.org.lidalia.gradle.plugins.kotlinflat.KotlinFlatPlugin
 
 plugins {
   base
   kotlin("jvm") version "1.4.31" apply false
+  id("uk.org.lidalia.kotlin-flat-plugin") apply false
   id("uk.org.lidalia.idea-ext-plugin") apply false
   id("com.autonomousapps.dependency-analysis") version "0.70.0"
   id("org.jmailen.kotlinter") version "3.3.0"
@@ -45,14 +46,10 @@ subprojects {
 
   pluginManager.withPlugin("kotlin") {
 
+    apply<KotlinFlatPlugin>()
     apply<KotlinterPlugin>()
     apply<BuildDashboardPlugin>()
     apply<IdeaPlugin>()
-
-    val mainSrc = setOf("src")
-    val mainSrcResources = setOf("src-resources")
-    val testSrc = setOf("test")
-    val testSrcResources = setOf("test-resources")
 
     configure<JavaPluginExtension> {
       toolchain {
@@ -60,26 +57,8 @@ subprojects {
         vendor.set(JvmVendorSpec.ADOPTOPENJDK)
       }
 
-      configure<SourceSetContainer> {
-        named("main") {
-          java.setSrcDirs(mainSrc)
-          resources.setSrcDirs(mainSrcResources)
-        }
-        named("test") {
-          java.setSrcDirs(testSrc)
-          resources.setSrcDirs(testSrcResources)
-        }
-      }
-
       consistentResolution {
         useCompileClasspathVersions()
-      }
-    }
-
-    configure<KotlinJvmProjectExtension> {
-      sourceSets {
-        named("main") { kotlin.setSrcDirs(mainSrc) }
-        named("test") { kotlin.setSrcDirs(testSrc) }
       }
     }
 
@@ -128,19 +107,6 @@ subprojects {
   }
 
   pluginManager.withPlugin("java-test-fixtures") {
-    val testFixturesSrc = setOf("test-fixtures")
-
-    configure<JavaPluginExtension> {
-      configure<SourceSetContainer> {
-        named("testFixtures") { java.setSrcDirs(testFixturesSrc) }
-      }
-    }
-    configure<KotlinJvmProjectExtension> {
-      sourceSets {
-        named("testFixtures") { kotlin.setSrcDirs(testFixturesSrc) }
-      }
-    }
-
     dependencies {
       constraints {
         configurations
