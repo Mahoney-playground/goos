@@ -1,7 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
   `kotlin-dsl`
   `java-gradle-plugin`
@@ -20,25 +18,6 @@ kotlin {
     }
     test {
       kotlin.setSrcDirs(setOf("test"))
-    }
-  }
-}
-
-val javaVersion by extra(JavaLanguageVersion.of(15))
-
-java {
-  toolchain {
-    languageVersion.set(javaVersion)
-    vendor.set(JvmVendorSpec.ADOPTOPENJDK)
-  }
-}
-
-tasks {
-
-  withType<KotlinCompile> {
-    kotlinOptions.apply {
-      jvmTarget = javaVersion.toString()
-      useIR = true
     }
   }
 }
