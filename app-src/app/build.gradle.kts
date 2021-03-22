@@ -1,7 +1,10 @@
+import uk.org.lidalia.gradle.plugins.copywithoutversion.CopyWithoutVersionsTask
+
 plugins {
   kotlin("jvm")
   id("alt-application-plugin")
   id("dev.jacomet.logging-capabilities") version "0.9.0"
+  id("uk.org.lidalia.copy-without-version")
 }
 
 val javaAgents: Configuration by configurations.creating
@@ -35,11 +38,9 @@ idea {
 
 tasks {
 
-  val copyJavaAgents by registering(Copy::class) {
-    copyWithoutVersion(
-      from = javaAgents,
-      into = buildDir.resolve("libs/agents"),
-    )
+  val copyJavaAgents by registering(CopyWithoutVersionsTask::class) {
+    from = javaAgents
+    into = buildDir.resolve("lib/agents")
   }
 
   named("build") {
