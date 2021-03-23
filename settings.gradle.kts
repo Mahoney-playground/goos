@@ -11,6 +11,8 @@ includeChildrenOf("libraries") { ":$name" }
 
 include(":end-to-end-tests")
 
+enableFeaturePreview("VERSION_CATALOGS")
+
 apply(from = "gradle/versions.gradle.kts")
 
 fun includeChildrenOf(
