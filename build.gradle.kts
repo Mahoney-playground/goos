@@ -21,7 +21,7 @@ plugins {
   id("org.jmailen.kotlinter") version "3.3.0"
   id("com.vanniktech.dependency.graph.generator") version "0.5.0"
   id("com.github.ben-manes.versions") version "0.36.0"
-  id("report-aggregator")
+  id("uk.org.lidalia.report-aggregator")
   id("com.dorongold.task-tree") version "1.5"
 }
 

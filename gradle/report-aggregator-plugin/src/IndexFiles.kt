@@ -1,4 +1,4 @@
-package uk.org.lidalia.indexhtml
+package uk.org.lidalia.gradle.plugins.reportaggregator
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope

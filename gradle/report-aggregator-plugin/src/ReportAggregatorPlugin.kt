@@ -10,7 +10,6 @@ import org.gradle.api.reporting.ReportingExtension
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
-import uk.org.lidalia.indexhtml.addIndexFiles
 import java.io.File
 
 /**
