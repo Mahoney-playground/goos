@@ -42,7 +42,7 @@ dependencyResolutionManagement {
       )
       versionCatalog(
         "kotlinxHtml",
-        "org.jetbrains.kotlinx", { "kotlinx-html-$it" }, "0.7.2",
+        "org.jetbrains.kotlinx", { "kotlinx-html-$it" }, "0.7.3",
         "jvm",
       )
       versionCatalog(

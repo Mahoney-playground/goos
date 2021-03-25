@@ -7,12 +7,7 @@ plugins {
 repositories {
   mavenCentral()
   gradlePluginPortal()
-  jcenter() {
-    content {
-      includeModule("org.jetbrains.kotlinx", "kotlinx-html-jvm")
-      includeModule("org.jetbrains.kotlinx", "kotlinx-html-common")
-    }
-  }
+  maven(url = "https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
 }
 
 kotlin {
@@ -27,7 +22,7 @@ kotlin {
 }
 
 dependencies {
-  implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2")
+  implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.3")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
 }
 

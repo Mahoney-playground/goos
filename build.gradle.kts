@@ -35,13 +35,7 @@ allprojects {
 
   repositories {
     mavenCentral()
-    @Suppress("DEPRECATION") // can't lose jcenter until kotlinx-html is in maven central
-    jcenter {
-      content {
-        includeModule("org.jetbrains.kotlinx", "kotlinx-html-jvm")
-        includeModule("org.jetbrains.kotlinx", "kotlinx-html-common")
-      }
-    }
+    maven(url = "https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
   }
   apply<DownloadDependenciesPlugin>()
 }
