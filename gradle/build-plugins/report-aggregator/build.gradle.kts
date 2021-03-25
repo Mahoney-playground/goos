@@ -10,13 +10,11 @@ plugins {
 
 repositories {
   mavenCentral()
-  jcenter()
   gradlePluginPortal()
 }
 
 dependencies {
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
-  implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2")
+  implementation("uk.org.lidalia:indexhtml:0.1.0")
 }
 
 gradlePlugin {

@@ -11,7 +11,7 @@ import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 import java.io.File
-
+import uk.org.lidalia.indexhtml.addIndexFiles
 /**
  * <p>A {@link Plugin} which aggregates the reports of child projects into the parent project.</p>
  *

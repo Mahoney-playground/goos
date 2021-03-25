@@ -3,6 +3,11 @@
 rootProject.name = "goos"
 
 includeBuildChildrenOf("gradle/build-plugins")
+includeBuild("gradle/shared-libraries/indexhtml") {
+  dependencySubstitution {
+    substitute(module("uk.org.lidalia:indexhtml")).with(project(":"))
+  }
+}
 
 includeChildrenOf("app-src") { ":$name" }
 includeChildrenOf("app-src/auction")
