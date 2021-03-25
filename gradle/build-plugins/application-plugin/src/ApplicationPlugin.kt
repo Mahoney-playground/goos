@@ -158,7 +158,7 @@ class ApplicationPlugin : Plugin<Project> {
     return toolMapper(service, extension.toolchain).orElse(Providers.notDefined())
   }
 
-  private fun runtimeClasspath(project: Project): FileCollection? =
+  private fun runtimeClasspath(project: Project): FileCollection =
     project.convention.getPlugin(JavaPluginConvention::class.java).sourceSets.getByName(
       MAIN_SOURCE_SET_NAME
     ).runtimeClasspath

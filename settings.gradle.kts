@@ -2,7 +2,7 @@
 
 rootProject.name = "goos"
 
-includeBuildChildrenOf("gradle")
+includeBuildChildrenOf("gradle/build-plugins")
 
 includeChildrenOf("app-src") { ":$name" }
 includeChildrenOf("app-src/auction")
