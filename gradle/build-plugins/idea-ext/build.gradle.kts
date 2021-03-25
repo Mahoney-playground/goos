@@ -4,7 +4,6 @@ plugins {
   `kotlin-dsl`
   `java-gradle-plugin`
   id("org.jmailen.kotlinter") version "3.2.0"
-  id("uk.org.lidalia.idea-ext-plugin")
 }
 
 repositories {
@@ -24,19 +23,15 @@ kotlin {
 }
 
 dependencies {
-  api("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.31")
+  api("gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:1.0")
 }
 
 gradlePlugin {
   plugins {
-    create("kotlin-flat-plugin") {
-      id = "uk.org.lidalia.kotlin-flat-plugin"
+    create("idea-ext") {
+      id = "uk.org.lidalia.idea-ext"
       implementationClass =
-        "uk.org.lidalia.gradle.plugins.kotlinflat.KotlinFlatPlugin"
+        "uk.org.lidalia.gradle.plugins.idea.IdeaPlugin"
     }
   }
-}
-
-idea {
-  setPackagePrefix("uk.org.lidalia.gradle.plugins.kotlinflat")
 }

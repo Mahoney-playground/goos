@@ -4,8 +4,8 @@ plugins {
   `kotlin-dsl`
   `java-gradle-plugin`
   id("org.jmailen.kotlinter") version "3.2.0"
-  id("uk.org.lidalia.idea-ext-plugin")
-  id("uk.org.lidalia.kotlin-flat-plugin")
+  id("uk.org.lidalia.idea-ext")
+  id("uk.org.lidalia.kotlin-flat")
 }
 
 repositories {
@@ -15,7 +15,7 @@ repositories {
 
 gradlePlugin {
   plugins {
-    create("application-plugin") {
+    create("application") {
       id = "uk.org.lidalia.application"
       implementationClass =
         "uk.org.lidalia.gradle.plugins.application.ApplicationPlugin"

@@ -13,9 +13,9 @@ import uk.org.lidalia.gradle.plugins.kotlinflat.KotlinFlatPlugin
 plugins {
   base
   kotlin("jvm") version "1.4.31" apply false
-  id("uk.org.lidalia.kotlin-flat-plugin") apply false
-  id("uk.org.lidalia.idea-ext-plugin") apply false
-  id("uk.org.lidalia.download-dependencies-plugin")
+  id("uk.org.lidalia.kotlin-flat") apply false
+  id("uk.org.lidalia.idea-ext") apply false
+  id("uk.org.lidalia.download-dependencies")
   id("uk.org.lidalia.copy-without-version")
   id("com.autonomousapps.dependency-analysis") version "0.70.0"
   id("org.jmailen.kotlinter") version "3.3.0"
