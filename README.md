@@ -10,7 +10,7 @@ To build locally with JDK >= 14 installed:
 ```
 The output will be in `build/goos`.
 
-To run the end to end tests:
+To run the end-to-end tests:
 ```bash
 COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 \
 GOOS_TAG=latest \
@@ -21,7 +21,7 @@ docker-compose \
  --exit-code-from end-to-end-tests --abort-on-container-exit
 ```
 
-To run the end to end tests locally:
+To run the end-to-end tests locally:
 * Install dnsmasq: `brew install dnsmasq`
 * Ensure it resolves *.internal to localhost:
   ```bash
