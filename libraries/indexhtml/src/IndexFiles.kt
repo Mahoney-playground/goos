@@ -17,6 +17,7 @@ import kotlinx.html.style
 import kotlinx.html.title
 import kotlinx.html.unsafe
 import java.io.File
+import org.intellij.lang.annotations.Language
 
 fun File.addIndexFiles() = runBlocking(Dispatchers.Default) {
   this@addIndexFiles.addIndexFiles(false)
@@ -41,37 +42,49 @@ private fun File.addIndexFile(includeParentLink: Boolean) =
 
 private fun File.indexFileHtml(
   includeParentLink: Boolean
-): String = buildString {
+): String {
+  val children = listFiles().orEmpty()
+    .filterNot { it.isHidden }
+    .directoriesFirst()
+  return indexHtmlTemplate(
+    this,
+    includeParentLink,
+    children,
+  )
+}
+
+private fun indexHtmlTemplate(
+  directory: File,
+  includeParentLink: Boolean,
+  children: List<File>
+) = buildString {
+  @Language("css")
+  val css = """
+    a {
+      text-decoration: none;
+    }
+    """.trimIndent()
   appendLine("<!DOCTYPE html>")
   appendHTML()
     .html {
       lang = "en"
       head {
-        title(name)
+        title(directory.name)
         meta {
           charset = "utf-8"
         }
         style {
-          unsafe {
-            +"""
-          a {
-            text-decoration: none;
-          }
-          """
-          }
+          unsafe { +css }
         }
       }
       body {
-        h1 { +"Index of $name" }
+        h1 { +"Index of ${directory.name}" }
         div {
           if (includeParentLink) {
             div {
               a(href = "..") { +"⬆ Parent Directory" }
             }
           }
-          val children = listFiles().orEmpty()
-            .filterNot { it.isHidden }
-            .directoriesFirst()
           children.forEach { child ->
             val icon = if (child.isDirectory) "\uD83D\uDCC1" else "\uD83D\uDCC4"
             div {
@@ -93,7 +106,7 @@ private suspend fun File.addIndexFilesToSubDirs() =
     .filter { it.isDirectory && !it.isHidden }
     .forEachParallel { it.addIndexFiles(includeParentLink = true) }
 
-suspend fun <T> Iterable<T>.forEachParallel(f: suspend (T) -> Unit) {
+private suspend fun <T> Iterable<T>.forEachParallel(f: suspend (T) -> Unit) {
   coroutineScope {
     forEach { t ->
       launch {
