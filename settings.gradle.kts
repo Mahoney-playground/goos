@@ -3,7 +3,7 @@
 rootProject.name = "goos"
 
 includeBuildChildrenOf("gradle/build-plugins")
-includeBuild("gradle/shared-libraries/indexhtml") {
+includeBuild("libraries/indexhtml") {
   dependencySubstitution {
     substitute(module("uk.org.lidalia:indexhtml")).with(project(":"))
   }
@@ -12,7 +12,7 @@ includeBuild("gradle/shared-libraries/indexhtml") {
 includeChildrenOf("app-src") { ":$name" }
 includeChildrenOf("app-src/auction")
 includeChildrenOf("app-src/ui")
-includeChildrenOf("libraries") { ":$name" }
+includeChildrenOf("libraries", excluding = setOf("indexhtml")) { ":$name" }
 
 include(":end-to-end-tests")
 
@@ -22,9 +22,10 @@ apply(from = "gradle/versions.gradle.kts")
 
 fun includeChildrenOf(
   dir: String,
-  toProjectName: File.() -> String = { ":${parentFile.name}-$name" }
+  excluding: Set<String> = emptySet(),
+  toProjectName: File.() -> String = { ":${parentFile.name}-$name" },
 ) =
-  dir.forEachChildWithABuildScript { projectDir ->
+  dir.forEachChildWithABuildScript(excluding) { projectDir ->
     createProject(projectDir, projectDir.toProjectName())
   }
 
@@ -33,9 +34,10 @@ fun includeBuildChildrenOf(dir: String) =
     includeBuild(projectDir)
   }
 
-fun String.forEachChildWithABuildScript(action: (File) -> Unit) = file(this)
+fun String.forEachChildWithABuildScript(excluding: Set<String> = emptySet(), action: (File) -> Unit) = file(this)
   .directories()
   .filter { it.containsBuildScript() }
+  .filter { !excluding.contains(it.name) }
   .forEach(action)
 
 fun File.directories() = filter { isDirectory }
