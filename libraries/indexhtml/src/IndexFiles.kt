@@ -16,8 +16,8 @@ import kotlinx.html.stream.appendHTML
 import kotlinx.html.style
 import kotlinx.html.title
 import kotlinx.html.unsafe
-import java.io.File
 import org.intellij.lang.annotations.Language
+import java.io.File
 
 fun File.addIndexFiles() = runBlocking(Dispatchers.Default) {
   this@addIndexFiles.addIndexFiles(false)
