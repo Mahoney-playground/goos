@@ -36,6 +36,7 @@ fun String.forEachChildWithABuildScript(excluding: Set<String> = emptySet(), act
   .directories()
   .filter { it.containsBuildScript() }
   .filter { !excluding.contains(it.name) }
+  .sorted()
   .forEach(action)
 
 fun File.directories() = filter { isDirectory }
