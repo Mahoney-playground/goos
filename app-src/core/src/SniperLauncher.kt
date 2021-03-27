@@ -3,12 +3,12 @@ package goos.core
 import goos.auction.api.AuctionHouse
 import goos.ui.api.Item
 import goos.ui.api.UserRequestListener
-import java.util.concurrent.CountDownLatch
+import uk.org.lidalia.kotlinlangext.concurrent.Gate
 
 internal class SniperLauncher(
   private val auctionHouse: AuctionHouse,
   private val portfolio: SniperPortfolio,
-  private val latch: CountDownLatch
+  private val shutdownGate: Gate,
 ) : UserRequestListener {
 
   override fun joinAuction(item: Item) {
@@ -30,6 +30,6 @@ internal class SniperLauncher(
 
   override fun closeApplication() {
     auctionHouse.disconnect()
-    latch.countDown()
+    shutdownGate.open()
   }
 }

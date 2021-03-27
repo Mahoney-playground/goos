@@ -1,20 +1,20 @@
 package uk.org.lidalia.kotlinlangext.threads
 
-import java.util.concurrent.CountDownLatch
+import uk.org.lidalia.kotlinlangext.concurrent.Gate
 
 fun blockUntilShutdown(
-  latch: CountDownLatch = CountDownLatch(1)
+  gate: Gate = Gate.closed()
 ) {
   val runningThread = Thread.currentThread()
 
   Runtime.getRuntime().addShutdownHook(
     object : Thread() {
       override fun run() {
-        latch.countDown()
+        gate.open()
         runningThread.join()
       }
     }
   )
 
-  latch.await()
+  gate.waitUntilOpened()
 }

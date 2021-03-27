@@ -8,7 +8,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.verifyOrder
-import java.util.concurrent.CountDownLatch
+import uk.org.lidalia.kotlinlangext.concurrent.Gate
 
 class SniperLauncherTest : StringSpec({
 
@@ -18,7 +18,7 @@ class SniperLauncherTest : StringSpec({
     every { auctionFor(itemId) } returns auction
   }
   val sniperPortfolio = SniperPortfolio().apply { mockkObject(this) }
-  val sniperLauncher = SniperLauncher(auctionHouse, sniperPortfolio, CountDownLatch(1))
+  val sniperLauncher = SniperLauncher(auctionHouse, sniperPortfolio, Gate.closed())
 
   "adds new sniper to collector and then joins auction" {
 
