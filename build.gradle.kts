@@ -24,7 +24,7 @@ plugins {
   id("uk.org.lidalia.download-dependencies")
   id("uk.org.lidalia.copy-without-version")
   id("com.autonomousapps.dependency-analysis") version "0.70.0"
-  id("org.jmailen.kotlinter") version "3.3.0"
+  id("org.jmailen.kotlinter") version "3.4.0"
   id("com.vanniktech.dependency.graph.generator") version "0.5.0"
   id("com.github.ben-manes.versions") version "0.36.0"
   id("uk.org.lidalia.report-aggregator")
@@ -179,7 +179,8 @@ tasks {
   }
 
   check {
-    dependsOn(named("buildHealth"))
+    dependsOn("buildHealth")
+    dependsOn("installKotlinterPrePushHook")
   }
 }
 
