@@ -12,7 +12,7 @@ import org.jetbrains.gradle.ext.IdeaExtPlugin
 import org.jetbrains.gradle.ext.ModuleSettings
 import org.jetbrains.gradle.ext.PackagePrefixContainer
 
-class IdeaPlugin : Plugin<Project>{
+class IdeaPlugin : Plugin<Project> {
   override fun apply(project: Project) {
     project.plugins.apply(IdeaExtPlugin::class.java)
     val ideaModel = project.extensions.getByType(IdeaModel::class.java)
