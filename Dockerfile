@@ -2,7 +2,7 @@
 ARG username=worker
 ARG work_dir=/home/$username/work
 
-FROM adoptopenjdk:15.0.2_7-jdk-hotspot as worker
+FROM openjdk:16-jdk-slim as worker
 ARG username
 ARG work_dir
 
@@ -77,7 +77,7 @@ COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/e
 COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/internal ./internal
 COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/end-to-end-tests.jar .
 
-ENTRYPOINT ["java", "-jar", "--illegal-access=deny", "-ea", "end-to-end-tests.jar"]
+ENTRYPOINT ["java", "-jar", "-ea", "end-to-end-tests.jar"]
 
 
 FROM worker as auction-xmpp-integration-tests
@@ -88,7 +88,7 @@ COPY --from=checker --chown=$username $work_dir/app-src/auction/xmpp-integration
 COPY --from=checker --chown=$username $work_dir/app-src/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/internal ./internal
 COPY --from=checker --chown=$username $work_dir/app-src/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/auction-xmpp-integration-tests.jar .
 
-ENTRYPOINT ["java", "-jar", "--illegal-access=deny", "-ea", "auction-xmpp-integration-tests.jar"]
+ENTRYPOINT ["java", "-jar", "-ea", "auction-xmpp-integration-tests.jar"]
 
 
 FROM worker as instrumentedapp
@@ -112,7 +112,7 @@ COPY --from=checker --chown=$username $work_dir/build/goos/lib/goos.jar .
 
 EXPOSE 1234
 
-ENTRYPOINT ["simple-xvfb-run", "java", "-javaagent:agents/marathon-java-agent.jar=1234", "-Xshare:off", "--illegal-access=deny", "--add-exports", "java.desktop/sun.awt=ALL-UNNAMED", "-jar", "goos.jar"]
+ENTRYPOINT ["simple-xvfb-run", "java", "-javaagent:agents/marathon-java-agent.jar=1234", "-Xshare:off", "--add-exports", "java.desktop/sun.awt=ALL-UNNAMED", "-jar", "goos.jar"]
 
 COPY --chown=$username scripts/app-running.sh $work_dir/app-running.sh
 
@@ -129,4 +129,4 @@ COPY --from=checker --chown=$username $work_dir/build/goos/lib/external ./extern
 COPY --from=checker --chown=$username $work_dir/build/goos/lib/internal ./internal
 COPY --from=checker --chown=$username $work_dir/build/goos/lib/goos.jar .
 
-ENTRYPOINT ["simple-xvfb-run", "java", "--illegal-access=deny", "-jar", "goos.jar"]
+ENTRYPOINT ["simple-xvfb-run", "java", "-jar", "goos.jar"]

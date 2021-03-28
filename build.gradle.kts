@@ -25,7 +25,7 @@ plugins {
   id("com.dorongold.task-tree") version "1.5"
 }
 
-val javaVersion by extra(JavaLanguageVersion.of(15))
+val javaVersion by extra(JavaLanguageVersion.of(16))
 
 apply<ReportingBasePlugin>()
 
@@ -92,7 +92,6 @@ subprojects {
         useJUnitPlatform()
         jvmArgs(
           "-Xshare:off",
-          "--illegal-access=deny"
         )
       }
 
