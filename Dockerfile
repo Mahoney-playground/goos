@@ -31,8 +31,7 @@ ENV GRADLE_OPTS='-Dorg.gradle.daemon=false -Xms256m -Xmx2g'
 COPY --chown=$username gradle/wrapper gradle/wrapper
 COPY --chown=$username gradlew gradlew
 
-RUN --mount=type=cache,target=/home/worker/.gradle/caches,gid=1000,uid=1001 \
-    ./gradlew --version
+RUN ./gradlew --version
 
 COPY --chown=$username . .
 
