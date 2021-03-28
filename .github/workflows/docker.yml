@@ -47,7 +47,12 @@ jobs:
         run: docker login --username Mahoney-playground --password-stdin docker.pkg.github.com < <(echo "${{ secrets.GITHUB_TOKEN }}")
 
       - name: Do the build
-        run: docker build . --target builder -t goos-builder:$GITHUB_SHA &&
+        run: docker build .
+               --target builder
+               --build-arg BUILDKIT_INLINE_CACHE=1
+               --cache-from docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-builder
+               -t goos-builder:$GITHUB_SHA &&
+             docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-builder &&
              docker build . --target checker
 
       - name: Capture the reports as artifacts
