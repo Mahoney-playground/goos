@@ -2,7 +2,7 @@
 ARG username=worker
 ARG work_dir=/home/$username/work
 
-FROM openjdk:15.0.2-jdk-slim as worker
+FROM adoptopenjdk:15.0.2_7-jdk-hotspot as worker
 ARG username
 ARG work_dir
 
@@ -28,9 +28,9 @@ FROM worker as builder
 ARG username
 ENV GRADLE_OPTS='-Dorg.gradle.daemon=false -Xms256m -Xmx2g'
 
+# Download gradle in a separate step to benefit from layer caching
 COPY --chown=$username gradle/wrapper gradle/wrapper
 COPY --chown=$username gradlew gradlew
-
 RUN ./gradlew --version
 
 COPY --chown=$username . .
@@ -38,13 +38,15 @@ COPY --chown=$username . .
 # Can't use docker ARG values in the --mount argument: https://github.com/moby/buildkit/issues/815
 # Do all the downloading in one step...
 RUN --mount=type=cache,target=/home/worker/.gradle/caches,gid=1000,uid=1001 \
-    ./gradlew downloadDependencies
+    --mount=type=cache,target=/home/worker/.gradle/.tmp,gid=1000,uid=1001 \
+    ./gradlew --info downloadDependencies
 
 # So the actual build can run without network access. Proves no tests rely on external services.
 RUN --mount=type=cache,target=/home/worker/.gradle/caches,gid=1000,uid=1001 \
+    --mount=type=cache,target=/home/worker/.gradle/.tmp,gid=1000,uid=1001 \
     --network=none \
     set +e; \
-    simple-xvfb-run ./gradlew --offline build; \
+    simple-xvfb-run ./gradlew --info --offline build; \
     echo $? > build_result;
 
 
@@ -53,12 +55,12 @@ ARG work_dir
 
 COPY --from=builder $work_dir/build/reports ./build-reports
 
-# The previous step is guaranteed not to fail, so that the worker output can be tagged and its
+# The builder step is guaranteed not to fail, so that the worker output can be tagged and its
 # contents (build reports) extracted.
 # You run this as:
 # `docker build . --target builder -t goos-builder:$GITHUB_SHA && docker build . --target checker`
 # and you can then use
-# `docker cp $(docker create "goos-builder:$GITHUB_SHA"):/home/worker/work/build/reports reports`
+# `docker build . --target build-reports --output build-report`
 # to retrieve them whether or not the previous line exited successfully.
 # Workaround for https://github.com/moby/buildkit/issues/1421
 FROM builder as checker
