@@ -44,6 +44,7 @@ allprojects {
     maven(url = "https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
   }
   apply<DownloadDependenciesPlugin>()
+  apply<KotlinterPlugin>()
 }
 
 subprojects {
@@ -51,7 +52,6 @@ subprojects {
   pluginManager.withPlugin("kotlin") {
 
     apply<KotlinFlatPlugin>()
-    apply<KotlinterPlugin>()
     apply<BuildDashboardPlugin>()
     apply<IdeaPlugin>()
 
@@ -181,6 +181,16 @@ tasks {
   check {
     dependsOn("buildHealth")
     dependsOn("installKotlinterPrePushHook")
+    dependsOn(gradle.includedBuilds.map { it.task(":check") })
+  }
+  clean {
+    dependsOn(gradle.includedBuilds.map { it.task(":clean") })
+  }
+  register("lintKotlin") {
+    dependsOn(gradle.includedBuilds.map { it.task(":lintKotlin") })
+  }
+  register("formatKotlin") {
+    dependsOn(gradle.includedBuilds.map { it.task(":formatKotlin") })
   }
 }
 
