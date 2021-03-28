@@ -63,7 +63,7 @@ private fun indexHtmlTemplate(
     a {
       text-decoration: none;
     }
-    """.trimIndent()
+  """.trimIndent()
   appendLine("<!DOCTYPE html>")
   appendHTML()
     .html {
