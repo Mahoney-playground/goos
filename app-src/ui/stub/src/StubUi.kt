@@ -13,8 +13,10 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 class StubUi : UI {
 
-  @Volatile var itemField: String = ""
-  @Volatile var stopPriceField: String = ""
+  @Volatile
+  var itemField: String = ""
+  @Volatile
+  var stopPriceField: String = ""
   val started = AtomicBoolean(false)
 
   val columnTitles: List<String> = listOf("Item", "Last Price", "Last Bid", "State")

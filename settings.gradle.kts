@@ -32,7 +32,10 @@ fun includeBuildChildrenOf(dir: String) =
     includeBuild(projectDir)
   }
 
-fun String.forEachChildWithABuildScript(excluding: Set<String> = emptySet(), action: (File) -> Unit) = file(this)
+fun String.forEachChildWithABuildScript(
+  excluding: Set<String> = emptySet(),
+  action: (File) -> Unit
+) = file(this)
   .directories()
   .filter { it.containsBuildScript() }
   .filter { !excluding.contains(it.name) }

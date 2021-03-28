@@ -19,8 +19,10 @@ class IdeaPlugin : Plugin<Project> {
     val ideaModelExt = ideaModel as ExtensionAware
     ideaModelExt
       .extensions
-      .add(object : TypeOf<Function1<String, Unit>>() {}, "setPackagePrefix") {
-        packagePrefix: String ->
+      .add(
+        object : TypeOf<Function1<String, Unit>>() {},
+        "setPackagePrefix"
+      ) { packagePrefix: String ->
         ideaModel.setPackagePrefix(packagePrefix)
       }
   }

@@ -34,7 +34,12 @@ class MultiAuctionEventListener : AuctionEventListener, Notifier<AuctionEventLis
 }
 
 interface NoOpAuctionEventListener : AuctionEventListener {
-  override fun auctionClosed() { /* no-op */ }
-  override fun currentPrice(price: Int, increment: Int, source: PriceSource) { /* no-op */ }
-  override fun auctionFailed() { /* no-op */ }
+  override fun auctionClosed() { /* no-op */
+  }
+
+  override fun currentPrice(price: Int, increment: Int, source: PriceSource) { /* no-op */
+  }
+
+  override fun auctionFailed() { /* no-op */
+  }
 }
