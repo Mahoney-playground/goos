@@ -181,17 +181,14 @@ tasks {
   check {
     dependsOn("buildHealth")
     dependsOn("installKotlinterPrePushHook")
-    dependsOn(gradle.includedBuilds.map { it.task(":check") })
   }
-  clean {
-    dependsOn(gradle.includedBuilds.map { it.task(":clean") })
-  }
-  register("lintKotlin") {
-    dependsOn(gradle.includedBuilds.map { it.task(":lintKotlin") })
-  }
-  register("formatKotlin") {
-    dependsOn(gradle.includedBuilds.map { it.task(":formatKotlin") })
-  }
+
+  cascade(
+    "check",
+    "clean",
+    "lintKotlin",
+    "formatKotlin",
+  )
 }
 
 dependencyAnalysis {
@@ -202,6 +199,22 @@ dependencyAnalysis {
       onAny {
         severity("fail")
       }
+    }
+  }
+}
+
+fun TaskContainerScope.cascade(
+  vararg tasks: String,
+) {
+  tasks.forEach { task ->
+    val existingTask = findByName(task)
+    val includedBuildTasks = gradle.includedBuilds.map { it.task(":$task") }
+    if (existingTask == null) {
+      register(task) {
+        dependsOn(includedBuildTasks)
+      }
+    } else {
+      existingTask.dependsOn(includedBuildTasks)
     }
   }
 }
