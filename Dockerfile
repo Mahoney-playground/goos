@@ -41,14 +41,14 @@ COPY --chown=$username . .
 # Do all the downloading in one step...
 RUN --mount=type=cache,target=/home/worker/.gradle/caches,gid=1000,uid=1001 \
     --mount=type=cache,target=/home/worker/.gradle/.tmp,gid=1000,uid=1001 \
-    ./gradlew --info downloadDependencies
+    ./gradlew --no-watch-fs --info downloadDependencies
 
 # So the actual build can run without network access. Proves no tests rely on external services.
 RUN --mount=type=cache,target=/home/worker/.gradle/caches,gid=1000,uid=1001 \
     --mount=type=cache,target=/home/worker/.gradle/.tmp,gid=1000,uid=1001 \
     --network=none \
     set +e; \
-    simple-xvfb-run ./gradlew --info --offline build; \
+    simple-xvfb-run ./gradlew --no-watch-fs --info --offline build; \
     echo $? > build_result;
 
 
