@@ -24,7 +24,7 @@ RUN mkdir -p $work_dir
 WORKDIR $work_dir
 
 
-FROM worker as builder
+FROM worker as gradle
 ARG username
 ENV GRADLE_OPTS='-Dorg.gradle.daemon=false -Xms256m -Xmx2g'
 
@@ -33,6 +33,8 @@ COPY --chown=$username gradle/wrapper gradle/wrapper
 COPY --chown=$username gradlew gradlew
 RUN ./gradlew --version
 
+FROM gradle as builder
+ARG username
 COPY --chown=$username . .
 
 # Can't use docker ARG values in the --mount argument: https://github.com/moby/buildkit/issues/815

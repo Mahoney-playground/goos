@@ -48,12 +48,12 @@ jobs:
 
       - name: Do the build
         run: docker build .
-               --target builder
+               --target gradle
                --build-arg BUILDKIT_INLINE_CACHE=1
                --cache-from docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-builder-cache
-               -t goos-builder:$GITHUB_SHA
                -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-builder-cache &&
              docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-builder-cache &&
+             docker build . --target builder &&
              docker build . --target checker
 
       - name: Capture the reports as artifacts
