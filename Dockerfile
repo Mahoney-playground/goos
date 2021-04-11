@@ -40,12 +40,10 @@ COPY --chown=$username . .
 # Can't use docker ARG values in the --mount argument: https://github.com/moby/buildkit/issues/815
 # Do all the downloading in one step...
 RUN --mount=type=cache,target=/home/worker/.gradle/caches,gid=1000,uid=1001 \
-    --mount=type=cache,target=/home/worker/.gradle/.tmp,gid=1000,uid=1001 \
     ./gradlew --no-watch-fs --info downloadDependencies
 
 # So the actual build can run without network access. Proves no tests rely on external services.
 RUN --mount=type=cache,target=/home/worker/.gradle/caches,gid=1000,uid=1001 \
-    --mount=type=cache,target=/home/worker/.gradle/.tmp,gid=1000,uid=1001 \
     --network=none \
     set +e; \
     simple-xvfb-run ./gradlew --no-watch-fs --info --offline build; \
