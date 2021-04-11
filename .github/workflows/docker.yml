@@ -93,7 +93,10 @@ jobs:
           docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-instrumentedapp:$GITHUB_SHA
 
       - name: Build openfire with Docker
-        run: cd docker-openfire && docker build . -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/openfire:4.5.1 &&
+        run: cd docker-openfire && docker build .
+            --build-arg BUILDKIT_INLINE_CACHE=1
+            --cache-from docker.pkg.github.com/${{ env.DOCKER_REPO }}/openfire:4.5.1
+            -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/openfire:4.5.1 &&
           docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/openfire:4.5.1
 
       - name: Backup docker
