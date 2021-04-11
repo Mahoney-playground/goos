@@ -53,7 +53,6 @@ jobs:
                --cache-from docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-builder-cache
                -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-builder-cache &&
              docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-builder-cache &&
-             docker build . --target builder &&
              docker build . --target checker
 
       - name: Capture the reports as artifacts
