@@ -14,7 +14,7 @@ fun main(vararg args: String) {
 
   Logger.getLogger("").level = WARNING
 
-  println("Starting the app.")
+  println("Starting the app")
 
   val auctionHouse = XMPPAuctionHouse(
     hostname = args[ARG_HOSTNAME],
