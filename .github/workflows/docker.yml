@@ -109,7 +109,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Login to docker repo
-        run: docker login --username Mahoney-playground --password-stdin docker.pkg.github.com < <(echo "${{ secrets.GITHUB_TOKEN }}")
+        run: docker login --username Mahoney-playground --password-stdin ghcr.io < <(echo "${{ secrets.GITHUB_TOKEN }}")
 
       - name: Run auction xmpp integration tests
         env:
@@ -153,7 +153,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Login to docker repo
-        run: docker login --username Mahoney-playground --password-stdin docker.pkg.github.com < <(echo "${{ secrets.GITHUB_TOKEN }}")
+        run: docker login --username Mahoney-playground --password-stdin ghcr.io < <(echo "${{ secrets.GITHUB_TOKEN }}")
 
       - name: Run end to end tests
         env:
