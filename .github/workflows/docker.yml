@@ -10,12 +10,12 @@ on:
     - cron: '0 2 * * *'
 
 env:
-  DOCKER_REPO: mahoney-playground/goos
+  DOCKER_REPO: ghcr.io/mahoney-playground
   COMPOSE_DOCKER_CLI_BUILD: 1
   DOCKER_BUILDKIT: 1
   BUILDKIT_PROGRESS: plain
   PROGRESS_NO_TRUNC: 1
-  cache-name: docker-cache-13
+  cache-name: docker-cache-15
 
 jobs:
   build:
@@ -50,9 +50,9 @@ jobs:
         run: docker build .
                --target gradle
                --build-arg BUILDKIT_INLINE_CACHE=1
-               --cache-from docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-builder-cache
-               -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-builder-cache &&
-             docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-builder-cache &&
+               --cache-from ${{ env.DOCKER_REPO }}/goos-builder-cache
+               -t ${{ env.DOCKER_REPO }}/goos-builder-cache &&
+             docker push ${{ env.DOCKER_REPO }}/goos-builder-cache &&
              docker build . --target checker
 
       - name: Capture the reports as artifacts
@@ -80,23 +80,23 @@ jobs:
         run: echo "Reports are published at https://mahoney-playground.github.io/goos/builds/${{ github.sha }}/build-reports"
 
       - name: Build Auction XMPP Integration Tests with Docker
-        run: docker build . --target auction-xmpp-integration-tests -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-auction-xmpp-integration-tests:$GITHUB_SHA &&
-          docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-auction-xmpp-integration-tests:$GITHUB_SHA
+        run: docker build . --target auction-xmpp-integration-tests -t ${{ env.DOCKER_REPO }}/goos-auction-xmpp-integration-tests:$GITHUB_SHA &&
+          docker push ${{ env.DOCKER_REPO }}/goos-auction-xmpp-integration-tests:$GITHUB_SHA
 
       - name: Build End to End Tests with Docker
-        run: docker build . --target end-to-end-tests -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-end-to-end-tests:$GITHUB_SHA &&
-          docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-end-to-end-tests:$GITHUB_SHA
+        run: docker build . --target end-to-end-tests -t ${{ env.DOCKER_REPO }}/goos-end-to-end-tests:$GITHUB_SHA &&
+          docker push ${{ env.DOCKER_REPO }}/goos-end-to-end-tests:$GITHUB_SHA
 
       - name: Build App with Docker
-        run: docker build . --target instrumentedapp -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-instrumentedapp:$GITHUB_SHA &&
-          docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/goos-instrumentedapp:$GITHUB_SHA
+        run: docker build . --target instrumentedapp -t ${{ env.DOCKER_REPO }}/goos-instrumentedapp:$GITHUB_SHA &&
+          docker push ${{ env.DOCKER_REPO }}/goos-instrumentedapp:$GITHUB_SHA
 
       - name: Build openfire with Docker
         run: cd docker-openfire && docker build .
             --build-arg BUILDKIT_INLINE_CACHE=1
-            --cache-from docker.pkg.github.com/${{ env.DOCKER_REPO }}/openfire:4.5.1
-            -t docker.pkg.github.com/${{ env.DOCKER_REPO }}/openfire:4.5.1 &&
-          docker push docker.pkg.github.com/${{ env.DOCKER_REPO }}/openfire:4.5.1
+            --cache-from ${{ env.DOCKER_REPO }}/openfire:4.5.1
+            -t ${{ env.DOCKER_REPO }}/openfire:4.5.1 &&
+          docker push ${{ env.DOCKER_REPO }}/openfire:4.5.1
 
       - name: Backup docker
         run: ./.github/actions/docker-cache/backup.sh ${{ runner.temp }}/docker_cache/cache.tar
