@@ -34,6 +34,7 @@ enableFeaturePreview("VERSION_CATALOGS")
 val jxmppVersion = "0.6.4"
 
 dependencyResolutionManagement {
+  @Suppress("UnstableApiUsage")
   versionCatalogs {
     create("libs") {
       versionCatalog(

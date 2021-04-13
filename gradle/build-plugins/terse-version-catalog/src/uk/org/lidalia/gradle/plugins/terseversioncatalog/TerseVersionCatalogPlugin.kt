@@ -1,4 +1,4 @@
-@file:Suppress("unused")
+@file:Suppress("unused", "UnstableApiUsage")
 
 package uk.org.lidalia.gradle.plugins.terseversioncatalog
 
