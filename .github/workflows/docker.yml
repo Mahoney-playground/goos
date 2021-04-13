@@ -52,8 +52,12 @@ jobs:
                --build-arg BUILDKIT_INLINE_CACHE=1
                --cache-from ${{ env.DOCKER_REPO }}/goos-builder-cache
                -t ${{ env.DOCKER_REPO }}/goos-builder-cache &&
-             docker push ${{ env.DOCKER_REPO }}/goos-builder-cache &&
-             docker build . --target checker
+             docker push ${{ env.DOCKER_REPO }}/goos-builder-cache
+
+      - name: Capture the reports as artifacts
+        if: always()
+        run: docker build . --target build-reports -t ${{ env.DOCKER_REPO }}/goos-build-report:${{ github.sha }}-${{ github.run_number }} &&
+          docker push ${{ env.DOCKER_REPO }}/goos-build-report:${{ github.sha }}-${{ github.run_number }}
 
       - name: Build Auction XMPP Integration Tests with Docker
         run: docker build . --target auction-xmpp-integration-tests -t ${{ env.DOCKER_REPO }}/goos-auction-xmpp-integration-tests:$GITHUB_SHA &&
@@ -78,29 +82,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Get current date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-
-      - name: Cache docker
-        uses: actions/cache@v2
-        with:
-          path: ${{ runner.temp }}/docker_cache
-          key: ${{ env.cache-name }}_${{ steps.date.outputs.date }}-${{ github.ref }}-${{ github.run_number }}
-
-      - name: Restore docker
-        run: .github/actions/docker-cache/restore.sh ${{ runner.temp }}/docker_cache/cache.tar
-
       - name: Capture the reports as artifacts
         if: always()
-        run: docker build . --target build-reports --output builds/${{ github.sha }}
+        run: ./scripts/retrieve-docker-build-logs.sh ${{ env.DOCKER_REPO }}/goos-build-report ${{ github.sha }}-${{ github.run_number }}
 
       - name: Archive reports
         if: always()
         uses: actions/upload-artifact@v1
         with:
           name: build-reports
-          path: builds/${{ github.sha }}/build-reports
+          path: builds/${{ github.sha }}-${{ github.run_number }}/build-reports
 
       - name: Publish Reports
         if: always()
@@ -113,7 +104,7 @@ jobs:
 
       - name: Link to Reports
         if: always()
-        run: echo "Reports are published at https://mahoney-playground.github.io/goos/builds/${{ github.sha }}/build-reports"
+        run: echo "Reports are published at https://mahoney-playground.github.io/goos/builds/${{ github.sha }}-${{ github.run_number }}/build-reports"
 
   docker-openfire:
     runs-on: ubuntu-18.04
