@@ -55,6 +55,42 @@ jobs:
              docker push ${{ env.DOCKER_REPO }}/goos-builder-cache &&
              docker build . --target checker
 
+      - name: Build Auction XMPP Integration Tests with Docker
+        run: docker build . --target auction-xmpp-integration-tests -t ${{ env.DOCKER_REPO }}/goos-auction-xmpp-integration-tests:$GITHUB_SHA &&
+          docker push ${{ env.DOCKER_REPO }}/goos-auction-xmpp-integration-tests:$GITHUB_SHA
+
+      - name: Build End to End Tests with Docker
+        run: docker build . --target end-to-end-tests -t ${{ env.DOCKER_REPO }}/goos-end-to-end-tests:$GITHUB_SHA &&
+          docker push ${{ env.DOCKER_REPO }}/goos-end-to-end-tests:$GITHUB_SHA
+
+      - name: Build App with Docker
+        run: docker build . --target instrumentedapp -t ${{ env.DOCKER_REPO }}/goos-instrumentedapp:$GITHUB_SHA &&
+          docker push ${{ env.DOCKER_REPO }}/goos-instrumentedapp:$GITHUB_SHA
+
+      - name: Backup docker
+        run: ./.github/actions/docker-cache/backup.sh ${{ runner.temp }}/docker_cache/cache.tar
+
+  publish-build-reports:
+    if: always()
+    needs: build
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+      - name: Cache docker
+        uses: actions/cache@v2
+        with:
+          path: ${{ runner.temp }}/docker_cache
+          key: ${{ env.cache-name }}_${{ steps.date.outputs.date }}-${{ github.ref }}-${{ github.run_number }}
+
+      - name: Restore docker
+        run: ./.github/actions/docker-cache/restore.sh ${{ runner.temp }}/docker_cache/cache.tar
+
       - name: Capture the reports as artifacts
         if: always()
         run: docker build . --target build-reports --output builds/${{ github.sha }}
@@ -79,30 +115,24 @@ jobs:
         if: always()
         run: echo "Reports are published at https://mahoney-playground.github.io/goos/builds/${{ github.sha }}/build-reports"
 
-      - name: Build Auction XMPP Integration Tests with Docker
-        run: docker build . --target auction-xmpp-integration-tests -t ${{ env.DOCKER_REPO }}/goos-auction-xmpp-integration-tests:$GITHUB_SHA &&
-          docker push ${{ env.DOCKER_REPO }}/goos-auction-xmpp-integration-tests:$GITHUB_SHA
+  docker-openfire:
+    runs-on: ubuntu-18.04
 
-      - name: Build End to End Tests with Docker
-        run: docker build . --target end-to-end-tests -t ${{ env.DOCKER_REPO }}/goos-end-to-end-tests:$GITHUB_SHA &&
-          docker push ${{ env.DOCKER_REPO }}/goos-end-to-end-tests:$GITHUB_SHA
+    steps:
+      - uses: actions/checkout@v2
 
-      - name: Build App with Docker
-        run: docker build . --target instrumentedapp -t ${{ env.DOCKER_REPO }}/goos-instrumentedapp:$GITHUB_SHA &&
-          docker push ${{ env.DOCKER_REPO }}/goos-instrumentedapp:$GITHUB_SHA
+      - name: Login to docker repo
+        run: docker login --username Mahoney-playground --password-stdin ghcr.io < <(echo "${{ secrets.GITHUB_TOKEN }}")
 
       - name: Build openfire with Docker
         run: cd docker-openfire && docker build .
-            --build-arg BUILDKIT_INLINE_CACHE=1
-            --cache-from ${{ env.DOCKER_REPO }}/openfire:4.5.1
-            -t ${{ env.DOCKER_REPO }}/openfire:4.5.1 &&
+          --build-arg BUILDKIT_INLINE_CACHE=1
+          --cache-from ${{ env.DOCKER_REPO }}/openfire:4.5.1
+          -t ${{ env.DOCKER_REPO }}/openfire:4.5.1 &&
           docker push ${{ env.DOCKER_REPO }}/openfire:4.5.1
 
-      - name: Backup docker
-        run: ./.github/actions/docker-cache/backup.sh ${{ runner.temp }}/docker_cache/cache.tar
-
   auction-xmpp-integration-tests:
-    needs: build
+    needs: [build, docker-openfire]
     runs-on: ubuntu-18.04
 
     steps:
@@ -146,7 +176,7 @@ jobs:
         run: echo "Reports are published at https://mahoney-playground.github.io/goos/builds/${{ github.sha }}/auction-xmpp-integration-tests-reports"
 
   end-to-end-tests:
-    needs: build
+    needs: [build, docker-openfire]
     runs-on: ubuntu-18.04
 
     steps:
