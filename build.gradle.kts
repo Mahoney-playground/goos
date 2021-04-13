@@ -18,7 +18,7 @@ buildscript {
 
 plugins {
   base
-  kotlin("jvm") version "1.4.31" apply false
+  kotlin("jvm") version "1.4.32" apply false
   id("uk.org.lidalia.kotlin-flat") apply false
   id("uk.org.lidalia.idea-ext") apply false
   id("uk.org.lidalia.download-dependencies")
