@@ -10,19 +10,19 @@ suspend fun <A> retry(
   clock: Clock = Clock.systemUTC(),
   timeBetweenRetries: Duration = Duration.ofMillis(10),
   timeoutAfter: Duration = Duration.ofSeconds(10),
-  work: suspend () -> A
+  work: () -> A
 ) = retry(clock, timeBetweenRetries, clock.instant().plus(timeoutAfter), work)
 
 tailrec suspend fun <A> retry(
   clock: Clock,
   timeBetweenRetries: Duration,
   timeout: Instant,
-  work: suspend () -> A
+  work: () -> A
 ): A =
   when (val result = Either.catch(work)) {
-    is Either.Right -> result.b
-    is Either.Left ->
-      if (timeout.inPast(clock)) throw result.a
+    is Either.Right<A> -> result.value
+    is Either.Left<Throwable> ->
+      if (timeout.inPast(clock)) throw result.value
       else {
         delay(timeBetweenRetries.toMillis())
         retry(
