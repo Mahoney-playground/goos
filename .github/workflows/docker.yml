@@ -46,7 +46,7 @@ jobs:
       - name: Login to docker repo
         run: docker login --username Mahoney-playground --password-stdin ghcr.io < <(echo "${{ secrets.GITHUB_TOKEN }}")
 
-      - name: Do the build
+      - name: Updae gradle if necessary
         run: docker build .
                --target gradle
                --build-arg BUILDKIT_INLINE_CACHE=1
@@ -54,8 +54,7 @@ jobs:
                -t ${{ env.DOCKER_REPO }}/goos-builder-cache &&
              docker push ${{ env.DOCKER_REPO }}/goos-builder-cache
 
-      - name: Capture the reports as artifacts
-        if: always()
+      - name: Do the build
         run: docker build . --target build-reports -t ${{ env.DOCKER_REPO }}/goos-build-report:${{ github.sha }}-${{ github.run_number }} &&
           docker push ${{ env.DOCKER_REPO }}/goos-build-report:${{ github.sha }}-${{ github.run_number }}
 
