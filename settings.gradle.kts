@@ -97,7 +97,7 @@ dependencyResolutionManagement {
       )
       versionCatalog(
         "coroutines",
-        "org.jetbrains.kotlinx", { "kotlinx-coroutines-$it" }, "1.4.2",
+        "org.jetbrains.kotlinx", { "kotlinx-coroutines-$it" }, "1.4.3",
         "core",
         "core-jvm",
       )
