@@ -56,7 +56,8 @@ jobs:
 
       - name: Do the build
         run: docker build . --target build-reports -t ${{ env.DOCKER_REPO }}/goos-build-report:${{ github.sha }}-${{ github.run_number }} &&
-          docker push ${{ env.DOCKER_REPO }}/goos-build-report:${{ github.sha }}-${{ github.run_number }}
+          docker push ${{ env.DOCKER_REPO }}/goos-build-report:${{ github.sha }}-${{ github.run_number }} &&
+          docker build . --target checker
 
       - name: Build Auction XMPP Integration Tests with Docker
         run: docker build . --target auction-xmpp-integration-tests -t ${{ env.DOCKER_REPO }}/goos-auction-xmpp-integration-tests:$GITHUB_SHA &&
