@@ -70,7 +70,7 @@ dependencyResolutionManagement {
       )
       versionCatalog(
         "mockk",
-        "io.mockk", { if (it == null) "mockk" else "mockk-$it" }, "1.10.5",
+        "io.mockk", { if (it == null) "mockk" else "mockk-$it" }, "1.11.0",
         null,
         "dsl-jvm",
       )
