@@ -41,7 +41,7 @@ jobs:
             ${{ env.cache-name }}_${{ steps.date.outputs.date }}-
 
       - name: Restore docker
-        run: ./.github/actions/docker-cache/restore.sh ${{ runner.temp }}/docker_cache/cache.tar
+        run: .github/actions/docker-cache/restore.sh ${{ runner.temp }}/docker_cache/cache.tar
 
       - name: Login to docker repo
         run: docker login --username Mahoney-playground --password-stdin ghcr.io < <(echo "${{ secrets.GITHUB_TOKEN }}")
@@ -68,7 +68,7 @@ jobs:
           docker push ${{ env.DOCKER_REPO }}/goos-instrumentedapp:$GITHUB_SHA
 
       - name: Backup docker
-        run: ./.github/actions/docker-cache/backup.sh ${{ runner.temp }}/docker_cache/cache.tar
+        run: .github/actions/docker-cache/backup.sh ${{ runner.temp }}/docker_cache/cache.tar
 
   publish-build-reports:
     if: always()
@@ -89,7 +89,7 @@ jobs:
           key: ${{ env.cache-name }}_${{ steps.date.outputs.date }}-${{ github.ref }}-${{ github.run_number }}
 
       - name: Restore docker
-        run: ./.github/actions/docker-cache/restore.sh ${{ runner.temp }}/docker_cache/cache.tar
+        run: .github/actions/docker-cache/restore.sh ${{ runner.temp }}/docker_cache/cache.tar
 
       - name: Capture the reports as artifacts
         if: always()
