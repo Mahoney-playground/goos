@@ -46,7 +46,7 @@ jobs:
       - name: Login to docker repo
         run: docker login --username Mahoney-playground --password-stdin ghcr.io < <(echo "${{ secrets.GITHUB_TOKEN }}")
 
-      - name: Updae gradle if necessary
+      - name: Update gradle if necessary
         run: docker build .
                --target gradle
                --build-arg BUILDKIT_INLINE_CACHE=1
