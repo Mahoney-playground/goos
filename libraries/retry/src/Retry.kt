@@ -3,16 +3,22 @@ package uk.org.lidalia.retry
 import arrow.core.Either
 import kotlinx.coroutines.delay
 import java.time.Clock
-import java.time.Duration
 import java.time.Instant
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
+import kotlin.time.milliseconds
+import kotlin.time.seconds
+import kotlin.time.toJavaDuration
 
+@ExperimentalTime
 suspend fun <A> retry(
   clock: Clock = Clock.systemUTC(),
-  timeBetweenRetries: Duration = Duration.ofMillis(10),
-  timeoutAfter: Duration = Duration.ofSeconds(10),
+  timeBetweenRetries: Duration = 10.milliseconds,
+  timeoutAfter: Duration = 10.seconds,
   work: () -> A
-) = retry(clock, timeBetweenRetries, clock.instant().plus(timeoutAfter), work)
+) = retry(clock, timeBetweenRetries, clock.instant().plus(timeoutAfter.toJavaDuration()), work)
 
+@ExperimentalTime
 tailrec suspend fun <A> retry(
   clock: Clock,
   timeBetweenRetries: Duration,
@@ -24,10 +30,10 @@ tailrec suspend fun <A> retry(
     is Either.Left<Throwable> ->
       if (timeout.inPast(clock)) throw result.value
       else {
-        delay(timeBetweenRetries.toMillis())
+        delay(timeBetweenRetries)
         retry(
           clock = clock,
-          timeBetweenRetries = timeBetweenRetries.multipliedBy(2),
+          timeBetweenRetries = timeBetweenRetries * 2,
           timeout = timeout,
           work = work
         )
