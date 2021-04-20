@@ -2,15 +2,26 @@ import uk.org.lidalia.gradle.plugins.includebuildconventions.includeChildrenOf
 import uk.org.lidalia.gradle.plugins.includebuildconventions.includeBuildChildrenOf
 import uk.org.lidalia.gradle.plugins.terseversioncatalog.versionCatalog
 
-@Suppress("UnstableApiUsage")
-pluginManagement {
-  includeBuild("gradle/build-plugins/include-build-conventions")
-  includeBuild("gradle/build-plugins/terse-version-catalog")
-}
+buildscript {
+  includeBuild("gradle/build-libraries/include-build-conventions") {
+    dependencySubstitution {
+      substitute(module("uk.org.lidalia:include-build-conventions")).with(project(":"))
+    }
+  }
+  includeBuild("gradle/build-libraries/terse-version-catalog") {
+    dependencySubstitution {
+      substitute(module("uk.org.lidalia:terse-version-catalog")).with(project(":"))
+    }
+  }
 
-plugins {
-  id("uk.org.lidalia.include-build-conventions")
-  id("uk.org.lidalia.terse-version-catalog")
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath("uk.org.lidalia:include-build-conventions:0.1.0")
+    classpath("uk.org.lidalia:terse-version-catalog:0.1.0")
+  }
 }
 
 rootProject.name = "goos"
