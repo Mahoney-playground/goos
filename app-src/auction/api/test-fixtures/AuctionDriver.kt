@@ -1,11 +1,11 @@
 package goos.auction.api
 
 interface AuctionDriver : AutoCloseable {
-  val itemId: String
+  val auctionId: AuctionId
   fun startSellingItem()
   fun announceClosed()
-  fun reportPrice(price: Int, increment: Int, bidder: String)
+  fun reportPrice(price: Int, increment: Int, bidder: BidderId)
   fun sendInvalidMessageContaining(brokenMessage: String)
-  suspend fun hasReceivedJoinRequestFrom(sniperId: String)
-  suspend fun hasReceivedBid(bid: Int, sniperId: String)
+  suspend fun hasReceivedJoinRequestFrom(sniperId: BidderId)
+  suspend fun hasReceivedBid(bid: Int, sniperId: BidderId)
 }

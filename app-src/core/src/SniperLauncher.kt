@@ -1,7 +1,9 @@
 package goos.core
 
 import goos.auction.api.AuctionHouse
+import goos.auction.api.AuctionId
 import goos.ui.api.Item
+import goos.ui.api.ItemId
 import goos.ui.api.UserRequestListener
 import uk.org.lidalia.kotlinlangext.concurrent.Gate
 
@@ -13,7 +15,7 @@ internal class SniperLauncher(
 
   override fun joinAuction(item: Item) {
 
-    val auction = auctionHouse.auctionFor(item.identifier)
+    val auction = auctionHouse.auctionFor(item.identifier.toAuctionId())
 
     val sniper = AuctionSniper(item, auction)
 
@@ -33,3 +35,5 @@ internal class SniperLauncher(
     shutdownGate.open()
   }
 }
+
+private fun ItemId.toAuctionId() = AuctionId(this.value)

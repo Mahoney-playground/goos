@@ -2,11 +2,12 @@ package goos.auction.sol
 
 import goos.auction.api.Auction
 import goos.auction.api.AuctionEventListener
+import goos.auction.api.BidderId
 import goos.auction.api.MultiAuctionEventListener
 import goos.auction.api.NoOpAuctionEventListener
 
 class SolAuction(
-  sniperId: String,
+  sniperId: BidderId,
   transportFactory: (MessageListener) -> MessageTransport
 ) : Auction {
 

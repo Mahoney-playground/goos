@@ -7,7 +7,7 @@ interface UiDriver : AutoCloseable {
 
   @ExperimentalTime
   suspend fun showSniperState(
-    itemId: String,
+    itemId: ItemId,
     lastPrice: Int,
     lastBid: Int,
     stateText: String
@@ -16,5 +16,5 @@ interface UiDriver : AutoCloseable {
   fun hasTitle(title: String)
   fun hasColumnTitles()
   fun reset()
-  fun startBiddingFor(itemId: String, stopPrice: Int)
+  fun startBiddingFor(itemId: ItemId, stopPrice: Int)
 }

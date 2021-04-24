@@ -2,6 +2,8 @@ package goos
 
 import goos.ApplicationRunner.Companion.SNIPER_XMPP_ID
 import goos.auction.api.AuctionDriver
+import goos.auction.api.toAuctionId
+import goos.auction.api.toBidderId
 import goos.auction.xmpp.XmppAuctionDriver
 import goos.ui.swing.AuctionSniperDriver
 import io.kotest.core.spec.IsolationMode.InstancePerTest
@@ -14,8 +16,8 @@ internal class AuctionSniperEndToEndTest : StringSpec({
 
   include(
     auctionSniperEndToEndTest(
-      XmppAuctionDriver("item-54321"),
-      XmppAuctionDriver("item-65432"),
+      XmppAuctionDriver("item-54321".toAuctionId()),
+      XmppAuctionDriver("item-65432".toAuctionId()),
       ApplicationRunner(AuctionSniperDriver())
     )
   )
@@ -52,7 +54,7 @@ internal fun auctionSniperEndToEndTest(
     application.startBiddingIn(auction)
     auction.hasReceivedJoinRequestFrom(SNIPER_XMPP_ID)
 
-    auction.reportPrice(price = 1_000, increment = 98, bidder = "other bidder")
+    auction.reportPrice(price = 1_000, increment = 98, bidder = "other bidder".toBidderId())
     application.hasShownSniperIsBidding(auction, lastPrice = 1_000, lastBid = 1_098)
     auction.hasReceivedBid(bid = 1_098, sniperId = SNIPER_XMPP_ID)
 
@@ -67,7 +69,7 @@ internal fun auctionSniperEndToEndTest(
     application.startBiddingIn(auction)
     auction.hasReceivedJoinRequestFrom(SNIPER_XMPP_ID)
 
-    auction.reportPrice(price = 1_000, increment = 98, bidder = "other bidder")
+    auction.reportPrice(price = 1_000, increment = 98, bidder = "other bidder".toBidderId())
     application.hasShownSniperIsBidding(auction, lastPrice = 1_000, lastBid = 1_098)
     auction.hasReceivedBid(bid = 1_098, sniperId = SNIPER_XMPP_ID)
 
@@ -85,7 +87,7 @@ internal fun auctionSniperEndToEndTest(
     application.startBiddingIn(auction)
     auction.hasReceivedJoinRequestFrom(SNIPER_XMPP_ID)
 
-    auction.reportPrice(price = 1_000, increment = 98, bidder = "other bidder")
+    auction.reportPrice(price = 1_000, increment = 98, bidder = "other bidder".toBidderId())
     application.hasShownSniperIsBidding(auction, lastPrice = 1_000, lastBid = 1_098)
 
     auction.hasReceivedBid(bid = 1_098, sniperId = SNIPER_XMPP_ID)
@@ -93,7 +95,7 @@ internal fun auctionSniperEndToEndTest(
     auction.reportPrice(price = 1_098, increment = 100, bidder = SNIPER_XMPP_ID)
     application.hasShownSniperIsWinning(auction, winningBid = 1_098)
 
-    auction.reportPrice(price = 1_198, increment = 110, bidder = "other bidder")
+    auction.reportPrice(price = 1_198, increment = 110, bidder = "other bidder".toBidderId())
     application.hasShownSniperIsBidding(auction, lastPrice = 1_198, lastBid = 1_308)
     auction.hasReceivedBid(bid = 1_308, sniperId = SNIPER_XMPP_ID)
 
@@ -110,10 +112,10 @@ internal fun auctionSniperEndToEndTest(
     auction.hasReceivedJoinRequestFrom(SNIPER_XMPP_ID)
     auction2.hasReceivedJoinRequestFrom(SNIPER_XMPP_ID)
 
-    auction.reportPrice(price = 1_000, increment = 98, bidder = "other bidder")
+    auction.reportPrice(price = 1_000, increment = 98, bidder = "other bidder".toBidderId())
     auction.hasReceivedBid(bid = 1_098, sniperId = SNIPER_XMPP_ID)
 
-    auction2.reportPrice(price = 500, increment = 21, bidder = "other bidder")
+    auction2.reportPrice(price = 500, increment = 21, bidder = "other bidder".toBidderId())
     auction2.hasReceivedBid(bid = 521, sniperId = SNIPER_XMPP_ID)
 
     auction.reportPrice(price = 1_098, increment = 97, bidder = SNIPER_XMPP_ID)
@@ -135,14 +137,14 @@ internal fun auctionSniperEndToEndTest(
     application.startBiddingIn(auction, stopPrice = 1_100)
     auction.hasReceivedJoinRequestFrom(SNIPER_XMPP_ID)
 
-    auction.reportPrice(1000, 98, "other bidder")
+    auction.reportPrice(1000, 98, "other bidder".toBidderId())
     application.hasShownSniperIsBidding(auction, lastPrice = 1000, lastBid = 1_098)
     auction.hasReceivedBid(1098, SNIPER_XMPP_ID)
 
-    auction.reportPrice(1197, 10, "third party")
+    auction.reportPrice(1197, 10, "third party".toBidderId())
     application.hasShownSniperIsLosing(auction, lastPrice = 1197, lastBid = 1_098)
 
-    auction.reportPrice(1207, 10, "fourth party")
+    auction.reportPrice(1207, 10, "fourth party".toBidderId())
     application.hasShownSniperIsLosing(auction, lastPrice = 1207, lastBid = 1_098)
 
     auction.announceClosed()
@@ -156,13 +158,13 @@ internal fun auctionSniperEndToEndTest(
 
     auction.hasReceivedJoinRequestFrom(SNIPER_XMPP_ID)
 
-    auction.reportPrice(price = 500, increment = 20, bidder = "other bidder")
+    auction.reportPrice(price = 500, increment = 20, bidder = "other bidder".toBidderId())
     auction.hasReceivedBid(bid = 520, sniperId = SNIPER_XMPP_ID)
 
     auction.sendInvalidMessageContaining("a broken message")
     application.showsSniperHasFailed(auction)
 
-    auction.reportPrice(price = 520, increment = 21, bidder = "other")
+    auction.reportPrice(price = 520, increment = 21, bidder = "other".toBidderId())
     application.waitForAnotherAuctionEvent(auction2)
     application.showsSniperHasFailed(auction)
   }
@@ -178,6 +180,6 @@ internal suspend fun ApplicationRunner.waitForAnotherAuctionEvent(
 ) {
   auction2.startSellingItem()
   startBiddingIn(auction2)
-  auction2.reportPrice(600, 6, "other")
+  auction2.reportPrice(600, 6, "other".toBidderId())
   hasShownSniperIsBidding(auction2, 600, 606)
 }

@@ -4,6 +4,7 @@ import goos.auction.api.Auction
 import goos.auction.api.AuctionEventListener.PriceSource.FromOtherBidder
 import goos.auction.api.AuctionEventListener.PriceSource.FromSniper
 import goos.ui.api.Item
+import goos.ui.api.ItemId
 import goos.ui.api.SniperListener
 import goos.ui.api.SniperSnapshot
 import goos.ui.api.SniperState.BIDDING
@@ -183,6 +184,6 @@ class AuctionSniperTest : StringSpec({
   override fun isolationMode() = IsolationMode.InstancePerTest
 
   companion object {
-    const val ITEM_ID = "1234"
+    val ITEM_ID = ItemId("1234")
   }
 }

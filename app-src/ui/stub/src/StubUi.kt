@@ -1,6 +1,7 @@
 package goos.ui.stub
 
 import goos.ui.api.Item
+import goos.ui.api.ItemId
 import goos.ui.api.MultiUserRequestListener
 import goos.ui.api.PortfolioListener
 import goos.ui.api.SniperListener
@@ -9,6 +10,7 @@ import goos.ui.api.SniperSnapshot
 import goos.ui.api.UI
 import goos.ui.api.UserRequestListener
 import goos.ui.api.stateText
+import goos.ui.api.toItemId
 import java.util.concurrent.atomic.AtomicBoolean
 
 class StubUi : UI {
@@ -22,7 +24,7 @@ class StubUi : UI {
   val columnTitles: List<String> = listOf("Item", "Last Price", "Last Bid", "State")
   val title: String = "Auction Sniper"
 
-  val snipers = LinkedHashMap<String, SniperRow>()
+  val snipers = mutableMapOf<ItemId, SniperRow>()
 
   private val userRequestListeners = MultiUserRequestListener()
 
@@ -58,12 +60,12 @@ class StubUi : UI {
   }
 
   fun clickBidButton() {
-    userRequestListeners.joinAuction(Item(itemField, stopPriceField.toInt()))
+    userRequestListeners.joinAuction(Item(itemField.toItemId(), stopPriceField.toInt()))
   }
 }
 
 data class SniperRow(
-  val itemId: String,
+  val itemId: ItemId,
   val lastPrice: Int,
   val lastBid: Int,
   val stateText: String,

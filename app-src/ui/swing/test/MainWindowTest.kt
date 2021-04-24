@@ -2,6 +2,7 @@ package goos.ui.swing
 
 import goos.ui.api.Item
 import goos.ui.api.UserRequestListener
+import goos.ui.api.toItemId
 import io.kotest.assertions.timing.eventually
 import io.kotest.core.spec.style.StringSpec
 import io.mockk.confirmVerified
@@ -44,13 +45,13 @@ class MainWindowTest : StringSpec({
 
   "make user request when join button clicked" {
 
-    driver.startBiddingFor("an item-id", 11_000)
+    driver.startBiddingFor("an item-id".toItemId(), 11_000)
 
     eventually(5.seconds) {
       verify(exactly = 1) {
         userRequestListener.joinAuction(
           Item(
-            "an item-id",
+            "an item-id".toItemId(),
             stopPrice = 11_000
           )
         )

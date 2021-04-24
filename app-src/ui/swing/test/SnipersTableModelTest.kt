@@ -5,6 +5,7 @@ import goos.ui.api.SniperSnapshot
 import goos.ui.api.SniperState.BIDDING
 import goos.ui.api.SniperState.JOINING
 import goos.ui.api.stateText
+import goos.ui.api.toItemId
 import goos.ui.swing.Column.ITEM_IDENTIFIER
 import goos.ui.swing.Column.LAST_BID
 import goos.ui.swing.Column.LAST_PRICE
@@ -68,7 +69,7 @@ class SnipersTableModelTest : StringSpec({
 
   "sets sniper values in columns" {
 
-    val joining = joining(Item("item id", 1_000))
+    val joining = joining(Item("item id".toItemId(), 1_000))
     model.sniperStateChanged(joining)
 
     val bidding = joining.copy(state = BIDDING, lastPrice = 555, lastBid = 666)
@@ -79,7 +80,7 @@ class SnipersTableModelTest : StringSpec({
   }
 
   "notifies listeners when adding a sniper" {
-    val joining = joining(Item("item123", 1_000))
+    val joining = joining(Item("item123".toItemId(), 1_000))
 
     model.rowCount shouldBe 0
 
@@ -94,7 +95,7 @@ class SnipersTableModelTest : StringSpec({
     model.sniperStateChanged(
       joining(
         Item(
-          "item 0",
+          "item 0".toItemId(),
           1_000
         )
       )
@@ -102,25 +103,25 @@ class SnipersTableModelTest : StringSpec({
     model.sniperStateChanged(
       joining(
         Item(
-          "item 1",
+          "item 1".toItemId(),
           1_000
         )
       )
     )
 
-    model.row(0).column(ITEM_IDENTIFIER) shouldBe "item 0"
-    model.row(1).column(ITEM_IDENTIFIER) shouldBe "item 1"
+    model.row(0).column(ITEM_IDENTIFIER) shouldBe "item 0".toItemId()
+    model.row(1).column(ITEM_IDENTIFIER) shouldBe "item 1".toItemId()
   }
 
   "updates correct row for sniper" {
 
-    val item0 = joining(Item("item 0", 1_000))
+    val item0 = joining(Item("item 0".toItemId(), 1_000))
     model.sniperStateChanged(item0)
 
-    val item1 = joining(Item("item 1", 1_000))
+    val item1 = joining(Item("item 1".toItemId(), 1_000))
     model.sniperStateChanged(item1)
 
-    val item2 = joining(Item("item 2", 1_000))
+    val item2 = joining(Item("item 2".toItemId(), 1_000))
     model.sniperStateChanged(item2)
 
     val updatedItem1 = item1.copy(state = BIDDING, lastPrice = 10, lastBid = 11)

@@ -2,6 +2,7 @@ package goos
 
 import ch.qos.logback.classic.Level.INFO
 import ch.qos.logback.classic.Logger
+import goos.auction.api.toAuctionId
 import goos.auction.xmpp.XmppAuctionDriver
 import goos.testcontainers.openfireTestContainer
 import goos.ui.swing.AuctionSniperDriver
@@ -24,8 +25,8 @@ internal class AuctionSniperEndToEndContainerTest : StringSpec({
 
   include(
     auctionSniperEndToEndTest(
-      XmppAuctionDriver("item-54321"),
-      XmppAuctionDriver("item-65432"),
+      XmppAuctionDriver("item-54321".toAuctionId()),
+      XmppAuctionDriver("item-65432".toAuctionId()),
       ApplicationRunner(AuctionSniperDriver(JavaDriver()))
     )
   )

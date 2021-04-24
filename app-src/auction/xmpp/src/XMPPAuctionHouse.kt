@@ -2,6 +2,8 @@ package goos.auction.xmpp
 
 import goos.auction.api.Auction
 import goos.auction.api.AuctionHouse
+import goos.auction.api.AuctionId
+import goos.auction.api.toBidderId
 import goos.auction.sol.MessageListener
 import goos.auction.sol.SolAuction
 import org.jivesoftware.smack.ConnectionConfiguration
@@ -29,12 +31,12 @@ class XMPPAuctionHouse(
       .build()
   )
 
-  override fun auctionFor(itemId: String): Auction {
+  override fun auctionFor(auctionId: AuctionId): Auction {
     ensureConnected()
-    return SolAuction(connection.user.toString()) { messageListener: MessageListener ->
+    return SolAuction(connection.user.toString().toBidderId()) { messageListener: MessageListener ->
       XMPPAuctionMessageTransport(
         connection,
-        auctionId(itemId, connection.host),
+        auctionId(auctionId, connection.host),
         messageListener,
       )
     }
@@ -67,7 +69,7 @@ class XMPPAuctionHouse(
 
     private val AUCTION_RESOURCE = Resourcepart.from("Auction")
 
-    private fun auctionId(itemId: String, hostname: String): EntityBareJid =
-      JidCreate.entityBareFrom("auction-$itemId@$hostname/$AUCTION_RESOURCE")
+    private fun auctionId(auctionId: AuctionId, hostname: String): EntityBareJid =
+      JidCreate.entityBareFrom("auction-$auctionId@$hostname/$AUCTION_RESOURCE")
   }
 }

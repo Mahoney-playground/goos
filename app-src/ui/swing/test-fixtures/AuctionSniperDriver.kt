@@ -1,5 +1,6 @@
 package goos.ui.swing
 
+import goos.ui.api.ItemId
 import goos.ui.api.UiDriver
 import io.kotest.assertions.timing.eventually
 import io.kotest.inspectors.forOne
@@ -30,7 +31,7 @@ class AuctionSniperDriver(
 
   @ExperimentalTime
   override suspend fun showSniperState(
-    itemId: String,
+    itemId: ItemId,
     lastPrice: Int,
     lastBid: Int,
     stateText: String
@@ -40,7 +41,7 @@ class AuctionSniperDriver(
     )
 
     table.hasRow(
-      { it shouldBe itemId },
+      { it shouldBe itemId.value },
       { it shouldBe lastPrice.toString() },
       { it shouldBe lastBid.toString() },
       { it shouldBe stateText }
@@ -61,15 +62,15 @@ class AuctionSniperDriver(
 
   override fun reset() = resetButton().click()
 
-  override fun startBiddingFor(itemId: String, stopPrice: Int) {
-    itemIdField().setText(itemId)
+  override fun startBiddingFor(itemId: ItemId, stopPrice: Int) {
+    itemIdField().setText(itemId.value)
     stopPriceField().setText(stopPrice.toString())
     bidButton().click()
   }
 
-  private fun WebElement.setText(itemId: String) {
+  private fun WebElement.setText(text: String) {
     clear()
-    sendKeys(itemId)
+    sendKeys(text)
   }
 
   private fun resetButton() = driver.findElement(By.name(SNIPER_RESET_BUTTON_NAME))

@@ -1,5 +1,6 @@
 package goos.ui.stub
 
+import goos.ui.api.ItemId
 import goos.ui.api.UiDriver
 import io.kotest.matchers.shouldBe
 import kotlin.time.ExperimentalTime
@@ -12,7 +13,7 @@ class StubUiDriver(
 
   @ExperimentalTime
   override suspend fun showSniperState(
-    itemId: String,
+    itemId: ItemId,
     lastPrice: Int,
     lastBid: Int,
     stateText: String,
@@ -32,8 +33,8 @@ class StubUiDriver(
     ui.clickResetButton()
   }
 
-  override fun startBiddingFor(itemId: String, stopPrice: Int) {
-    ui.itemField = itemId
+  override fun startBiddingFor(itemId: ItemId, stopPrice: Int) {
+    ui.itemField = itemId.value
     ui.stopPriceField = stopPrice.toString()
     ui.clickBidButton()
   }

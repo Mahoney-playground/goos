@@ -13,7 +13,7 @@ import kotlin.time.seconds
 
 @ExperimentalTime
 fun auctionApiTests(
-  sniperId: String,
+  sniperId: BidderId,
   auctionServer: AuctionDriver,
   auctionHouse: AuctionHouse
 ): TestFactory = stringSpec {
@@ -23,7 +23,7 @@ fun auctionApiTests(
 
     auctionServer.startSellingItem()
 
-    val auction = auctionHouse.getAuction(auctionServer.itemId, auctionListener)
+    val auction = auctionHouse.getAuction(auctionServer.auctionId, auctionListener)
     auction.join()
     auctionServer.hasReceivedJoinRequestFrom(sniperId)
     auction.synchronously {
@@ -39,7 +39,7 @@ fun auctionApiTests(
 
     auctionServer.startSellingItem()
 
-    val auction = auctionHouse.getAuction(auctionServer.itemId, auctionListener)
+    val auction = auctionHouse.getAuction(auctionServer.auctionId, auctionListener)
     auction.join()
     auctionServer.hasReceivedJoinRequestFrom(sniperId)
 
@@ -52,7 +52,7 @@ fun auctionApiTests(
     }
 
     auction.synchronously {
-      auctionServer.reportPrice(price = 100, increment = 10, bidder = "other")
+      auctionServer.reportPrice(price = 100, increment = 10, bidder = "other".toBidderId())
     }
 
     confirmNoFurtherInteractionsWith(auctionListener)
@@ -62,9 +62,9 @@ fun auctionApiTests(
 }
 
 private fun AuctionHouse.getAuction(
-  itemId: String,
+  auctionId: AuctionId,
   auctionListener: AuctionEventListener
-): Auction = auctionFor(itemId)
+): Auction = auctionFor(auctionId)
   .apply {
     addAuctionEventListener(auctionListener)
   }

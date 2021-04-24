@@ -3,6 +3,7 @@ package goos.auction.sol
 import goos.auction.api.AuctionEventListener
 import goos.auction.api.AuctionEventListener.PriceSource.FromOtherBidder
 import goos.auction.api.AuctionEventListener.PriceSource.FromSniper
+import goos.auction.api.toBidderId
 import io.kotest.core.spec.IsolationMode.InstancePerTest
 import io.kotest.core.spec.style.StringSpec
 import io.mockk.confirmVerified
@@ -67,6 +68,6 @@ class AuctionMessageTranslatorTest : StringSpec({
   override fun isolationMode() = InstancePerTest
 
   companion object {
-    const val SNIPER_ID = "sniper"
+    val SNIPER_ID = "sniper".toBidderId()
   }
 }

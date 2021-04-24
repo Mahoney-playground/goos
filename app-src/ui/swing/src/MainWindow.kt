@@ -5,6 +5,7 @@ import goos.ui.api.MultiUserRequestListener
 import goos.ui.api.PortfolioListener
 import goos.ui.api.UI
 import goos.ui.api.UserRequestListener
+import goos.ui.api.toItemId
 import java.awt.BorderLayout
 import java.awt.BorderLayout.CENTER
 import java.awt.BorderLayout.NORTH
@@ -88,7 +89,7 @@ class MainWindow : JFrame("Auction Sniper"), UI {
         addActionListener {
           userRequests.joinAuction(
             Item(
-              itemIdField.text,
+              itemIdField.text.toItemId(),
               (stopPriceField.value as Long).toInt()
             )
           )

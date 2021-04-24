@@ -1,6 +1,10 @@
 package goos
 
 import goos.auction.api.AuctionDriver
+import goos.auction.api.AuctionId
+import goos.auction.api.BidderId
+import goos.auction.api.toBidderId
+import goos.ui.api.ItemId
 import goos.ui.api.UiDriver
 import kotlin.time.ExperimentalTime
 
@@ -19,8 +23,8 @@ internal class ApplicationRunner(
     auction: AuctionDriver,
     stopPrice: Int = Int.MAX_VALUE
   ) {
-    driver.startBiddingFor(auction.itemId, stopPrice)
-    driver.showSniperState(auction.itemId, 0, 0, STATE_JOINING)
+    driver.startBiddingFor(auction.auctionId.toItemId(), stopPrice)
+    driver.showSniperState(auction.auctionId.toItemId(), 0, 0, STATE_JOINING)
   }
 
   suspend fun startBiddingIn(vararg auctions: AuctionDriver) = auctions.forEach {
@@ -28,27 +32,27 @@ internal class ApplicationRunner(
   }
 
   suspend fun showSniperHasLostAuction(auction: AuctionDriver, lastPrice: Int, lastBid: Int) {
-    driver.showSniperState(auction.itemId, lastPrice, lastBid, STATE_LOST)
+    driver.showSniperState(auction.auctionId.toItemId(), lastPrice, lastBid, STATE_LOST)
   }
 
   suspend fun hasShownSniperIsBidding(auction: AuctionDriver, lastPrice: Int, lastBid: Int) {
-    driver.showSniperState(auction.itemId, lastPrice, lastBid, STATE_BIDDING)
+    driver.showSniperState(auction.auctionId.toItemId(), lastPrice, lastBid, STATE_BIDDING)
   }
 
   suspend fun hasShownSniperIsWinning(auction: AuctionDriver, winningBid: Int) {
-    driver.showSniperState(auction.itemId, winningBid, winningBid, STATE_WINNING)
+    driver.showSniperState(auction.auctionId.toItemId(), winningBid, winningBid, STATE_WINNING)
   }
 
   suspend fun hasShownSniperIsLosing(auction: AuctionDriver, lastPrice: Int, lastBid: Int) {
-    driver.showSniperState(auction.itemId, lastPrice, lastBid, STATE_LOSING)
+    driver.showSniperState(auction.auctionId.toItemId(), lastPrice, lastBid, STATE_LOSING)
   }
 
   suspend fun showSniperHasWonAuction(auction: AuctionDriver, lastPrice: Int) {
-    driver.showSniperState(auction.itemId, lastPrice, lastPrice, STATE_WON)
+    driver.showSniperState(auction.auctionId.toItemId(), lastPrice, lastPrice, STATE_WON)
   }
 
   suspend fun showsSniperHasFailed(auction: AuctionDriver) {
-    driver.showSniperState(auction.itemId, 0, 0, STATE_FAILED)
+    driver.showSniperState(auction.auctionId.toItemId(), 0, 0, STATE_FAILED)
   }
 
   fun reset() {
@@ -56,7 +60,7 @@ internal class ApplicationRunner(
   }
 
   companion object {
-    const val SNIPER_XMPP_ID: String = "sniper@auctionhost.internal/Auction"
+    val SNIPER_XMPP_ID: BidderId = "sniper@auctionhost.internal/Auction".toBidderId()
     const val STATE_LOST: String = "Lost"
     const val STATE_LOSING: String = "Losing"
     const val STATE_BIDDING: String = "Bidding"
@@ -66,3 +70,5 @@ internal class ApplicationRunner(
     const val STATE_FAILED: String = "Failed"
   }
 }
+
+private fun AuctionId.toItemId() = ItemId(this.value)

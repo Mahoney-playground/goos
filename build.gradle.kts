@@ -86,6 +86,7 @@ subprojects {
         kotlinOptions.apply {
           jvmTarget = javaVersion.toString()
           useIR = true
+          freeCompilerArgs = listOf("-Xinline-classes")
         }
       }
 
