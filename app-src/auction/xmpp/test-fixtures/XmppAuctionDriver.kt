@@ -5,6 +5,7 @@ package goos.auction.xmpp
 import goos.auction.api.AuctionDriver
 import goos.auction.api.AuctionId
 import goos.auction.api.BidderId
+import goos.auction.api.toBidderId
 import io.kotest.matchers.shouldBe
 import org.jivesoftware.smack.ConnectionConfiguration.SecurityMode.disabled
 import org.jivesoftware.smack.chat.Chat
@@ -85,7 +86,7 @@ class XmppAuctionDriver(
     matcher: (String?) -> Unit
   ) {
     messageListener.receivesAMessage(matcher)
-    currentChat!!.participant shouldBe sniperId
+    currentChat!!.participant.toBidderId() shouldBe sniperId
   }
 
   override fun announceClosed() = currentChat!!.sendMessage("SOLVersion: 1.1; Event: CLOSE;")

@@ -4,7 +4,7 @@ inline class ItemId(val value: String) {
   override fun toString() = value
 }
 
-fun String.toItemId() = ItemId(this)
+fun CharSequence.toItemId() = ItemId(this.toString())
 
 data class Item(
   val identifier: ItemId,
