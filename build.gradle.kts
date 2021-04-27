@@ -10,12 +10,6 @@ import uk.org.lidalia.gradle.plugins.downloaddeps.DownloadDependenciesPlugin
 import uk.org.lidalia.gradle.plugins.idea.IdeaPlugin
 import uk.org.lidalia.gradle.plugins.kotlinflat.KotlinFlatPlugin
 
-buildscript {
-  repositories {
-    maven(url = "https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
-  }
-}
-
 plugins {
   base
   kotlin("jvm") version "1.4.32" apply false
@@ -41,7 +35,6 @@ allprojects {
 
   repositories {
     mavenCentral()
-    maven(url = "https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
   }
   apply<DownloadDependenciesPlugin>()
   apply<KotlinterPlugin>()
