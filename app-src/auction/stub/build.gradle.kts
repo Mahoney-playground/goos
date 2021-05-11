@@ -5,13 +5,13 @@ plugins {
 
 dependencies {
 
-  api(project(":auction-api"))
-  api(project(":auction-sol"))
+  api(projects.auctionApi)
+  api(projects.auctionSol)
 
   testImplementation(libs.kotest.assertionsCore)
   testImplementation(libs.kotest.assertionsShared)
 
-  testFixturesApi(testFixtures(project(":auction-api")))
+  testFixturesApi(testFixtures(projects.auctionApi))
   testFixturesImplementation(libs.kotest.assertionsCore)
   testFixturesImplementation(libs.kotest.assertionsCoreJvm)
   testFixturesImplementation(libs.kotest.assertionsShared)

@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  api(project(":kotlinlangext"))
+  api(projects.kotlinlangext)
 
   testFixturesImplementation(libs.kotest.frameworkApi)
   testFixturesImplementation(libs.kotest.assertionsCore)

@@ -5,12 +5,12 @@ plugins {
 
 dependencies {
 
-  api(project(":ui-api"))
+  api(projects.uiApi)
 
   testImplementation(libs.kotest.assertionsCore)
   testImplementation(libs.kotest.assertionsShared)
 
-  testFixturesApi(testFixtures(project(":ui-api")))
+  testFixturesApi(testFixtures(projects.uiApi))
   testFixturesImplementation(libs.kotest.assertionsCore)
   testFixturesImplementation(libs.kotest.assertionsCoreJvm)
   testFixturesImplementation(libs.kotest.assertionsShared)

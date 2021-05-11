@@ -30,6 +30,7 @@ includeChildrenOf(file("libraries"), excluding = setOf("indexhtml")) { ":$name" 
 include(":end-to-end-tests")
 
 enableFeaturePreview("VERSION_CATALOGS")
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 val jxmppVersion = "0.6.4"
 

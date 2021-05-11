@@ -8,8 +8,8 @@ dependencies {
 
   implementation(libs.coroutines.core)
 
-  implementation(project(":testlauncher"))
-  implementation(testFixtures(project(":auction-xmpp")))
+  implementation(projects.testlauncher)
+  implementation(testFixtures(projects.auctionXmpp))
 
   implementation(libs.kotest.frameworkApi)
 }

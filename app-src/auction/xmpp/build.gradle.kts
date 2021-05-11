@@ -5,8 +5,8 @@ plugins {
 
 dependencies {
 
-  api(project(":auction-api"))
-  implementation(project(":auction-sol"))
+  api(projects.auctionApi)
+  implementation(projects.auctionSol)
 
   implementation(libs.smack.tcp)
   implementation(libs.smack.core)
@@ -16,7 +16,7 @@ dependencies {
   runtimeOnly(libs.smack.extensions)
   runtimeOnly(libs.smack.java7)
 
-  testFixturesApi(testFixtures(project(":auction-api")))
+  testFixturesApi(testFixtures(projects.auctionApi))
   testFixturesApi(libs.smack.core)
   testFixturesApi(libs.smack.im)
 
@@ -33,7 +33,7 @@ dependencies {
   testFixturesRuntimeOnly(libs.smack.java7)
 
   testImplementation(libs.kotest.extensionsTestcontainers)
-  testImplementation(project(":testcontainers"))
+  testImplementation(projects.testcontainers)
   testImplementation("ch.qos.logback:logback-classic:1.2.3")
 }
 

@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  api(project(":ui-api"))
+  api(projects.uiApi)
 
   testFixturesApi(libs.selenium.api)
   testFixturesApi(libs.selenium.remoteDriver)
@@ -13,7 +13,7 @@ dependencies {
   testFixturesImplementation(libs.kotest.assertionsSharedJvm)
   testFixturesImplementation(libs.coroutines.core)
   testFixturesImplementation(libs.coroutines.coreJvm)
-  testFixturesApi(testFixtures(project(":ui-api")))
+  testFixturesApi(testFixtures(projects.uiApi))
 
   testImplementation(libs.marathon.javaDriver)
 }

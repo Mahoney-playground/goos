@@ -9,6 +9,6 @@ dependencies {
   }
   implementation("org.junit.platform:junit-platform-console:1.7.0")
 
-  implementation(project(":clioptions"))
+  implementation(projects.clioptions)
   implementation("uk.org.lidalia:indexhtml:0.1.0")
 }

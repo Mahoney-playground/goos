@@ -11,13 +11,13 @@ val javaAgents: Configuration by configurations.creating
 
 dependencies {
 
-  implementation(project(":core"))
+  implementation(projects.core)
 
-  implementation(project(":ui-api"))
-  implementation(project(":ui-swing"))
+  implementation(projects.uiApi)
+  implementation(projects.uiSwing)
 
-  implementation(project(":auction-api"))
-  implementation(project(":auction-xmpp"))
+  implementation(projects.auctionApi)
+  implementation(projects.auctionXmpp)
 
   @Suppress("UnstableApiUsage")
   javaAgents(libs.marathon.javaAgent)

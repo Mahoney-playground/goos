@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  api(project(":kotlinlangext"))
+  api(projects.kotlinlangext)
 
   testFixturesApi(libs.kotest.frameworkApiJvm)
 
@@ -14,7 +14,7 @@ dependencies {
   testFixturesImplementation(libs.coroutines.core)
   testFixturesImplementation(libs.mockk.core)
   testFixturesImplementation(libs.mockk.dslJvm)
-  testFixturesImplementation(project(":kotlinlangext"))
+  testFixturesImplementation(projects.kotlinlangext)
   constraints {
     testFixturesImplementation(libs.mockk.core)
   }

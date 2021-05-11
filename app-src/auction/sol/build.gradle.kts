@@ -3,8 +3,8 @@ plugins {
 }
 
 dependencies {
-  api(project(":auction-api"))
-  implementation(project(":kotlinlangext"))
+  api(projects.auctionApi)
+  implementation(projects.kotlinlangext)
 }
 
 idea {
