@@ -1,4 +1,4 @@
-FROM openjdk:14.0.1-jdk-slim
+FROM adoptopenjdk:15.0.2_7-jdk-hotspot
 
 ENV OPENFIRE_VERSION=4.5.1 \
     OPENFIRE_USER=openfire
