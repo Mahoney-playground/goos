@@ -1,6 +1,7 @@
 package goos.ui.api
 
-inline class ItemId(val value: String) {
+@JvmInline
+value class ItemId(val value: String) {
   override fun toString() = value
 }
 

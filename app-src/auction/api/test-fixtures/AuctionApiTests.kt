@@ -8,8 +8,8 @@ import io.mockk.confirmVerified
 import io.mockk.mockk
 import io.mockk.verify
 import uk.org.lidalia.kotlinlangext.coroutines.sync.CountDownLatch
+import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
-import kotlin.time.seconds
 
 @ExperimentalTime
 fun auctionApiTests(
@@ -83,7 +83,7 @@ private suspend fun Auction.synchronously(
     override fun auctionFailed() = eventReceived.countDown()
   })
   work()
-  eventReceived.await(5.seconds).shouldBeTrue()
+  eventReceived.await(Duration.seconds(5)).shouldBeTrue()
 }
 
 private fun confirmNoFurtherInteractionsWith(vararg mocks: Any) = confirmVerified(*mocks)

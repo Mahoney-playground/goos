@@ -5,16 +5,16 @@ import kotlinx.coroutines.delay
 import java.time.Clock
 import java.time.Instant
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
-import kotlin.time.milliseconds
-import kotlin.time.seconds
 import kotlin.time.toJavaDuration
 
 @ExperimentalTime
 suspend fun <A> retry(
   clock: Clock = Clock.systemUTC(),
-  timeBetweenRetries: Duration = 10.milliseconds,
-  timeoutAfter: Duration = 10.seconds,
+  timeBetweenRetries: Duration = milliseconds(10),
+  timeoutAfter: Duration = seconds(10),
   work: () -> A
 ) = retry(clock, timeBetweenRetries, clock.instant().plus(timeoutAfter.toJavaDuration()), work)
 

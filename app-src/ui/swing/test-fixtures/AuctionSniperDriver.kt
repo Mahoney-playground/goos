@@ -13,8 +13,8 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
 import java.net.URL
+import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
-import kotlin.time.seconds
 
 class AuctionSniperDriver(
   private val driver: WebDriver
@@ -35,7 +35,7 @@ class AuctionSniperDriver(
     lastPrice: Int,
     lastBid: Int,
     stateText: String
-  ) = eventually(5.seconds) {
+  ) = eventually(Duration.seconds(5)) {
     val table = JTableDriver(
       driver.findElement(By.name(SNIPERS_TABLE_NAME))
     )

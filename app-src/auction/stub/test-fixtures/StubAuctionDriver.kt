@@ -5,8 +5,8 @@ import goos.auction.api.AuctionId
 import goos.auction.api.BidderId
 import io.kotest.assertions.timing.eventually
 import io.kotest.matchers.collections.shouldContain
+import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
-import kotlin.time.seconds
 
 class StubAuctionDriver(
   override val auctionId: AuctionId,
@@ -47,7 +47,7 @@ class StubAuctionDriver(
 
   @ExperimentalTime
   private suspend fun hasReceivedMessage(sniperId: BidderId, expectedMessage: String) {
-    eventually(1.seconds) {
+    eventually(Duration.seconds(1)) {
       auctionServer.messagesFor(auctionId) shouldContain Message(sniperId, expectedMessage)
     }
   }

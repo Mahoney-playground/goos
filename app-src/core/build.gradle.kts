@@ -5,8 +5,7 @@ plugins {
 dependencies {
   api(projects.uiApi)
   api(projects.auctionApi)
-
-  implementation(projects.kotlinlangext)
+  api(projects.kotlinlangext)
 }
 
 idea {

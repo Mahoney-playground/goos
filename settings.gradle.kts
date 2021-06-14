@@ -40,7 +40,7 @@ dependencyResolutionManagement {
     create("libs") {
       versionCatalog(
         "kotest",
-        "io.kotest", { "kotest-$it" }, "4.4.3",
+        "io.kotest", { "kotest-$it" }, "4.6.0",
         "framework-api",
         "framework-api-jvm",
         "assertions-core",
@@ -48,7 +48,10 @@ dependencyResolutionManagement {
         "assertions-shared",
         "assertions-shared-jvm",
         "runner-junit5",
-        "extensions-testcontainers",
+      )
+      versionCatalog(
+        "kotestextensions-testcontainers",
+        "io.kotest.extensions", "kotest-extensions-testcontainers", "1.0.0",
       )
       versionCatalog(
         "arrow",
@@ -98,7 +101,7 @@ dependencyResolutionManagement {
       )
       versionCatalog(
         "coroutines",
-        "org.jetbrains.kotlinx", { "kotlinx-coroutines-$it" }, "1.4.3",
+        "org.jetbrains.kotlinx", { "kotlinx-coroutines-$it" }, "1.5.0",
         "core",
         "core-jvm",
       )

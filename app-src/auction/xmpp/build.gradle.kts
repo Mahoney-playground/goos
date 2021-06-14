@@ -6,12 +6,12 @@ plugins {
 dependencies {
 
   api(projects.auctionApi)
-  implementation(projects.auctionSol)
+  api(projects.auctionSol)
+  api(libs.smack.core)
+  api(libs.jxmpp.jid)
 
   implementation(libs.smack.tcp)
-  implementation(libs.smack.core)
   implementation(libs.smack.im)
-  implementation(libs.jxmpp.jid)
 
   runtimeOnly(libs.smack.extensions)
   runtimeOnly(libs.smack.java7)
@@ -32,7 +32,7 @@ dependencies {
 
   testFixturesRuntimeOnly(libs.smack.java7)
 
-  testImplementation(libs.kotest.extensionsTestcontainers)
+  testImplementation(libs.kotestextensions.testcontainers)
   testImplementation(projects.testcontainers)
   testImplementation("ch.qos.logback:logback-classic:1.2.3")
 }

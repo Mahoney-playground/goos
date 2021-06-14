@@ -10,8 +10,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
-import kotlin.time.milliseconds
 
 @ExperimentalTime
 class CountDownLatchTest : StringSpec({
@@ -78,7 +78,7 @@ class CountDownLatchTest : StringSpec({
       events.add(3)
     }
     val job2 = launch {
-      delay(100.milliseconds)
+      delay(milliseconds(100))
       events.add(2)
       latch.countDown()
     }
@@ -95,7 +95,7 @@ class CountDownLatchTest : StringSpec({
         latch.await()
       }
     }
-    delay(50.milliseconds)
+    delay(milliseconds(50))
     latch.countDown()
     job.join()
   }
@@ -105,12 +105,12 @@ class CountDownLatchTest : StringSpec({
     val events = mutableListOf<Int>()
     val awaitedInTime = async {
       events.add(1)
-      val inTime = latch.await(200.milliseconds)
+      val inTime = latch.await(milliseconds(200))
       events.add(3)
       inTime
     }
     val job2 = launch {
-      delay(100.milliseconds)
+      delay(milliseconds(100))
       events.add(2)
       latch.countDown()
     }
@@ -125,12 +125,12 @@ class CountDownLatchTest : StringSpec({
     val events = mutableListOf<Int>()
     val awaitedInTime = async {
       events.add(1)
-      val inTime = latch.await(100.milliseconds)
+      val inTime = latch.await(milliseconds(100))
       events.add(2)
       inTime
     }
     val job2 = launch {
-      delay(200.milliseconds)
+      delay(milliseconds(200))
       events.add(3)
       latch.countDown()
     }

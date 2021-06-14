@@ -1,6 +1,7 @@
 package goos.auction.api
 
-inline class AuctionId(val value: String) {
+@JvmInline
+value class AuctionId(val value: String) {
   override fun toString() = value
 }
 
