@@ -12,7 +12,7 @@ import uk.org.lidalia.gradle.plugins.kotlinflat.KotlinFlatPlugin
 
 plugins {
   base
-  kotlin("jvm") version "1.5.10" apply false
+  kotlin("jvm") version "1.5.21" apply false
   id("uk.org.lidalia.kotlin-flat") apply false
   id("uk.org.lidalia.idea-ext") apply false
   id("uk.org.lidalia.download-dependencies")
