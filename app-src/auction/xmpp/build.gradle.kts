@@ -33,6 +33,9 @@ dependencies {
   testFixturesRuntimeOnly(libs.smack.java7)
 
   testImplementation(libs.kotestextensions.testcontainers)
+  testImplementation(libs.testcontainers)
+  testImplementation(libs.slf4j.api)
+  testImplementation(libs.kotest.frameworkApiJvm)
   testImplementation(projects.testcontainers)
   testImplementation("ch.qos.logback:logback-classic:1.2.3")
 }
