@@ -18,7 +18,7 @@ rootProject.name = "goos"
 includeBuildChildrenOf(file("gradle/build-plugins"))
 includeBuild("libraries/indexhtml") {
   dependencySubstitution {
-    substitute(module("uk.org.lidalia:indexhtml")).with(project(":"))
+    substitute(module("uk.org.lidalia:indexhtml")).using(project(":"))
   }
 }
 
@@ -41,6 +41,7 @@ dependencyResolutionManagement {
       versionCatalog(
         "kotest",
         "io.kotest", { "kotest-$it" }, "4.6.0",
+        "common-jvm",
         "framework-api",
         "framework-api-jvm",
         "assertions-core",
@@ -52,6 +53,17 @@ dependencyResolutionManagement {
       versionCatalog(
         "kotestextensions-testcontainers",
         "io.kotest.extensions", "kotest-extensions-testcontainers", "1.0.0",
+      )
+      versionCatalog(
+        "testcontainers",
+        "org.testcontainers",
+        "testcontainers",
+        "1.16.0",
+      )
+      versionCatalog(
+        "slf4j",
+        "org.slf4j", { "slf4j-$it" }, "1.7.30",
+        "api"
       )
       versionCatalog(
         "arrow",

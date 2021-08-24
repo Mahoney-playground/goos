@@ -12,12 +12,12 @@ import uk.org.lidalia.gradle.plugins.kotlinflat.KotlinFlatPlugin
 
 plugins {
   base
-  kotlin("jvm") version "1.5.10" apply false
+  kotlin("jvm") version "1.5.21" apply false
   id("uk.org.lidalia.kotlin-flat") apply false
   id("uk.org.lidalia.idea-ext") apply false
   id("uk.org.lidalia.download-dependencies")
   id("uk.org.lidalia.copy-without-version")
-  id("com.autonomousapps.dependency-analysis") version "0.73.0"
+  id("com.autonomousapps.dependency-analysis") version "0.75.0"
   id("org.jmailen.kotlinter") version "3.4.5"
   id("com.vanniktech.dependency.graph.generator") version "0.5.0"
   id("com.github.ben-manes.versions") version "0.38.0"
@@ -70,7 +70,6 @@ subprojects {
       val testImplementation by configurations
 
       testImplementation(libs.kotest.runnerJunit5)
-      testImplementation(libs.mockk.core)
     }
 
     tasks {
@@ -78,7 +77,6 @@ subprojects {
       withType<KotlinCompile> {
         kotlinOptions.apply {
           jvmTarget = javaVersion.toString()
-          useIR = true
           freeCompilerArgs = listOf("-Xinline-classes")
         }
       }
@@ -194,7 +192,7 @@ dependencyAnalysis {
     all {
       // set behavior for all issue types
       onAny {
-        severity("fail")
+        severity("warn")
       }
     }
   }

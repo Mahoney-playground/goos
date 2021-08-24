@@ -9,6 +9,7 @@ dependencies {
 
   testImplementation(libs.kotest.assertionsCore)
   testImplementation(libs.kotest.assertionsShared)
+  testImplementation(libs.kotest.frameworkApiJvm)
 
   testFixturesApi(testFixtures(projects.uiApi))
   testFixturesImplementation(libs.kotest.assertionsCore)

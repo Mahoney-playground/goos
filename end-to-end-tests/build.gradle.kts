@@ -19,8 +19,8 @@ dependencies {
   }
 
   implementation(projects.testlauncher)
-  implementation(libs.selenium.api)
 
+  testImplementation(libs.selenium.api)
   testImplementation(projects.testcontainers)
   testImplementation("ch.qos.logback:logback-classic:1.2.3")
   testImplementation(libs.kotestextensions.testcontainers)
@@ -29,6 +29,8 @@ dependencies {
   testImplementation(testFixtures(projects.uiStub))
   testImplementation(testFixtures(projects.auctionStub))
   testImplementation(projects.core)
+  testImplementation(libs.testcontainers)
+  testImplementation(libs.slf4j.api)
 }
 
 application {
