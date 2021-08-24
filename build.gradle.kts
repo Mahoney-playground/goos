@@ -12,13 +12,13 @@ import uk.org.lidalia.gradle.plugins.kotlinflat.KotlinFlatPlugin
 
 plugins {
   base
-  kotlin("jvm") version "1.5.21" apply false
+  kotlin("jvm") version "1.5.30" apply false
   id("uk.org.lidalia.kotlin-flat") apply false
   id("uk.org.lidalia.idea-ext") apply false
   id("uk.org.lidalia.download-dependencies")
   id("uk.org.lidalia.copy-without-version")
-  id("com.autonomousapps.dependency-analysis") version "0.75.0"
-  id("org.jmailen.kotlinter") version "3.4.5"
+  id("com.autonomousapps.dependency-analysis") version "0.76.0"
+  id("org.jmailen.kotlinter") version "3.5.0"
   id("com.vanniktech.dependency.graph.generator") version "0.5.0"
   id("com.github.ben-manes.versions") version "0.38.0"
   id("uk.org.lidalia.report-aggregator")
