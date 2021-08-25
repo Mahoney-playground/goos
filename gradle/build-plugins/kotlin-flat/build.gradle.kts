@@ -22,7 +22,7 @@ kotlin {
 }
 
 dependencies {
-  api("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.31")
+  api("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30")
 }
 
 gradlePlugin {
