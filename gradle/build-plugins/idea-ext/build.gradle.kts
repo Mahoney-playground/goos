@@ -1,7 +1,7 @@
 plugins {
   `kotlin-dsl`
   `java-gradle-plugin`
-  id("org.jmailen.kotlinter") version "3.4.0"
+  id("org.jmailen.kotlinter") version "3.5.0"
 }
 
 repositories {
