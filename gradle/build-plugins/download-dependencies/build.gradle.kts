@@ -24,3 +24,7 @@ gradlePlugin {
 idea {
   setPackagePrefix("uk.org.lidalia.gradle.plugins.downloaddeps")
 }
+
+tasks.register("downloadDependencies") {
+  // dummy to allow the build to pass!
+}

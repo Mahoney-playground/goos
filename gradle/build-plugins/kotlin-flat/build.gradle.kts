@@ -22,7 +22,7 @@ kotlin {
 }
 
 dependencies {
-  api("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30")
+  api("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21")
 }
 
 gradlePlugin {
@@ -37,4 +37,8 @@ gradlePlugin {
 
 idea {
   setPackagePrefix("uk.org.lidalia.gradle.plugins.kotlinflat")
+}
+
+tasks.register("downloadDependencies") {
+  // dummy to allow the build to pass!
 }

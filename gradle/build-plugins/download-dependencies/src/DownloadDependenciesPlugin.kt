@@ -7,6 +7,16 @@ import org.gradle.kotlin.dsl.register
 class DownloadDependenciesPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
-    project.tasks.register<DownloadDependenciesTask>("downloadDependencies")
+    val task = project.tasks.register<DownloadDependenciesTask>("downloadDependencies")
+    if (project.isRoot) {
+      project.gradle.includedBuilds.forEach { includedBuild ->
+        task.configure {
+          val includedBuildTask = includedBuild.task(":downloadDependencies")
+          dependsOn(includedBuildTask)
+        }
+      }
+    }
   }
 }
+
+private val Project.isRoot get() = parent == null

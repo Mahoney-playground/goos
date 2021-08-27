@@ -29,3 +29,7 @@ gradlePlugin {
     }
   }
 }
+
+tasks.register("downloadDependencies") {
+  // dummy to allow the build to pass!
+}
