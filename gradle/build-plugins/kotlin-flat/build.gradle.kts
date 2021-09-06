@@ -2,6 +2,7 @@ plugins {
   `kotlin-dsl`
   `java-gradle-plugin`
   id("org.jmailen.kotlinter") version "3.5.0"
+  id("uk.org.lidalia.download-dependencies")
   id("uk.org.lidalia.idea-ext")
 }
 
@@ -37,8 +38,4 @@ gradlePlugin {
 
 idea {
   setPackagePrefix("uk.org.lidalia.gradle.plugins.kotlinflat")
-}
-
-tasks.register("downloadDependencies") {
-  // dummy to allow the build to pass!
 }
