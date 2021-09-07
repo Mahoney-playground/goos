@@ -74,14 +74,14 @@ subprojects {
 
     tasks {
 
-      withType<KotlinCompile> {
+      withType<KotlinCompile>().configureEach {
         kotlinOptions.apply {
           jvmTarget = javaVersion.toString()
           freeCompilerArgs = listOf("-Xinline-classes")
         }
       }
 
-      withType<Jar> {
+      withType<Jar>().configureEach {
         archiveVersion.convention(null as String?)
       }
 

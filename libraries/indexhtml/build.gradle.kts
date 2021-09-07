@@ -37,7 +37,7 @@ configurations.all {
 }
 
 tasks {
-  withType<KotlinCompile> {
+  withType<KotlinCompile>().configureEach {
     kotlinOptions.apply {
       jvmTarget = javaVersion.toString()
       freeCompilerArgs = listOf("-Xinline-classes")
