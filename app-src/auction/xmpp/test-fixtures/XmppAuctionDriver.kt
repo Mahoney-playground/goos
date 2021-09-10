@@ -21,6 +21,7 @@ import java.util.concurrent.ArrayBlockingQueue
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import java.util.concurrent.TimeUnit.SECONDS
+import kotlin.time.ExperimentalTime
 
 class XmppAuctionDriver(
   override val auctionId: AuctionId
@@ -72,11 +73,13 @@ class XmppAuctionDriver(
     c.disconnect()
   }
 
+  @ExperimentalTime
   override suspend fun hasReceivedJoinRequestFrom(sniperId: BidderId) =
     hasReceivedMessage(sniperId) {
       it shouldBe "SOLVersion: 1.1; Command: JOIN;"
     }
 
+  @ExperimentalTime
   override suspend fun hasReceivedBid(bid: Int, sniperId: BidderId) = hasReceivedMessage(sniperId) {
     it shouldBe "SOLVersion: 1.1; Command: BID; Price: $bid;"
   }

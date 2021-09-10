@@ -1,3 +1,10 @@
+/*
+ * The gradle application plugin hasn't avoided the deprecations, and they probably are not
+ * avoidable... at present you can't create a [DefaultJavaApplication], the only implementation of
+ * [JavaApplication], without passing an [ApplicationPluginConvention] to its sole constructor.
+ */
+@file:Suppress("DEPRECATION")
+
 package uk.org.lidalia.gradle.plugins.application
 
 import org.gradle.api.Action

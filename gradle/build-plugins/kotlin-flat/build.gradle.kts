@@ -1,7 +1,8 @@
 plugins {
   `kotlin-dsl`
   `java-gradle-plugin`
-  id("org.jmailen.kotlinter") version "3.4.0"
+  id("org.jmailen.kotlinter") version "3.5.0"
+  id("uk.org.lidalia.download-dependencies")
   id("uk.org.lidalia.idea-ext")
 }
 
@@ -22,7 +23,7 @@ kotlin {
 }
 
 dependencies {
-  api("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.31")
+  api("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21")
 }
 
 gradlePlugin {

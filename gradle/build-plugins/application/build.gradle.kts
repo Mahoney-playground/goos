@@ -1,9 +1,10 @@
 plugins {
   `kotlin-dsl`
   `java-gradle-plugin`
-  id("org.jmailen.kotlinter") version "3.4.0"
+  id("org.jmailen.kotlinter") version "3.5.0"
   id("uk.org.lidalia.idea-ext")
   id("uk.org.lidalia.kotlin-flat")
+  id("uk.org.lidalia.download-dependencies")
 }
 
 repositories {
