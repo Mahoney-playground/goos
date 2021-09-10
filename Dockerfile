@@ -30,7 +30,8 @@ WORKDIR $work_dir
 
 FROM worker as gradle
 ARG username
-ENV GRADLE_OPTS='-Dorg.gradle.daemon=false -Xms256m -Xmx2g'
+# The single use daemon will be unavoidable in future so don't waste time trying to prevent it
+ENV GRADLE_OPTS='-Dorg.gradle.daemon=false'
 
 # Download gradle in a separate step to benefit from layer caching
 COPY --chown=$username gradle/wrapper gradle/wrapper
