@@ -65,7 +65,8 @@ COPY --from=builder $work_dir/build/reports ./build-reports
 # Workaround for https://github.com/moby/buildkit/issues/1421
 FROM builder as checker
 RUN build_result=$(cat build_result); \
-    if [ "$build_result" -gt 0 ]; then >&2 echo "The build failed with exit status $build_result, check output of builder stage"; fi; \
+    if [ "$build_result" -eq 137 ]; then >&2 echo "The build failed with exit status $build_result, you probably need to give Docker more memory"; \
+    elif [ "$build_result" -gt 0 ]; then >&2 echo "The build failed with exit status $build_result, check output of builder stage"; fi; \
     exit "$build_result"
 
 
