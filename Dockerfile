@@ -1,10 +1,14 @@
-# syntax=docker/dockerfile:1.2.1-labs
+# syntax=docker/dockerfile:1.3.0-labs
 ARG username=worker
 ARG work_dir=/home/$username/work
+ARG gid=1000
+ARG uid=1001
 
 FROM adoptopenjdk:15.0.2_7-jdk-hotspot as worker
 ARG username
 ARG work_dir
+ARG gid
+ARG uid
 
 # Install xvfb so that a GUI (and GUI tests) can run
 RUN apt-get -qq update && \
@@ -16,8 +20,8 @@ RUN apt-get -qq update && \
 RUN mkdir /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
 COPY --chown=root scripts/simple-xvfb-run.sh /usr/bin/simple-xvfb-run
 
-RUN addgroup --system $username --gid 1000 && \
-    adduser --system $username --ingroup $username --uid 1001
+RUN addgroup --system $username --gid $gid && \
+    adduser --system $username --ingroup $username --uid $uid
 
 USER $username
 RUN mkdir -p $work_dir
@@ -35,15 +39,19 @@ RUN ./gradlew --version
 
 FROM gradle as builder
 ARG username
+ARG gid
+ARG uid
+
 COPY --chown=$username . .
 
-# Can't use docker ARG values in the --mount argument: https://github.com/moby/buildkit/issues/815
+ARG gradle_cache_dir=/home/$username/.gradle/caches
+
 # Do all the downloading in one step...
-RUN --mount=type=cache,target=/home/worker/.gradle/caches,gid=1000,uid=1001 \
+RUN --mount=type=cache,target=$gradle_cache_dir,gid=$gid,uid=$uid \
     ./gradlew --no-watch-fs --stacktrace downloadDependencies
 
 # So the actual build can run without network access. Proves no tests rely on external services.
-RUN --mount=type=cache,target=/home/worker/.gradle/caches,gid=1000,uid=1001 \
+RUN --mount=type=cache,target=$gradle_cache_dir,gid=$gid,uid=$uid \
     --network=none \
     set +e; \
     simple-xvfb-run ./gradlew --no-watch-fs --stacktrace --offline build; \
