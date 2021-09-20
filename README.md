@@ -126,101 +126,174 @@ Diagram key:
   instantiate and wire together.
 - All other components contain the actual logic
 
+#### Adapter contract testing component diagram
+
+The principles here are:
+* by running the same contract tests against both the actual implementations and the stub, we create
+  confidence that the stub is an accurate representation of the actual implementation
+* by having contract tests we make it easy to replace an implementation - to migrate from Swing to
+  JFX, or from an XMPP based interaction with the Auction server to some other API
+
 ```plantuml
 @startuml
 
 node production { 
     component app
     component core
-    component adapter
-    interface port
+    interface auction
+    component auction.xmpp
+    interface ui
+    component ui.swing
 }
 
-node "Contract tests" {
-    component "port-contract-test" as port_contract_test
-    interface "port-test-driver" as port_test_driver
+node "UI Contract tests" {
+    component "ui-contract-test" as ui_contract_test
+    interface "ui-test-driver" as ui_test_driver
     
-    node "Stubbed" {
-        component "stub-contract-test" as stub_contract_test
-        component "stub-adapter" as stub_adapter
-        component "stub-test-driver" as stub_test_driver
+    node "UI Stubbed" {
+        component "stub-ui-contract-test" as stub_ui_contract_test
+        component "stub-ui" as stub_ui
+        component "stub-ui-test-driver" as stub_ui_test_driver
     }
     
-    node Actual {
-        component "adapter-contract-test" as adapter_contract_test
-        component "adapter-test-driver" as adapter_test_driver
+    node "UI Actual" {
+        component "ui.swing-contract-test" as ui.swing_contract_test
+        component "ui.swing-test-driver" as ui.swing_test_driver
+    }
+}
+
+node "Auction Contract tests" {
+    component "auction-contract-test" as auction_contract_test
+    interface "auction-test-driver" as auction_test_driver
+    
+    node "Auction Stubbed" {
+        component "stub-auction-contract-test" as stub_auction_contract_test
+        component "stub-auction" as stub_auction
+        component "stub-auction-test-driver" as stub_auction_test_driver
+    }
+    
+    node "Auction Actual" {
+        component "auction.xmpp-contract-test" as auction.xmpp_contract_test
+        component "auction.xmpp-test-driver" as auction.xmpp_test_driver
     }
 }
 
 app --> core
-app --> adapter
-core --> port
-adapter ..> port
+core --> ui
+app --> ui.swing
+ui.swing ..> ui
 
-stub_adapter ..> port
+core --> auction
+app --> auction.xmpp
+auction.xmpp ..> auction
 
-port_contract_test --> port
-port_contract_test --> port_test_driver
+stub_ui ..> ui
+ui.swing_test_driver ..> ui_test_driver
+stub_ui_test_driver ..> ui_test_driver
 
-stub_test_driver ..> port_test_driver
-stub_contract_test --> port_contract_test
-stub_contract_test --> stub_test_driver
-stub_contract_test --> stub_adapter
+stub_auction ..> auction
+auction.xmpp_test_driver ..> auction_test_driver
+stub_auction_test_driver ..> auction_test_driver
 
-adapter_test_driver ..> port_test_driver
-adapter_contract_test --> port_contract_test
-adapter_contract_test --> adapter_test_driver
-adapter_contract_test --> adapter
+ui_contract_test --> ui
+ui_contract_test --> ui_test_driver
+
+ui.swing_contract_test --> ui_contract_test
+ui.swing_contract_test --> ui.swing_test_driver
+ui.swing_contract_test --> ui.swing
+
+stub_ui_contract_test --> ui_contract_test
+stub_ui_contract_test --> stub_ui_test_driver
+stub_ui_contract_test --> stub_ui
+
+auction_contract_test --> auction
+auction_contract_test --> auction_test_driver
+
+stub_auction_contract_test --> auction_contract_test
+stub_auction_contract_test --> stub_auction_test_driver
+stub_auction_contract_test --> stub_auction
+
+auction.xmpp_contract_test --> auction_contract_test
+auction.xmpp_contract_test --> auction.xmpp_test_driver
+auction.xmpp_contract_test --> auction.xmpp
 
 @enduml
 ```
 
+#### End to end test component diagram
+
+The principles here are:
+* the stubbed tests instantiate `core` passing it the stubbed implementations that were proven in
+  the adapter contract tests above, and interact with the resulting app using the stub test driver
+  implementations that were likewise proven in the adapter contract tests above
+* this gives confidence that if the stubbed end-to-end tests pass, the same tests would pass against
+  the real app
+* the same tests can be run against the real app, instantiated by the `end-to-end-real-tests` and
+  interacting with it via the test drivers proven in the adapter contract tests above
+
 ```plantuml
 @startuml
 
 node production { 
     component app
     component core
-    component adapter
-    interface port
+    interface auction
+    component auction.xmpp
+    interface ui
+    component ui.swing
 }
 
-node "End to end tests" {
-
-    interface "port-test-driver" as port_test_driver
+node Contract {
+    interface "ui-test-driver" as ui_test_driver
+    interface "auction-test-driver" as auction_test_driver
     component "end-to-end-contract-test" as end_to_end_contract_test
-    
-    node "Stubbed" {
-        component "end-to-end-stubbed-test" as end_to_end_stubbed_test
-        component "stub-adapter" as stub_adapter
-        component "stub-test-driver" as stub_test_driver
-    }
-    
-    node Actual {
-        component "end-to-end-real-test" as end_to_end_real_test
-        component "adapter-test-driver" as adapter_test_driver
-    }
+}
+
+node "Stubbed end-to-end tests" {
+    component "end-to-end-stubbed-tests" as end_to_end_stubbed_tests
+    component "stub-ui" as stub_ui
+    component "stub-auction" as stub_auction
+    component "stub-ui-test-driver" as stub_ui_test_driver
+    component "stub-auction-test-driver" as stub_auction_test_driver
+}
+
+node "Real end-to-end tests" {
+    component "end-to-end-real-tests" as end_to_end_real_tests
+    component "ui.swing-test-driver" as ui.swing_test_driver
+    component "auction.xmpp-test-driver" as auction.xmpp_test_driver
 }
 
 app --> core
-app --> adapter
-core --> port
-adapter ..> port
+core --> ui
+app --> ui.swing
+ui.swing ..> ui
 
-adapter_test_driver ..> port_test_driver
-end_to_end_contract_test --> port_test_driver
+core --> auction
+app --> auction.xmpp
+auction.xmpp ..> auction
 
-end_to_end_real_test --> end_to_end_contract_test
-end_to_end_real_test --> core
-end_to_end_real_test --> adapter
-end_to_end_real_test --> adapter_test_driver
+stub_ui ..> ui
+ui.swing_test_driver ..> ui_test_driver
+stub_ui_test_driver ..> ui_test_driver
 
-stub_test_driver ..> port_test_driver
+stub_auction ..> auction
+auction.xmpp_test_driver ..> auction_test_driver
+stub_auction_test_driver ..> auction_test_driver
 
-stub_adapter ..> port
-end_to_end_stubbed_test --> end_to_end_contract_test
-end_to_end_stubbed_test --> stub_test_driver
-end_to_end_stubbed_test --> core
-end_to_end_stubbed_test --> stub_adapter
+end_to_end_contract_test --> ui_test_driver
+end_to_end_contract_test --> auction_test_driver
+
+end_to_end_real_tests -> app
+end_to_end_real_tests --> end_to_end_contract_test
+end_to_end_real_tests --> ui.swing_test_driver
+end_to_end_real_tests --> auction.xmpp_test_driver
+
+end_to_end_stubbed_tests --> end_to_end_contract_test
+end_to_end_stubbed_tests --> stub_ui_test_driver
+end_to_end_stubbed_tests --> stub_auction_test_driver
+end_to_end_stubbed_tests --> core
+end_to_end_stubbed_tests --> stub_ui
+end_to_end_stubbed_tests --> stub_auction
+
 @enduml
 ```
