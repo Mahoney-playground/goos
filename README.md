@@ -116,17 +116,6 @@ The app has the following modules:
         - a real one, constructing the app with the adapters defined in `{port}/{adapter}/src` and
           the tests with the drivers defined in `{port}/{adapter}/testFixtures`
 
-Diagram key:
-
-- Solid line means `a` constructs `b`.
-- Dashed line mean `a` implements `b`.
-- Dotted line means `a` depends on `b` without either constructing or implementing it.
-- Rounded elements are interfaces - they contain no logic, only declare interfaces and data classes
-- Components contain logic. They are not executable.
-- Remaining boxes are executable. The only logic they contain is the choice of components to
-  instantiate and wire together.
-- Grey boxes represent production modules.
-
 ```plantuml
 @startuml
 
