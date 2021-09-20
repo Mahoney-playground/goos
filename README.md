@@ -205,9 +205,9 @@ node "End to end tests" {
 app --> core
 app --> adapter
 core --> port
-adapter --> port
+adapter ..> port
 
-adapter_test_driver --> port_test_driver
+adapter_test_driver ..> port_test_driver
 end_to_end_contract_test --> port_test_driver
 
 end_to_end_real_test --> end_to_end_contract_test
@@ -215,8 +215,9 @@ end_to_end_real_test --> core
 end_to_end_real_test --> adapter
 end_to_end_real_test --> adapter_test_driver
 
-stub_test_driver --> port_test_driver
+stub_test_driver ..> port_test_driver
 
+stub_adapter ..> port
 end_to_end_stubbed_test --> end_to_end_contract_test
 end_to_end_stubbed_test --> stub_test_driver
 end_to_end_stubbed_test --> core
