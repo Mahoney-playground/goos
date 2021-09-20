@@ -201,5 +201,4 @@ end_to_end_real_test --> end_to_end_contract_test
 end_to_end_real_test --> adapter_test_driver
 end_to_end_real_test --> app
 @enduml
-}
 ```
