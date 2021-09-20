@@ -5,7 +5,7 @@ DOCKER_BUILDKIT=1 \
 docker build .
 ```
 
-To build locally with JDK >= 14 installed:
+To build locally:
 
 ```bash
 ./gradlew build
@@ -128,96 +128,78 @@ Diagram key:
 - Grey boxes represent production modules.
 
 ```plantuml
-digraph Test {
+@startuml
 
-  node [shape=box]
+component app
+component core
+component "port-contract-test" as port_contract_test
+interface "port-test-driver" as port_test_driver
+component adapter
+component "stub-adapter" as stub_adapter
+component "stub-contract-test" as stub_contract_test
+component "stub-test-driver" as stub_test_driver
+component "end-to-end-contract-test" as end_to_end_contract_test
+component "end-to-end-stubbed-test" as end_to_end_stubbed_test
+interface port
 
-  app [style=filled]
-  core [style=filled shape=component]
+app --> core
+app --> adapter
+core --> port
+adapter --> port
 
-  port [style="filled,rounded"]
-  "port-contract-test" [shape=component]
-  "port-test-driver" [style=rounded]
+stub_adapter --> port
 
-  adapter [style=filled shape=component]
+port_contract_test --> port
+port_contract_test --> port_test_driver
 
-  "stub-adapter" [shape=component]
-  "stub-contract-test"
-  "stub-test-driver" [shape=component]
+stub_test_driver --> port_test_driver
+stub_contract_test --> port_contract_test
+stub_contract_test --> stub_test_driver
+stub_contract_test --> stub_adapter
 
-  "end-to-end-contract-test" [shape=component]
-  "end-to-end-stubbed-test"
+end_to_end_contract_test --> port_test_driver
+end_to_end_contract_test --> port
 
-  app -> core
-  app -> adapter
-  core -> port [style=dotted]
-  adapter -> port [style=dashed]
-
-  "stub-adapter" -> port [style=dashed]
-
-  "port-contract-test" -> "port" [style=dotted]
-  "port-contract-test" -> "port-test-driver" [style=dotted]
-
-  "stub-test-driver" -> "port-test-driver" [style=dashed]
-  "stub-contract-test" -> "port-contract-test"
-  "stub-contract-test" -> "stub-test-driver"
-  "stub-contract-test" -> "stub-adapter"
-
-  "end-to-end-contract-test" -> "port-test-driver" [style=dotted]
-  "end-to-end-contract-test" -> "port" [style=dotted]
-
-  "end-to-end-stubbed-test" -> "end-to-end-contract-test"
-  "end-to-end-stubbed-test" -> "stub-test-driver"
-  "end-to-end-stubbed-test" -> "core"
-  "end-to-end-stubbed-test" -> "stub-adapter"
-
-  { rank = same; port; "port-test-driver"; }
-  { rank = same; "end-to-end-contract-test"; "port-contract-test"; }
-  { rank = same; "adapter"; "stub-adapter"; }
-}
+end_to_end_stubbed_test --> end_to_end_contract_test
+end_to_end_stubbed_test --> stub_test_driver
+end_to_end_stubbed_test --> core
+end_to_end_stubbed_test --> stub_adapter
+@enduml
 ```
 
 ```plantuml
-digraph Test {
+@startuml
 
-  node [shape=box]
+component app
+component core
+component adapter
+component "adapter-contract-test" as adapter_contract_test
+component "end-to-end-real-test" as end_to_end_real_test
+component "adapter-test-driver" as adapter_test_driver
+component "end-to-end-contract-test" as end_to_end_contract_test
+component "port-contract-test" as port_contract_test
+interface "port-test-driver" as port_test_driver
+interface port
 
-  app [style=filled]
-  core [style=filled shape=component]
+app --> core
+app --> adapter
+core --> port
+adapter --> port
 
-  port [style="filled,rounded"]
-  "port-contract-test" [shape=component]
-  "port-test-driver" [style=rounded]
+port_contract_test --> port
+port_contract_test --> port_test_driver
 
-  adapter [style=filled shape=component]
+adapter_test_driver --> port_test_driver
+adapter_contract_test --> port_contract_test
+adapter_contract_test --> adapter_test_driver
+adapter_contract_test --> adapter
 
-  "adapter-contract-test"
-  "adapter-test-driver" [shape=component]
+end_to_end_contract_test --> port_test_driver
+end_to_end_contract_test --> port
 
-  "end-to-end-contract-test" [shape=component]
-  "end-to-end-real-test"
-
-  app -> core
-  app -> adapter
-  core -> port [style=dotted]
-  adapter -> port [style=dashed]
-
-  "port-contract-test" -> "port" [style=dotted]
-  "port-contract-test" -> "port-test-driver" [style=dotted]
-
-  "adapter-test-driver" -> "port-test-driver" [style=dashed]
-  "adapter-contract-test" -> "port-contract-test"
-  "adapter-contract-test" -> "adapter-test-driver"
-  "adapter-contract-test" -> "adapter"
-  
-  "end-to-end-contract-test" -> "port-test-driver" [style=dotted]
-  "end-to-end-contract-test" -> "port" [style=dotted]
-
-  "end-to-end-real-test" -> "end-to-end-contract-test"
-  "end-to-end-real-test" -> "adapter-test-driver"
-  "end-to-end-real-test" -> "app"
-
-  { rank = same; port; "port-test-driver"; }
-  { rank = same; "end-to-end-contract-test"; "port-contract-test"; }
+end_to_end_real_test --> end_to_end_contract_test
+end_to_end_real_test --> adapter_test_driver
+end_to_end_real_test --> app
+@enduml
 }
 ```
