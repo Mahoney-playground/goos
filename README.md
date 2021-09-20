@@ -116,78 +116,110 @@ The app has the following modules:
         - a real one, constructing the app with the adapters defined in `{port}/{adapter}/src` and
           the tests with the drivers defined in `{port}/{adapter}/testFixtures`
 
+Diagram key:
+
+- Circular elements are interfaces - they contain no logic, only declare interfaces and data classes
+- Solid line means `a` constructs `b` if `b` is a component or depends on `b` if `b` is an
+  interface.
+- Dashed line mean `a` implements `b`.
+- Top level components are executable. The only logic they contain is the choice of components to
+  instantiate and wire together.
+- All other components contain the actual logic
+
 ```plantuml
 @startuml
 
-component app
-component core
-component "port-contract-test" as port_contract_test
-interface "port-test-driver" as port_test_driver
-component adapter
-component "stub-adapter" as stub_adapter
-component "stub-contract-test" as stub_contract_test
-component "stub-test-driver" as stub_test_driver
-component "end-to-end-contract-test" as end_to_end_contract_test
-component "end-to-end-stubbed-test" as end_to_end_stubbed_test
-interface port
+node production { 
+    component app
+    component core
+    component adapter
+    interface port
+}
+
+node "Contract tests" {
+    component "port-contract-test" as port_contract_test
+    interface "port-test-driver" as port_test_driver
+    
+    node "Stubbed" {
+        component "stub-contract-test" as stub_contract_test
+        component "stub-adapter" as stub_adapter
+        component "stub-test-driver" as stub_test_driver
+    }
+    
+    node Actual {
+        component "adapter-contract-test" as adapter_contract_test
+        component "adapter-test-driver" as adapter_test_driver
+    }
+}
 
 app --> core
 app --> adapter
 core --> port
-adapter --> port
+adapter ..> port
 
-stub_adapter --> port
+stub_adapter ..> port
 
 port_contract_test --> port
 port_contract_test --> port_test_driver
 
-stub_test_driver --> port_test_driver
+stub_test_driver ..> port_test_driver
 stub_contract_test --> port_contract_test
 stub_contract_test --> stub_test_driver
 stub_contract_test --> stub_adapter
 
-end_to_end_contract_test --> port_test_driver
-end_to_end_contract_test --> port
+adapter_test_driver ..> port_test_driver
+adapter_contract_test --> port_contract_test
+adapter_contract_test --> adapter_test_driver
+adapter_contract_test --> adapter
 
-end_to_end_stubbed_test --> end_to_end_contract_test
-end_to_end_stubbed_test --> stub_test_driver
-end_to_end_stubbed_test --> core
-end_to_end_stubbed_test --> stub_adapter
 @enduml
 ```
 
 ```plantuml
 @startuml
 
-component app
-component core
-component adapter
-component "adapter-contract-test" as adapter_contract_test
-component "end-to-end-real-test" as end_to_end_real_test
-component "adapter-test-driver" as adapter_test_driver
-component "end-to-end-contract-test" as end_to_end_contract_test
-component "port-contract-test" as port_contract_test
-interface "port-test-driver" as port_test_driver
-interface port
+node production { 
+    component app
+    component core
+    component adapter
+    interface port
+}
+
+node "End to end tests" {
+
+    interface "port-test-driver" as port_test_driver
+    component "end-to-end-contract-test" as end_to_end_contract_test
+    
+    node "Stubbed" {
+        component "end-to-end-stubbed-test" as end_to_end_stubbed_test
+        component "stub-adapter" as stub_adapter
+        component "stub-test-driver" as stub_test_driver
+    }
+    
+    node Actual {
+        component "end-to-end-real-test" as end_to_end_real_test
+        component "adapter-test-driver" as adapter_test_driver
+    }
+}
 
 app --> core
 app --> adapter
 core --> port
 adapter --> port
 
-port_contract_test --> port
-port_contract_test --> port_test_driver
-
 adapter_test_driver --> port_test_driver
-adapter_contract_test --> port_contract_test
-adapter_contract_test --> adapter_test_driver
-adapter_contract_test --> adapter
-
 end_to_end_contract_test --> port_test_driver
-end_to_end_contract_test --> port
 
 end_to_end_real_test --> end_to_end_contract_test
+end_to_end_real_test --> core
+end_to_end_real_test --> adapter
 end_to_end_real_test --> adapter_test_driver
-end_to_end_real_test --> app
+
+stub_test_driver --> port_test_driver
+
+end_to_end_stubbed_test --> end_to_end_contract_test
+end_to_end_stubbed_test --> stub_test_driver
+end_to_end_stubbed_test --> core
+end_to_end_stubbed_test --> stub_adapter
 @enduml
 ```
