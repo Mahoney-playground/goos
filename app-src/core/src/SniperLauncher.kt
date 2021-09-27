@@ -5,12 +5,12 @@ import goos.auction.api.AuctionId
 import goos.ui.api.Item
 import goos.ui.api.ItemId
 import goos.ui.api.UserRequestListener
-import uk.org.lidalia.kotlinlangext.concurrent.Gate
+import uk.org.lidalia.kotlinlangext.concurrent.Signal
 
 internal class SniperLauncher(
   private val auctionHouse: AuctionHouse,
   private val portfolio: SniperPortfolio,
-  private val shutdownGate: Gate,
+  private val shutdownSignal: Signal,
 ) : UserRequestListener {
 
   override fun joinAuction(item: Item) {
@@ -32,7 +32,7 @@ internal class SniperLauncher(
 
   override fun closeApplication() {
     auctionHouse.disconnect()
-    shutdownGate.open()
+    shutdownSignal.trigger()
   }
 }
 

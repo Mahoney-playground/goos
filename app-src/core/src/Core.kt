@@ -2,7 +2,7 @@ package goos.core
 
 import goos.auction.api.AuctionHouse
 import goos.ui.api.UI
-import uk.org.lidalia.kotlinlangext.concurrent.Gate
+import uk.org.lidalia.kotlinlangext.concurrent.Signal
 import uk.org.lidalia.kotlinlangext.threads.blockUntilShutdown
 
 class Core(
@@ -13,17 +13,17 @@ class Core(
   fun run() {
 
     val portfolio = SniperPortfolio()
-    val shutdownGate = Gate.closed()
+    val shutdownSignal = Signal.notTriggered()
     val sniperLauncher = SniperLauncher(
       auctionHouse,
       portfolio,
-      shutdownGate
+      shutdownSignal
     )
 
     ui.addUserRequestListener(sniperLauncher)
     portfolio.addPortfolioListener(ui.portfolioListener)
 
     ui.start()
-    blockUntilShutdown(shutdownGate)
+    blockUntilShutdown(shutdownSignal)
   }
 }

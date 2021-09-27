@@ -5,24 +5,26 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit.NANOSECONDS
 
 /**
- * Specialization of CountDownLatch with can only be opened
+ * Specialization of CountDownLatch which can only be triggered
  */
-class Gate private constructor() {
+class Signal private constructor() {
 
   private val latch = CountDownLatch(1)
 
   @Throws(InterruptedException::class)
-  fun waitUntilOpened(): Unit = latch.await()
+  fun await(duration: Duration? = null): Boolean = if (duration != null) {
+    latch.await(duration.toNanos(), NANOSECONDS)
+  } else {
+    latch.await()
+    true
+  }
 
-  @Throws(InterruptedException::class)
-  fun waitUntilOpened(duration: Duration): Boolean = latch.await(duration.toNanos(), NANOSECONDS)
+  fun trigger(): Unit = latch.countDown()
 
-  fun open(): Unit = latch.countDown()
-
-  fun isOpen(): Boolean = latch.count > 0
-  fun isClosed(): Boolean = !isOpen()
+  val isTriggered: Boolean get() = latch.count == 0L
 
   companion object {
-    fun closed() = Gate()
+    fun notTriggered() = Signal()
+    val triggered = Signal().trigger()
   }
 }

@@ -1,20 +1,20 @@
 package uk.org.lidalia.kotlinlangext.threads
 
-import uk.org.lidalia.kotlinlangext.concurrent.Gate
+import uk.org.lidalia.kotlinlangext.concurrent.Signal
 
 fun blockUntilShutdown(
-  gate: Gate = Gate.closed()
+  shutdownSignal: Signal = Signal.notTriggered()
 ) {
   val runningThread = Thread.currentThread()
 
   Runtime.getRuntime().addShutdownHook(
     object : Thread() {
       override fun run() {
-        gate.open()
+        shutdownSignal.trigger()
         runningThread.join()
       }
     }
   )
 
-  gate.waitUntilOpened()
+  shutdownSignal.await()
 }

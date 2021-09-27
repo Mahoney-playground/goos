@@ -10,7 +10,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.verifyOrder
-import uk.org.lidalia.kotlinlangext.concurrent.Gate
+import uk.org.lidalia.kotlinlangext.concurrent.Signal
 
 class SniperLauncherTest : StringSpec({
 
@@ -20,7 +20,7 @@ class SniperLauncherTest : StringSpec({
     every { auctionFor(itemId.value.toAuctionId()) } returns auction
   }
   val sniperPortfolio = SniperPortfolio().apply { mockkObject(this) }
-  val sniperLauncher = SniperLauncher(auctionHouse, sniperPortfolio, Gate.closed())
+  val sniperLauncher = SniperLauncher(auctionHouse, sniperPortfolio, Signal.notTriggered())
 
   "adds new sniper to collector and then joins auction" {
 
