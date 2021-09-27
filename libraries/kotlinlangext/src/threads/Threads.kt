@@ -7,14 +7,12 @@ fun blockUntilShutdown(
 ) {
   val runningThread = Thread.currentThread()
 
-  Runtime.getRuntime().addShutdownHook(
-    object : Thread() {
-      override fun run() {
-        shutdownSignal.trigger()
-        runningThread.join()
-      }
-    }
-  )
+  Runtime.getRuntime().addShutdownHook {
+    shutdownSignal.trigger()
+    runningThread.join()
+  }
 
   shutdownSignal.await()
 }
+
+fun Runtime.addShutdownHook(work: () -> Unit) = addShutdownHook(Thread(work))
