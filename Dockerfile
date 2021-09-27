@@ -67,10 +67,8 @@ COPY --from=builder $work_dir/build/reports ./build-reports
 # The builder step is guaranteed not to fail, so that the worker output can be tagged and its
 # contents (build reports) extracted.
 # You run this as:
-# `docker build . --target builder -t goos-builder:$GITHUB_SHA && docker build . --target checker`
-# and you can then use
-# `docker build . --target build-reports --output build-report`
-# to retrieve them whether or not the previous line exited successfully.
+# `docker build . --target build-reports --output build-reports && docker build .`
+# to retrieve the build reports whether or not the previous line exited successfully.
 # Workaround for https://github.com/moby/buildkit/issues/1421
 FROM builder as checker
 RUN build_result=$(cat build_result); \
