@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
   api(projects.uiApi)
+  implementation(projects.uiCommon)
 
   testFixturesApi(libs.selenium.api)
   testFixturesApi(libs.selenium.remoteDriver)

@@ -1,11 +1,11 @@
 package goos.ui.swing
 
-import goos.ui.api.Item
 import goos.ui.api.MultiUserRequestListener
 import goos.ui.api.PortfolioListener
 import goos.ui.api.UI
 import goos.ui.api.UserRequestListener
 import goos.ui.api.toItemId
+import goos.ui.common.ItemData
 import java.awt.BorderLayout
 import java.awt.BorderLayout.CENTER
 import java.awt.BorderLayout.NORTH
@@ -88,9 +88,9 @@ class MainWindow : JFrame("Auction Sniper"), UI {
         name = JOIN_BUTTON_NAME
         addActionListener {
           userRequests.joinAuction(
-            Item(
+            ItemData(
               itemIdField.text.toItemId(),
-              (stopPriceField.value as Long).toInt()
+              (stopPriceField.value as Long).toInt(),
             )
           )
         }

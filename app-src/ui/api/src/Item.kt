@@ -7,9 +7,7 @@ value class ItemId(val value: String) {
 
 fun CharSequence.toItemId() = ItemId(this.toString())
 
-data class Item(
-  val identifier: ItemId,
-  private val stopPrice: Int
-) {
-  fun allowsBid(bid: Int): Boolean = bid <= stopPrice
+interface Item {
+  val identifier: ItemId
+  val stopPrice: Int
 }

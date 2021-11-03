@@ -1,8 +1,8 @@
 package goos.ui.swing
 
-import goos.ui.api.Item
 import goos.ui.api.UserRequestListener
 import goos.ui.api.toItemId
+import goos.ui.common.ItemData
 import io.kotest.assertions.timing.eventually
 import io.kotest.core.spec.style.StringSpec
 import io.mockk.confirmVerified
@@ -50,7 +50,7 @@ class MainWindowTest : StringSpec({
     eventually(Duration.seconds(5)) {
       verify(exactly = 1) {
         userRequestListener.joinAuction(
-          Item(
+          ItemData(
             "an item-id".toItemId(),
             stopPrice = 11_000
           )

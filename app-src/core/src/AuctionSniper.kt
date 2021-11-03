@@ -4,13 +4,6 @@ import goos.auction.api.Auction
 import goos.auction.api.AuctionEventListener
 import goos.auction.api.AuctionEventListener.PriceSource
 import goos.auction.api.AuctionEventListener.PriceSource.FromSniper
-import goos.core.SniperState.BIDDING
-import goos.core.SniperState.FAILED
-import goos.core.SniperState.JOINING
-import goos.core.SniperState.LOSING
-import goos.core.SniperState.LOST
-import goos.core.SniperState.WINNING
-import goos.core.SniperState.WON
 import goos.ui.api.Item
 import goos.ui.api.MultiSniperListener
 import goos.ui.api.SniperListener
@@ -26,7 +19,7 @@ internal class AuctionSniper(
   private var snapshot = SniperSnapshot.joining(item)
     set(value) {
       field = value
-      sniperListeners.sniperStateChanged(value.toUiSnapshot())
+      sniperListeners.sniperStateChanged(value)
     }
 
   override fun auctionClosed() {
@@ -56,24 +49,9 @@ internal class AuctionSniper(
   }
 
   override fun addSniperListener(sniperListener: SniperListener) {
-    sniperListener.sniperStateChanged(snapshot.toUiSnapshot())
+    sniperListener.sniperStateChanged(snapshot)
     sniperListeners.addListener(sniperListener)
   }
 }
 
-private fun SniperSnapshot.toUiSnapshot() = goos.ui.api.SniperSnapshot(
-  item,
-  lastPrice,
-  lastBid,
-  state.toUiState()
-)
-
-fun SniperState.toUiState() = when (this) {
-  LOST -> goos.ui.api.SniperState.LOST
-  WON -> goos.ui.api.SniperState.WON
-  JOINING -> goos.ui.api.SniperState.JOINING
-  BIDDING -> goos.ui.api.SniperState.BIDDING
-  WINNING -> goos.ui.api.SniperState.WINNING
-  LOSING -> goos.ui.api.SniperState.LOSING
-  FAILED -> goos.ui.api.SniperState.FAILED
-}
+private fun Item.allowsBid(bid: Int) = bid <= stopPrice

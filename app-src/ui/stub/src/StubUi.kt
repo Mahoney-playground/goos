@@ -1,6 +1,5 @@
 package goos.ui.stub
 
-import goos.ui.api.Item
 import goos.ui.api.ItemId
 import goos.ui.api.MultiUserRequestListener
 import goos.ui.api.PortfolioListener
@@ -11,6 +10,7 @@ import goos.ui.api.UI
 import goos.ui.api.UserRequestListener
 import goos.ui.api.stateText
 import goos.ui.api.toItemId
+import goos.ui.common.ItemData
 import java.util.concurrent.atomic.AtomicBoolean
 
 class StubUi : UI {
@@ -60,7 +60,7 @@ class StubUi : UI {
   }
 
   fun clickBidButton() {
-    userRequestListeners.joinAuction(Item(itemField.toItemId(), stopPriceField.toInt()))
+    userRequestListeners.joinAuction(ItemData(itemField.toItemId(), stopPriceField.toInt()))
   }
 }
 

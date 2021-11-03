@@ -6,6 +6,7 @@ plugins {
 dependencies {
 
   api(projects.uiApi)
+  implementation(projects.uiCommon)
 
   testImplementation(libs.kotest.assertionsCore)
   testImplementation(libs.kotest.assertionsShared)

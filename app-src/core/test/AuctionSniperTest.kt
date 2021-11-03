@@ -3,16 +3,14 @@ package goos.core
 import goos.auction.api.Auction
 import goos.auction.api.AuctionEventListener.PriceSource.FromOtherBidder
 import goos.auction.api.AuctionEventListener.PriceSource.FromSniper
-import goos.ui.api.Item
+import goos.core.SniperState.BIDDING
+import goos.core.SniperState.FAILED
+import goos.core.SniperState.LOSING
+import goos.core.SniperState.LOST
+import goos.core.SniperState.WINNING
+import goos.core.SniperState.WON
 import goos.ui.api.ItemId
 import goos.ui.api.SniperListener
-import goos.ui.api.SniperSnapshot
-import goos.ui.api.SniperState.BIDDING
-import goos.ui.api.SniperState.FAILED
-import goos.ui.api.SniperState.LOSING
-import goos.ui.api.SniperState.LOST
-import goos.ui.api.SniperState.WINNING
-import goos.ui.api.SniperState.WON
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.StringSpec
 import io.mockk.confirmVerified
@@ -23,7 +21,7 @@ class AuctionSniperTest : StringSpec({
 
   val auction = mockk<Auction>(relaxed = true)
   val sniperListener = mockk<SniperListener>(relaxed = true)
-  val item = Item(ITEM_ID, 10_000)
+  val item = ItemData(ITEM_ID, 10_000)
   val sniper = AuctionSniper(item, auction).apply {
     addSniperListener(sniperListener)
   }
@@ -141,7 +139,7 @@ class AuctionSniperTest : StringSpec({
     val price = 1001
     val increment = 25
 
-    val stopPriceItem = Item(ITEM_ID, (price + increment) - 1)
+    val stopPriceItem = ItemData(ITEM_ID, (price + increment) - 1)
     val stopPriceSniper = AuctionSniper(
       stopPriceItem,
       auction = auction
@@ -158,7 +156,7 @@ class AuctionSniperTest : StringSpec({
           stopPriceItem,
           lastPrice = price,
           lastBid = 0,
-          state = LOSING
+          coreState = LOSING
         )
       )
     }
@@ -175,7 +173,7 @@ class AuctionSniperTest : StringSpec({
           item,
           lastPrice = 0,
           lastBid = 0,
-          state = FAILED
+          coreState = FAILED
         )
       )
     }

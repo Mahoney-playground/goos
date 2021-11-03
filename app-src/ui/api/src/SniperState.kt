@@ -10,7 +10,7 @@ enum class SniperState {
   FAILED;
 }
 
-fun SniperSnapshot.stateText(): String = when (state) {
+fun SniperState.text(): String = when (this) {
   SniperState.JOINING -> "Joining"
   SniperState.BIDDING -> "Bidding"
   SniperState.WINNING -> "Winning"
@@ -19,3 +19,5 @@ fun SniperSnapshot.stateText(): String = when (state) {
   SniperState.WON -> "Won"
   SniperState.FAILED -> "Failed"
 }
+
+fun SniperSnapshot.stateText(): String = state.text()
