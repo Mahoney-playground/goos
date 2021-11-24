@@ -26,8 +26,14 @@ class CommandTests : StringSpec({
     val e = shouldThrow<ProcessFailedException> {
       "printf 'pre fail' && false && printf 'post fail'"()
     }
-    e.message shouldMatch
-      """Failure\(command='printf 'pre fail' && false && printf 'post fail'', status=1, output='pre fail'\)""".toRegex()
+    e.message shouldBe e.failure.toString()
+    e.failure shouldBe Failed(
+      command = Shell("printf 'pre fail' && false && printf 'post fail'"),
+      status = ExitStatus(1),
+      stdout = "pre fail",
+      stderr = "",
+      output = "pre fail",
+    )
   }
 
   "throws exception on pipe fail" {
