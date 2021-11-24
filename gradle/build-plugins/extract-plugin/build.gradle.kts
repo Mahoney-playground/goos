@@ -34,5 +34,5 @@ gradlePlugin {
 }
 
 idea {
-  setPackagePrefix("uk.org.lidalia.gradle.plugins.reportaggregator")
+  setPackagePrefix("uk.org.lidalia.gradle.plugins.extractplugin")
 }

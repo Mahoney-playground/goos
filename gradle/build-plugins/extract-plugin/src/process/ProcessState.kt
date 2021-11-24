@@ -1,31 +1,31 @@
-package uk.org.lidalia.gradle.plugins.reportaggregator
+package uk.org.lidalia.gradle.plugins.extractplugin.process
 
-import uk.org.lidalia.gradle.plugins.reportaggregator.ProcessStatus.Companion.SUCCESS
+import uk.org.lidalia.gradle.plugins.extractplugin.process.ExitStatus.Companion.SUCCESS
 
-class ProcessStatus private constructor(val status: Int) {
+class ExitStatus private constructor(val status: Int) {
 
   val isSuccess = status == 0
 
   companion object {
-    val SUCCESS = ProcessStatus(0)
-    operator fun invoke(status: Int): ProcessStatus {
+    val SUCCESS = ExitStatus(0)
+    operator fun invoke(status: Int): ExitStatus {
       require(status >= 0)
       return if (status == 0) SUCCESS
-      else ProcessStatus(status)
+      else ExitStatus(status)
     }
   }
 
   override fun equals(other: Any?): Boolean =
-    this === other || (other is ProcessStatus && other.status == status)
+    this === other || (other is ExitStatus && other.status == status)
 
   override fun hashCode(): Int = status
   override fun toString(): String = status.toString()
 }
 
-sealed class ProcessResult {
+sealed class ProcessState {
 
   abstract val command: Command
-  abstract val status: ProcessStatus?
+  abstract val status: ExitStatus?
   abstract val stdout: String
   abstract val stderr: String
   abstract val output: String
@@ -33,7 +33,7 @@ sealed class ProcessResult {
 
   final override fun equals(other: Any?): Boolean {
     if (this === other) return true
-    if (other !is ProcessResult) return false
+    if (other !is ProcessState) return false
 
     if (command != other.command) return false
     if (status != other.status) return false
@@ -52,45 +52,45 @@ sealed class ProcessResult {
   }
 }
 
-sealed class Complete : ProcessResult() {
-  abstract override val status: ProcessStatus
+sealed class Completed : ProcessState() {
+  abstract override val status: ExitStatus
 
   companion object {
     operator fun invoke(
       command: Command,
-      status: ProcessStatus,
+      status: ExitStatus,
       stdout: String,
       stderr: String,
       combinedOutput: String
-    ): Complete = if (status.isSuccess) {
-      Success(command, stdout, stderr, combinedOutput)
+    ): Completed = if (status.isSuccess) {
+      Succeded(command, stdout, stderr, combinedOutput)
     } else {
-      Failure(command, status, stdout, stderr, combinedOutput)
+      Failed(command, status, stdout, stderr, combinedOutput)
     }
   }
 }
 
-class Success(
+class Succeded(
   override val command: Command,
   override val stdout: String,
   override val stderr: String,
   override val output: String
-) : Complete() {
+) : Completed() {
 
-  override val status: ProcessStatus = SUCCESS
+  override val status: ExitStatus = SUCCESS
   override val isSuccess: Boolean = true
 
   override fun toString(): String =
     "Success(command='$command', output='$output')"
 }
 
-class Failure(
+class Failed(
   override val command: Command,
-  override val status: ProcessStatus,
+  override val status: ExitStatus,
   override val stdout: String,
   override val stderr: String,
   override val output: String
-) : Complete() {
+) : Completed() {
   init {
     require(status != SUCCESS) { "status [$status] must not be $SUCCESS" }
   }
@@ -106,9 +106,9 @@ class Incomplete(
   override val stdout: String,
   override val stderr: String,
   override val output: String
-) : ProcessResult() {
+) : ProcessState() {
 
-  override val status: ProcessStatus? = null
+  override val status: ExitStatus? = null
 
   override val isSuccess: Boolean = false
 

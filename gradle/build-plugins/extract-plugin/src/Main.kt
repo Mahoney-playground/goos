@@ -1,5 +1,6 @@
 package uk.org.lidalia.gradle.plugins.reportaggregator
 
+import uk.org.lidalia.gradle.plugins.extractplugin.process.invoke
 import java.io.File
 import java.net.URI
 import java.net.URL
@@ -34,5 +35,5 @@ fun main() {
 private fun URL.toFile() = this.toURI().toFile()
 private fun URI.toFile() = File(this)
 
-private fun resource(resouceName: String) =
-  Thread.currentThread().contextClassLoader.getResource(resouceName)
+private fun resource(resourceName: String) =
+  Thread.currentThread().contextClassLoader.getResource(resourceName)
