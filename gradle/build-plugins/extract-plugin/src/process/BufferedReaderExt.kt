@@ -8,6 +8,13 @@ import java.util.NoSuchElementException
 const val newLine: Int = '\n'.toInt()
 const val endOfStream: Int = -1
 
+inline fun Reader.forEachChar(f: (Char) -> Unit) {
+  var c: Int
+  while (read().also { c = it } != endOfStream) {
+    f(c.toChar())
+  }
+}
+
 fun BufferedReader.readCompleteLine(): String? {
   var c: Int = read()
   return if (c == endOfStream) {

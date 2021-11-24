@@ -91,13 +91,7 @@ class Process internal constructor(
   companion object {
     private fun InputStream.appendTo(appendable: Appendable) =
       Thread {
-        var first = true
-        reader().forEachCompleteLine {
-          if (first) {
-            first = false
-          } else {
-            appendable.appendLine()
-          }
+        reader().buffered().forEachChar {
           appendable.append(it)
         }
       }.apply {

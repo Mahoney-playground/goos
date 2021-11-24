@@ -10,7 +10,11 @@ import java.io.StringWriter
 @Suppress("EXPERIMENTAL_API_USAGE_FUTURE_ERROR")
 class CommandTests : StringSpec({
 
-  "returns result" {
+  "returns result with no new line" {
+    "printf 'hello world'"() shouldBe "hello world"
+  }
+
+  "returns result with new line" {
     "echo 'hello world'"() shouldBe "hello world\n"
   }
 
