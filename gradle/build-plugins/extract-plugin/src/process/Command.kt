@@ -30,7 +30,7 @@ sealed class Command {
   override fun toString(): String = command
 }
 
-class Shell(
+data class Shell(
   override val command: String,
 ) : Command() {
   override fun run(
@@ -49,7 +49,7 @@ class Shell(
   override fun pipe(next: Command) = Pipe(listOf(this, next))
 }
 
-class Exec(
+data class Exec(
   val executable: String,
   val args: List<String>,
 ) : Command() {
@@ -73,7 +73,7 @@ class Exec(
   override fun pipe(next: Command) = Pipe(listOf(this, next))
 }
 
-class Pipe internal constructor(
+data class Pipe internal constructor(
   private val commands: List<Command>,
 ) : Command() {
   override fun run(
