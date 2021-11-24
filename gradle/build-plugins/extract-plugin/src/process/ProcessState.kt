@@ -63,14 +63,14 @@ sealed class Completed : ProcessState() {
       stderr: String,
       combinedOutput: String
     ): Completed = if (status.isSuccess) {
-      Succeded(command, stdout, stderr, combinedOutput)
+      Succeeded(command, stdout, stderr, combinedOutput)
     } else {
       Failed(command, status, stdout, stderr, combinedOutput)
     }
   }
 }
 
-class Succeded(
+class Succeeded(
   override val command: Command,
   override val stdout: String,
   override val stderr: String,

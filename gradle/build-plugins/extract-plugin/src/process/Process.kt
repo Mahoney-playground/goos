@@ -27,7 +27,7 @@ class Process internal constructor(
   private val t2 = process.errorStream?.appendTo(MultiAppendable(err, errStream, combined))
   val pid = process.pid()
 
-  fun await(timeout: Duration): Outcome<ProcessState, Succeded> {
+  fun await(timeout: Duration): Outcome<ProcessState, Succeeded> {
     val completed = process.waitFor(timeout.toMillis(), MILLISECONDS)
     if (!completed) {
       t1?.interrupt()
@@ -45,16 +45,16 @@ class Process internal constructor(
       )
     }
     return when (result) {
-      is Succeded -> result.success()
+      is Succeeded -> result.success()
       else -> result.failure()
     }
   }
 
-  fun await(): Outcome<Failed, Succeded> {
+  fun await(): Outcome<Failed, Succeeded> {
     process.waitFor()
     joinThreads()
     return when (val result = completedCommand()) {
-      is Succeded -> result.success()
+      is Succeeded -> result.success()
       is Failed -> result.failure()
     }
   }

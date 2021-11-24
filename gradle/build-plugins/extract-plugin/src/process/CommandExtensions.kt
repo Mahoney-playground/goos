@@ -11,7 +11,7 @@ fun Command.execute(
   env: Map<String, String> = emptyMap(),
   outStream: Appendable = System.out,
   errStream: Appendable = System.err,
-): Outcome<Failed, Succeded> =
+): Outcome<Failed, Succeeded> =
   run(dir, env, outStream, errStream)
     .await()
 
@@ -46,7 +46,7 @@ operator fun String.invoke(
 fun String.execute(
   dir: Path = Paths.get("."),
   env: Map<String, String> = emptyMap(),
-): Outcome<Failed, Succeded> = Shell(this).execute(dir, env)
+): Outcome<Failed, Succeeded> = Shell(this).execute(dir, env)
 
 infix fun String.`|`(command: Command): Pipe = Shell(this).pipe(command)
 infix fun String.`|`(command: String): Pipe = Shell(this).pipe(Shell(command))
