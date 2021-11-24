@@ -56,7 +56,8 @@ class Exec(
 
   constructor(executable: String, vararg args: String) : this(executable, args.toList())
 
-  override val command: String = (listOf(executable) + args).joinToString(" ") // TODO this isn't correct, needs to be escaped appropriately
+  // TODO this isn't correct, needs to be escaped appropriately
+  override val command: String = (listOf(executable) + args).joinToString(" ")
   override fun run(
     dir: Path,
     env: Map<String, String>,
