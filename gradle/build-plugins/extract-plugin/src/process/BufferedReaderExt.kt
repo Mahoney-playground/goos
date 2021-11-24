@@ -28,12 +28,14 @@ fun BufferedReader.readCompleteLine(): String? {
   }
 }
 
-fun Reader.forEachCompleteLine(action: (String) -> Unit): Unit = useCompleteLines { it.forEach(action) }
+fun Reader.forEachCompleteLine(action: (String) -> Unit): Unit =
+  useCompleteLines { it.forEach(action) }
 
 inline fun <T> Reader.useCompleteLines(block: (Sequence<String>) -> T): T =
   buffered().use { block(it.completeLineSequence()) }
 
-fun BufferedReader.completeLineSequence(): Sequence<String> = CompleteLinesSequence(this).constrainOnce()
+fun BufferedReader.completeLineSequence(): Sequence<String> =
+  CompleteLinesSequence(this).constrainOnce()
 
 private class CompleteLinesSequence(private val reader: BufferedReader) : Sequence<String> {
   override fun iterator(): Iterator<String> {
