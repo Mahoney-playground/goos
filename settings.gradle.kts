@@ -32,7 +32,7 @@ include(":end-to-end-tests")
 enableFeaturePreview("VERSION_CATALOGS")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-val jxmppVersion = "1.0.2"
+val jxmppVersion = "1.0.3"
 
 dependencyResolutionManagement {
   @Suppress("UnstableApiUsage")

@@ -1,5 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import com.github.gundy.semver4j.model.Version
 import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorExtension.Generator
 import org.gradle.api.distribution.plugins.DistributionPlugin.TASK_INSTALL_NAME
 import org.gradle.internal.deprecation.DeprecatableConfiguration
@@ -9,6 +11,7 @@ import uk.org.lidalia.gradle.plugins.copywithoutversion.CopyWithoutVersionsTask
 import uk.org.lidalia.gradle.plugins.downloaddeps.DownloadDependenciesPlugin
 import uk.org.lidalia.gradle.plugins.idea.IdeaPlugin
 import uk.org.lidalia.gradle.plugins.kotlinflat.KotlinFlatPlugin
+import java.lang.IllegalArgumentException
 
 plugins {
   base
@@ -38,6 +41,12 @@ allprojects {
   }
   apply<DownloadDependenciesPlugin>()
   apply<KotlinterPlugin>()
+
+  tasks.withType<DependencyUpdatesTask> {
+    rejectVersionIf {
+      candidate.version.isPreRelease()
+    }
+  }
 }
 
 subprojects {
@@ -196,4 +205,10 @@ dependencyAnalysis {
       }
     }
   }
+}
+
+fun String.isPreRelease(): Boolean = try {
+  Version.fromString(this).preReleaseIdentifiers.isNotEmpty()
+} catch (e: IllegalArgumentException) {
+  false
 }
