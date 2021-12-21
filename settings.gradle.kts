@@ -67,7 +67,7 @@ dependencyResolutionManagement {
       )
       versionCatalog(
         "arrow",
-        "io.arrow-kt", { "arrow-$it" }, "0.12.0",
+        "io.arrow-kt", { "arrow-$it" }, "0.12.1",
         "core-data",
       )
       versionCatalog(
