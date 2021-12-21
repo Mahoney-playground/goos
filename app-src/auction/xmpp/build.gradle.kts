@@ -14,7 +14,7 @@ dependencies {
   implementation(libs.smack.im)
 
   runtimeOnly(libs.smack.extensions)
-  runtimeOnly(libs.smack.java7)
+  runtimeOnly(libs.smack.java8)
 
   testFixturesApi(testFixtures(projects.auctionApi))
   testFixturesApi(libs.smack.core)
@@ -30,7 +30,7 @@ dependencies {
     testFixturesImplementation(libs.mockk.core)
   }
 
-  testFixturesRuntimeOnly(libs.smack.java7)
+  testFixturesRuntimeOnly(libs.smack.java8)
 
   testImplementation(libs.kotestextensions.testcontainers)
   testImplementation(libs.testcontainers)

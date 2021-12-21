@@ -32,7 +32,7 @@ include(":end-to-end-tests")
 enableFeaturePreview("VERSION_CATALOGS")
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-val jxmppVersion = "0.6.4"
+val jxmppVersion = "1.0.2"
 
 dependencyResolutionManagement {
   @Suppress("UnstableApiUsage")
@@ -72,12 +72,12 @@ dependencyResolutionManagement {
       )
       versionCatalog(
         "smack",
-        "org.igniterealtime.smack", { "smack-$it" }, "4.3.4",
+        "org.igniterealtime.smack", { "smack-$it" }, "4.4.4",
         "core",
         "tcp",
         "im",
         "extensions",
-        "java7",
+        "java8",
       )
       versionCatalog(
         "jxmpp",
