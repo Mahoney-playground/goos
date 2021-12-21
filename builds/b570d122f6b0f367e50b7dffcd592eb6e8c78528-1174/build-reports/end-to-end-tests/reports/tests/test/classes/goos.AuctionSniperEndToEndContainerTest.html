@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.022s</div>
+<div class="counter">0.019s</div>
 <p>duration</p>
 </div>
 </td>
@@ -291,7 +291,7 @@ Caused by: java.lang.IllegalStateException: Could not find a valid Docker enviro
 </thead>
 <tr>
 <td class="failures">Before Spec Error</td>
-<td class="failures">0.022s</td>
+<td class="failures">0.019s</td>
 <td class="failures">failed</td>
 </tr>
 <tr>
@@ -304,11 +304,11 @@ Caused by: java.lang.IllegalStateException: Could not find a valid Docker enviro
 <div id="tab2" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>17:26:42.873 [DefaultDispatcher-worker-1 @coroutine#2] WARN org.testcontainers.utility.TestcontainersConfiguration - Attempted to read Testcontainers configuration file at file:/home/worker/.testcontainers.properties but the file was not found. Exception message: FileNotFoundException: /home/worker/.testcontainers.properties (No such file or directory)
-17:26:43.043 [DefaultDispatcher-worker-1 @coroutine#2] INFO org.testcontainers.dockerclient.DockerMachineClientProviderStrategy - docker-machine executable was not found on PATH ([/opt/java/openjdk/bin, /usr/local/sbin, /usr/local/bin, /usr/sbin, /usr/bin, /sbin, /bin])
-17:26:43.044 [DefaultDispatcher-worker-1 @coroutine#2] ERROR org.testcontainers.dockerclient.DockerClientProviderStrategy - Could not find a valid Docker environment. Please check configuration. Attempted configurations were:
-17:26:43.044 [DefaultDispatcher-worker-1 @coroutine#2] ERROR org.testcontainers.dockerclient.DockerClientProviderStrategy -     UnixSocketClientProviderStrategy: failed with exception InvalidConfigurationException (Could not find unix domain socket). Root cause NoSuchFileException (/var/run/docker.sock)
-17:26:43.055 [DefaultDispatcher-worker-1 @coroutine#2] ERROR org.testcontainers.dockerclient.DockerClientProviderStrategy - As no valid configuration was found, execution cannot continue
+<pre>17:38:02.455 [DefaultDispatcher-worker-1 @coroutine#2] WARN org.testcontainers.utility.TestcontainersConfiguration - Attempted to read Testcontainers configuration file at file:/home/worker/.testcontainers.properties but the file was not found. Exception message: FileNotFoundException: /home/worker/.testcontainers.properties (No such file or directory)
+17:38:02.595 [DefaultDispatcher-worker-1 @coroutine#2] INFO org.testcontainers.dockerclient.DockerMachineClientProviderStrategy - docker-machine executable was not found on PATH ([/opt/java/openjdk/bin, /usr/local/sbin, /usr/local/bin, /usr/sbin, /usr/bin, /sbin, /bin])
+17:38:02.596 [DefaultDispatcher-worker-1 @coroutine#2] ERROR org.testcontainers.dockerclient.DockerClientProviderStrategy - Could not find a valid Docker environment. Please check configuration. Attempted configurations were:
+17:38:02.596 [DefaultDispatcher-worker-1 @coroutine#2] ERROR org.testcontainers.dockerclient.DockerClientProviderStrategy -     UnixSocketClientProviderStrategy: failed with exception InvalidConfigurationException (Could not find unix domain socket). Root cause NoSuchFileException (/var/run/docker.sock)
+17:38:02.597 [DefaultDispatcher-worker-1 @coroutine#2] ERROR org.testcontainers.dockerclient.DockerClientProviderStrategy - As no valid configuration was found, execution cannot continue
 Starting the app.
 </pre>
 </span>
@@ -316,7 +316,7 @@ Starting the app.
 <div id="tab3" class="tab">
 <h2>Standard error</h2>
 <span class="code">
-<pre>Dec 21, 2021 5:26:42 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+<pre>Dec 21, 2021 5:38:01 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
 INFO: JavaServer.serve(POST /session): {
   &quot;desiredCapabilities&quot;: {
     &quot;browserName&quot;: &quot;java&quot;,
@@ -330,17 +330,17 @@ INFO: JavaServer.serve(POST /session): {
     ]
   }
 }
-Dec 21, 2021 5:26:42 PM net.sourceforge.marathon.javaagent.server.JavaServer createSession
+Dec 21, 2021 5:38:01 PM net.sourceforge.marathon.javaagent.server.JavaServer createSession
 INFO: Creating device with type: EVENT_QUEUE
-Dec 21, 2021 5:26:42 PM net.sourceforge.marathon.javaagent.Device getDevice
+Dec 21, 2021 5:38:01 PM net.sourceforge.marathon.javaagent.Device getDevice
 INFO: Creating a EVENT_QUEUE device
-Dec 21, 2021 5:26:42 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+Dec 21, 2021 5:38:02 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
 INFO: POST(/session, {&quot;desiredCapabilities&quot;:{&quot;browserName&quot;:&quot;java&quot;,&quot;platform&quot;:&quot;ANY&quot;},&quot;capabilities&quot;:{&quot;firstMatch&quot;:[{&quot;browserName&quot;:&quot;java&quot;}]}}) = {data=, status=REDIRECT}
-Dec 21, 2021 5:26:42 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
-INFO: JavaServer.serve(GET /session/f8b5f16a-2de8-4457-80dd-c76ac83f0873): {}
-Dec 21, 2021 5:26:42 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
-INFO: GET(/session/f8b5f16a-2de8-4457-80dd-c76ac83f0873) = {data={&quot;name&quot;:&quot;getCapabilities&quot;,&quot;sessionId&quot;:&quot;f8b5f16a-2de8-4457-80dd-c76ac83f0873&quot;,&quot;value&quot;:{&quot;applicationCacheEnabled&quot;:false,&quot;rotatable&quot;:false,&quot;loggingPrefs&quot;:{&quot;driver&quot;:&quot;ALL&quot;},&quot;handlesAlerts&quot;:false,&quot;databaseEnabled&quot;:false,&quot;version&quot;:&quot;1.0&quot;,&quot;platform&quot;:&quot;ANY&quot;,&quot;browserConnectionEnabled&quot;:false,&quot;nativeEvents&quot;:false,&quot;acceptSslCerts&quot;:false,&quot;locationContextEnabled&quot;:false,&quot;webStorageEnabled&quot;:false,&quot;browserName&quot;:&quot;java&quot;,&quot;takesScreenshot&quot;:true,&quot;javascriptEnabled&quot;:true,&quot;cssSelectorsEnabled&quot;:false},&quot;status&quot;:0}, status=OK}
-Dec 21, 2021 5:26:42 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+Dec 21, 2021 5:38:02 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(GET /session/00a8b670-14d2-436f-9e5d-aafc9cd25cbf): {}
+Dec 21, 2021 5:38:02 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: GET(/session/00a8b670-14d2-436f-9e5d-aafc9cd25cbf) = {data={&quot;name&quot;:&quot;getCapabilities&quot;,&quot;sessionId&quot;:&quot;00a8b670-14d2-436f-9e5d-aafc9cd25cbf&quot;,&quot;value&quot;:{&quot;applicationCacheEnabled&quot;:false,&quot;rotatable&quot;:false,&quot;loggingPrefs&quot;:{&quot;driver&quot;:&quot;ALL&quot;},&quot;handlesAlerts&quot;:false,&quot;databaseEnabled&quot;:false,&quot;version&quot;:&quot;1.0&quot;,&quot;platform&quot;:&quot;ANY&quot;,&quot;browserConnectionEnabled&quot;:false,&quot;nativeEvents&quot;:false,&quot;acceptSslCerts&quot;:false,&quot;locationContextEnabled&quot;:false,&quot;webStorageEnabled&quot;:false,&quot;browserName&quot;:&quot;java&quot;,&quot;takesScreenshot&quot;:true,&quot;javascriptEnabled&quot;:true,&quot;cssSelectorsEnabled&quot;:false},&quot;status&quot;:0}, status=OK}
+Dec 21, 2021 5:38:02 PM org.openqa.selenium.remote.ProtocolHandshake createSession
 INFO: Detected dialect: OSS
 </pre>
 </span>
@@ -353,7 +353,7 @@ INFO: Detected dialect: OSS
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 7.3.2</a> at Dec 21, 2021, 5:26:44 PM</p>
+<a href="http://www.gradle.org">Gradle 7.3.2</a> at Dec 21, 2021, 5:38:03 PM</p>
 </div>
 </div>
 </body>

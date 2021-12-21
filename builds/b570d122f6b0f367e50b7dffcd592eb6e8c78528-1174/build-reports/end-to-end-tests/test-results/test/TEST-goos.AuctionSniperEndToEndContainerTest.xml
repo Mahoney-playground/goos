@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="goos.AuctionSniperEndToEndContainerTest" tests="2" skipped="0" failures="2" errors="0" timestamp="2021-12-21T17:26:43" hostname="buildkitsandbox" time="0.022">
+<testsuite name="goos.AuctionSniperEndToEndContainerTest" tests="2" skipped="0" failures="2" errors="0" timestamp="2021-12-21T17:38:02" hostname="buildkitsandbox" time="0.02">
   <properties/>
-  <testcase name="Before Spec Error" classname="goos.AuctionSniperEndToEndContainerTest" time="0.022">
+  <testcase name="Before Spec Error" classname="goos.AuctionSniperEndToEndContainerTest" time="0.019">
     <failure message="java.lang.IllegalStateException: Could not find a valid Docker environment. Please see logs and check configuration" type="java.lang.IllegalStateException">java.lang.IllegalStateException: Could not find a valid Docker environment. Please see logs and check configuration
 	at org.testcontainers.dockerclient.DockerClientProviderStrategy.lambda$getFirstValidStrategy$4(DockerClientProviderStrategy.java:156)
 	at java.base/java.util.Optional.orElseThrow(Optional.java:403)
@@ -196,14 +196,14 @@ Caused by: java.lang.IllegalStateException: Could not find a valid Docker enviro
 	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:665)
 </failure>
   </testcase>
-  <system-out><![CDATA[17:26:42.873 [DefaultDispatcher-worker-1 @coroutine#2] WARN org.testcontainers.utility.TestcontainersConfiguration - Attempted to read Testcontainers configuration file at file:/home/worker/.testcontainers.properties but the file was not found. Exception message: FileNotFoundException: /home/worker/.testcontainers.properties (No such file or directory)
-17:26:43.043 [DefaultDispatcher-worker-1 @coroutine#2] INFO org.testcontainers.dockerclient.DockerMachineClientProviderStrategy - docker-machine executable was not found on PATH ([/opt/java/openjdk/bin, /usr/local/sbin, /usr/local/bin, /usr/sbin, /usr/bin, /sbin, /bin])
-17:26:43.044 [DefaultDispatcher-worker-1 @coroutine#2] ERROR org.testcontainers.dockerclient.DockerClientProviderStrategy - Could not find a valid Docker environment. Please check configuration. Attempted configurations were:
-17:26:43.044 [DefaultDispatcher-worker-1 @coroutine#2] ERROR org.testcontainers.dockerclient.DockerClientProviderStrategy -     UnixSocketClientProviderStrategy: failed with exception InvalidConfigurationException (Could not find unix domain socket). Root cause NoSuchFileException (/var/run/docker.sock)
-17:26:43.055 [DefaultDispatcher-worker-1 @coroutine#2] ERROR org.testcontainers.dockerclient.DockerClientProviderStrategy - As no valid configuration was found, execution cannot continue
+  <system-out><![CDATA[17:38:02.455 [DefaultDispatcher-worker-1 @coroutine#2] WARN org.testcontainers.utility.TestcontainersConfiguration - Attempted to read Testcontainers configuration file at file:/home/worker/.testcontainers.properties but the file was not found. Exception message: FileNotFoundException: /home/worker/.testcontainers.properties (No such file or directory)
+17:38:02.595 [DefaultDispatcher-worker-1 @coroutine#2] INFO org.testcontainers.dockerclient.DockerMachineClientProviderStrategy - docker-machine executable was not found on PATH ([/opt/java/openjdk/bin, /usr/local/sbin, /usr/local/bin, /usr/sbin, /usr/bin, /sbin, /bin])
+17:38:02.596 [DefaultDispatcher-worker-1 @coroutine#2] ERROR org.testcontainers.dockerclient.DockerClientProviderStrategy - Could not find a valid Docker environment. Please check configuration. Attempted configurations were:
+17:38:02.596 [DefaultDispatcher-worker-1 @coroutine#2] ERROR org.testcontainers.dockerclient.DockerClientProviderStrategy -     UnixSocketClientProviderStrategy: failed with exception InvalidConfigurationException (Could not find unix domain socket). Root cause NoSuchFileException (/var/run/docker.sock)
+17:38:02.597 [DefaultDispatcher-worker-1 @coroutine#2] ERROR org.testcontainers.dockerclient.DockerClientProviderStrategy - As no valid configuration was found, execution cannot continue
 Starting the app.
 ]]></system-out>
-  <system-err><![CDATA[Dec 21, 2021 5:26:42 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+  <system-err><![CDATA[Dec 21, 2021 5:38:01 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
 INFO: JavaServer.serve(POST /session): {
   "desiredCapabilities": {
     "browserName": "java",
@@ -217,17 +217,17 @@ INFO: JavaServer.serve(POST /session): {
     ]
   }
 }
-Dec 21, 2021 5:26:42 PM net.sourceforge.marathon.javaagent.server.JavaServer createSession
+Dec 21, 2021 5:38:01 PM net.sourceforge.marathon.javaagent.server.JavaServer createSession
 INFO: Creating device with type: EVENT_QUEUE
-Dec 21, 2021 5:26:42 PM net.sourceforge.marathon.javaagent.Device getDevice
+Dec 21, 2021 5:38:01 PM net.sourceforge.marathon.javaagent.Device getDevice
 INFO: Creating a EVENT_QUEUE device
-Dec 21, 2021 5:26:42 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+Dec 21, 2021 5:38:02 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
 INFO: POST(/session, {"desiredCapabilities":{"browserName":"java","platform":"ANY"},"capabilities":{"firstMatch":[{"browserName":"java"}]}}) = {data=, status=REDIRECT}
-Dec 21, 2021 5:26:42 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
-INFO: JavaServer.serve(GET /session/f8b5f16a-2de8-4457-80dd-c76ac83f0873): {}
-Dec 21, 2021 5:26:42 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
-INFO: GET(/session/f8b5f16a-2de8-4457-80dd-c76ac83f0873) = {data={"name":"getCapabilities","sessionId":"f8b5f16a-2de8-4457-80dd-c76ac83f0873","value":{"applicationCacheEnabled":false,"rotatable":false,"loggingPrefs":{"driver":"ALL"},"handlesAlerts":false,"databaseEnabled":false,"version":"1.0","platform":"ANY","browserConnectionEnabled":false,"nativeEvents":false,"acceptSslCerts":false,"locationContextEnabled":false,"webStorageEnabled":false,"browserName":"java","takesScreenshot":true,"javascriptEnabled":true,"cssSelectorsEnabled":false},"status":0}, status=OK}
-Dec 21, 2021 5:26:42 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+Dec 21, 2021 5:38:02 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(GET /session/00a8b670-14d2-436f-9e5d-aafc9cd25cbf): {}
+Dec 21, 2021 5:38:02 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: GET(/session/00a8b670-14d2-436f-9e5d-aafc9cd25cbf) = {data={"name":"getCapabilities","sessionId":"00a8b670-14d2-436f-9e5d-aafc9cd25cbf","value":{"applicationCacheEnabled":false,"rotatable":false,"loggingPrefs":{"driver":"ALL"},"handlesAlerts":false,"databaseEnabled":false,"version":"1.0","platform":"ANY","browserConnectionEnabled":false,"nativeEvents":false,"acceptSslCerts":false,"locationContextEnabled":false,"webStorageEnabled":false,"browserName":"java","takesScreenshot":true,"javascriptEnabled":true,"cssSelectorsEnabled":false},"status":0}, status=OK}
+Dec 21, 2021 5:38:02 PM org.openqa.selenium.remote.ProtocolHandshake createSession
 INFO: Detected dialect: OSS
 ]]></system-err>
 </testsuite>
