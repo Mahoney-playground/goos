@@ -107,7 +107,7 @@ dependencyResolutionManagement {
       )
       versionCatalog(
         "selenium",
-        "org.seleniumhq.selenium", { "selenium-$it" }, "3.141.59",
+        "org.seleniumhq.selenium", { "selenium-$it" }, "4.1.1",
         "api",
         "remote-driver",
       )

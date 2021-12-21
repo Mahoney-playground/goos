@@ -10,6 +10,7 @@ dependencies {
 
   implementation(libs.kotest.frameworkApi)
   implementation(libs.kotest.frameworkApiJvm)
+  implementation(libs.slf4j.api)
   implementation(testFixtures(projects.uiSwing))
   implementation(testFixtures(projects.auctionXmpp))
 
@@ -30,7 +31,6 @@ dependencies {
   testImplementation(testFixtures(projects.auctionStub))
   testImplementation(projects.core)
   testImplementation(libs.testcontainers)
-  testImplementation(libs.slf4j.api)
 }
 
 application {
