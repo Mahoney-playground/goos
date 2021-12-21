@@ -1,7 +1,9 @@
 package goos.ui.swing
 
 import io.kotest.core.Tag
-import io.kotest.core.Tags
+import io.kotest.core.TagExpression
+import io.kotest.core.TagExpression.Companion.Empty
+import io.kotest.core.TagExpression.Companion.exclude
 import io.kotest.core.extensions.TagExtension
 import java.awt.GraphicsDevice
 import java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment
@@ -10,8 +12,8 @@ object UI : Tag()
 
 object UITagExtension : TagExtension {
 
-  override fun tags(): Tags =
-    if (shouldRunUITests()) Tags.Empty else Tags.exclude(UI)
+  override fun tags(): TagExpression =
+    if (shouldRunUITests()) Empty else exclude(UI)
 
   private fun shouldRunUITests() = displayIsVirtual() || !runningAsPartOfBuild()
 

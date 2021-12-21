@@ -40,7 +40,7 @@ dependencyResolutionManagement {
     create("libs") {
       versionCatalog(
         "kotest",
-        "io.kotest", { "kotest-$it" }, "4.6.4",
+        "io.kotest", { "kotest-$it" }, "5.0.3",
         "common-jvm",
         "framework-api",
         "framework-api-jvm",
