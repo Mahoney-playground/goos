@@ -13,8 +13,8 @@ import kotlin.time.toJavaDuration
 @ExperimentalTime
 suspend fun <A> retry(
   clock: Clock = Clock.systemUTC(),
-  timeBetweenRetries: Duration = milliseconds(10),
-  timeoutAfter: Duration = seconds(10),
+  timeBetweenRetries: Duration = 10.milliseconds,
+  timeoutAfter: Duration = 10.seconds,
   work: () -> A
 ) = retry(clock, timeBetweenRetries, clock.instant().plus(timeoutAfter.toJavaDuration()), work)
 

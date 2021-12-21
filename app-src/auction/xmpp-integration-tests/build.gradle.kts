@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  api(libs.kotest.frameworkApiJvm)
+  implementation(libs.kotest.frameworkApiJvm)
 
   implementation(libs.coroutines.core)
 

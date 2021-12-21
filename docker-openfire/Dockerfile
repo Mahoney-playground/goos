@@ -1,4 +1,4 @@
-FROM adoptopenjdk:15.0.2_7-jdk-hotspot
+FROM eclipse-temurin:17.0.1_12-jdk-focal
 
 ENV OPENFIRE_VERSION=4.5.1 \
     OPENFIRE_USER=openfire

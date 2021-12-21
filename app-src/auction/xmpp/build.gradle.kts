@@ -6,10 +6,10 @@ plugins {
 dependencies {
 
   api(projects.auctionApi)
-  api(projects.auctionSol)
-  api(libs.smack.core)
-  api(libs.jxmpp.jid)
 
+  implementation(projects.auctionSol)
+  implementation(libs.smack.core)
+  implementation(libs.jxmpp.jid)
   implementation(libs.smack.tcp)
   implementation(libs.smack.im)
 
@@ -37,7 +37,7 @@ dependencies {
   testImplementation(libs.slf4j.api)
   testImplementation(libs.kotest.frameworkApiJvm)
   testImplementation(projects.testcontainers)
-  testImplementation("ch.qos.logback:logback-classic:1.2.3")
+  testImplementation("ch.qos.logback:logback-classic:1.2.8")
 }
 
 idea {

@@ -78,7 +78,7 @@ class CountDownLatchTest : StringSpec({
       events.add(3)
     }
     val job2 = launch {
-      delay(milliseconds(100))
+      delay(100.milliseconds)
       events.add(2)
       latch.countDown()
     }
@@ -95,7 +95,7 @@ class CountDownLatchTest : StringSpec({
         latch.await()
       }
     }
-    delay(milliseconds(50))
+    delay(50.milliseconds)
     latch.countDown()
     job.join()
   }
@@ -105,12 +105,12 @@ class CountDownLatchTest : StringSpec({
     val events = mutableListOf<Int>()
     val awaitedInTime = async {
       events.add(1)
-      val inTime = latch.await(milliseconds(200))
+      val inTime = latch.await(200.milliseconds)
       events.add(3)
       inTime
     }
     val job2 = launch {
-      delay(milliseconds(100))
+      delay(100.milliseconds)
       events.add(2)
       latch.countDown()
     }
@@ -125,12 +125,12 @@ class CountDownLatchTest : StringSpec({
     val events = mutableListOf<Int>()
     val awaitedInTime = async {
       events.add(1)
-      val inTime = latch.await(milliseconds(100))
+      val inTime = latch.await(100.milliseconds)
       events.add(2)
       inTime
     }
     val job2 = launch {
-      delay(milliseconds(200))
+      delay(200.milliseconds)
       events.add(3)
       latch.countDown()
     }

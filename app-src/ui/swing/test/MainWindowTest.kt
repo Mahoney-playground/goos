@@ -9,7 +9,7 @@ import io.mockk.confirmVerified
 import io.mockk.mockk
 import io.mockk.verify
 import net.sourceforge.marathon.javadriver.JavaDriver
-import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
@@ -47,7 +47,7 @@ class MainWindowTest : StringSpec({
 
     driver.startBiddingFor("an item-id".toItemId(), 11_000)
 
-    eventually(Duration.seconds(5)) {
+    eventually(5.seconds) {
       verify(exactly = 1) {
         userRequestListener.joinAuction(
           ItemData(
@@ -64,7 +64,7 @@ class MainWindowTest : StringSpec({
 
     driver.reset()
 
-    eventually(Duration.seconds(1)) {
+    eventually(1.seconds) {
       verify(exactly = 1) {
         userRequestListener.reset()
       }

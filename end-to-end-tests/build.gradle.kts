@@ -5,11 +5,11 @@ plugins {
 
 dependencies {
 
-  api(libs.kotest.frameworkApiJvm)
-  api(testFixtures(projects.uiApi))
-  api(testFixtures(projects.auctionApi))
+  implementation(testFixtures(projects.uiApi))
+  implementation(testFixtures(projects.auctionApi))
 
   implementation(libs.kotest.frameworkApi)
+  implementation(libs.kotest.frameworkApiJvm)
   implementation(testFixtures(projects.uiSwing))
   implementation(testFixtures(projects.auctionXmpp))
 
@@ -22,7 +22,7 @@ dependencies {
 
   testImplementation(libs.selenium.api)
   testImplementation(projects.testcontainers)
-  testImplementation("ch.qos.logback:logback-classic:1.2.3")
+  testImplementation("ch.qos.logback:logback-classic:1.2.8")
   testImplementation(libs.kotestextensions.testcontainers)
   testImplementation(libs.marathon.javaDriver)
   testImplementation(projects.app)
