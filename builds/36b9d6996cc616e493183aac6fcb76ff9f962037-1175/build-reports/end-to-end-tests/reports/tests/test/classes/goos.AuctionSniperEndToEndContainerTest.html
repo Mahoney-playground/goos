@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Class goos.AuctionSniperEndToEndContainerTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class goos.AuctionSniperEndToEndContainerTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/goos.html">goos</a> &gt; AuctionSniperEndToEndContainerTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">2</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">2</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.025s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox failures" id="successRate">
+<div class="percent">0%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Failed tests</a>
+</li>
+<li>
+<a href="#tab1">Tests</a>
+</li>
+<li>
+<a href="#tab2">Standard output</a>
+</li>
+<li>
+<a href="#tab3">Standard error</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Failed tests</h2>
+<div class="test">
+<a name="Before Spec Error"></a>
+<h3 class="failures">Before Spec Error</h3>
+<span class="code">
+<pre>java.lang.IllegalStateException: Could not find a valid Docker environment. Please see logs and check configuration
+	at org.testcontainers.dockerclient.DockerClientProviderStrategy.lambda$getFirstValidStrategy$4(DockerClientProviderStrategy.java:156)
+	at java.base/java.util.Optional.orElseThrow(Optional.java:403)
+	at org.testcontainers.dockerclient.DockerClientProviderStrategy.getFirstValidStrategy(DockerClientProviderStrategy.java:148)
+	at org.testcontainers.DockerClientFactory.getOrInitializeStrategy(DockerClientFactory.java:146)
+	at org.testcontainers.DockerClientFactory.client(DockerClientFactory.java:188)
+	at org.testcontainers.DockerClientFactory$1.getDockerClient(DockerClientFactory.java:101)
+	at com.github.dockerjava.api.DockerClientDelegate.authConfig(DockerClientDelegate.java:107)
+	at org.testcontainers.containers.GenericContainer.start(GenericContainer.java:316)
+	at io.kotest.extensions.testcontainers.StartablePerSpecListener$beforeSpec$2.invokeSuspend(StartablePerSpecListener.kt:31)
+	at ???(Coroutine boundary.?(?)
+	at io.kotest.engine.spec.SpecExtensions.beforeSpec-gIAlu-s(SpecExtensions.kt:49)
+	at io.kotest.engine.spec.runners.SingleInstanceSpecRunner$execute$3.invokeSuspend(SingleInstanceSpecRunner.kt:57)
+	at io.kotest.engine.spec.runners.SingleInstanceSpecRunner.execute-gIAlu-s(SingleInstanceSpecRunner.kt:56)
+	at io.kotest.engine.spec.JvmSpecExecutorDelegate.execute(createSpecExecutorDelegate.kt:71)
+	at io.kotest.engine.spec.SpecExecutor$specInterceptors$initial$1.invokeSuspend(SpecExecutor.kt:106)
+	at io.kotest.engine.spec.interceptor.ConfigurationInContextInterceptor$intercept$2.invokeSuspend(ConfigurationInContextInterceptor.kt:23)
+	at io.kotest.engine.spec.interceptor.ConfigurationInContextInterceptor.intercept-0E7RQCE(ConfigurationInContextInterceptor.kt:22)
+	at io.kotest.engine.spec.SpecExecutor$specInterceptors$3$1.invokeSuspend(SpecExecutor.kt:115)
+	at io.kotest.engine.spec.interceptor.SpecExtensionInterceptor$intercept$2.invokeSuspend(SpecExtensionInterceptor.kt:21)
+	at io.kotest.engine.spec.SpecExtensions$intercept$initial$1.invokeSuspend(SpecExtensions.kt:143)
+	at io.kotest.engine.spec.SpecExtensions.intercept(SpecExtensions.kt:154)
+	at io.kotest.engine.spec.interceptor.SpecExtensionInterceptor.intercept-0E7RQCE(SpecExtensionInterceptor.kt:21)
+	at io.kotest.engine.spec.SpecExecutor$specInterceptors$3$1.invokeSuspend(SpecExecutor.kt:115)
+	at io.kotest.engine.spec.interceptor.ProjectContextInterceptor$intercept$2.invokeSuspend(ProjectContextInterceptor.kt:21)
+	at io.kotest.engine.spec.interceptor.ProjectContextInterceptor.intercept-0E7RQCE(ProjectContextInterceptor.kt:20)
+	at io.kotest.engine.spec.SpecExecutor$specInterceptors$3$1.invokeSuspend(SpecExecutor.kt:115)
+	at io.kotest.engine.spec.SpecExecutor.specInterceptors-gIAlu-s(SpecExecutor.kt:116)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$innerExecute$1.invokeSuspend(SpecExecutor.kt:84)
+	at io.kotest.engine.spec.interceptor.FinalizeSpecInterceptor.intercept-0E7RQCE(FinalizeSpecInterceptor.kt:19)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.PrepareSpecInterceptor.intercept-0E7RQCE(PrepareSpecInterceptor.kt:20)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.ApplyExtensionsInterceptor.intercept-0E7RQCE(ApplyExtensionsInterceptor.kt:35)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.SpecFinishedInterceptor.intercept-0E7RQCE(SpecFinishedInterceptor.kt:18)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.SpecStartedInterceptor.intercept-0E7RQCE(SpecStartedInterceptor.kt:19)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.SpecRefExtensionInterceptor$intercept$inner$1.invokeSuspend(SpecRefExtensionInterceptor.kt:24)
+	at io.kotest.engine.spec.interceptor.SpecRefExtensionInterceptor.intercept-0E7RQCE(SpecRefExtensionInterceptor.kt:27)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.RequiresTagSpecInterceptor.intercept-0E7RQCE(RequiresTagSpecInterceptor.kt:35)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.TagsExcludedSpecInterceptor.intercept-0E7RQCE(TagsExcludedDiscoveryExtension.kt:32)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.SystemPropertySpecFilterInterceptor.intercept-0E7RQCE(SystemPropertySpecFilterInterceptor.kt:49)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.SpecFilterInterceptor.intercept-0E7RQCE(SpecFilterInterceptor.kt:37)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.IgnoredSpecInterceptor.intercept-0E7RQCE(IgnoredSpecInterceptor.kt:42)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.EnabledIfSpecInterceptor.intercept-0E7RQCE(EnabledIfSpecInterceptor.kt:40)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.ConcurrentTestSuiteScheduler$schedule$8$1$2.invokeSuspend(ConcurrentTestSuiteScheduler.kt:71)
+Caused by: java.lang.IllegalStateException: Could not find a valid Docker environment. Please see logs and check configuration
+	at org.testcontainers.dockerclient.DockerClientProviderStrategy.lambda$getFirstValidStrategy$4(DockerClientProviderStrategy.java:156)
+	at java.base/java.util.Optional.orElseThrow(Optional.java:403)
+	at org.testcontainers.dockerclient.DockerClientProviderStrategy.getFirstValidStrategy(DockerClientProviderStrategy.java:148)
+	at org.testcontainers.DockerClientFactory.getOrInitializeStrategy(DockerClientFactory.java:146)
+	at org.testcontainers.DockerClientFactory.client(DockerClientFactory.java:188)
+	at org.testcontainers.DockerClientFactory$1.getDockerClient(DockerClientFactory.java:101)
+	at com.github.dockerjava.api.DockerClientDelegate.authConfig(DockerClientDelegate.java:107)
+	at org.testcontainers.containers.GenericContainer.start(GenericContainer.java:316)
+	at io.kotest.extensions.testcontainers.StartablePerSpecListener$beforeSpec$2.invokeSuspend(StartablePerSpecListener.kt:31)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:106)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:571)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:750)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:678)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:665)
+</pre>
+</span>
+</div>
+<div class="test">
+<a name="executionError"></a>
+<h3 class="failures">executionError</h3>
+<span class="code">
+<pre>io.kotest.engine.extensions.ExtensionException$BeforeSpecException: java.lang.IllegalStateException: Could not find a valid Docker environment. Please see logs and check configuration
+	at app//io.kotest.engine.spec.SpecExtensions$beforeSpec$errors$1$2.invoke(SpecExtensions.kt:50)
+	at app//io.kotest.engine.spec.SpecExtensions$beforeSpec$errors$1$2.invoke(SpecExtensions.kt:50)
+	at app//io.kotest.common.ResultsKt.mapError(results.kt:8)
+	at app//io.kotest.engine.spec.SpecExtensions.beforeSpec-gIAlu-s(SpecExtensions.kt:50)
+	at app//io.kotest.engine.spec.SpecExtensions$beforeSpec$1.invokeSuspend(SpecExtensions.kt)
+	at app//kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at app//kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:104)
+	at app//kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:274)
+	at app//kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:85)
+	at app//kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:59)
+	at app//kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source)
+	at app//kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:38)
+	at app//kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source)
+	at app//io.kotest.common.RunBlockingKt.runBlocking(runBlocking.kt:3)
+	at app//io.kotest.engine.TestEngineLauncher.launch(TestEngineLauncher.kt:190)
+	at app//io.kotest.runner.junit.platform.KotestJunitPlatformTestEngine.execute(KotestJunitPlatformTestEngine.kt:80)
+	at app//io.kotest.runner.junit.platform.KotestJunitPlatformTestEngine.execute(KotestJunitPlatformTestEngine.kt:44)
+	at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+	at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at app//org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:96)
+	at app//org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:75)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:99)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:79)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:75)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:61)
+	at java.base@17.0.1/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base@17.0.1/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base@17.0.1/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base@17.0.1/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:94)
+	at jdk.proxy1/jdk.proxy1.$Proxy2.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:193)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:129)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:100)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:60)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:133)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:71)
+	at app//worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at app//worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+Caused by: java.lang.IllegalStateException: Could not find a valid Docker environment. Please see logs and check configuration
+	at org.testcontainers.dockerclient.DockerClientProviderStrategy.lambda$getFirstValidStrategy$4(DockerClientProviderStrategy.java:156)
+	at java.base/java.util.Optional.orElseThrow(Optional.java:403)
+	at org.testcontainers.dockerclient.DockerClientProviderStrategy.getFirstValidStrategy(DockerClientProviderStrategy.java:148)
+	at org.testcontainers.DockerClientFactory.getOrInitializeStrategy(DockerClientFactory.java:146)
+	at org.testcontainers.DockerClientFactory.client(DockerClientFactory.java:188)
+	at org.testcontainers.DockerClientFactory$1.getDockerClient(DockerClientFactory.java:101)
+	at com.github.dockerjava.api.DockerClientDelegate.authConfig(DockerClientDelegate.java:107)
+	at org.testcontainers.containers.GenericContainer.start(GenericContainer.java:316)
+	at io.kotest.extensions.testcontainers.StartablePerSpecListener$beforeSpec$2.invokeSuspend(StartablePerSpecListener.kt:31)
+	at ???(Coroutine boundary.?(?)
+	at io.kotest.engine.spec.SpecExtensions.beforeSpec-gIAlu-s(SpecExtensions.kt:49)
+	at io.kotest.engine.spec.runners.SingleInstanceSpecRunner$execute$3.invokeSuspend(SingleInstanceSpecRunner.kt:57)
+	at io.kotest.engine.spec.runners.SingleInstanceSpecRunner.execute-gIAlu-s(SingleInstanceSpecRunner.kt:56)
+	at io.kotest.engine.spec.JvmSpecExecutorDelegate.execute(createSpecExecutorDelegate.kt:71)
+	at io.kotest.engine.spec.SpecExecutor$specInterceptors$initial$1.invokeSuspend(SpecExecutor.kt:106)
+	at io.kotest.engine.spec.interceptor.ConfigurationInContextInterceptor$intercept$2.invokeSuspend(ConfigurationInContextInterceptor.kt:23)
+	at io.kotest.engine.spec.interceptor.ConfigurationInContextInterceptor.intercept-0E7RQCE(ConfigurationInContextInterceptor.kt:22)
+	at io.kotest.engine.spec.SpecExecutor$specInterceptors$3$1.invokeSuspend(SpecExecutor.kt:115)
+	at io.kotest.engine.spec.interceptor.SpecExtensionInterceptor$intercept$2.invokeSuspend(SpecExtensionInterceptor.kt:21)
+	at io.kotest.engine.spec.SpecExtensions$intercept$initial$1.invokeSuspend(SpecExtensions.kt:143)
+	at io.kotest.engine.spec.SpecExtensions.intercept(SpecExtensions.kt:154)
+	at io.kotest.engine.spec.interceptor.SpecExtensionInterceptor.intercept-0E7RQCE(SpecExtensionInterceptor.kt:21)
+	at io.kotest.engine.spec.SpecExecutor$specInterceptors$3$1.invokeSuspend(SpecExecutor.kt:115)
+	at io.kotest.engine.spec.interceptor.ProjectContextInterceptor$intercept$2.invokeSuspend(ProjectContextInterceptor.kt:21)
+	at io.kotest.engine.spec.interceptor.ProjectContextInterceptor.intercept-0E7RQCE(ProjectContextInterceptor.kt:20)
+	at io.kotest.engine.spec.SpecExecutor$specInterceptors$3$1.invokeSuspend(SpecExecutor.kt:115)
+	at io.kotest.engine.spec.SpecExecutor.specInterceptors-gIAlu-s(SpecExecutor.kt:116)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$innerExecute$1.invokeSuspend(SpecExecutor.kt:84)
+	at io.kotest.engine.spec.interceptor.FinalizeSpecInterceptor.intercept-0E7RQCE(FinalizeSpecInterceptor.kt:19)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.PrepareSpecInterceptor.intercept-0E7RQCE(PrepareSpecInterceptor.kt:20)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.ApplyExtensionsInterceptor.intercept-0E7RQCE(ApplyExtensionsInterceptor.kt:35)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.SpecFinishedInterceptor.intercept-0E7RQCE(SpecFinishedInterceptor.kt:18)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.SpecStartedInterceptor.intercept-0E7RQCE(SpecStartedInterceptor.kt:19)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.SpecRefExtensionInterceptor$intercept$inner$1.invokeSuspend(SpecRefExtensionInterceptor.kt:24)
+	at io.kotest.engine.spec.interceptor.SpecRefExtensionInterceptor.intercept-0E7RQCE(SpecRefExtensionInterceptor.kt:27)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.RequiresTagSpecInterceptor.intercept-0E7RQCE(RequiresTagSpecInterceptor.kt:35)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.TagsExcludedSpecInterceptor.intercept-0E7RQCE(TagsExcludedDiscoveryExtension.kt:32)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.SystemPropertySpecFilterInterceptor.intercept-0E7RQCE(SystemPropertySpecFilterInterceptor.kt:49)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.SpecFilterInterceptor.intercept-0E7RQCE(SpecFilterInterceptor.kt:37)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.IgnoredSpecInterceptor.intercept-0E7RQCE(IgnoredSpecInterceptor.kt:42)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.spec.interceptor.EnabledIfSpecInterceptor.intercept-0E7RQCE(EnabledIfSpecInterceptor.kt:40)
+	at io.kotest.engine.spec.SpecExecutor$referenceInterceptors$3$1.invokeSuspend(SpecExecutor.kt:89)
+	at io.kotest.engine.ConcurrentTestSuiteScheduler$schedule$8$1$2.invokeSuspend(ConcurrentTestSuiteScheduler.kt:71)
+Caused by: java.lang.IllegalStateException: Could not find a valid Docker environment. Please see logs and check configuration
+	at org.testcontainers.dockerclient.DockerClientProviderStrategy.lambda$getFirstValidStrategy$4(DockerClientProviderStrategy.java:156)
+	at java.base/java.util.Optional.orElseThrow(Optional.java:403)
+	at org.testcontainers.dockerclient.DockerClientProviderStrategy.getFirstValidStrategy(DockerClientProviderStrategy.java:148)
+	at org.testcontainers.DockerClientFactory.getOrInitializeStrategy(DockerClientFactory.java:146)
+	at org.testcontainers.DockerClientFactory.client(DockerClientFactory.java:188)
+	at org.testcontainers.DockerClientFactory$1.getDockerClient(DockerClientFactory.java:101)
+	at com.github.dockerjava.api.DockerClientDelegate.authConfig(DockerClientDelegate.java:107)
+	at org.testcontainers.containers.GenericContainer.start(GenericContainer.java:316)
+	at io.kotest.extensions.testcontainers.StartablePerSpecListener$beforeSpec$2.invokeSuspend(StartablePerSpecListener.kt:31)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:106)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:571)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:750)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:678)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:665)
+</pre>
+</span>
+</div>
+</div>
+<div id="tab1" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="failures">Before Spec Error</td>
+<td class="failures">0.025s</td>
+<td class="failures">failed</td>
+</tr>
+<tr>
+<td class="failures">executionError</td>
+<td class="failures">0s</td>
+<td class="failures">failed</td>
+</tr>
+</table>
+</div>
+<div id="tab2" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>17:45:06.450 [DefaultDispatcher-worker-1 @coroutine#2] WARN org.testcontainers.utility.TestcontainersConfiguration - Attempted to read Testcontainers configuration file at file:/home/worker/.testcontainers.properties but the file was not found. Exception message: FileNotFoundException: /home/worker/.testcontainers.properties (No such file or directory)
+17:45:06.582 [DefaultDispatcher-worker-1 @coroutine#2] INFO org.testcontainers.dockerclient.DockerMachineClientProviderStrategy - docker-machine executable was not found on PATH ([/opt/java/openjdk/bin, /usr/local/sbin, /usr/local/bin, /usr/sbin, /usr/bin, /sbin, /bin])
+17:45:06.584 [DefaultDispatcher-worker-1 @coroutine#2] ERROR org.testcontainers.dockerclient.DockerClientProviderStrategy - Could not find a valid Docker environment. Please check configuration. Attempted configurations were:
+17:45:06.584 [DefaultDispatcher-worker-1 @coroutine#2] ERROR org.testcontainers.dockerclient.DockerClientProviderStrategy -     UnixSocketClientProviderStrategy: failed with exception InvalidConfigurationException (Could not find unix domain socket). Root cause NoSuchFileException (/var/run/docker.sock)
+17:45:06.584 [DefaultDispatcher-worker-1 @coroutine#2] ERROR org.testcontainers.dockerclient.DockerClientProviderStrategy - As no valid configuration was found, execution cannot continue
+Starting the app.
+</pre>
+</span>
+</div>
+<div id="tab3" class="tab">
+<h2>Standard error</h2>
+<span class="code">
+<pre>Dec 21, 2021 5:45:05 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(POST /session): {
+  &quot;desiredCapabilities&quot;: {
+    &quot;browserName&quot;: &quot;java&quot;,
+    &quot;platform&quot;: &quot;ANY&quot;
+  },
+  &quot;capabilities&quot;: {
+    &quot;firstMatch&quot;: [
+      {
+        &quot;browserName&quot;: &quot;java&quot;
+      }
+    ]
+  }
+}
+Dec 21, 2021 5:45:05 PM net.sourceforge.marathon.javaagent.server.JavaServer createSession
+INFO: Creating device with type: EVENT_QUEUE
+Dec 21, 2021 5:45:05 PM net.sourceforge.marathon.javaagent.Device getDevice
+INFO: Creating a EVENT_QUEUE device
+Dec 21, 2021 5:45:06 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: POST(/session, {&quot;desiredCapabilities&quot;:{&quot;browserName&quot;:&quot;java&quot;,&quot;platform&quot;:&quot;ANY&quot;},&quot;capabilities&quot;:{&quot;firstMatch&quot;:[{&quot;browserName&quot;:&quot;java&quot;}]}}) = {data=, status=REDIRECT}
+Dec 21, 2021 5:45:06 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: JavaServer.serve(GET /session/a54e100f-cf05-47db-a6d8-a723414fce8f): {}
+Dec 21, 2021 5:45:06 PM net.sourceforge.marathon.javaagent.server.JavaServer serve
+INFO: GET(/session/a54e100f-cf05-47db-a6d8-a723414fce8f) = {data={&quot;name&quot;:&quot;getCapabilities&quot;,&quot;sessionId&quot;:&quot;a54e100f-cf05-47db-a6d8-a723414fce8f&quot;,&quot;value&quot;:{&quot;applicationCacheEnabled&quot;:false,&quot;rotatable&quot;:false,&quot;loggingPrefs&quot;:{&quot;driver&quot;:&quot;ALL&quot;},&quot;handlesAlerts&quot;:false,&quot;databaseEnabled&quot;:false,&quot;version&quot;:&quot;1.0&quot;,&quot;platform&quot;:&quot;ANY&quot;,&quot;browserConnectionEnabled&quot;:false,&quot;nativeEvents&quot;:false,&quot;acceptSslCerts&quot;:false,&quot;locationContextEnabled&quot;:false,&quot;webStorageEnabled&quot;:false,&quot;browserName&quot;:&quot;java&quot;,&quot;takesScreenshot&quot;:true,&quot;javascriptEnabled&quot;:true,&quot;cssSelectorsEnabled&quot;:false},&quot;status&quot;:0}, status=OK}
+Dec 21, 2021 5:45:06 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+INFO: Detected dialect: OSS
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 7.3.2</a> at Dec 21, 2021, 5:45:07 PM</p>
+</div>
+</div>
+</body>
+</html>
