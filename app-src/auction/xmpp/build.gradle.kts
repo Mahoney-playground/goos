@@ -37,7 +37,7 @@ dependencies {
   testImplementation(libs.slf4j.api)
   testImplementation(libs.kotest.frameworkApiJvm)
   testImplementation(projects.testcontainers)
-  testImplementation("ch.qos.logback:logback-classic:1.2.8")
+  testImplementation("ch.qos.logback:logback-classic:1.2.9")
 }
 
 idea {

@@ -18,7 +18,7 @@ plugins {
   id("uk.org.lidalia.download-dependencies")
   id("uk.org.lidalia.copy-without-version")
   id("com.autonomousapps.dependency-analysis") version "0.79.0"
-  id("org.jmailen.kotlinter") version "3.6.0"
+  id("org.jmailen.kotlinter") version "3.8.0"
   id("com.vanniktech.dependency.graph.generator") version "0.5.0"
   id("com.github.ben-manes.versions") version "0.39.0"
   id("uk.org.lidalia.report-aggregator")

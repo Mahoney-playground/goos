@@ -3,7 +3,7 @@ import uk.org.lidalia.gradle.plugins.copywithoutversion.CopyWithoutVersionsTask
 plugins {
   kotlin("jvm")
   id("uk.org.lidalia.application")
-  id("dev.jacomet.logging-capabilities") version "0.9.0"
+  id("dev.jacomet.logging-capabilities") version "0.10.0"
   id("uk.org.lidalia.copy-without-version")
 }
 

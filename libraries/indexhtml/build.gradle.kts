@@ -47,7 +47,7 @@ tasks {
 
 dependencies {
   @Suppress("GradlePackageUpdate")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
   implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.3")
 }
 

@@ -22,7 +22,7 @@ dependencies {
 
   testImplementation(libs.selenium.api)
   testImplementation(projects.testcontainers)
-  testImplementation("ch.qos.logback:logback-classic:1.2.8")
+  testImplementation("ch.qos.logback:logback-classic:1.2.9")
   testImplementation(libs.kotestextensions.testcontainers)
   testImplementation(libs.marathon.javaDriver)
   testImplementation(projects.app)
