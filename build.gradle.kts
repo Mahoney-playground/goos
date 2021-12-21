@@ -118,7 +118,7 @@ subprojects {
           .forEach { conf ->
             add(conf.name, "org.minidns:minidns-core") {
               version {
-                strictly("0.3.4")
+                strictly("1.0.2")
                 because("minidns-core is declared by smack-core as a dependency range but we fail on non reproducible resolution")
               }
             }
