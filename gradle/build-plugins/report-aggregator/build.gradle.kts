@@ -12,6 +12,13 @@ repositories {
   gradlePluginPortal()
 }
 
+java {
+  toolchain {
+    languageVersion.set(JavaLanguageVersion.of(8))
+    vendor.set(JvmVendorSpec.matching("Temurin"))
+  }
+}
+
 dependencies {
   implementation("uk.org.lidalia:indexhtml:0.1.0")
 }

@@ -5,7 +5,6 @@ import com.github.gundy.semver4j.model.Version
 import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorExtension.Generator
 import org.gradle.api.distribution.plugins.DistributionPlugin.TASK_INSTALL_NAME
 import org.gradle.internal.deprecation.DeprecatableConfiguration
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jmailen.gradle.kotlinter.KotlinterPlugin
 import uk.org.lidalia.gradle.plugins.copywithoutversion.CopyWithoutVersionsTask
 import uk.org.lidalia.gradle.plugins.downloaddeps.DownloadDependenciesPlugin
@@ -27,8 +26,6 @@ plugins {
   id("uk.org.lidalia.report-aggregator")
   id("com.dorongold.task-tree") version "2.1.0"
 }
-
-val javaVersion by extra(JavaLanguageVersion.of(17))
 
 apply<ReportingBasePlugin>()
 
@@ -59,7 +56,7 @@ subprojects {
 
     configure<JavaPluginExtension> {
       toolchain {
-        languageVersion.set(javaVersion)
+        languageVersion.set(JavaLanguageVersion.of(17))
         vendor.set(JvmVendorSpec.matching("Eclipse Adoptium"))
       }
 
@@ -82,13 +79,6 @@ subprojects {
     }
 
     tasks {
-
-      withType<KotlinCompile>().configureEach {
-        kotlinOptions.apply {
-          jvmTarget = javaVersion.toString()
-          freeCompilerArgs = listOf("-Xinline-classes")
-        }
-      }
 
       withType<Jar>().configureEach {
         archiveVersion.convention(null as String?)

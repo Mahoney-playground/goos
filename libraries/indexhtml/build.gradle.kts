@@ -1,7 +1,5 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-  kotlin("jvm") version "1.6.10"
+  kotlin("jvm") version "1.5.21"
   id("org.jmailen.kotlinter") version "3.6.0"
   id("uk.org.lidalia.idea-ext")
   id("uk.org.lidalia.kotlin-flat")
@@ -15,13 +13,10 @@ repositories {
 group = "uk.org.lidalia"
 version = "0.1.0"
 
-
-val javaVersion by extra(JavaLanguageVersion.of(17))
-
 configure<JavaPluginExtension> {
   toolchain {
-    languageVersion.set(javaVersion)
-    vendor.set(JvmVendorSpec.matching("Eclipse Adoptium"))
+    languageVersion.set(JavaLanguageVersion.of(8))
+    vendor.set(JvmVendorSpec.matching("Temurin"))
   }
 
   @Suppress("UnstableApiUsage")
@@ -33,15 +28,6 @@ configure<JavaPluginExtension> {
 configurations.all {
   resolutionStrategy {
     failOnNonReproducibleResolution()
-  }
-}
-
-tasks {
-  withType<KotlinCompile>().configureEach {
-    kotlinOptions.apply {
-      jvmTarget = javaVersion.toString()
-      freeCompilerArgs = listOf("-Xinline-classes")
-    }
   }
 }
 
