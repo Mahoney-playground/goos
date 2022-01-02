@@ -48,5 +48,8 @@ fun String.execute(
   env: Map<String, String> = emptyMap(),
 ): Outcome<Failed, Succeeded> = Shell(this).execute(dir, env)
 
+@Suppress("DANGEROUS_CHARACTERS")
 infix fun String.`|`(command: Command): Pipe = Shell(this).pipe(command)
+
+@Suppress("DANGEROUS_CHARACTERS")
 infix fun String.`|`(command: String): Pipe = Shell(this).pipe(Shell(command))
