@@ -1,5 +1,6 @@
 package uk.org.lidalia.gradle.plugins.extractplugin.process
 
+import uk.org.lidalia.gradle.plugins.extractplugin.stringfunctions.containsAny
 import java.nio.file.Path
 
 sealed class Command {
@@ -49,6 +50,11 @@ data class Shell(
   override fun pipe(next: Command) = Pipe(listOf(this, next))
 }
 
+private val charsRequiringEscapeInShell: Set<Char> = setOf(
+  ' ', '"', '#', '$', '&', '(', ')', ';', '<', '>', '?', '[', ']', '`', '{', '|', '}', '~',
+  '\\', '\'', '\t', '\r', '\n',
+)
+
 data class Exec(
   val executable: String,
   val args: List<String>,
@@ -56,8 +62,14 @@ data class Exec(
 
   constructor(executable: String, vararg args: String) : this(executable, args.toList())
 
-  // TODO this isn't correct, needs to be escaped appropriately
-  override val command: String = (listOf(executable) + args).joinToString(" ")
+  override val command: String by lazy {
+    (listOf(executable) + args).joinToString(" ") { it.shellEscape() }
+  }
+
+  private fun String.shellEscape() = if (containsAny(charsRequiringEscapeInShell)) {
+    "'${replace("'", "'\\''")}'"
+  } else this
+
   override fun run(
     dir: Path,
     env: Map<String, String>,
