@@ -9,7 +9,7 @@ sealed class Command {
     env: Map<String, String> = emptyMap(),
     outStream: Appendable = System.out,
     errStream: Appendable = System.err,
-  ): Process
+  ): JavaProcess
   abstract val command: String
   internal fun run(
     processBuilder: ProcessBuilder,
@@ -17,10 +17,10 @@ sealed class Command {
     env: Map<String, String>,
     outStream: Appendable,
     errStream: Appendable,
-  ): Process {
+  ): JavaProcess {
     processBuilder.environment().putAll(env)
     processBuilder.directory(dir.toFile())
-    return Process(
+    return JavaProcess(
       processBuilder,
       this,
       outStream,
@@ -39,7 +39,7 @@ data class Shell(
     env: Map<String, String>,
     outStream: Appendable,
     errStream: Appendable,
-  ): Process = run(
+  ): JavaProcess = run(
     ProcessBuilder("/usr/bin/env", "sh", "-c", command),
     dir,
     env,
@@ -75,7 +75,7 @@ data class Exec(
     env: Map<String, String>,
     outStream: Appendable,
     errStream: Appendable,
-  ): Process = run(
+  ): JavaProcess = run(
     ProcessBuilder(executable, *args.toTypedArray()),
     dir,
     env,
@@ -93,7 +93,7 @@ data class Pipe internal constructor(
     env: Map<String, String>,
     outStream: Appendable,
     errStream: Appendable,
-  ): Process {
+  ): JavaProcess {
     TODO("not implemented")
   }
 

@@ -8,7 +8,7 @@ import java.io.StringWriter
 import java.time.Duration
 import java.util.concurrent.TimeUnit.MILLISECONDS
 
-class Process internal constructor(
+class JavaProcess internal constructor(
   processBuilder: ProcessBuilder,
   private val command: Command,
   outStream: Appendable,
@@ -72,12 +72,12 @@ class Process internal constructor(
     combined.toString()
   )
 
-  override fun destroy(): Process {
+  override fun destroy(): JavaProcess {
     process.destroy()
     return this
   }
 
-  override fun destroyForcibly(): Process {
+  override fun destroyForcibly(): JavaProcess {
     process.destroyForcibly()
     return this
   }
