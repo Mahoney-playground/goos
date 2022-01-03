@@ -5,20 +5,39 @@ import java.io.File
 import java.nio.file.Path
 import java.nio.file.Paths
 
+fun CommandInContext.execute(
+  outStream: Appendable = System.out,
+  errStream: Appendable = System.err,
+): Outcome<Failed, Succeeded> =
+  JavaProcessStarter.run {
+    execute(
+      outStream,
+      errStream
+    )
+  }
+
+operator fun CommandInContext.invoke(
+  outStream: Appendable = Discard,
+  errStream: Appendable = System.err,
+): String =
+  JavaProcessStarter.run {
+    invoke(
+      outStream,
+      errStream,
+    )
+  }
+
 fun Command.execute(
   dir: Path = Paths.get("."),
   env: Map<String, String> = emptyMap(),
   outStream: Appendable = System.out,
   errStream: Appendable = System.err,
 ): Outcome<Failed, Succeeded> =
-  JavaProcessStarter.run {
-    execute(
-      dir,
-      env,
+  withContext(dir, env)
+    .execute(
       outStream,
       errStream
     )
-  }
 
 operator fun Command.invoke(
   dir: Path = Paths.get("."),
@@ -26,14 +45,11 @@ operator fun Command.invoke(
   outStream: Appendable = Discard,
   errStream: Appendable = System.err,
 ): String =
-  JavaProcessStarter.run {
-    invoke(
-      dir,
-      env,
+  withContext(dir, env)
+    .invoke(
       outStream,
       errStream,
     )
-  }
 
 operator fun File.invoke(
   vararg args: String,

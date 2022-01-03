@@ -9,7 +9,7 @@ import java.time.Duration
 import java.util.concurrent.TimeUnit.MILLISECONDS
 
 class JavaProcess internal constructor(
-  processBuilder: ProcessBuilder,
+  private val process: java.lang.Process,
   private val command: Command,
   outStream: Appendable,
   errStream: Appendable,
@@ -22,7 +22,6 @@ class JavaProcess internal constructor(
   private val out = StringWriter()
   private val err = StringWriter()
   private val combined = StringBuffer()
-  private val process: java.lang.Process = processBuilder.start()
   private val t1 = process.inputStream?.appendTo(MultiAppendable(out, outStream, combined))
   private val t2 = process.errorStream?.appendTo(MultiAppendable(err, errStream, combined))
   override val pid = process.pid()

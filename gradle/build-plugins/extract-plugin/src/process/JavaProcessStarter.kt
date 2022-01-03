@@ -1,36 +1,18 @@
 package uk.org.lidalia.gradle.plugins.extractplugin.process
 
+import java.lang.IllegalArgumentException
 import java.nio.file.Path
 
 object JavaProcessStarter : ProcessStarter {
   override fun run(
-    command: Command,
-    dir: Path,
-    env: Map<String, String>,
+    command: CommandInContext,
     outStream: Appendable,
-    errStream: Appendable
-  ): Process = when (command) {
-    is Exec -> command.run(dir, env, outStream, errStream)
-    is Shell -> command.run(dir, env, outStream, errStream)
-    is Pipe -> command.run(dir, env, outStream, errStream)
+    errStream: Appendable,
+  ): Process = when (command.command) {
+    is Exec -> command.command.run(command.dir, command.env, outStream, errStream)
+    is Shell -> command.command.run(command.dir, command.env, outStream, errStream)
+    is Pipe -> command.command.run(command.dir, command.env, outStream, errStream)
   }
-}
-
-private fun Command.run(
-  processBuilder: ProcessBuilder,
-  dir: Path,
-  env: Map<String, String>,
-  outStream: Appendable,
-  errStream: Appendable,
-): Process {
-  processBuilder.environment().putAll(env)
-  processBuilder.directory(dir.toFile())
-  return JavaProcess(
-    processBuilder,
-    this,
-    outStream,
-    errStream,
-  )
 }
 
 private fun Exec.run(
@@ -39,7 +21,7 @@ private fun Exec.run(
   outStream: Appendable,
   errStream: Appendable,
 ) = run(
-  ProcessBuilder(executable, *args.toTypedArray()),
+  toProcessBuilder(),
   dir,
   env,
   outStream,
@@ -52,7 +34,7 @@ private fun Shell.run(
   outStream: Appendable,
   errStream: Appendable,
 ) = run(
-  ProcessBuilder("/usr/bin/env", "sh", "-c", command),
+  toProcessBuilder(),
   dir,
   env,
   outStream,
@@ -64,6 +46,45 @@ private fun Pipe.run(
   env: Map<String, String>,
   outStream: Appendable,
   errStream: Appendable,
-): JavaProcess {
-  TODO("not implemented")
+): PipedProcess {
+  val flatCommands = commands.flatMap { it.flatten() }
+  val processBuilders = flatCommands.map { it.toProcessBuilder().directory(dir.toFile()).apply { environment().putAll(env) } }
+  val processes = ProcessBuilder
+    .startPipeline(processBuilders)
+    .mapIndexed { index, process ->
+      JavaProcess(process, flatCommands[index], outStream, errStream)
+    }
+  return PipedProcess(processes)
+}
+
+private fun Command.flatten(): List<Command> = when (this) {
+  is Pipe -> commands.flatMap { it.flatten() }
+  else -> listOf(this)
+}
+
+private fun Command.toProcessBuilder() = when (this) {
+  is Shell -> this.toProcessBuilder()
+  is Exec -> this.toProcessBuilder()
+  is Pipe -> throw IllegalArgumentException("cannot convert $this to a ProcessBuilder")
+}
+
+private fun Shell.toProcessBuilder() = ProcessBuilder("/usr/bin/env", "sh", "-c", command)
+
+private fun Exec.toProcessBuilder() = ProcessBuilder(executable, *args.toTypedArray())
+
+private fun Command.run(
+  processBuilder: ProcessBuilder,
+  dir: Path,
+  env: Map<String, String>,
+  outStream: Appendable,
+  errStream: Appendable,
+): Process {
+  processBuilder.environment().putAll(env)
+  processBuilder.directory(dir.toFile())
+  return JavaProcess(
+    processBuilder.start(),
+    this,
+    outStream,
+    errStream,
+  )
 }

@@ -3,7 +3,6 @@ package uk.org.lidalia.gradle.plugins.extractplugin.process
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldMatch
 import java.io.InputStream
 import java.io.StringWriter
 
@@ -39,10 +38,16 @@ class CommandTests : StringSpec({
   "throws exception on pipe fail" {
 
     val e = shouldThrow<ProcessFailedException> {
-//      ("exit 1" pipe "echo 'hello world'").await()
+      ("exit 1" `|` "echo 'hello world'")()
     }
-    e.message shouldMatch
-      """Got status 1 running java.lang.UNIXProcess@[a-f0-9]+\[exit 1]""".toRegex()
+    e.message shouldBe e.failure.toString()
+    e.failure shouldBe Failed(
+      command = Shell("exit 1"),
+      status = ExitStatus(1),
+      stdout = "",
+      stderr = "",
+      output = "",
+    )
   }
 
   "can recreate string ending in line feed" {

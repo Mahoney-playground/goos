@@ -8,12 +8,32 @@ import java.nio.file.Paths
 
 interface ProcessStarter {
   fun run(
-    command: Command,
-    dir: Path = Path.of("."),
-    env: Map<String, String> = emptyMap(),
+    command: CommandInContext,
     outStream: Appendable = System.out,
     errStream: Appendable = System.err,
   ): Process
+
+  fun CommandInContext.execute(
+    outStream: Appendable = System.out,
+    errStream: Appendable = System.err,
+  ): Outcome<Failed, Succeeded> =
+      run(
+        this,
+        outStream,
+        errStream
+      )
+      .await()
+
+  operator fun CommandInContext.invoke(
+    outStream: Appendable = Discard,
+    errStream: Appendable = System.err,
+  ): String =
+      execute(
+        outStream,
+        errStream,
+      )
+      .orThrow { f -> ProcessFailedException(f) }
+      .stdout
 
   fun Command.execute(
     dir: Path = Paths.get("."),
@@ -21,14 +41,11 @@ interface ProcessStarter {
     outStream: Appendable = System.out,
     errStream: Appendable = System.err,
   ): Outcome<Failed, Succeeded> =
-      run(
-        this,
-        dir,
-        env,
+    withContext(dir, env)
+      .execute(
         outStream,
         errStream
       )
-      .await()
 
   operator fun Command.invoke(
     dir: Path = Paths.get("."),
@@ -36,14 +53,11 @@ interface ProcessStarter {
     outStream: Appendable = Discard,
     errStream: Appendable = System.err,
   ): String =
-      execute(
-        dir,
-        env,
+    withContext(dir, env)
+      .invoke(
         outStream,
         errStream,
       )
-      .orThrow { f -> ProcessFailedException(f) }
-      .stdout
 
   operator fun File.invoke(
     vararg args: String,

@@ -1,11 +1,16 @@
 package uk.org.lidalia.gradle.plugins.extractplugin.process
 
 import uk.org.lidalia.gradle.plugins.extractplugin.stringfunctions.containsAny
+import java.nio.file.Path
 
 sealed class Command {
   abstract val command: String
   abstract fun pipe(next: Command): Pipe
   override fun toString(): String = command
+  fun withContext(
+    dir: Path,
+    env: Map<String, String>,
+  ) = CommandInContext(this, dir, env)
 }
 
 data class Shell(
@@ -38,10 +43,16 @@ data class Exec(
 }
 
 data class Pipe internal constructor(
-  private val commands: List<Command>,
+  val commands: List<Command>,
 ) : Command() {
 
   override fun pipe(next: Command) = Pipe(commands + next)
 
   override val command: String = commands.joinToString(" | ")
 }
+
+data class CommandInContext(
+  val command: Command,
+  val dir: Path,
+  val env: Map<String, String>,
+)
