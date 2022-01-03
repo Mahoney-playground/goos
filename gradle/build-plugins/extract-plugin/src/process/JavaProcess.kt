@@ -72,12 +72,12 @@ class JavaProcess internal constructor(
     combined.toString()
   )
 
-  override fun destroy(): JavaProcess {
+  override fun destroy(): Process {
     process.destroy()
     return this
   }
 
-  override fun destroyForcibly(): JavaProcess {
+  override fun destroyForcibly(): Process {
     process.destroyForcibly()
     return this
   }

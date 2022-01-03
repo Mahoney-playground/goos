@@ -7,8 +7,8 @@ interface Process {
   val pid: Long
   fun await(timeout: Duration): Outcome<ProcessState, Succeeded>
   fun await(): Outcome<Failed, Succeeded>
-  fun destroy(): JavaProcess
-  fun destroyForcibly(): JavaProcess
+  fun destroy(): Process
+  fun destroyForcibly(): Process
   fun isAlive(): Boolean
   fun info(): ProcessHandle.Info
 }
