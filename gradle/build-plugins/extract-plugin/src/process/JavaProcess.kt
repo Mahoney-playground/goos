@@ -13,7 +13,7 @@ class JavaProcess internal constructor(
   private val command: Command,
   outStream: Appendable,
   errStream: Appendable,
-) : IProcess {
+) : Process {
 
   override fun toString(): String {
     return "$process[$command]"
