@@ -2,7 +2,7 @@ package uk.org.lidalia.gradle.plugins.extractplugin.process
 
 import java.nio.file.Path
 
-class JavaProcessStarter : ProcessStarter {
+object JavaProcessStarter : ProcessStarter {
   override fun run(
     command: Command,
     dir: Path,
@@ -33,12 +33,12 @@ private fun Command.run(
   )
 }
 
-fun Exec.run(
+private fun Exec.run(
   dir: Path,
   env: Map<String, String>,
   outStream: Appendable,
   errStream: Appendable,
-): Process = run(
+) = run(
   ProcessBuilder(executable, *args.toTypedArray()),
   dir,
   env,
@@ -46,12 +46,12 @@ fun Exec.run(
   errStream,
 )
 
-fun Shell.run(
+private fun Shell.run(
   dir: Path,
   env: Map<String, String>,
   outStream: Appendable,
   errStream: Appendable,
-): Process = run(
+) = run(
   ProcessBuilder("/usr/bin/env", "sh", "-c", command),
   dir,
   env,
@@ -59,11 +59,11 @@ fun Shell.run(
   errStream,
 )
 
-fun Pipe.run(
+private fun Pipe.run(
   dir: Path,
   env: Map<String, String>,
   outStream: Appendable,
   errStream: Appendable,
-): Process {
+): JavaProcess {
   TODO("not implemented")
 }
