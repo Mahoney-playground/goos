@@ -13,7 +13,7 @@ class Process internal constructor(
   private val command: Command,
   outStream: Appendable,
   errStream: Appendable,
-) {
+) : IProcess {
 
   override fun toString(): String {
     return "$process[$command]"
@@ -25,9 +25,9 @@ class Process internal constructor(
   private val process: java.lang.Process = processBuilder.start()
   private val t1 = process.inputStream?.appendTo(MultiAppendable(out, outStream, combined))
   private val t2 = process.errorStream?.appendTo(MultiAppendable(err, errStream, combined))
-  val pid = process.pid()
+  override val pid = process.pid()
 
-  fun await(timeout: Duration): Outcome<ProcessState, Succeeded> {
+  override fun await(timeout: Duration): Outcome<ProcessState, Succeeded> {
     val completed = process.waitFor(timeout.toMillis(), MILLISECONDS)
     if (!completed) {
       t1?.interrupt()
@@ -50,7 +50,7 @@ class Process internal constructor(
     }
   }
 
-  fun await(): Outcome<Failed, Succeeded> {
+  override fun await(): Outcome<Failed, Succeeded> {
     process.waitFor()
     joinThreads()
     return when (val result = completedCommand()) {
@@ -72,19 +72,19 @@ class Process internal constructor(
     combined.toString()
   )
 
-  fun destroy(): Process {
+  override fun destroy(): Process {
     process.destroy()
     return this
   }
 
-  fun destroyForcibly(): Process {
+  override fun destroyForcibly(): Process {
     process.destroyForcibly()
     return this
   }
 
-  fun isAlive(): Boolean = process.isAlive
+  override fun isAlive(): Boolean = process.isAlive
 
-  fun info(): ProcessHandle.Info {
+  override fun info(): ProcessHandle.Info {
     return process.info()
   }
 
