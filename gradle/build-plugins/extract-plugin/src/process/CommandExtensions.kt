@@ -12,7 +12,7 @@ fun Command.execute(
   outStream: Appendable = System.out,
   errStream: Appendable = System.err,
 ): Outcome<Failed, Succeeded> =
-  run(dir, env, outStream, errStream)
+  JavaProcessStarter().run(this, dir, env, outStream, errStream)
     .await()
 
 operator fun Command.invoke(
