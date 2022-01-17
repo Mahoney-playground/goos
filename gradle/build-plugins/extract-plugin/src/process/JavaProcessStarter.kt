@@ -48,7 +48,9 @@ private fun Pipe.run(
   errStream: Appendable,
 ): PipedProcess {
   val flatCommands = commands.flatMap { it.flatten() }
-  val processBuilders = flatCommands.map { it.toProcessBuilder().directory(dir.toFile()).apply { environment().putAll(env) } }
+  val processBuilders = flatCommands.map {
+    it.toProcessBuilder().directory(dir.toFile()).apply { environment().putAll(env) }
+  }
   val processes = ProcessBuilder
     .startPipeline(processBuilders)
     .mapIndexed { index, process ->

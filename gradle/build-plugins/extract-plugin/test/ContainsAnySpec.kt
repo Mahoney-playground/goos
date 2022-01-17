@@ -7,12 +7,14 @@ import uk.org.lidalia.gradle.plugins.extractplugin.stringfunctions.containsAny
 class ContainsAnySpec : StringSpec({
 
   listOf(
+    /* ktlint-disable no-multi-spaces */
     " "           to true,
     "a"           to true,
     "hello world" to true,
     "whatever"    to true,
     ""            to false,
     "hello"       to false,
+    /* ktlint-enable no-multi-spaces */
   ).forEach { (input, expected) ->
     """"$input".containsAny('a', ' ') shouldBe $expected""" {
       input.containsAny('a', ' ') shouldBe expected

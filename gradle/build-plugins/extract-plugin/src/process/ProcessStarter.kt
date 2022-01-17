@@ -17,21 +17,21 @@ interface ProcessStarter {
     outStream: Appendable = System.out,
     errStream: Appendable = System.err,
   ): Outcome<Failed, Succeeded> =
-      run(
-        this,
-        outStream,
-        errStream
-      )
+    run(
+      this,
+      outStream,
+      errStream
+    )
       .await()
 
   operator fun CommandInContext.invoke(
     outStream: Appendable = Discard,
     errStream: Appendable = System.err,
   ): String =
-      execute(
-        outStream,
-        errStream,
-      )
+    execute(
+      outStream,
+      errStream,
+    )
       .orThrow { f -> ProcessFailedException(f) }
       .stdout
 
