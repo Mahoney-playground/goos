@@ -136,6 +136,7 @@ The principles here are:
 
 ```plantuml
 @startuml
+!pragma layout smetana
 
 node production { 
     component app
@@ -233,6 +234,7 @@ The principles here are:
 
 ```plantuml
 @startuml
+!pragma layout smetana
 
 node production { 
     component app
