@@ -56,7 +56,7 @@ private fun Pipe.run(
     .mapIndexed { index, process ->
       JavaProcess(process, flatCommands[index], outStream, errStream)
     }
-  return PipedProcess(processes)
+  return PipedProcess(this, processes)
 }
 
 private fun Command.flatten(): List<Command> = when (this) {

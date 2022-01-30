@@ -33,7 +33,7 @@ interface ProcessStarter {
       errStream,
     )
       .orThrow { f -> ProcessFailedException(f) }
-      .stdout
+      .stdout.trimEnd()
 
   fun Command.execute(
     dir: Path = Paths.get("."),

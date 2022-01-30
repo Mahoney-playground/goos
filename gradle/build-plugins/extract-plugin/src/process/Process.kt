@@ -5,6 +5,7 @@ import java.time.Duration
 
 interface Process {
   val pid: Long
+  val command: Command
   fun await(timeout: Duration): Outcome<ProcessState, Succeeded>
   fun await(): Outcome<Failed, Succeeded>
   fun destroy(): Process

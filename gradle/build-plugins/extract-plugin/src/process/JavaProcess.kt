@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
 
 class JavaProcess internal constructor(
   private val process: java.lang.Process,
-  private val command: Command,
+  override val command: Command,
   outStream: Appendable,
   errStream: Appendable,
 ) : Process {

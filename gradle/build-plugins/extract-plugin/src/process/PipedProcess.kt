@@ -5,6 +5,7 @@ import uk.org.lidalia.gradle.plugins.extractplugin.either.isFailure
 import java.time.Duration
 
 class PipedProcess(
+  override val command: Command,
   val processes: List<Process>
 ) : Process {
 

@@ -1,39 +1,37 @@
-package uk.org.lidalia.gradle.plugins.reportaggregator
+package uk.org.lidalia.gradle.plugins.extractplugin
 
+import uk.org.lidalia.gradle.plugins.extractplugin.either.orThrow
+import uk.org.lidalia.gradle.plugins.extractplugin.filesystem.toDirectory
+import uk.org.lidalia.gradle.plugins.extractplugin.filesystem.toPath
+import uk.org.lidalia.gradle.plugins.extractplugin.git.CliGitRepo
+import uk.org.lidalia.gradle.plugins.extractplugin.git.GitRepo
+import uk.org.lidalia.gradle.plugins.extractplugin.github.CliGitHubAccount
+import uk.org.lidalia.gradle.plugins.extractplugin.packages.registry.PackagesRegistry
 import uk.org.lidalia.gradle.plugins.extractplugin.process.invoke
-import java.io.File
-import java.net.URI
-import java.net.URL
-import java.nio.file.Paths
 
-fun main() {
+fun main(vararg args: String) {
 
-  val pathToExistingRepository = Paths.get("/Users/Robert/Workspaces/goos")
-  val plugin = "download-dependencies"
-  val pluginToExtract = Paths.get("gradle/build-plugins/$plugin")
-  val pathToNewRepository = Paths.get("/Users/Robert/Workspaces/$plugin")
+  val relativePathToPlugin = args[0].toPath()
+  val parentOfNewRepository = args[1].toDirectory().orThrow()
 
-  val gitFilterRepoScript = resource("git-filter-repo.py")!!.toFile()
+  val existingRepository = CliGitRepo("git rev-parse --show-toplevel"().toDirectory().orThrow())
 
-  "git clone --no-local $pathToExistingRepository $pathToNewRepository"()
-  gitFilterRepoScript(
-    "--path", pluginToExtract.toString(),
-    "--path", "gradle/wrapper",
-    "--path", "gradlew",
-    "--path", "gradlew.bat",
-    "--path", ".editorconfig",
-    "--path", ".gitattributes",
-    "--path", ".gitignore",
-    dir = pathToNewRepository
-  )
-  "mv $pluginToExtract/* ."(dir = pathToNewRepository)
-  "rm -rf gradle/build-plugins"(dir = pathToNewRepository)
-  "git add ."(dir = pathToNewRepository)
-  "git commit -m 'Extracted $plugin to new repository'"(dir = pathToNewRepository)
+  val gitHubAccount = CliGitHubAccount()
+  val mavenRegistry = gitHubAccount.mavenRegistry()
+
+  val newPluginRepository = existingRepository.extractGradlePluginToNewGitRepo(
+    parentOfNewRepository,
+    relativePathToPlugin,
+  ).apply {
+    configurePackagesRegistry(mavenRegistry)
+  }
+
+//  val gitHubProject = newPluginRepository.publishTo(gitHubAccount)
+//  gitHubProject.publish()
+
+  println(newPluginRepository)
 }
 
-private fun URL.toFile() = this.toURI().toFile()
-private fun URI.toFile() = File(this)
-
-private fun resource(resourceName: String) =
-  Thread.currentThread().contextClassLoader.getResource(resourceName)
+private fun GitRepo.configurePackagesRegistry(packagesRegistry: PackagesRegistry) {
+//  TODO("Not yet implemented")
+}
