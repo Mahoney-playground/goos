@@ -28,35 +28,44 @@ RUN mkdir -p $work_dir
 WORKDIR $work_dir
 
 
-FROM worker as gradle
-ARG username
-# The single use daemon will be unavoidable in future so don't waste time trying to prevent it
-ENV GRADLE_OPTS='-Dorg.gradle.daemon=false'
+# Copy across all the *.gradle.kts files in a separate stage
+# This will not get any layer caching if anything in the context has changed, but when we
+# subsequently copy them into a different stage that stage *will* get layer caching. So if none of
+# the *.gradle.kts files have changed, a subsequent command will also get layer caching.
+FROM alpine as gradle-files
+RUN --mount=type=bind,target=/docker-context \
+    mkdir -p /gradle-files; \
+    cd /docker-context/; \
+    find . -name "*.gradle.kts" -exec cp --parents "{}" /gradle-files/ \;
 
-# Download gradle in a separate step to benefit from layer caching
-COPY --chown=$username gradle/wrapper gradle/wrapper
-COPY --chown=$username gradlew gradlew
-RUN ./gradlew --version
 
-FROM gradle as builder
+FROM worker as builder
 ARG username
 ARG gid
 ARG uid
 
-COPY --chown=$username . .
-
+# The single use daemon will be unavoidable in future so don't waste time trying to prevent it
+ENV GRADLE_OPTS='-Dorg.gradle.daemon=false'
 ARG gradle_cache_dir=/home/$username/.gradle/caches
 
+# Download gradle in a separate step to benefit from layer caching
+COPY --chown=$username gradle/wrapper gradle/wrapper
+COPY --chown=$username gradlew gradlew
+COPY --chown=$username gradle.properties gradle.properties
+RUN ./gradlew --version
+
 # Do all the downloading in one step...
+COPY --chown=$username --from=gradle-files /gradle-files ./
+COPY --chown=$username libraries/indexhtml libraries/indexhtml
+COPY --chown=$username gradle/build-plugins gradle/build-plugins
 RUN --mount=type=cache,target=$gradle_cache_dir,gid=$gid,uid=$uid \
     ./gradlew --no-watch-fs --stacktrace downloadDependencies
 
 # So the actual build can run without network access. Proves no tests rely on external services.
+COPY --chown=$username . .
 RUN --mount=type=cache,target=$gradle_cache_dir,gid=$gid,uid=$uid \
     --network=none \
-    set +e; \
-    simple-xvfb-run ./gradlew --no-watch-fs --stacktrace --offline build; \
-    echo $? > build_result;
+    simple-xvfb-run ./gradlew --no-watch-fs --offline build || mkdir -p build
 
 
 FROM scratch as build-reports
@@ -71,10 +80,9 @@ COPY --from=builder $work_dir/build/reports ./build-reports
 # to retrieve the build reports whether or not the previous line exited successfully.
 # Workaround for https://github.com/moby/buildkit/issues/1421
 FROM builder as checker
-RUN build_result=$(cat build_result); \
-    if [ "$build_result" -eq 137 ]; then >&2 echo "The build failed with exit status $build_result, you probably need to give Docker more memory"; \
-    elif [ "$build_result" -gt 0 ]; then >&2 echo "The build failed with exit status $build_result, check output of builder stage"; fi; \
-    exit "$build_result"
+RUN --mount=type=cache,target=$gradle_cache_dir,gid=$gid,uid=$uid \
+    --network=none \
+    simple-xvfb-run ./gradlew --no-watch-fs --stacktrace --offline build
 
 
 FROM worker as end-to-end-tests
