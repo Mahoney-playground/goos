@@ -61,6 +61,8 @@ COPY --chown=$username gradle/build-plugins gradle/build-plugins
 RUN --mount=type=cache,target=$gradle_cache_dir,gid=$gid,uid=$uid \
     ./gradlew --no-watch-fs --stacktrace downloadDependencies
 
+
+FROM builder as tester
 # So the actual build can run without network access. Proves no tests rely on external services.
 COPY --chown=$username . .
 RUN --mount=type=cache,target=$gradle_cache_dir,gid=$gid,uid=$uid \
@@ -71,7 +73,7 @@ RUN --mount=type=cache,target=$gradle_cache_dir,gid=$gid,uid=$uid \
 FROM scratch as build-reports
 ARG work_dir
 
-COPY --from=builder $work_dir/build/reports ./build-reports
+COPY --from=builder $work_dir/build .
 
 # The builder step is guaranteed not to fail, so that the worker output can be tagged and its
 # contents (build reports) extracted.
@@ -89,9 +91,9 @@ FROM worker as end-to-end-tests
 ARG username
 ARG work_dir
 
-COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/external ./external
-COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/internal ./internal
-COPY --from=checker --chown=$username $work_dir/end-to-end-tests/build/install/end-to-end-tests/lib/end-to-end-tests.jar .
+COPY --from=checker --chown=$username $work_dir/build/end-to-end-tests/install/end-to-end-tests/lib/external ./external
+COPY --from=checker --chown=$username $work_dir/build/end-to-end-tests/install/end-to-end-tests/lib/internal ./internal
+COPY --from=checker --chown=$username $work_dir/build/end-to-end-tests/install/end-to-end-tests/lib/end-to-end-tests.jar .
 
 ENTRYPOINT ["java", "-jar", "-enableassertions", "end-to-end-tests.jar"]
 
@@ -100,9 +102,9 @@ FROM worker as auction-xmpp-integration-tests
 ARG username
 ARG work_dir
 
-COPY --from=checker --chown=$username $work_dir/app-src/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/external ./external
-COPY --from=checker --chown=$username $work_dir/app-src/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/internal ./internal
-COPY --from=checker --chown=$username $work_dir/app-src/auction/xmpp-integration-tests/build/install/auction-xmpp-integration-tests/lib/auction-xmpp-integration-tests.jar .
+COPY --from=checker --chown=$username $work_dir/build/app-src/auction/xmpp-integration-tests/install/auction-xmpp-integration-tests/lib/external ./external
+COPY --from=checker --chown=$username $work_dir/build/app-src/auction/xmpp-integration-tests/install/auction-xmpp-integration-tests/lib/internal ./internal
+COPY --from=checker --chown=$username $work_dir/build/app-src/auction/xmpp-integration-tests/install/auction-xmpp-integration-tests/lib/auction-xmpp-integration-tests.jar .
 
 ENTRYPOINT ["java", "-jar", "-enableassertions", "auction-xmpp-integration-tests.jar"]
 

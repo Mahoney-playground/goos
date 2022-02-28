@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Build
 
 on:
   push:
@@ -46,10 +46,22 @@ jobs:
       - name: Login to docker repo
         run: docker login --username Mahoney-playground --password-stdin ghcr.io < <(echo "${{ secrets.GITHUB_TOKEN }}")
 
-      - name: Do the build
-        run: docker build . --target build-reports -t ${{ env.DOCKER_REPO }}/goos-build-report:${{ github.sha }}-${{ github.run_number }} &&
-          docker push ${{ env.DOCKER_REPO }}/goos-build-report:${{ github.sha }}-${{ github.run_number }} &&
-          docker build . --target checker
+      - name: Get build output
+        run: >-
+          docker build .
+          --target build-output
+          --output build/docker-output
+
+      - name: Build
+        run: >-
+          docker build .
+          --target checker
+
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: '**/test-results/**/*.xml'
 
       - name: Build Auction XMPP Integration Tests with Docker
         run: docker build . --target auction-xmpp-integration-tests -t ${{ env.DOCKER_REPO }}/goos-auction-xmpp-integration-tests:$GITHUB_SHA &&
@@ -65,38 +77,6 @@ jobs:
 
       - name: Backup docker
         run: .github/actions/docker-cache/backup.sh ${{ runner.temp }}/docker_cache/cache.tar
-
-  publish-build-reports:
-    if: always()
-    needs: build
-    runs-on: ubuntu-18.04
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Capture the reports as artifacts
-        if: always()
-        run: ./scripts/retrieve-docker-build-logs.sh ${{ env.DOCKER_REPO }}/goos-build-report ${{ github.sha }}-${{ github.run_number }}
-
-      - name: Archive reports
-        if: always()
-        uses: actions/upload-artifact@v1
-        with:
-          name: build-reports
-          path: builds/${{ github.sha }}-${{ github.run_number }}/build-reports
-
-      - name: Publish Reports
-        if: always()
-        uses: JamesIves/github-pages-deploy-action@3.4.2
-        with:
-          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: builds
-          TARGET_FOLDER: builds
-
-      - name: Link to Reports
-        if: always()
-        run: echo "Reports are published at https://mahoney-playground.github.io/goos/builds/${{ github.sha }}-${{ github.run_number }}/build-reports"
 
   docker-openfire:
     runs-on: ubuntu-18.04
@@ -145,19 +125,6 @@ jobs:
           name: auction-xmpp-integration-tests-reports
           path: builds/${{ github.sha }}/auction-xmpp-integration-tests-reports
 
-      - name: Publish Reports
-        if: always()
-        uses: JamesIves/github-pages-deploy-action@3.4.2
-        with:
-          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: builds
-          TARGET_FOLDER: builds
-
-      - name: Link to Reports
-        if: always()
-        run: echo "Reports are published at https://mahoney-playground.github.io/goos/builds/${{ github.sha }}/auction-xmpp-integration-tests-reports"
-
   end-to-end-tests:
     needs: [build, docker-openfire]
     runs-on: ubuntu-18.04
@@ -188,16 +155,3 @@ jobs:
         with:
           name: end-to-end-tests-reports
           path: builds/${{ github.sha }}/end-to-end-tests-reports
-
-      - name: Publish Reports
-        if: always()
-        uses: JamesIves/github-pages-deploy-action@3.4.2
-        with:
-          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: builds
-          TARGET_FOLDER: builds
-
-      - name: Link to Reports
-        if: always()
-        run: echo "Reports are published at https://mahoney-playground.github.io/goos/builds/${{ github.sha }}/end-to-end-tests-reports"

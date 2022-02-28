@@ -24,7 +24,6 @@ plugins {
   id("org.jmailen.kotlinter") version "3.8.0"
   id("com.vanniktech.dependency.graph.generator") version "0.5.0"
   id("com.github.ben-manes.versions") version "0.39.0"
-  id("uk.org.lidalia.report-aggregator")
   id("com.dorongold.task-tree") version "2.1.0"
 }
 
@@ -47,7 +46,12 @@ allprojects {
   }
 }
 
+val rootBuildDir = buildDir
+
 subprojects {
+
+  val relativeProjectPath = rootProject.projectDir.toPath().relativize(this.projectDir.toPath())
+  buildDir = rootProject.file("${rootBuildDir}/$relativeProjectPath")
 
   pluginManager.withPlugin("kotlin") {
 
