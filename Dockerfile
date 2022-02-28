@@ -73,7 +73,7 @@ RUN --mount=type=cache,target=$gradle_cache_dir,gid=$gid,uid=$uid \
 FROM scratch as build-output
 ARG work_dir
 
-COPY --from=builder $work_dir/build .
+COPY --from=tester $work_dir/build .
 
 # The builder step is guaranteed not to fail, so that the worker output can be tagged and its
 # contents (build reports) extracted.
