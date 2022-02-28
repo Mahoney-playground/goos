@@ -70,7 +70,7 @@ RUN --mount=type=cache,target=$gradle_cache_dir,gid=$gid,uid=$uid \
     simple-xvfb-run ./gradlew --no-watch-fs --offline build || mkdir -p build
 
 
-FROM scratch as build-reports
+FROM scratch as build-output
 ARG work_dir
 
 COPY --from=builder $work_dir/build .
