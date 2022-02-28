@@ -61,10 +61,10 @@ COPY --chown=$username gradle/build-plugins gradle/build-plugins
 RUN --mount=type=cache,target=$gradle_cache_dir,gid=$gid,uid=$uid \
     ./gradlew --no-watch-fs --stacktrace downloadDependencies
 
+COPY --chown=$username . .
 
 FROM builder as tester
 # So the actual build can run without network access. Proves no tests rely on external services.
-COPY --chown=$username . .
 RUN --mount=type=cache,target=$gradle_cache_dir,gid=$gid,uid=$uid \
     --network=none \
     simple-xvfb-run ./gradlew --no-watch-fs --offline build || mkdir -p build
