@@ -19,7 +19,6 @@ dependencies {
   testImplementation(libs.marathon.javaDriver)
   testImplementation(libs.mockk.core)
   testImplementation(libs.mockk.dslJvm)
-  testImplementation(libs.kotest.assertionsSharedJvm)
   testImplementation(libs.kotest.frameworkApiJvm)
 }
 

@@ -8,7 +8,6 @@ dependencies {
 
   testFixturesImplementation(libs.kotest.frameworkApi)
   testFixturesImplementation(libs.kotest.assertionsCore)
-  testFixturesImplementation(libs.kotest.assertionsCoreJvm)
   testFixturesImplementation(libs.coroutines.core)
 }
 
