@@ -14,7 +14,6 @@ dependencies {
 
   testFixturesApi(testFixtures(projects.auctionApi))
   testFixturesImplementation(libs.kotest.assertionsCore)
-  testFixturesImplementation(libs.kotest.assertionsCoreJvm)
   testFixturesImplementation(libs.kotest.assertionsShared)
   constraints {
     testFixturesImplementation(libs.mockk.core)

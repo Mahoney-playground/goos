@@ -17,27 +17,18 @@ dependencies {
   runtimeOnly(libs.smack.java8)
 
   testFixturesApi(testFixtures(projects.auctionApi))
-  testFixturesApi(libs.smack.core)
-  testFixturesApi(libs.smack.im)
 
   testFixturesImplementation(libs.smack.tcp)
   testFixturesImplementation(libs.smack.extensions)
-  testFixturesImplementation(libs.jxmpp.jid)
   testFixturesImplementation(libs.kotest.assertionsCore)
   testFixturesImplementation(libs.kotest.assertionsShared)
-  testFixturesImplementation(libs.kotest.assertionsSharedJvm)
   constraints {
     testFixturesImplementation(libs.mockk.core)
   }
 
   testFixturesRuntimeOnly(libs.smack.java8)
 
-  testImplementation(libs.kotestextensions.testcontainers)
-  testImplementation(libs.testcontainers)
-  testImplementation(libs.slf4j.api)
-  testImplementation(libs.kotest.frameworkApiJvm)
-  testImplementation(projects.testcontainers)
-  testImplementation("ch.qos.logback:logback-classic:1.2.9")
+  testImplementation("io.kotest:kotest-framework-api-jvm:5.1.0")
 }
 
 idea {

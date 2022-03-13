@@ -13,7 +13,6 @@ dependencies {
   testFixturesImplementation(libs.kotest.assertionsCore)
   testFixturesImplementation(libs.kotest.assertionsSharedJvm)
   testFixturesImplementation(libs.coroutines.core)
-  testFixturesImplementation(libs.coroutines.coreJvm)
   testFixturesApi(testFixtures(projects.uiApi))
 
   testImplementation(libs.marathon.javaDriver)
