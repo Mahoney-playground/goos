@@ -50,8 +50,8 @@ val rootBuildDir = buildDir
 
 subprojects {
 
-//  val relativeProjectPath = rootProject.projectDir.toPath().relativize(this.projectDir.toPath())
-//  buildDir = rootProject.file("${rootBuildDir}/$relativeProjectPath")
+  val relativeProjectPath = rootProject.projectDir.toPath().relativize(this.projectDir.toPath())
+  buildDir = rootProject.file("${rootBuildDir}/$relativeProjectPath")
 
   pluginManager.withPlugin("kotlin") {
 
