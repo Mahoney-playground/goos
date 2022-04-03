@@ -12,6 +12,7 @@ dependencies {
   testFixturesImplementation(libs.coroutines.core)
   testFixturesImplementation(libs.mockk.core)
   testFixturesImplementation(libs.mockk.dslJvm)
+  testFixturesImplementation(projects.kotlinlangext)
 
   constraints {
     testFixturesImplementation(libs.mockk.core)

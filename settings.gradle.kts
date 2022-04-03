@@ -89,6 +89,7 @@ dependencyResolutionManagement {
         "io.mockk", { if (it == null) "mockk" else "mockk-$it" }, "1.12.1",
         null,
         "dsl-jvm",
+        "dsl",
       )
       versionCatalog(
         "kotlinxHtml",
@@ -116,6 +117,25 @@ dependencyResolutionManagement {
         "org.jetbrains.kotlinx", { "kotlinx-coroutines-$it" }, "1.5.2",
         "core",
         "core-jvm",
+      )
+      versionCatalog(
+        "dockerJava",
+        "com.github.docker-java", { "docker-java-$it" }, "3.2.12",
+        "core",
+      )
+      versionCatalog(
+        "junitPlatform",
+        "org.junit.platform", { "junit-platform-$it" }, "1.8.2",
+        "console",
+      )
+      versionCatalog(
+        "indexhtml",
+        "uk.org.lidalia", "indexhtml", "0.1.0",
+      )
+      versionCatalog(
+        "logback",
+        "ch.qos.logback", { "logback-$it" }, "1.2.9",
+        "classic",
       )
     }
   }

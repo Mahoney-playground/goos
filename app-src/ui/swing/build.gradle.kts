@@ -11,13 +11,13 @@ dependencies {
   testFixturesApi(libs.selenium.remoteDriver)
 
   testFixturesImplementation(libs.kotest.assertionsCore)
-  testFixturesImplementation(libs.kotest.assertionsSharedJvm)
+  testFixturesImplementation(libs.kotest.assertionsShared)
   testFixturesImplementation(libs.coroutines.core)
   testFixturesApi(testFixtures(projects.uiApi))
 
   testImplementation(libs.marathon.javaDriver)
   testImplementation(libs.mockk.core)
-  testImplementation(libs.mockk.dslJvm)
+  testImplementation(libs.mockk.dsl)
   testImplementation(libs.kotest.frameworkApiJvm)
 }
 

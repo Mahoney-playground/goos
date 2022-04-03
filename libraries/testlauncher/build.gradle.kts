@@ -7,8 +7,8 @@ dependencies {
   constraints {
     implementation(libs.mockk.core)
   }
-  implementation("org.junit.platform:junit-platform-console:1.8.2")
+  implementation(libs.junitPlatform.console)
 
   implementation(projects.clioptions)
-  implementation("uk.org.lidalia:indexhtml:0.1.0")
+  implementation(libs.indexhtml)
 }

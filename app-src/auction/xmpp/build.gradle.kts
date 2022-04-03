@@ -17,9 +17,12 @@ dependencies {
   runtimeOnly(libs.smack.java8)
 
   testFixturesApi(testFixtures(projects.auctionApi))
+  testFixturesApi(libs.smack.core)
+  testFixturesApi(libs.smack.im)
 
   testFixturesImplementation(libs.smack.tcp)
   testFixturesImplementation(libs.smack.extensions)
+  testFixturesImplementation(libs.jxmpp.jid)
   testFixturesImplementation(libs.kotest.assertionsCore)
   testFixturesImplementation(libs.kotest.assertionsShared)
   constraints {
@@ -28,7 +31,13 @@ dependencies {
 
   testFixturesRuntimeOnly(libs.smack.java8)
 
-  testImplementation("io.kotest:kotest-framework-api-jvm:5.1.0")
+  testImplementation(libs.kotest.frameworkApi)
+// removed until we reinstate running the xmpp tests locally
+//  testImplementation(libs.kotestextensions.testcontainers)
+//  testImplementation(libs.testcontainers)
+//  testImplementation(libs.slf4j.api)
+//  testImplementation(projects.testcontainers)
+//  testImplementation(libs.logback.classic)
 }
 
 idea {
