@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.3.0-labs
+# syntax=docker/dockerfile:1.4.0
 ARG username=worker
 ARG work_dir=/home/$username/work
 ARG gid=1000
