@@ -15,7 +15,7 @@ sealed class Either<out L, out R> {
   abstract fun rightOrNull(): R?
 }
 
-data class Left<L>(val value: L) : Either<L, Nothing>() {
+data class Left<out L>(val value: L) : Either<L, Nothing>() {
 
   override val isLeft = true
 
@@ -32,7 +32,7 @@ data class Left<L>(val value: L) : Either<L, Nothing>() {
 
 fun <L> L.left() = Left(this)
 
-data class Right<R>(val value: R) : Either<Nothing, R>() {
+data class Right<out R>(val value: R) : Either<Nothing, R>() {
 
   override val isLeft = false
 

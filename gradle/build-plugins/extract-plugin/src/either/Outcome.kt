@@ -32,3 +32,25 @@ fun <F : Throwable, S> Outcome<F, S>.orThrow(): S = when (this) {
 }
 
 fun <F, S> Outcome<F, S>.orThrow(f: (F) -> Throwable): S = mapFailure(f).orThrow()
+
+inline fun <reified F, S> catching(action: () -> S): Outcome<F, S> =
+  try {
+    action().success()
+  } catch (t: Throwable) {
+    if (t is F) {
+      t.failure()
+    } else {
+      throw t
+    }
+  }
+
+inline fun <S> outcomeOf(action: () -> S): Outcome<Exception, S> =
+  try {
+    action().success()
+  } catch (t: Exception) {
+    if (t is InterruptedException) {
+      throw t
+    } else {
+      t.failure()
+    }
+  }
