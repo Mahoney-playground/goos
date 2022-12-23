@@ -5,7 +5,6 @@ import com.github.gundy.semver4j.model.Version
 import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorExtension.Generator
 import org.gradle.api.distribution.plugins.DistributionPlugin.TASK_INSTALL_NAME
 import org.gradle.internal.deprecation.DeprecatableConfiguration
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jmailen.gradle.kotlinter.KotlinterPlugin
 import uk.org.lidalia.gradle.plugins.copywithoutversion.CopyWithoutVersionsTask
 import uk.org.lidalia.gradle.plugins.downloaddeps.DownloadDependenciesPlugin
@@ -92,10 +91,6 @@ subprojects {
 
       withType<Jar>().configureEach {
         archiveVersion.convention(null as String?)
-      }
-
-      withType<KotlinCompile> {
-        kotlinOptions.freeCompilerArgs = listOf("-XXLanguage:+DefinitelyNonNullableTypes")
       }
 
       named<Test>("test") {
