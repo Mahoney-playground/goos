@@ -13,9 +13,15 @@ import uk.org.lidalia.gradle.plugins.idea.IdeaPlugin
 import uk.org.lidalia.gradle.plugins.kotlinflat.KotlinFlatPlugin
 import java.lang.IllegalArgumentException
 
+buildscript {
+  dependencies {
+    classpath("com.github.gundy:semver4j:0.16.4")
+  }
+}
+
 plugins {
   base
-  kotlin("jvm") version "1.6.10" apply false
+  kotlin("jvm") version "1.7.22" apply false
   id("uk.org.lidalia.kotlin-flat") apply false
   id("uk.org.lidalia.idea-ext") apply false
   id("uk.org.lidalia.download-dependencies")
