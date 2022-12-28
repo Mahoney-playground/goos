@@ -7,7 +7,7 @@ import org.gradle.api.distribution.plugins.DistributionPlugin.TASK_INSTALL_NAME
 import org.gradle.internal.deprecation.DeprecatableConfiguration
 import org.jmailen.gradle.kotlinter.KotlinterPlugin
 import uk.org.lidalia.gradle.plugins.copywithoutversion.CopyWithoutVersionsTask
-import uk.org.lidalia.gradle.plugins.downloaddeps.DownloadDependenciesPlugin
+import uk.org.lidalia.gradle.plugin.downloaddependencies.LidaliaDownloadDependenciesPlugin
 import uk.org.lidalia.gradle.plugins.idea.IdeaPlugin
 import uk.org.lidalia.gradle.plugins.kotlinflat.KotlinFlatPlugin
 import java.lang.IllegalArgumentException
@@ -23,7 +23,7 @@ plugins {
   kotlin("jvm") version "1.7.22" apply false
   id("uk.org.lidalia.kotlin-flat") apply false
   id("uk.org.lidalia.idea-ext") apply false
-  id("uk.org.lidalia.download-dependencies")
+  id("uk.org.lidalia.downloaddependencies") version "0.3.0"
   id("uk.org.lidalia.copy-without-version")
   id("com.autonomousapps.dependency-analysis") version "1.18.0"
   id("org.jmailen.kotlinter") version "3.13.0"
@@ -41,7 +41,7 @@ allprojects {
   repositories {
     mavenCentral()
   }
-  apply<DownloadDependenciesPlugin>()
+  apply<LidaliaDownloadDependenciesPlugin>()
   apply<KotlinterPlugin>()
 
   tasks.withType<DependencyUpdatesTask> {

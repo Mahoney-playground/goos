@@ -1,3 +1,10 @@
 includeBuild("../idea-ext")
 includeBuild("../kotlin-flat")
-includeBuild("../download-dependencies")
+pluginManagement {
+  repositories {
+    gradlePluginPortal()
+    maven {
+      url = uri("https://public.mavenrepo.lidalia.org.uk/releases")
+    }
+  }
+}
