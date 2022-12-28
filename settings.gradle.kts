@@ -57,7 +57,7 @@ dependencyResolutionManagement {
         "testcontainers",
         "org.testcontainers",
         "testcontainers",
-        "1.16.2",
+        "1.17.6",
       )
       versionCatalog(
         "slf4j",
