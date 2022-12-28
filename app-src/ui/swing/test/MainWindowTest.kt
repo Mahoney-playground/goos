@@ -9,6 +9,8 @@ import io.mockk.confirmVerified
 import io.mockk.mockk
 import io.mockk.verify
 import net.sourceforge.marathon.javadriver.JavaDriver
+import org.openqa.selenium.remote.CapabilityType.BROWSER_NAME
+import org.openqa.selenium.remote.DesiredCapabilities
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 
@@ -30,7 +32,13 @@ class MainWindowTest : StringSpec({
     mainWindow = MainWindow()
     mainWindow.addUserRequestListener(userRequestListener)
     mainWindow.start()
-    driver = AuctionSniperDriver(JavaDriver())
+    driver = AuctionSniperDriver(
+      JavaDriver(
+        DesiredCapabilities().apply {
+          setCapability(BROWSER_NAME, "java")
+        }
+      )
+    )
   }
 
   afterTest {
