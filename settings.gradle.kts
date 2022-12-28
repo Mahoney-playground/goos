@@ -6,6 +6,12 @@ import uk.org.lidalia.gradle.plugins.terseversioncatalog.versionCatalog
 pluginManagement {
   includeBuild("gradle/build-plugins/include-build-conventions")
   includeBuild("gradle/build-plugins/terse-version-catalog")
+  repositories {
+    gradlePluginPortal()
+    maven {
+      url = uri("https://public.mavenrepo.lidalia.org.uk/releases")
+    }
+  }
 }
 
 plugins {
