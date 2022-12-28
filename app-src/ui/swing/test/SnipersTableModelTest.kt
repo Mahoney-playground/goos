@@ -46,7 +46,7 @@ class SnipersTableModelTest : StringSpec({
 
   fun TableModelEvent.isAnEventAtRow(
     row: Int,
-    eventType: Int
+    eventType: Int,
   ) {
     source shouldBe model
     firstRow shouldBe row
@@ -98,17 +98,17 @@ class SnipersTableModelTest : StringSpec({
       joining(
         ItemData(
           "item 0".toItemId(),
-          1_000
-        )
-      )
+          1_000,
+        ),
+      ),
     )
     model.sniperStateChanged(
       joining(
         ItemData(
           "item 1".toItemId(),
-          1_000
-        )
-      )
+          1_000,
+        ),
+      ),
     )
 
     model.row(0).column(ITEM_IDENTIFIER) shouldBe "item 0".toItemId()
@@ -133,7 +133,7 @@ class SnipersTableModelTest : StringSpec({
     model.row(1) shouldMatch updatedItem1
     model.row(2) shouldMatch item2
   }
-}) {
+},) {
   override fun isolationMode() = InstancePerTest
 }
 
@@ -151,5 +151,5 @@ data class SniperSnapshotData(
   override val item: Item,
   override val lastPrice: Int,
   override val lastBid: Int,
-  override val state: SniperState
+  override val state: SniperState,
 ) : SniperSnapshot

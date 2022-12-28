@@ -5,5 +5,5 @@ import goos.ui.api.ItemId
 
 data class ItemData(
   override val identifier: ItemId,
-  override val stopPrice: Int
+  override val stopPrice: Int,
 ) : Item

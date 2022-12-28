@@ -18,14 +18,14 @@ class StubAuctionTest : StringSpec({
       sniperId = sniperId,
       auctionServer = StubAuctionDriver(
         auctionId = "item-879".toAuctionId(),
-        auctionServer = stubAuctionServer
+        auctionServer = stubAuctionServer,
       ),
       auctionHouse = StubAuctionHouse(
         sniperId,
-        stubAuctionServer
+        stubAuctionServer,
       ),
-    )
+    ),
   )
-}) {
+},) {
   override fun isolationMode() = InstancePerTest
 }

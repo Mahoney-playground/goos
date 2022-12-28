@@ -17,7 +17,7 @@ internal class AuctionSniperEndToEndStubbedTest : StringSpec({
   val stubAuctionServer = StubAuctionServer()
   val auctionHouse = StubAuctionHouse(
     "sniper@auctionhost.internal/Auction".toBidderId(),
-    stubAuctionServer
+    stubAuctionServer,
   )
 
   val ui = StubUi()
@@ -34,7 +34,7 @@ internal class AuctionSniperEndToEndStubbedTest : StringSpec({
     auctionSniperEndToEndTest(
       StubAuctionDriver("item-54321".toAuctionId(), stubAuctionServer),
       StubAuctionDriver("item-65432".toAuctionId(), stubAuctionServer),
-      ApplicationRunner(StubUiDriver(ui))
-    )
+      ApplicationRunner(StubUiDriver(ui)),
+    ),
   )
-})
+},)

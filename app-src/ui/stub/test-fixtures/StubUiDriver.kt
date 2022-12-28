@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 import kotlin.time.ExperimentalTime
 
 class StubUiDriver(
-  private val ui: StubUi
+  private val ui: StubUi,
 ) : UiDriver {
 
   override fun hasBasicAttributes() {}

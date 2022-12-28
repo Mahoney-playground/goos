@@ -15,12 +15,11 @@ import kotlin.time.ExperimentalTime
 fun auctionApiTests(
   sniperId: BidderId,
   auctionServer: AuctionDriver,
-  auctionHouse: AuctionHouse
+  auctionHouse: AuctionHouse,
 ): TestFactory = stringSpec {
   val auctionListener = mockk<AuctionEventListener>(relaxed = true)
 
   "receives events from auction server after joining" {
-
     auctionServer.startSellingItem()
 
     val auction = auctionHouse.getAuction(auctionServer.auctionId, auctionListener)
@@ -36,7 +35,6 @@ fun auctionApiTests(
   }
 
   "stops receiving events from auction server after failure" {
-
     auctionServer.startSellingItem()
 
     val auction = auctionHouse.getAuction(auctionServer.auctionId, auctionListener)
@@ -63,7 +61,7 @@ fun auctionApiTests(
 
 private fun AuctionHouse.getAuction(
   auctionId: AuctionId,
-  auctionListener: AuctionEventListener
+  auctionListener: AuctionEventListener,
 ): Auction = auctionFor(auctionId)
   .apply {
     addAuctionEventListener(auctionListener)
@@ -72,16 +70,18 @@ private fun AuctionHouse.getAuction(
 @ExperimentalTime
 private suspend fun Auction.synchronously(
   numberOfEvents: Int = 1,
-  work: () -> Unit
+  work: () -> Unit,
 ) {
   val eventReceived = CountDownLatch(numberOfEvents)
-  addAuctionEventListener(object : AuctionEventListener {
-    override fun currentPrice(price: Int, increment: Int, source: PriceSource) =
-      eventReceived.countDown()
+  addAuctionEventListener(
+    object : AuctionEventListener {
+      override fun currentPrice(price: Int, increment: Int, source: PriceSource) =
+        eventReceived.countDown()
 
-    override fun auctionClosed() = eventReceived.countDown()
-    override fun auctionFailed() = eventReceived.countDown()
-  })
+      override fun auctionClosed() = eventReceived.countDown()
+      override fun auctionFailed() = eventReceived.countDown()
+    },
+  )
   work()
   eventReceived.await(5.seconds).shouldBeTrue()
 }

@@ -11,7 +11,6 @@ private const val ARG_USERNAME = 1
 private const val ARG_PASSWORD = 2
 
 fun main(vararg args: String) {
-
   Logger.getLogger("").level = WARNING
 
   println("Starting the app.")
@@ -19,7 +18,7 @@ fun main(vararg args: String) {
   val auctionHouse = XMPPAuctionHouse(
     hostname = args[ARG_HOSTNAME],
     username = args[ARG_USERNAME],
-    password = args[ARG_PASSWORD]
+    password = args[ARG_PASSWORD],
   )
 
   val ui = MainWindow()

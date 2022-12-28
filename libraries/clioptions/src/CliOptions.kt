@@ -3,9 +3,8 @@ package uk.org.lidalia.clioptions
 fun Array<String>.withDefaultOption(
   shortOption: Char?,
   longOption: String,
-  value: String
+  value: String,
 ): Array<String> {
-
   val alreadyHasOption =
     (shortOption != null && this.contains("-$shortOption")) ||
       this.any { it.startsWith("--$longOption=") }
@@ -15,7 +14,7 @@ fun Array<String>.withDefaultOption(
 
 fun Array<String>.getOption(
   shortOption: Char?,
-  longOption: String
+  longOption: String,
 ): String? {
   val shortOptionIndex = shortOption?.let { this.indexOfOrNull("-$shortOption") }
   return if (shortOptionIndex != null) {

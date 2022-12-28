@@ -8,7 +8,7 @@ import kotlin.time.ExperimentalTime
 
 class CountDownLatch private constructor(
   private val mutex: Mutex,
-  private val counter: AtomicInteger
+  private val counter: AtomicInteger,
 ) {
 
   init {

@@ -10,7 +10,7 @@ import uk.org.lidalia.kotlinlangext.strings.toMap
 
 internal class AuctionMessageTranslator(
   private val sniperId: BidderId,
-  private val listener: AuctionEventListener
+  private val listener: AuctionEventListener,
 ) {
   fun processMessage(messageText: String?) {
     try {
@@ -21,7 +21,7 @@ internal class AuctionMessageTranslator(
         "PRICE" -> listener.currentPrice(
           price = event.price,
           increment = event.increment,
-          source = event.isFrom(sniperId)
+          source = event.isFrom(sniperId),
         )
       }
     } catch (e: Exception) {
@@ -31,7 +31,7 @@ internal class AuctionMessageTranslator(
 }
 
 private class AuctionEvent(
-  private val fields: Map<String, String>
+  private val fields: Map<String, String>,
 ) {
 
   val type: String = fields.getValue("Event")
@@ -49,8 +49,8 @@ private class AuctionEvent(
     fun from(message: String): AuctionEvent = AuctionEvent(
       message.toMap(
         pairDelimiter = ';',
-        keyValueSeparator = ':'
-      )
+        keyValueSeparator = ':',
+      ),
     )
   }
 }

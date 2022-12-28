@@ -10,7 +10,7 @@ import kotlin.time.ExperimentalTime
 
 class StubAuctionDriver(
   override val auctionId: AuctionId,
-  private val auctionServer: StubAuctionServer = StubAuctionServer()
+  private val auctionServer: StubAuctionServer = StubAuctionServer(),
 ) : AuctionDriver {
 
   override fun startSellingItem() {
@@ -24,14 +24,15 @@ class StubAuctionDriver(
   override fun reportPrice(price: Int, increment: Int, bidder: BidderId) {
     auctionServer.sendToSubscribers(
       auctionId,
-      "SOLVersion: 1.1; Event: PRICE; CurrentPrice: $price; Increment: $increment; Bidder: $bidder;"
+      "SOLVersion: 1.1; " +
+        "Event: PRICE; CurrentPrice: $price; Increment: $increment; Bidder: $bidder;",
     )
   }
 
   override fun sendInvalidMessageContaining(brokenMessage: String) {
     auctionServer.sendToSubscribers(
       auctionId,
-      brokenMessage
+      brokenMessage,
     )
   }
 

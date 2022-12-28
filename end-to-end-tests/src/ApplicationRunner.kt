@@ -10,7 +10,7 @@ import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 internal class ApplicationRunner(
-  private val driver: UiDriver
+  private val driver: UiDriver,
 ) {
 
   fun hasCorrectAppearance() {
@@ -21,7 +21,7 @@ internal class ApplicationRunner(
 
   suspend fun startBiddingIn(
     auction: AuctionDriver,
-    stopPrice: Int = Int.MAX_VALUE
+    stopPrice: Int = Int.MAX_VALUE,
   ) {
     driver.startBiddingFor(auction.auctionId.toItemId(), stopPrice)
     driver.showSniperState(auction.auctionId.toItemId(), 0, 0, STATE_JOINING)

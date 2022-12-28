@@ -15,7 +15,7 @@ suspend fun <A> retry(
   clock: Clock = Clock.systemUTC(),
   timeBetweenRetries: Duration = 10.milliseconds,
   timeoutAfter: Duration = 10.seconds,
-  work: () -> A
+  work: () -> A,
 ) = retry(clock, timeBetweenRetries, clock.instant().plus(timeoutAfter.toJavaDuration()), work)
 
 @ExperimentalTime
@@ -23,19 +23,20 @@ tailrec suspend fun <A> retry(
   clock: Clock,
   timeBetweenRetries: Duration,
   timeout: Instant,
-  work: () -> A
+  work: () -> A,
 ): A =
   when (val result = Either.catch(work)) {
     is Either.Right<A> -> result.value
     is Either.Left<Throwable> ->
-      if (timeout.inPast(clock)) throw result.value
-      else {
+      if (timeout.inPast(clock)) {
+        throw result.value
+      } else {
         delay(timeBetweenRetries)
         retry(
           clock = clock,
           timeBetweenRetries = timeBetweenRetries * 2,
           timeout = timeout,
-          work = work
+          work = work,
         )
       }
   }

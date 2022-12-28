@@ -12,6 +12,6 @@ fun xmppAuctionApiTests() = auctionApiTests(
   auctionHouse = XMPPAuctionHouse(
     hostname = "auctionhost.internal",
     username = "sniper",
-    password = "sniper"
-  )
+    password = "sniper",
+  ),
 )

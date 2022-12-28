@@ -14,7 +14,7 @@ interface AuctionEventListener {
   fun currentPrice(
     price: Int,
     increment: Int,
-    source: PriceSource
+    source: PriceSource,
   )
 
   fun auctionFailed()
@@ -27,7 +27,7 @@ class MultiAuctionEventListener : AuctionEventListener, Notifier<AuctionEventLis
   override fun currentPrice(
     price: Int,
     increment: Int,
-    source: PriceSource
+    source: PriceSource,
   ) = notify { currentPrice(price, increment, source) }
 
   override fun auctionFailed() = notify { auctionFailed() }

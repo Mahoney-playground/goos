@@ -11,7 +11,7 @@ import goos.ui.api.SniperNotifier
 
 internal class AuctionSniper(
   val item: Item,
-  private val auction: Auction
+  private val auction: Auction,
 ) : AuctionEventListener, SniperNotifier {
 
   private val sniperListeners = MultiSniperListener()
@@ -29,7 +29,7 @@ internal class AuctionSniper(
   override fun currentPrice(
     price: Int,
     increment: Int,
-    source: PriceSource
+    source: PriceSource,
   ) {
     snapshot = if (source == FromSniper) {
       snapshot.winning(price)

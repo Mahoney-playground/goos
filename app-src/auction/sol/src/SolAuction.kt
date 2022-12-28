@@ -8,20 +8,22 @@ import goos.auction.api.NoOpAuctionEventListener
 
 class SolAuction(
   sniperId: BidderId,
-  transportFactory: (MessageListener) -> MessageTransport
+  transportFactory: (MessageListener) -> MessageTransport,
 ) : Auction {
 
   private val auctionEventListeners = MultiAuctionEventListener()
   private val auctionMessageTranslator = AuctionMessageTranslator(
     sniperId,
-    auctionEventListeners
+    auctionEventListeners,
   )
 
-  private val transport = transportFactory(object : MessageListener {
-    override fun processMessage(body: String?) {
-      auctionMessageTranslator.processMessage(body)
-    }
-  })
+  private val transport = transportFactory(
+    object : MessageListener {
+      override fun processMessage(body: String?) {
+        auctionMessageTranslator.processMessage(body)
+      }
+    },
+  )
 
   init {
     addAuctionEventListener(disconnectOnFailure())

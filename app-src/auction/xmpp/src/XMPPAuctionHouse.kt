@@ -19,16 +19,16 @@ import kotlin.concurrent.withLock
 class XMPPAuctionHouse(
   hostname: String,
   private val username: String,
-  private val password: String
+  private val password: String,
 ) : AuctionHouse {
 
   private val connection: XMPPTCPConnection = XMPPTCPConnection(
     XMPPTCPConnectionConfiguration.builder()
       .setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)
       .setXmppDomain(
-        JidCreate.domainBareFrom(hostname)
+        JidCreate.domainBareFrom(hostname),
       )
-      .build()
+      .build(),
   )
 
   override fun auctionFor(auctionId: AuctionId): Auction {
@@ -56,13 +56,14 @@ class XMPPAuctionHouse(
     connection.login(
       username,
       password,
-      Resourcepart.from("Auction")
+      Resourcepart.from("Auction"),
     )
   }
 
   override fun disconnect() {
-    if (connection.isConnected)
+    if (connection.isConnected) {
       connection.disconnect()
+    }
   }
 
   companion object {

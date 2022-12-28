@@ -8,6 +8,6 @@ import kotlin.time.ExperimentalTime
 @ExperimentalTime
 internal class XMPPAuctionTest : StringSpec({
   include(xmppAuctionApiTests())
-}) {
+},) {
   override fun isolationMode() = InstancePerTest
 }

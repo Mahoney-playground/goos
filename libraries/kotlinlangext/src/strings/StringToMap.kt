@@ -2,7 +2,7 @@ package uk.org.lidalia.kotlinlangext.strings
 
 fun String.toMap(
   pairDelimiter: Char,
-  keyValueSeparator: Char
+  keyValueSeparator: Char,
 ): Map<String, String> =
   split(pairDelimiter)
     .map { it.split(keyValueSeparator, limit = 2) }
@@ -12,6 +12,8 @@ fun List<List<String>>.toMap(): Map<String, String> =
   mapNotNull { it.toPair() }.toMap()
 
 fun List<String>.toPair(): Pair<String, String>? =
-  if (this.size >= 2)
+  if (this.size >= 2) {
     this[0].trim() to this[1].trim()
-  else null
+  } else {
+    null
+  }

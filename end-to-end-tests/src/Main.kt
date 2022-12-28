@@ -6,7 +6,6 @@ import java.util.logging.Logger
 import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
-
   Logger.getLogger("").level = WARNING
 
   val exitCode = runTests(args)

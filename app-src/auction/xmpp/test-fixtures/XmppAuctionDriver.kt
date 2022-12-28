@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit.SECONDS
 import kotlin.time.ExperimentalTime
 
 class XmppAuctionDriver(
-  override val auctionId: AuctionId
+  override val auctionId: AuctionId,
 ) : AuctionDriver {
 
   private val connection by lazy {
@@ -33,7 +33,7 @@ class XmppAuctionDriver(
       XMPPTCPConnectionConfiguration.builder()
         .setSecurityMode(disabled)
         .setXmppDomain(XMPP_DOMAIN)
-        .build()
+        .build(),
     )
   }
 
@@ -41,7 +41,6 @@ class XmppAuctionDriver(
   private var currentChat: Chat? = null
 
   override fun startSellingItem() {
-
     createAuctionItem(auctionId)
     connection.connect()
     connection.login("auction-$auctionId", AUCTION_PASSWORD, Resourcepart.from(AUCTION_RESOURCE))
@@ -62,13 +61,13 @@ class XmppAuctionDriver(
       XMPPTCPConnectionConfiguration.builder()
         .setSecurityMode(disabled)
         .setXmppDomain(XMPP_DOMAIN)
-        .build()
+        .build(),
     )
     c.connect()
     c.login("admin", "admin")
     ServiceAdministrationManager.getInstanceFor(c).addUser(
       JidCreate.entityBareFrom("$username@$XMPP_DOMAIN"),
-      password
+      password,
     )
     c.disconnect()
   }
@@ -86,7 +85,7 @@ class XmppAuctionDriver(
 
   private fun hasReceivedMessage(
     sniperId: BidderId,
-    matcher: (String?) -> Unit
+    matcher: (String?) -> Unit,
   ) {
     messageListener.receivesAMessage(matcher)
     currentChat!!.participant.toBidderId() shouldBe sniperId
@@ -107,7 +106,8 @@ class XmppAuctionDriver(
 
   override fun reportPrice(price: Int, increment: Int, bidder: BidderId) =
     currentChat!!.sendMessage(
-      "SOLVersion: 1.1; Event: PRICE; CurrentPrice: $price; Increment: $increment; Bidder: $bidder;"
+      "SOLVersion: 1.1; " +
+        "Event: PRICE; CurrentPrice: $price; Increment: $increment; Bidder: $bidder;",
     )
 
   override fun sendInvalidMessageContaining(brokenMessage: String) {

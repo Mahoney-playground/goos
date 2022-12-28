@@ -7,11 +7,9 @@ import io.kotest.matchers.shouldBe
 @Suppress("UNUSED_PARAMETER")
 fun uiApiTests(
   ui: UI,
-  uiDriver: UiDriver
+  uiDriver: UiDriver,
 ): TestFactory = stringSpec {
-
   "a test" {
-
     true shouldBe true
   }
 }

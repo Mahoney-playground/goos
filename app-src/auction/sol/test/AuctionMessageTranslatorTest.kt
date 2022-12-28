@@ -27,7 +27,7 @@ class AuctionMessageTranslatorTest : StringSpec({
   "notifies bid details when current price message received from other bidder" {
 
     translator.processMessage(
-      "SOLVERSION: 1.1; Event: PRICE; CurrentPrice: 192; Increment: 7; Bidder: Someone else;"
+      "SOLVERSION: 1.1; Event: PRICE; CurrentPrice: 192; Increment: 7; Bidder: Someone else;",
     )
 
     verify(exactly = 1) {
@@ -38,7 +38,7 @@ class AuctionMessageTranslatorTest : StringSpec({
   "notifies bid details when current price message received from sniper" {
 
     translator.processMessage(
-      "SOLVERSION: 1.1; Event: PRICE; CurrentPrice: 192; Increment: 7; Bidder: $SNIPER_ID;"
+      "SOLVERSION: 1.1; Event: PRICE; CurrentPrice: 192; Increment: 7; Bidder: $SNIPER_ID;",
     )
 
     verify(exactly = 1) {
@@ -49,7 +49,7 @@ class AuctionMessageTranslatorTest : StringSpec({
   "notifies auction failed when bad message received" {
 
     translator.processMessage(
-      "a bad message"
+      "a bad message",
     )
 
     verify(exactly = 1) {
@@ -64,7 +64,7 @@ class AuctionMessageTranslatorTest : StringSpec({
   afterTest {
     confirmVerified(listener)
   }
-}) {
+},) {
   override fun isolationMode() = InstancePerTest
 
   companion object {

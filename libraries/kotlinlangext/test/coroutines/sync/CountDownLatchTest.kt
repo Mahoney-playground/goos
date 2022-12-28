@@ -24,7 +24,7 @@ class CountDownLatchTest : StringSpec({
     0,
     1,
     10,
-    1_000_000
+    1_000_000,
   ).forEach { initialCount ->
     "initial count $initialCount is allowed" {
       CountDownLatch(initialCount).count shouldBe initialCount
@@ -33,7 +33,7 @@ class CountDownLatchTest : StringSpec({
 
   listOf(
     -1,
-    -1_000_000
+    -1_000_000,
   ).forEach { initialCount ->
     "initial count $initialCount is not allowed" {
       val e = shouldThrow<IllegalArgumentException> {
@@ -139,15 +139,14 @@ class CountDownLatchTest : StringSpec({
     awaitedInTime.await() shouldBe false
     events shouldBe listOf(1, 2, 3)
   }
-})
+},)
 
 suspend fun inParallel(
   numberOfCoroutines: Int = 100,
   repeatsPerCoroutine: Int = 1,
-  block: suspend () -> Unit
+  block: suspend () -> Unit,
 ) {
   withContext(Dispatchers.Default) {
-
     coroutineScope { // scope for coroutines
       repeat(numberOfCoroutines) {
         launch {

@@ -16,7 +16,7 @@ class SniperStateTest : StringSpec({
     JOINING to LOST,
     BIDDING to LOST,
     WINNING to WON,
-    LOSING to LOST
+    LOSING to LOST,
   ).forEach { (initial, whenAuctionClosed) ->
     "$initial should become $whenAuctionClosed when closed" {
       initial.whenAuctionClosed() shouldBe whenAuctionClosed
@@ -25,7 +25,7 @@ class SniperStateTest : StringSpec({
 
   listOf(
     LOST,
-    WON
+    WON,
   ).forEach { initial ->
     "$initial should not be closeable" {
       val defect = shouldThrow<Defect> {
@@ -34,4 +34,4 @@ class SniperStateTest : StringSpec({
       defect.message shouldBe "Auction is already closed"
     }
   }
-})
+},)

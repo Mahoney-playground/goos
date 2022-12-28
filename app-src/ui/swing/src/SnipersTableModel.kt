@@ -17,7 +17,7 @@ internal class SnipersTableModel :
   override fun getColumnCount(): Int = Column.values().size
   override fun getRowCount(): Int = sniperSnapshots.size
   override fun getColumnName(column: Int): String = Column.at(
-    column
+    column,
   ).title
 
   override fun getValueAt(rowIndex: Int, columnIndex: Int): Any {
@@ -26,7 +26,7 @@ internal class SnipersTableModel :
   }
 
   override fun sniperStateChanged(
-    sniperSnapshot: SniperSnapshot
+    sniperSnapshot: SniperSnapshot,
   ) {
     val index = sniperSnapshots.indexOfFirstOrNull { it.isForSameItemAs(sniperSnapshot) }
     if (index == null) {
@@ -65,7 +65,7 @@ internal enum class Column(val title: String) {
   },
   SNIPER_STATE("State") {
     override fun valueIn(snapshot: SniperSnapshot) = snapshot.stateText()
-  };
+  }, ;
 
   abstract fun valueIn(snapshot: SniperSnapshot): Any
 

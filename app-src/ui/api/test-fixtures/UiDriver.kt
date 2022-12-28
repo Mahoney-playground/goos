@@ -10,7 +10,7 @@ interface UiDriver : AutoCloseable {
     itemId: ItemId,
     lastPrice: Int,
     lastBid: Int,
-    stateText: String
+    stateText: String,
   )
 
   fun hasTitle(title: String)

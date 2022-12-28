@@ -9,6 +9,6 @@ import kotlin.time.ExperimentalTime
 class StubUiTest : StringSpec({
   val ui = StubUi()
   include(uiApiTests(ui, StubUiDriver(ui)))
-}) {
+},) {
   override fun isolationMode() = InstancePerTest
 }

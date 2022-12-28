@@ -34,4 +34,4 @@ class SniperLauncherTest : StringSpec({
       auction.join()
     }
   }
-})
+},)

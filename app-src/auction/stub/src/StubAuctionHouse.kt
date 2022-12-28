@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 class StubAuctionHouse(
   private val sniperId: BidderId,
-  private val stubAuctionServer: StubAuctionServer
+  private val stubAuctionServer: StubAuctionServer,
 ) : AuctionHouse {
 
   private val connected: AtomicBoolean = AtomicBoolean(false)
@@ -32,7 +32,7 @@ class StubAuctionHouse(
 
 class StubMessageTransport(
   private val sniperId: BidderId,
-  private val messageSink: (BidderId, String) -> Unit
+  private val messageSink: (BidderId, String) -> Unit,
 ) : MessageTransport {
   override fun sendMessage(message: String) {
     messageSink(sniperId, message)

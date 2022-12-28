@@ -36,8 +36,8 @@ class MainWindowTest : StringSpec({
       JavaDriver(
         DesiredCapabilities().apply {
           setCapability(BROWSER_NAME, "java")
-        }
-      )
+        },
+      ),
     )
   }
 
@@ -60,8 +60,8 @@ class MainWindowTest : StringSpec({
         userRequestListener.joinAuction(
           ItemData(
             "an item-id".toItemId(),
-            stopPrice = 11_000
-          )
+            stopPrice = 11_000,
+          ),
         )
       }
     }
@@ -79,4 +79,4 @@ class MainWindowTest : StringSpec({
     }
     confirmVerified(userRequestListener)
   }
-})
+},)

@@ -5,7 +5,7 @@ import goos.ui.api.SniperSnapshot
 import javax.swing.SwingUtilities
 
 internal class SwingThreadSniperListener(
-  private val decorated: SniperListener
+  private val decorated: SniperListener,
 ) : SniperListener {
 
   override fun sniperStateChanged(sniperSnapshot: SniperSnapshot) =

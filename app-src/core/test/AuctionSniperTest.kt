@@ -35,8 +35,8 @@ class AuctionSniperTest : StringSpec({
           item,
           0,
           0,
-          LOST
-        )
+          LOST,
+        ),
       )
     }
   }
@@ -51,8 +51,8 @@ class AuctionSniperTest : StringSpec({
           item,
           123,
           168,
-          BIDDING
-        )
+          BIDDING,
+        ),
       )
     }
     verify(exactly = 1) {
@@ -61,8 +61,8 @@ class AuctionSniperTest : StringSpec({
           item,
           123,
           168,
-          LOST
-        )
+          LOST,
+        ),
       )
     }
   }
@@ -77,8 +77,8 @@ class AuctionSniperTest : StringSpec({
           item,
           123,
           0,
-          WINNING
-        )
+          WINNING,
+        ),
       )
     }
     verify(exactly = 1) {
@@ -87,8 +87,8 @@ class AuctionSniperTest : StringSpec({
           item,
           123,
           0,
-          WON
-        )
+          WON,
+        ),
       )
     }
   }
@@ -108,8 +108,8 @@ class AuctionSniperTest : StringSpec({
           item,
           price,
           bid,
-          BIDDING
-        )
+          BIDDING,
+        ),
       )
     }
   }
@@ -128,8 +128,8 @@ class AuctionSniperTest : StringSpec({
           item,
           price,
           0,
-          WINNING
-        )
+          WINNING,
+        ),
       )
     }
   }
@@ -142,7 +142,7 @@ class AuctionSniperTest : StringSpec({
     val stopPriceItem = ItemData(ITEM_ID, (price + increment) - 1)
     val stopPriceSniper = AuctionSniper(
       stopPriceItem,
-      auction = auction
+      auction = auction,
     ).apply {
       addSniperListener(sniperListener)
     }
@@ -156,8 +156,8 @@ class AuctionSniperTest : StringSpec({
           stopPriceItem,
           lastPrice = price,
           lastBid = 0,
-          coreState = LOSING
-        )
+          coreState = LOSING,
+        ),
       )
     }
   }
@@ -173,12 +173,12 @@ class AuctionSniperTest : StringSpec({
           item,
           lastPrice = 0,
           lastBid = 0,
-          coreState = FAILED
-        )
+          coreState = FAILED,
+        ),
       )
     }
   }
-}) {
+},) {
   override fun isolationMode() = IsolationMode.InstancePerTest
 
   companion object {

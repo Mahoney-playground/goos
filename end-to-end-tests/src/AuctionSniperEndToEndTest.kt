@@ -18,10 +18,10 @@ internal class AuctionSniperEndToEndTest : StringSpec({
     auctionSniperEndToEndTest(
       XmppAuctionDriver("item-54321".toAuctionId()),
       XmppAuctionDriver("item-65432".toAuctionId()),
-      ApplicationRunner(AuctionSniperDriver())
-    )
+      ApplicationRunner(AuctionSniperDriver()),
+    ),
   )
-}) {
+},) {
   override fun isolationMode() = InstancePerTest
 }
 
@@ -29,15 +29,13 @@ internal class AuctionSniperEndToEndTest : StringSpec({
 internal fun auctionSniperEndToEndTest(
   auction: AuctionDriver,
   auction2: AuctionDriver,
-  application: ApplicationRunner
+  application: ApplicationRunner,
 ) = stringSpec {
-
   "basic appearance of the app" {
     application.hasCorrectAppearance()
   }
 
   "sniper joins auction, loses without bidding" {
-
     auction.startSellingItem()
 
     application.startBiddingIn(auction)
@@ -48,7 +46,6 @@ internal fun auctionSniperEndToEndTest(
   }
 
   "sniper joins auction, bids and loses" {
-
     auction.startSellingItem()
 
     application.startBiddingIn(auction)
@@ -63,7 +60,6 @@ internal fun auctionSniperEndToEndTest(
   }
 
   "sniper wins an auction by bidding higher" {
-
     auction.startSellingItem()
 
     application.startBiddingIn(auction)
@@ -81,7 +77,6 @@ internal fun auctionSniperEndToEndTest(
   }
 
   "sniper loses an auction after bidding" {
-
     auction.startSellingItem()
 
     application.startBiddingIn(auction)
@@ -104,7 +99,6 @@ internal fun auctionSniperEndToEndTest(
   }
 
   "sniper bids for multiple items" {
-
     auction.startSellingItem()
     auction2.startSellingItem()
 
@@ -132,7 +126,6 @@ internal fun auctionSniperEndToEndTest(
   }
 
   "sniper loses an auction when the price is too high" {
-
     auction.startSellingItem()
     application.startBiddingIn(auction, stopPrice = 1_100)
     auction.hasReceivedJoinRequestFrom(SNIPER_XMPP_ID)
@@ -152,7 +145,6 @@ internal fun auctionSniperEndToEndTest(
   }
 
   "sniper reports invalid auction message and stops responding to events" {
-
     auction.startSellingItem()
     application.startBiddingIn(auction)
 
@@ -176,7 +168,7 @@ internal fun auctionSniperEndToEndTest(
 
 @ExperimentalTime
 internal suspend fun ApplicationRunner.waitForAnotherAuctionEvent(
-  auction2: AuctionDriver
+  auction2: AuctionDriver,
 ) {
   auction2.startSellingItem()
   startBiddingIn(auction2)

@@ -17,11 +17,11 @@ import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 
 class AuctionSniperDriver(
-  private val driver: WebDriver
+  private val driver: WebDriver,
 ) : UiDriver {
 
   constructor(url: URL = URL("http://app.internal:1234")) : this(
-    RemoteWebDriver(url, DesiredCapabilities("java", "1.0", Platform.ANY))
+    RemoteWebDriver(url, DesiredCapabilities("java", "1.0", Platform.ANY)),
   )
 
   override fun hasBasicAttributes() {
@@ -34,17 +34,17 @@ class AuctionSniperDriver(
     itemId: ItemId,
     lastPrice: Int,
     lastBid: Int,
-    stateText: String
+    stateText: String,
   ) = eventually(5.seconds) {
     val table = JTableDriver(
-      driver.findElement(By.name(SNIPERS_TABLE_NAME))
+      driver.findElement(By.name(SNIPERS_TABLE_NAME)),
     )
 
     table.hasRow(
       { it shouldBe itemId.value },
       { it shouldBe lastPrice.toString() },
       { it shouldBe lastBid.toString() },
-      { it shouldBe stateText }
+      { it shouldBe stateText },
     )
   }
 
@@ -97,7 +97,7 @@ class AuctionSniperDriver(
 private fun WebDriver.rootElement() = findElement(By.cssSelector("."))
 
 private class JTableDriver(
-  private val element: WebElement
+  private val element: WebElement,
 ) {
   fun hasRow(vararg cellMatchers: (String) -> Unit) {
     (1 until element.rowCount() + 1).toList().forOne { rowNum ->

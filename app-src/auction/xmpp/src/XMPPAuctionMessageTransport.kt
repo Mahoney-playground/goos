@@ -11,7 +11,7 @@ import org.jxmpp.jid.EntityJid
 internal class XMPPAuctionMessageTransport(
   connection: XMPPConnection,
   userJID: EntityJid,
-  messageListener: MessageListener
+  messageListener: MessageListener,
 ) : MessageTransport {
 
   private val chat = ChatManager.getInstanceFor(connection)

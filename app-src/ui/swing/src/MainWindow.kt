@@ -43,11 +43,13 @@ class MainWindow : JFrame("Auction Sniper"), UI {
       pack()
       defaultCloseOperation = EXIT_ON_CLOSE
       isVisible = true
-      addWindowListener(object : WindowAdapter() {
-        override fun windowClosing(e: WindowEvent) {
-          userRequests.closeApplication()
-        }
-      })
+      addWindowListener(
+        object : WindowAdapter() {
+          override fun windowClosing(e: WindowEvent) {
+            userRequests.closeApplication()
+          }
+        },
+      )
     }
   }
 
@@ -58,7 +60,6 @@ class MainWindow : JFrame("Auction Sniper"), UI {
   }
 
   private fun makeControls() = JPanel(FlowLayout()).apply {
-
     val itemIdField = JTextField().apply {
       columns = 25
       name = NEW_ITEM_ID_NAME
@@ -72,14 +73,14 @@ class MainWindow : JFrame("Auction Sniper"), UI {
     add(
       JLabel("Item:").apply {
         labelFor = itemIdField
-      }
+      },
     )
     add(itemIdField)
 
     add(
       JLabel("Stop price:").apply {
         labelFor = stopPriceField
-      }
+      },
     )
     add(stopPriceField)
 
@@ -91,17 +92,17 @@ class MainWindow : JFrame("Auction Sniper"), UI {
             ItemData(
               itemIdField.text.toItemId(),
               (stopPriceField.value as Long).toInt(),
-            )
+            ),
           )
         }
-      }
+      },
     )
   }
 
   private fun fillContentPane(
     snipersTable: JTable,
     controls: Component,
-    connectionControls: Component
+    connectionControls: Component,
   ) {
     contentPane.apply {
       add(
@@ -111,7 +112,7 @@ class MainWindow : JFrame("Auction Sniper"), UI {
           add(JScrollPane(snipersTable), CENTER)
           add(connectionControls, SOUTH)
           pack()
-        }
+        },
       )
     }
   }
@@ -121,7 +122,7 @@ class MainWindow : JFrame("Auction Sniper"), UI {
       JButton("Reset").apply {
         name = SNIPER_RESET_BUTTON_NAME
         addActionListener { userRequests.reset() }
-      }
+      },
     )
   }
 

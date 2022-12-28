@@ -7,17 +7,16 @@ import uk.org.lidalia.kotlinlangext.threads.blockUntilShutdown
 
 class Core(
   private val auctionHouse: AuctionHouse,
-  private val ui: UI
+  private val ui: UI,
 ) {
 
   fun run() {
-
     val portfolio = SniperPortfolio()
     val shutdownSignal = Signal.notTriggered()
     val sniperLauncher = SniperLauncher(
       auctionHouse,
       portfolio,
-      shutdownSignal
+      shutdownSignal,
     )
 
     ui.addUserRequestListener(sniperLauncher)

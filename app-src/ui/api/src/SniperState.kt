@@ -7,7 +7,8 @@ enum class SniperState {
   BIDDING,
   WINNING,
   LOSING,
-  FAILED;
+  FAILED,
+  ;
 }
 
 fun SniperState.text(): String = when (this) {

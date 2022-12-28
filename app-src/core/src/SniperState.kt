@@ -1,7 +1,7 @@
 package goos.core
 
 enum class SniperState(
-  private val whenAuctionClosed: SniperState?
+  private val whenAuctionClosed: SniperState?,
 ) {
   LOST(null),
   WON(null),
@@ -9,7 +9,8 @@ enum class SniperState(
   BIDDING(LOST),
   WINNING(WON),
   LOSING(LOST),
-  FAILED(null);
+  FAILED(null),
+  ;
 
   internal fun whenAuctionClosed(): SniperState =
     whenAuctionClosed ?: throw Defect("Auction is already closed")

@@ -17,6 +17,7 @@ class StubUi : UI {
 
   @Volatile
   var itemField: String = ""
+
   @Volatile
   var stopPriceField: String = ""
   val started = AtomicBoolean(false)
@@ -30,16 +31,18 @@ class StubUi : UI {
 
   override val portfolioListener: PortfolioListener = object : PortfolioListener {
     override fun sniperAdded(sniper: SniperNotifier) {
-      sniper.addSniperListener(object : SniperListener {
-        override fun sniperStateChanged(sniperSnapshot: SniperSnapshot) {
-          snipers[sniperSnapshot.item.identifier] = SniperRow(
-            itemId = sniperSnapshot.item.identifier,
-            lastPrice = sniperSnapshot.lastPrice,
-            lastBid = sniperSnapshot.lastBid,
-            stateText = sniperSnapshot.stateText(),
-          )
-        }
-      })
+      sniper.addSniperListener(
+        object : SniperListener {
+          override fun sniperStateChanged(sniperSnapshot: SniperSnapshot) {
+            snipers[sniperSnapshot.item.identifier] = SniperRow(
+              itemId = sniperSnapshot.item.identifier,
+              lastPrice = sniperSnapshot.lastPrice,
+              lastBid = sniperSnapshot.lastBid,
+              stateText = sniperSnapshot.stateText(),
+            )
+          }
+        },
+      )
     }
 
     override fun reset() {
