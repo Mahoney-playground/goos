@@ -6,8 +6,6 @@ plugins {
 dependencies {
   implementation(libs.kotest.frameworkApiJvm)
 
-  implementation(libs.coroutines.core)
-
   implementation(projects.testlauncher)
   implementation(testFixtures(projects.auctionXmpp))
 

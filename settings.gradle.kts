@@ -120,7 +120,7 @@ dependencyResolutionManagement {
       versionCatalog(
         "dockerJava",
         "com.github.docker-java", { "docker-java-$it" }, "3.2.14",
-        "core",
+        "api",
       )
       versionCatalog(
         "junitPlatform",

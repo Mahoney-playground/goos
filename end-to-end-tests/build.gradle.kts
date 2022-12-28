@@ -10,17 +10,20 @@ dependencies {
 
   implementation(libs.kotest.frameworkApi)
   implementation(libs.kotest.frameworkApiJvm)
+  implementation(projects.uiApi)
   implementation(testFixtures(projects.uiSwing))
+  implementation(projects.auctionApi)
   implementation(testFixtures(projects.auctionXmpp))
 
-  implementation(libs.coroutines.core)
   constraints {
     implementation(libs.mockk.core)
   }
 
   implementation(projects.testlauncher)
 
+  testImplementation(projects.uiStub)
   testImplementation(testFixtures(projects.uiStub))
+  testImplementation(projects.auctionStub)
   testImplementation(testFixtures(projects.auctionStub))
   testImplementation(projects.core)
 }

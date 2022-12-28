@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
   api(libs.testcontainers)
-  implementation(libs.dockerJava.core)
+  implementation(libs.dockerJava.api)
 }
 
 idea {

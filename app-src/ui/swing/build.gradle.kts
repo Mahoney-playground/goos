@@ -19,6 +19,9 @@ dependencies {
   testImplementation(libs.mockk.core)
   testImplementation(libs.mockk.dsl)
   testImplementation(libs.kotest.frameworkApiJvm)
+  testImplementation(libs.kotest.assertionsShared)
+  testImplementation(libs.selenium.api)
+  testImplementation(libs.selenium.remoteDriver)
 }
 
 idea {
