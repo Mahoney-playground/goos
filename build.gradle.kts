@@ -27,7 +27,7 @@ plugins {
   id("uk.org.lidalia.copy-without-version")
   id("com.autonomousapps.dependency-analysis") version "1.18.0"
   id("org.jmailen.kotlinter") version "3.8.0"
-  id("com.vanniktech.dependency.graph.generator") version "0.5.0"
+  id("com.vanniktech.dependency.graph.generator") version "0.8.0"
   id("com.github.ben-manes.versions") version "0.44.0"
   id("com.dorongold.task-tree") version "2.1.0"
 }
@@ -129,18 +129,22 @@ subprojects {
 }
 
 dependencyGraphGenerator {
-  generators = listOf(
-    Generator.ALL.copy(
-      includeProject = { it.pluginManager.hasPlugin("java") }
-    ),
-    Generator(
-      name = "main",
-      include = {
-        !it.moduleGroup.startsWith("org.jetbrains")
-      },
-      includeProject = { it.pluginManager.hasPlugin("java") }
+  generators {
+    add(
+      Generator.ALL.copy(
+        includeProject = { it.pluginManager.hasPlugin("java") }
+      )
     )
-  )
+    add(
+      Generator(
+        name = "main",
+        include = {
+          !it.moduleGroup.startsWith("org.jetbrains")
+        },
+        includeProject = { it.pluginManager.hasPlugin("java") }
+      )
+    )
+  }
 }
 
 val appJavaAgents: Configuration by configurations.creating
