@@ -71,7 +71,7 @@ dependencyResolutionManagement {
       )
       versionCatalog(
         "smack",
-        "org.igniterealtime.smack", { "smack-$it" }, "4.4.4",
+        "org.igniterealtime.smack", { "smack-$it" }, "4.4.6",
         "core",
         "tcp",
         "im",
