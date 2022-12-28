@@ -39,7 +39,7 @@ dependencyResolutionManagement {
     create("libs") {
       versionCatalog(
         "kotest",
-        "io.kotest", { "kotest-$it" }, "5.1.0",
+        "io.kotest", { "kotest-$it" }, "5.5.4",
         "common-jvm",
         "framework-api",
         "framework-api-jvm",
@@ -85,7 +85,7 @@ dependencyResolutionManagement {
       )
       versionCatalog(
         "mockk",
-        "io.mockk", { if (it == null) "mockk" else "mockk-$it" }, "1.12.1",
+        "io.mockk", { if (it == null) "mockk" else "mockk-$it" }, "1.13.3",
         null,
         "dsl-jvm",
         "dsl",
@@ -113,7 +113,7 @@ dependencyResolutionManagement {
       )
       versionCatalog(
         "coroutines",
-        "org.jetbrains.kotlinx", { "kotlinx-coroutines-$it" }, "1.5.2",
+        "org.jetbrains.kotlinx", { "kotlinx-coroutines-$it" }, "1.6.4",
         "core",
         "core-jvm",
       )
@@ -124,7 +124,7 @@ dependencyResolutionManagement {
       )
       versionCatalog(
         "junitPlatform",
-        "org.junit.platform", { "junit-platform-$it" }, "1.8.2",
+        "org.junit.platform", { "junit-platform-$it" }, "1.9.1",
         "console",
       )
       versionCatalog(
