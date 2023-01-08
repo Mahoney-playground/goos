@@ -1,4 +1,3 @@
-includeBuild("../idea-ext")
 includeBuild("../kotlin-flat")
 pluginManagement {
   repositories {

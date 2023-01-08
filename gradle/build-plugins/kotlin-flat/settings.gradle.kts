@@ -1,4 +1,3 @@
-includeBuild("../idea-ext")
 pluginManagement {
   repositories {
     gradlePluginPortal()
