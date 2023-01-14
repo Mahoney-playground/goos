@@ -8,7 +8,7 @@ import org.gradle.internal.deprecation.DeprecatableConfiguration
 import org.jmailen.gradle.kotlinter.KotlinterPlugin
 import uk.org.lidalia.gradle.plugins.copywithoutversion.CopyWithoutVersionsTask
 import uk.org.lidalia.gradle.plugin.downloaddependencies.LidaliaDownloadDependenciesPlugin
-import uk.org.lidalia.gradle.plugins.idea.IdeaPlugin
+import uk.org.lidalia.gradle.plugin.ideaext.LidaliaIdeaExtPlugin
 import uk.org.lidalia.gradle.plugins.kotlinflat.KotlinFlatPlugin
 import java.lang.IllegalArgumentException
 
@@ -22,7 +22,7 @@ plugins {
   base
   kotlin("jvm") version "1.7.22" apply false
   id("uk.org.lidalia.kotlin-flat") apply false
-  id("uk.org.lidalia.idea-ext") apply false
+  id("uk.org.lidalia.ideaext") version "0.1.0" apply false
   id("uk.org.lidalia.downloaddependencies") version "0.3.0"
   id("uk.org.lidalia.copy-without-version")
   id("com.autonomousapps.dependency-analysis") version "1.18.0"
@@ -62,7 +62,7 @@ subprojects {
 
     apply<KotlinFlatPlugin>()
     apply<BuildDashboardPlugin>()
-    apply<IdeaPlugin>()
+    apply<LidaliaIdeaExtPlugin>()
 
     configure<JavaPluginExtension> {
       toolchain {

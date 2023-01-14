@@ -3,7 +3,7 @@ plugins {
   `java-gradle-plugin`
   id("org.jmailen.kotlinter") version "3.6.0"
   id("uk.org.lidalia.downloaddependencies") version "0.3.0"
-  id("uk.org.lidalia.idea-ext")
+  id("uk.org.lidalia.ideaext") version "0.1.0"
 }
 
 repositories {
