@@ -22,8 +22,8 @@ plugins {
   base
   kotlin("jvm") version "1.7.22" apply false
   id("uk.org.lidalia.kotlin-flat") apply false
-  id("uk.org.lidalia.ideaext") version "0.1.0" apply false
-  id("uk.org.lidalia.downloaddependencies") version "0.3.0"
+  id("uk.org.lidalia.ideaext") version "0.2.0" apply false
+  id("uk.org.lidalia.downloaddependencies") version "0.4.0"
   id("uk.org.lidalia.copy-without-version")
   id("com.autonomousapps.dependency-analysis") version "1.18.0"
   id("org.jmailen.kotlinter") version "3.13.0"
