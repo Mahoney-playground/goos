@@ -1,5 +1,5 @@
 plugins {
-  kotlin("jvm") version "1.5.21"
+  kotlin("jvm") version "1.8.0"
   id("org.jmailen.kotlinter") version "3.6.0"
   id("uk.org.lidalia.ideaext") version "0.2.0"
   id("uk.org.lidalia.kotlin-flat")
