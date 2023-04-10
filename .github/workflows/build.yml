@@ -120,7 +120,7 @@ jobs:
 
       - name: Archive reports
         if: always()
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: auction-xmpp-integration-tests-reports
           path: builds/${{ github.sha }}/auction-xmpp-integration-tests-reports
@@ -151,7 +151,7 @@ jobs:
 
       - name: Archive reports
         if: always()
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: end-to-end-tests-reports
           path: builds/${{ github.sha }}/end-to-end-tests-reports
