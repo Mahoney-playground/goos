@@ -1,6 +1,7 @@
 package uk.org.lidalia.gradle.plugins.extractplugin.process
 
 import java.io.BufferedReader
+import java.io.InputStream
 import java.io.Reader
 import java.io.StringWriter
 import java.util.NoSuchElementException
@@ -12,6 +13,13 @@ inline fun Reader.forEachChar(f: (Char) -> Unit) {
   var c: Int
   while (read().also { c = it } != endOfStream) {
     f(c.toChar())
+  }
+}
+
+inline fun InputStream.forEachByte(f: (Int) -> Unit) {
+  var c: Int
+  while (read().also { c = it } != endOfStream) {
+    f(c)
   }
 }
 

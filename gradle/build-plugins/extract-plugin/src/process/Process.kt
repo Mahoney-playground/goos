@@ -4,6 +4,7 @@ import uk.org.lidalia.gradle.plugins.extractplugin.either.Outcome
 import uk.org.lidalia.gradle.plugins.extractplugin.either.failure
 import uk.org.lidalia.gradle.plugins.extractplugin.either.success
 import java.io.InputStream
+import java.io.OutputStream
 import java.io.StringWriter
 import java.time.Duration
 import java.util.concurrent.TimeUnit.MILLISECONDS
@@ -89,11 +90,9 @@ class Process internal constructor(
   }
 
   companion object {
-    private fun InputStream.appendTo(appendable: Appendable) =
+    private fun InputStream.appendTo(appendable: OutputStream) =
       Thread {
-        reader().buffered().forEachChar {
-          appendable.append(it)
-        }
+        buffered().use { it.copyTo(appendable, 1) }
       }.apply {
         start()
       }
