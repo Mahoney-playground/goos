@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Get current date
         id: date
@@ -83,7 +83,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Login to docker repo
         run: docker login --username Mahoney-playground --password-stdin ghcr.io < <(echo "${{ secrets.GITHUB_TOKEN }}")
@@ -100,7 +100,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Login to docker repo
         run: docker login --username Mahoney-playground --password-stdin ghcr.io < <(echo "${{ secrets.GITHUB_TOKEN }}")
@@ -131,7 +131,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Login to docker repo
         run: docker login --username Mahoney-playground --password-stdin ghcr.io < <(echo "${{ secrets.GITHUB_TOKEN }}")
